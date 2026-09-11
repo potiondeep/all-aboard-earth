@@ -170,6 +170,27 @@ const copy = {
 };
 
 /* ---------- scroll-reveal hook ---------- */
+/* Seat 1 — hero parallax: the sun drifts at 0.85x scroll, capped at +-40px.
+   rAF-throttled and transform-only, so it never touches layout. */
+function useSunParallax() {
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const hero = document.querySelector(".hero");
+    if (!hero) return;
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const shift = Math.max(-40, Math.min(40, window.scrollY * 0.15));
+        hero.style.setProperty("--sun-shift", `${shift.toFixed(1)}px`);
+      });
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => { window.removeEventListener("scroll", onScroll); cancelAnimationFrame(raf); };
+  }, []);
+}
+
 function useReveal(lang) {
   useEffect(() => {
     const els = document.querySelectorAll("[data-reveal]");
@@ -211,17 +232,19 @@ function VinylSun() {
           />
         ))}
       </g>
-      {/* the record */}
-      <circle cx="200" cy="200" r="148" fill="url(#sunGrad)" />
-      {/* vinyl grooves */}
-      {[132, 116, 100, 84, 68].map((r) => (
-        <circle key={r} cx="200" cy="200" r={r} fill="none" stroke={T.pineDeep} strokeOpacity=".28" strokeWidth="2.5" />
-      ))}
-      {/* record label */}
-      <circle cx="200" cy="200" r="46" fill={T.cream} />
-      <circle cx="200" cy="200" r="6" fill={T.pineDeep} />
-      <text x="200" y="182" textAnchor="middle" fontFamily="'Space Mono', monospace" fontSize="12" fontWeight="700" fill={T.pineDeep} letterSpacing="1">SIDE A</text>
-      <text x="200" y="234" textAnchor="middle" fontFamily="'Space Mono', monospace" fontSize="10" fill={T.pineDeep} letterSpacing="1">33⅓ RPM</text>
+      {/* the record — turns as one piece, label and all */}
+      <g className="vinyl-disc">
+        <circle cx="200" cy="200" r="148" fill="url(#sunGrad)" />
+        {/* vinyl grooves */}
+        {[132, 116, 100, 84, 68].map((r) => (
+          <circle key={r} cx="200" cy="200" r={r} fill="none" stroke={T.pineDeep} strokeOpacity=".28" strokeWidth="2.5" />
+        ))}
+        {/* record label */}
+        <circle cx="200" cy="200" r="46" fill={T.cream} />
+        <circle cx="200" cy="200" r="6" fill={T.pineDeep} />
+        <text x="200" y="182" textAnchor="middle" fontFamily="'Space Mono', monospace" fontSize="12" fontWeight="700" fill={T.pineDeep} letterSpacing="1">SIDE A</text>
+        <text x="200" y="234" textAnchor="middle" fontFamily="'Space Mono', monospace" fontSize="10" fill={T.pineDeep} letterSpacing="1">33⅓ RPM</text>
+      </g>
     </svg>
   );
 }
@@ -237,9 +260,9 @@ function WaveMountainDivider({ flip }) {
     "q18,-16 36,0 t36,0 t36,0 t36,0 t36,0 t36,0 t36,0 t36,0 t36,0 t36,0"; // signal rides on
   return (
     <div className={"divider" + (flip ? " flip" : "")} data-reveal aria-hidden="true">
-      <svg viewBox="0 0 1200 110" preserveAspectRatio="none">
-        <path d={wavePath} fill="none" stroke={T.sky} strokeWidth="3" strokeLinecap="round" />
-        <path d={wavePath} fill="none" stroke={T.marigold} strokeWidth="3" strokeLinecap="round" transform="translate(0,12)" opacity=".55" />
+      <svg viewBox="0 0 1200 110" preserveAspectRatio="none" className="wobble">
+        <path className="draw-on" d={wavePath} fill="none" stroke={T.sky} strokeWidth="3" strokeLinecap="round" />
+        <path className="draw-on draw-on-b" d={wavePath} fill="none" stroke={T.marigold} strokeWidth="3" strokeLinecap="round" transform="translate(0,12)" opacity=".55" />
       </svg>
     </div>
   );
@@ -250,7 +273,7 @@ function WaveMountainDivider({ flip }) {
    ============================================================ */
 function RootsMark() {
   return (
-    <svg className="roots" viewBox="0 0 220 110" aria-hidden="true" data-reveal>
+    <svg className="roots wobble seed-grow" viewBox="0 0 220 110" aria-hidden="true" data-reveal>
       {/* ground line */}
       <line x1="0" y1="34" x2="220" y2="34" stroke={T.cream} strokeOpacity=".25" strokeWidth="2" strokeDasharray="2 7" />
       {/* sprout */}
@@ -274,13 +297,24 @@ function RootsMark() {
    ============================================================ */
 function ClimbingTrain() {
   const [p, setP] = useState(0);
+  const [settling, setSettling] = useState(false);
   useEffect(() => {
     let raf = 0;
+    let stopTimer = 0;
+    let last = window.scrollY;
     const onScroll = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
         const max = document.documentElement.scrollHeight - window.innerHeight;
         setP(max > 0 ? Math.min(1, window.scrollY / max) : 0);
+        // climb angle follows scroll direction; settles back when scrolling stops
+        const dir = window.scrollY - last;
+        last = window.scrollY;
+        if (Math.abs(dir) > 0.5) {
+          setSettling(false);
+          clearTimeout(stopTimer);
+          stopTimer = setTimeout(() => setSettling(true), 120);
+        }
       });
     };
     onScroll();
@@ -290,7 +324,10 @@ function ClimbingTrain() {
   return (
     <div className="rail" aria-hidden="true">
       <div className="rail-track" />
-      <div className="rail-train" style={{ bottom: `calc(${(p * 100).toFixed(2)}% - ${(p * 84).toFixed(1)}px)` }}>
+      <div
+        className={"rail-train" + (settling ? " settling" : "")}
+        style={{ bottom: `calc(${(p * 100).toFixed(2)}% - ${(p * 84).toFixed(1)}px)`, "--climb": `${(-6 - p * 6).toFixed(1)}deg` }}
+      >
         <svg viewBox="0 0 44 84" width="34" height="66">
           {/* steam puffs */}
           <circle className="puff p1" cx="22" cy="10" r="4" fill={T.cream} opacity=".8" />
@@ -314,51 +351,87 @@ function ClimbingTrain() {
   );
 }
 
-/* ---------- tilting trading card ---------- */
+/* ---------- Seat 7: tilting trading card ----------
+   Tilt is driven by rAF writing CSS custom properties straight to the node, so
+   pointer movement never triggers a React re-render and we stay on the
+   compositor (transform + opacity only). */
 function CareerCard({ c, i, art }) {
   const ref = useRef(null);
-  const [t, setT] = useState({ rx: 0, ry: 0 });
+  const raf = useRef(0);
+  const pending = useRef(null);
+
+  const apply = () => {
+    raf.current = 0;
+    const el = ref.current;
+    if (!el || !pending.current) return;
+    const { rx, ry, gx, gy, on } = pending.current;
+    el.style.setProperty("--rx", `${rx.toFixed(2)}deg`);
+    el.style.setProperty("--ry", `${ry.toFixed(2)}deg`);
+    el.style.setProperty("--gx", `${gx.toFixed(1)}%`);
+    el.style.setProperty("--gy", `${gy.toFixed(1)}%`);
+    el.style.setProperty("--glare", on ? ".18" : "0");
+  };
+
+  const schedule = (next) => {
+    pending.current = next;
+    if (!raf.current) raf.current = requestAnimationFrame(apply);
+  };
+
   const move = (e) => {
-    const r = ref.current.getBoundingClientRect();
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width - 0.5;
     const y = (e.clientY - r.top) / r.height - 0.5;
-    setT({ rx: -y * 14, ry: x * 14 });
+    schedule({
+      rx: -y * 20, // +-10deg at the edges
+      ry: x * 20,
+      gx: (x + 0.5) * 100,
+      gy: (y + 0.5) * 100,
+      on: true,
+    });
   };
+
+  const leave = () => schedule({ rx: 0, ry: 0, gx: 50, gy: 50, on: false });
+
+  useEffect(() => () => cancelAnimationFrame(raf.current), []);
+
   return (
     <div
       ref={ref}
       data-reveal
       className="ccard"
-      style={{ transitionDelay: `${i * 90}ms` }}
+      style={{ transitionDelay: `${i * 110}ms`, animationDelay: `${i * 700}ms` }}
       onMouseMove={move}
-      onMouseLeave={() => setT({ rx: 0, ry: 0 })}
+      onMouseLeave={leave}
     >
-      <div
-        className="ccard-inner"
-        style={{ transform: `perspective(700px) rotateX(${t.rx}deg) rotateY(${t.ry}deg)` }}
-      >
-        <div className="ccard-top">
-          <span className="mono">№ {c.num}</span>
-          <span className="mono">{c.stat} ★★★★</span>
+      <div className="ccard-inner">
+        {art && art.src ? (
+          <a className="ccard-link" href={art.href} target="_blank" rel="noopener noreferrer">
+            <img className="ccard-img" src={art.src} alt={art.alt} loading="lazy" decoding="async" width="600" height="840" />
+          </a>
+        ) : (
+          /* placeholder until this career's art lands — see MISSING_ART.md */
+          <div className="ccard-fallback" style={{ background: c.hue }} aria-hidden="true">
+            <svg viewBox="0 0 100 100" className="ccard-svg">
+              <circle cx="50" cy="26" r="15" fill={T.cream} />
+              <circle cx="50" cy="26" r="10" fill="none" stroke={T.pineDeep} strokeOpacity=".3" strokeWidth="1.5" />
+              <path d="M-10,105 L20,66 L45,95 L70,58 L105,100 Z" fill={T.pineDeep} />
+            </svg>
+          </div>
+        )}
+
+        <span className="ccard-glare" aria-hidden="true" />
+
+        <div className="ccard-top mono">
+          <span>&#8470; {c.num}</span>
+          <span>{c.stat} &#9733;&#9733;&#9733;&#9733;</span>
         </div>
-        <div className="ccard-art" style={{ background: c.hue }}>
-          {art && art.src ? (
-            <a className="ccard-link" href={art.href} target="_blank" rel="noopener noreferrer">
-              <img className="ccard-img" src={art.src} alt={art.alt} loading="lazy" decoding="async" width="600" height="840" />
-            </a>
-          ) : (
-          /* mini vinyl sun echo */
-          <svg viewBox="0 0 100 100" className="ccard-svg">
-            <circle cx="50" cy="26" r="15" fill={T.cream} />
-            <circle cx="50" cy="26" r="10" fill="none" stroke={T.pineDeep} strokeOpacity=".3" strokeWidth="1.5" />
-            <circle cx="50" cy="26" r="5" fill="none" stroke={T.pineDeep} strokeOpacity=".3" strokeWidth="1.5" />
-            <path d="M-10,105 L20,66 L45,95 L70,58 L105,100 Z" fill={T.pineDeep} />
-            <path d="M-10,110 Q15,98 35,104 T80,102 T115,106" fill="none" stroke={T.cream} strokeOpacity=".5" strokeWidth="2" />
-          </svg>
-          )}
+
+        <div className="ccard-plate" style={{ "--hue": c.hue }}>
+          <div className="ccard-role">{c.role}</div>
+          <div className="ccard-flavor">{c.flavor}</div>
         </div>
-        <div className="ccard-role">{c.role}</div>
-        <div className="ccard-flavor">{c.flavor}</div>
       </div>
     </div>
   );
@@ -368,6 +441,7 @@ export default function App() {
   const [lang, setLang] = useState("en");
   const c = copy[lang];
   useReveal(lang);
+  useSunParallax();
 
   return (
     <div className="page">
@@ -375,15 +449,38 @@ export default function App() {
 
         * { margin:0; padding:0; box-sizing:border-box; }
         .page {
+          /* organic easing tokens — nothing in this page snaps */
+          --ease-settle: cubic-bezier(.22, 1, .36, 1);   /* things land like leaves */
+          --ease-drift:  cubic-bezier(.45, 0, .55, 1);   /* loops */
           background:${T.pine}; color:${T.cream};
           font-family:'Bricolage Grotesque', sans-serif;
           overflow-x:hidden; min-height:100vh;
         }
+
+        /* paper-grain overlay: kills the flat-vector feel, costs one layer */
+        .grain{
+          position:fixed; inset:0; z-index:9999; pointer-events:none;
+          opacity:.07; mix-blend-mode:overlay;
+          background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+          background-repeat:repeat;
+        }
+        /* wobble is applied statically to line art — never animated, never on text */
+        .wobble{ filter:url(#wobble); }
+
+        /* Seat 3 — dividers draw themselves on as they enter view */
+        .draw-on{ stroke-dasharray:2400; stroke-dashoffset:2400; transition:stroke-dashoffset 1.4s var(--ease-settle); }
+        .draw-on-b{ transition-delay:.18s; }
+        [data-reveal].in .draw-on{ stroke-dashoffset:0; }
+
+        /* Seat 4/11 — the seed mark grows rather than fades */
+        .seed-grow{ transform-origin:50% 30%; }
+        [data-reveal].seed-grow{ transform:translateY(24px) scale(.72); }
+        [data-reveal].seed-grow.in{ transform:translateY(0) scale(1); }
         .mono { font-family:'Space Mono', monospace; font-size:12px; letter-spacing:.08em; }
         .display { font-family:'Anton', sans-serif; text-transform:uppercase; line-height:.92; }
 
         /* reveal */
-        [data-reveal]{ opacity:0; transform:translateY(34px); transition:opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
+        [data-reveal]{ opacity:0; transform:translateY(24px); transition:opacity .78s var(--ease-settle), transform .78s var(--ease-settle); }
         [data-reveal].in{ opacity:1; transform:translateY(0); }
         @media (prefers-reduced-motion: reduce){
           [data-reveal]{ opacity:1; transform:none; transition:none; }
@@ -392,6 +489,12 @@ export default function App() {
           .vinyl-sun{ animation:none !important; }
           .sun-rays{ animation:none !important; }
           .puff{ animation:none !important; }
+          /* remaster seats */
+          .grain{ display:none; }
+          .scene img, .ccard-inner, .rail-train, .cta-train{ transition:none !important; animation:none !important; transform:none !important; }
+          .cta-train{ left:auto !important; right:0 !important; }
+          .draw-on{ stroke-dasharray:none !important; stroke-dashoffset:0 !important; transition:none !important; }
+          .seed-grow{ opacity:1 !important; transform:none !important; }
         }
 
         /* nav */
@@ -412,9 +515,14 @@ export default function App() {
 
         /* hero + vinyl sun */
         .hero{ position:relative; padding:clamp(40px,8vh,90px) clamp(16px,4vw,48px) 0; text-align:center; }
-        .vinyl-sun{ position:absolute; left:50%; top:56%; width:min(74vw,580px); transform:translateX(-50%);
-          z-index:0; animation:rise 1.6s cubic-bezier(.2,.8,.2,1) both; }
+        .vinyl-sun{ position:absolute; left:50%; top:56%; width:min(74vw,580px);
+          z-index:0; animation:rise 1.6s var(--ease-settle) both;
+          /* parallax: sun drifts slower than the type (0.85x), capped at 40px */
+          transform:translateX(-50%) translate3d(0, var(--sun-shift, 0px), 0); will-change:transform; }
         @keyframes rise{ from{ top:95%; opacity:0; } to{ top:56%; opacity:1; } }
+        /* the whole record turns, 45s/rev; hover spins it up like a turntable */
+        .vinyl-disc{ transform-origin:200px 200px; animation:spin 45s linear infinite; transition:none; }
+        .hero:hover .vinyl-disc{ animation-duration:22s; }
         .sun-rays{ transform-origin:200px 200px; animation:spin 60s linear infinite; }
         @keyframes spin{ to{ transform:rotate(360deg); } }
         .hero-eyebrow{ position:relative; z-index:2; color:${T.marigold}; margin-bottom:14px; }
@@ -427,7 +535,9 @@ export default function App() {
 
         /* marquee */
         .marquee{ background:${T.marigold}; color:${T.pineDeep}; overflow:hidden; transform:rotate(-1.5deg) scale(1.02); padding:10px 0; }
-        .marquee-inner{ display:inline-block; white-space:nowrap; font-family:'Anton'; font-size:22px; letter-spacing:.1em; animation:slide 18s linear infinite; }
+        .marquee-inner{ display:inline-block; white-space:nowrap; font-family:'Anton'; font-size:22px; letter-spacing:.1em; animation:slide 35s linear infinite; }
+        .marquee:hover .marquee-inner{ animation-play-state:paused; }
+        .seed-sep{ display:inline-block; width:22px; height:22px; vertical-align:-4px; margin:0 .5em; }
         @keyframes slide{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
 
         /* wave→mountain dividers */
@@ -441,7 +551,9 @@ export default function App() {
         /* climbing train rail */
         .rail{ position:fixed; right:14px; top:80px; bottom:20px; width:44px; z-index:40; pointer-events:none; }
         .rail-track{ position:absolute; left:50%; top:0; bottom:0; width:0; border-left:3px dashed ${T.cream}33; transform:translateX(-50%); }
-        .rail-train{ position:absolute; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; transition:bottom .15s linear; }
+        .rail-train{ position:absolute; left:50%; display:flex; flex-direction:column; align-items:center;
+          transform:translateX(-50%) rotate(var(--climb, 0deg)); transition:bottom .15s linear, transform .3s var(--ease-settle); will-change:transform; }
+        .rail-train.settling{ transform:translateX(-50%) rotate(calc(var(--climb, 0deg) * .4)); }
         .rail-label{ writing-mode:vertical-rl; font-size:9px; color:${T.marigold}; margin-top:6px; letter-spacing:.2em; }
         .puff{ animation:puff 2.2s ease-in-out infinite; transform-origin:center; }
         .puff.p2{ animation-delay:.4s; } .puff.p3{ animation-delay:.9s; }
@@ -482,16 +594,54 @@ export default function App() {
 
         /* trading cards */
         .cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:22px; margin-top:40px; }
-        .ccard-inner{ background:${T.cream}; color:${T.pineDeep}; border-radius:16px; padding:14px; border:3px solid ${T.pineDeep}; transition:transform .15s ease-out; will-change:transform; }
-        .ccard-top{ display:flex; justify-content:space-between; margin-bottom:10px; font-weight:700; }
-        .ccard-art{ position:relative; border-radius:10px; height:150px; overflow:hidden; border:2px solid ${T.pineDeep}; }
-        .ccard-svg{ position:absolute; inset:0; width:100%; height:100%; }
-        .ccard-img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 22%; display:block; }
+        .ccard{ perspective:900px; }
+        .ccard-inner{
+          position:relative; aspect-ratio:2 / 2.8; border-radius:18px; overflow:hidden;
+          border:2px solid ${T.marigold}; background:${T.pineDeep};
+          transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+          transition:transform .5s var(--ease-settle); will-change:transform;
+          box-shadow:0 14px 34px #0007;
+        }
+        .ccard:hover .ccard-inner{ transition:transform .08s linear; }
         .ccard-link{ position:absolute; inset:0; display:block; }
+        .ccard-img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 18%; display:block; }
+        .ccard-fallback{ position:absolute; inset:0; }
+        .ccard-svg{ position:absolute; inset:0; width:100%; height:100%; }
+
+        /* glare sweep — position tracks the tilt, capped at .18 */
+        .ccard-glare{
+          position:absolute; inset:0; pointer-events:none; opacity:var(--glare,0);
+          transition:opacity .4s var(--ease-drift);
+          background:radial-gradient(circle at var(--gx,50%) var(--gy,50%), #fff 0%, #fff6 28%, transparent 62%);
+          mix-blend-mode:screen;
+        }
+
+        .ccard-top{
+          position:absolute; top:0; left:0; right:0; display:flex; justify-content:space-between;
+          padding:9px 11px; font-weight:700; color:${T.cream}; font-size:11px;
+          background:linear-gradient(${T.pineDeep}cc, transparent); pointer-events:none;
+        }
+        .ccard-plate{
+          position:absolute; left:0; right:0; bottom:0; padding:14px 13px 13px;
+          background:linear-gradient(transparent, ${T.pineDeep}e8 34%, ${T.pineDeep});
+          border-top:2px solid var(--hue, ${T.marigold}); pointer-events:none;
+        }
+        .ccard-role{ font-family:'Anton'; font-size:19px; line-height:1.05; color:${T.cream}; }
+        .ccard-flavor{ font-size:12.5px; margin-top:5px; opacity:.82; line-height:1.35; color:${T.cream}; }
+
+        /* entrance: cards fan out of a 12px overlap into final spacing */
+        [data-reveal].ccard{ transform:translateY(24px) translateX(-12px) rotate(-3deg); }
+        [data-reveal].ccard.in{ transform:translateY(0) translateX(0) rotate(0deg); }
+
+        /* touch devices get a slow idle float instead of cursor tilt */
+        @media (hover:none){
+          .ccard-inner{ animation:cardfloat 6s var(--ease-drift) infinite; }
+          .ccard-glare{ display:none; }
+        }
+        @keyframes cardfloat{ 0%,100%{ transform:translateY(-4px); } 50%{ transform:translateY(4px); } }
+
         .scene{ margin-top:30px; border:3px solid ${T.pineDeep}; border-radius:16px; overflow:hidden; line-height:0; box-shadow:0 18px 40px #0006; }
         .scene img{ width:100%; height:clamp(180px,30vw,340px); object-fit:cover; display:block; }
-        .ccard-role{ font-family:'Anton'; font-size:21px; margin-top:12px; }
-        .ccard-flavor{ font-size:13.5px; margin-top:6px; opacity:.8; line-height:1.4; }
 
         /* proof */
         .proof{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:2px; margin-top:36px; border:2px solid ${T.cream}33; border-radius:18px; overflow:hidden; }
@@ -508,6 +658,18 @@ export default function App() {
 
         footer{ text-align:center; padding:30px; font-family:'Space Mono'; font-size:12px; color:${T.cream}88; letter-spacing:.12em; }
       `}</style>
+
+      <div className="grain" aria-hidden="true" />
+
+      {/* shared hand-drawn edge wobble, used statically by line art */}
+      <svg width="0" height="0" aria-hidden="true" style={{ position: "absolute" }}>
+        <defs>
+          <filter id="wobble">
+            <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="7" result="n" />
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </defs>
+      </svg>
 
       <ClimbingTrain />
 
