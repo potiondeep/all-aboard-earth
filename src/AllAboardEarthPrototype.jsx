@@ -5,6 +5,10 @@ import sceneGreenCareers from "./assets/scenes/green-careers.webp";
 import sceneEarthRests from "./assets/scenes/earth-rests.webp";
 import sceneRaccoon from "./assets/scenes/felt-raccoon.webp";
 import sceneWindMonkey from "./assets/scenes/felt-wind-monkey.webp";
+import dividerA from "./assets/marks/divider-wave-mountain-a.webp";
+import dividerB from "./assets/marks/divider-wave-mountain-b.webp";
+import climbingTrainArt from "./assets/marks/climbing-train.webp";
+import seedMarkArt from "./assets/marks/seed-mark.webp";
 
 // Card art is language-independent, so it lives outside the copy object and is
 // matched to cards by position. Art streams from the Wix CMS, so replacing the
@@ -253,38 +257,28 @@ function useReveal(lang) {
 function VinylSun() {
   return (
     <div className="vinyl-wrap" aria-hidden="true">
-    <svg className="vinyl-sun" viewBox="0 0 400 400">
-      <defs>
-        <radialGradient id="sunGrad" cx="50%" cy="40%">
-          <stop offset="0%" stopColor={T.marigold} />
-          <stop offset="75%" stopColor={T.coral} />
-        </radialGradient>
-      </defs>
-      {/* rotating rays */}
-      <g className="sun-rays">
-        {Array.from({ length: 16 }).map((_, i) => (
-          <rect
-            key={i}
-            x="196" y="8" width="8" height="34" rx="4"
-            fill={T.marigold}
-            transform={`rotate(${i * 22.5} 200 200)`}
-          />
-        ))}
-      </g>
-      {/* the record — turns as one piece, label and all */}
-      <g className="vinyl-disc">
-        <circle cx="200" cy="200" r="148" fill="url(#sunGrad)" />
-        {/* vinyl grooves */}
-        {[132, 116, 100, 84, 68].map((r) => (
-          <circle key={r} cx="200" cy="200" r={r} fill="none" stroke={T.pineDeep} strokeOpacity=".28" strokeWidth="2.5" />
-        ))}
-        {/* record label */}
-        <circle cx="200" cy="200" r="46" fill={T.cream} />
-        <circle cx="200" cy="200" r="6" fill={T.pineDeep} />
-        <text x="200" y="182" textAnchor="middle" fontFamily="'Space Mono', monospace" fontSize="12" fontWeight="700" fill={T.pineDeep} letterSpacing="1">SIDE A</text>
-        <text x="200" y="234" textAnchor="middle" fontFamily="'Space Mono', monospace" fontSize="10" fill={T.pineDeep} letterSpacing="1">33⅓ RPM</text>
-      </g>
-    </svg>
+      <svg className="vinyl-sun" viewBox="0 0 400 400">
+        <g className="sun-rays">
+          {Array.from({ length: 16 }).map((_, i) => (
+            <rect
+              key={i}
+              x="196" y="8" width="8" height="34" rx="4"
+              fill={T.marigold}
+              transform={`rotate(${i * 22.5} 200 200)`}
+            />
+          ))}
+        </g>
+      </svg>
+      {/* the record itself — real art, turning as one piece */}
+      <img
+        className="vinyl-disc"
+        src="/art/vinyl-sun.webp"
+        alt=""
+        width="640"
+        height="640"
+        fetchPriority="high"
+        decoding="async"
+      />
     </div>
   );
 }
@@ -294,16 +288,20 @@ function VinylSun() {
    the signal starts as water and rises into peaks
    ============================================================ */
 function WaveMountainDivider({ flip }) {
-  const wavePath =
-    "M0,84 q18,-16 36,0 t36,0 t36,0 t36,0 t36,0 t36,0 " + // water grooves
-    "L252,84 L310,46 L358,84 L430,22 L500,90 L570,14 L650,92 L724,34 L800,84 " + // rising peaks
-    "q18,-16 36,0 t36,0 t36,0 t36,0 t36,0 t36,0 t36,0 t36,0 t36,0 t36,0"; // signal rides on
   return (
     <div className={"divider" + (flip ? " flip" : "")} data-reveal aria-hidden="true">
-      <svg viewBox="0 0 1200 110" preserveAspectRatio="none" className="wobble">
-        <path className="draw-on" d={wavePath} fill="none" stroke={T.sky} strokeWidth="3" strokeLinecap="round" />
-        <path className="draw-on draw-on-b" d={wavePath} fill="none" stroke={T.marigold} strokeWidth="3" strokeLinecap="round" transform="translate(0,12)" opacity=".55" />
-      </svg>
+      <img
+        className="divider-img"
+        src={flip ? dividerB : dividerA}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        width="1600"
+        height="192"
+      />
+      {/* wipe: a pine curtain slides off to the right — transform-only, so the
+          reveal stays on the compositor (clip-path would not) */}
+      <span className="divider-wipe" />
     </div>
   );
 }
@@ -326,22 +324,16 @@ function SeedGlyph({ className = "", hue }) {
    ============================================================ */
 function RootsMark() {
   return (
-    <svg className="roots wobble seed-grow" viewBox="0 0 220 110" aria-hidden="true" data-reveal>
-      {/* ground line */}
-      <line x1="0" y1="34" x2="220" y2="34" stroke={T.cream} strokeOpacity=".25" strokeWidth="2" strokeDasharray="2 7" />
-      {/* sprout */}
-      <path d="M110,34 L110,14" stroke={T.leaf} strokeWidth="3.5" strokeLinecap="round" fill="none" />
-      <path d="M110,20 q-14,-12 -22,-4 q6,12 22,4" fill={T.leaf} />
-      <path d="M110,14 q14,-12 22,-4 q-6,12 -22,4" fill={T.leaf} />
-      {/* seed */}
-      <ellipse cx="110" cy="42" rx="9" ry="7" fill={T.marigold} />
-      {/* roots branching down */}
-      <path d="M110,48 q0,14 -14,22 q-12,7 -14,20" stroke={T.marigold} strokeOpacity=".8" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-      <path d="M110,48 q0,16 0,26 q0,12 6,22" stroke={T.marigold} strokeOpacity=".8" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-      <path d="M110,48 q2,12 16,18 q14,7 16,22" stroke={T.marigold} strokeOpacity=".8" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-      <path d="M96,70 q-8,4 -10,12" stroke={T.marigold} strokeOpacity=".5" strokeWidth="2" fill="none" strokeLinecap="round" />
-      <path d="M126,66 q8,6 8,14" stroke={T.marigold} strokeOpacity=".5" strokeWidth="2" fill="none" strokeLinecap="round" />
-    </svg>
+    <img
+      className="roots seed-grow"
+      src={seedMarkArt}
+      alt=""
+      width="520"
+      height="624"
+      loading="lazy"
+      decoding="async"
+      data-reveal
+    />
   );
 }
 
@@ -395,23 +387,7 @@ function ClimbingTrain() {
         className={"rail-train" + (settling ? " settling" : "")}
         style={{ "--y": `${travel * (1 - p)}px`, "--climb": `${(-6 - p * 6).toFixed(1)}deg` }}
       >
-        <svg viewBox="0 0 44 84" width="34" height="66">
-          {/* steam puffs */}
-          <circle className="puff p1" cx="22" cy="10" r="4" fill={T.cream} opacity=".8" />
-          <circle className="puff p2" cx="16" cy="6" r="3" fill={T.cream} opacity=".55" />
-          <circle className="puff p3" cx="28" cy="4" r="2.5" fill={T.cream} opacity=".4" />
-          {/* chimney (pointing up — we climb!) */}
-          <rect x="17" y="14" width="10" height="8" rx="2" fill={T.coral} />
-          {/* boiler */}
-          <rect x="12" y="22" width="20" height="30" rx="7" fill={T.marigold} />
-          <circle cx="22" cy="32" r="5" fill={T.pineDeep} />
-          {/* cab */}
-          <rect x="9" y="52" width="26" height="18" rx="3" fill={T.coral} />
-          <rect x="15" y="56" width="14" height="7" rx="2" fill={T.cream} />
-          {/* wheels */}
-          <circle cx="10" cy="74" r="5" fill={T.cream} stroke={T.pineDeep} strokeWidth="2" />
-          <circle cx="34" cy="74" r="5" fill={T.cream} stroke={T.pineDeep} strokeWidth="2" />
-        </svg>
+        <img className="rail-train-img" src={climbingTrainArt} alt="" width="760" height="672" loading="lazy" decoding="async" />
         <span className="rail-label mono">UP WE GO</span>
       </div>
     </div>
@@ -541,6 +517,7 @@ export default function App() {
 
         /* Seat 4/11 — the seed mark grows rather than fades */
         .seed-grow{ transform-origin:50% 30%; }
+        [data-reveal].divider{ opacity:1; transform:none; }
         [data-reveal].seed-grow{ transform:translateY(24px) scale(.72); }
         [data-reveal].seed-grow.in{ transform:translateY(0) scale(1); }
         .mono { font-family:'Space Mono', monospace; font-size:12px; letter-spacing:.08em; line-height:1.5; }
@@ -561,10 +538,11 @@ export default function App() {
           .ccard-inner, .rail-train, .cta-train{ transition:none !important; animation:none !important; transform:none !important; }
           .cta-train{ left:auto !important; right:0 !important; }
           .draw-on{ stroke-dasharray:none !important; stroke-dashoffset:0 !important; transition:none !important; }
+          .divider-wipe{ transform:translateX(101%) !important; transition:none !important; }
           .seed-grow{ opacity:1 !important; transform:none !important; }
           .photoprint, .poster, .panel{ animation:none !important; }
           .cta-train{ animation:none !important; transform:translateX(0) !important; left:auto !important; right:8px !important; }
-          .cta-train-rock{ animation:none !important; }
+          .cta-train-img{ animation:none !important; }
           /* the record and the pulsing badges stop too */
           .vinyl-disc{ animation:none !important; }
           .boarding-badge, .signal{ animation:none !important; opacity:1 !important; }
@@ -589,14 +567,23 @@ export default function App() {
 
         /* hero + vinyl sun */
         .hero{ position:relative; padding:clamp(40px,8vh,90px) clamp(16px,4vw,48px) 0; text-align:center; }
+        /* The record art is light tan, so cream copy laid over it loses contrast.
+           A soft pine scrim sits between the art (z 0) and the type (z 2). */
+        .hero::after{
+          content:""; position:absolute; left:50%; top:38%; width:min(92vw,900px); height:62%;
+          transform:translateX(-50%); z-index:1; pointer-events:none;
+          background:radial-gradient(ellipse at 50% 45%, ${T.pine}e6 0%, ${T.pine}c4 42%, ${T.pine}00 72%);
+        }
         /* wrapper owns position + entrance; svg owns parallax. Both transform-only. */
-        .vinyl-wrap{ position:absolute; left:50%; top:56%; width:min(74vw,580px);
+        .vinyl-wrap{ position:absolute; aspect-ratio:1; left:50%; top:56%; width:min(74vw,580px);
           z-index:0; transform:translateX(-50%); animation:rise 1.6s var(--ease-settle) both; will-change:transform; }
-        .vinyl-sun{ display:block; width:100%;
+        .vinyl-sun{ display:block; width:100%; position:absolute; inset:0;
           transform:translate3d(0, var(--sun-shift, 0px), 0); will-change:transform; }
+        .vinyl-disc{ position:relative; display:block; width:86%; margin:7% auto;
+          transform:translate3d(0, var(--sun-shift, 0px), 0) rotate(0deg); will-change:transform; }
         @keyframes rise{ from{ transform:translateX(-50%) translateY(70vh); opacity:0; } to{ transform:translateX(-50%) translateY(0); opacity:1; } }
         /* the whole record turns, 45s/rev; hover spins it up like a turntable */
-        .vinyl-disc{ transform-origin:200px 200px; animation:spin 45s linear infinite; transition:none; }
+        .vinyl-disc{ animation:spin 45s linear infinite; }
         .hero:hover .vinyl-disc{ animation-duration:22s; }
         .sun-rays{ transform-origin:200px 200px; animation:spin 60s linear infinite; }
         @keyframes spin{ to{ transform:rotate(360deg); } }
@@ -621,12 +608,16 @@ export default function App() {
         @keyframes slide{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
 
         /* wave→mountain dividers */
-        .divider{ max-width:1100px; margin:0 auto; padding:0 clamp(16px,4vw,48px); }
-        .divider svg{ width:100%; height:64px; display:block; }
-        .divider.flip svg{ transform:scaleX(-1); }
+        .divider{ position:relative; width:100%; margin:0 auto; overflow:hidden; line-height:0; }
+        .divider-img{ width:100%; height:clamp(84px,11vw,150px); object-fit:cover; display:block; }
+        .divider-wipe{
+          position:absolute; inset:0; background:${T.pine}; pointer-events:none;
+          transform:translateX(0); transition:transform 1.4s var(--ease-settle); will-change:transform;
+        }
+        [data-reveal].in .divider-wipe{ transform:translateX(101%); }
 
         /* roots mark */
-        .roots{ display:block; width:180px; margin:44px auto 0; }
+        .roots{ display:block; width:104px; height:auto; margin:40px auto 0; }
 
         /* climbing train rail */
         .rail{ position:fixed; right:14px; top:80px; bottom:20px; width:44px; z-index:40; pointer-events:none; }
@@ -635,6 +626,7 @@ export default function App() {
           transform:translateX(-50%) translateY(var(--y, 0px)) rotate(var(--climb, 0deg));
           transition:transform .3s var(--ease-settle); will-change:transform; }
         .rail-train.settling{ transform:translateX(-50%) translateY(var(--y, 0px)) rotate(calc(var(--climb, 0deg) * .4)); }
+        .rail-train-img{ width:52px; height:auto; display:block; filter:drop-shadow(0 3px 6px #0008); }
         .rail-label{ writing-mode:vertical-rl; font-size:9px; color:${T.marigold}; margin-top:6px; letter-spacing:.2em; }
         .puff{ animation:puff 2.2s ease-in-out infinite; transform-origin:center; }
         .puff.p2{ animation-delay:.4s; } .puff.p3{ animation-delay:.9s; }
@@ -772,14 +764,14 @@ export default function App() {
         .collage img:nth-child(3){ transform:rotate(-1deg); }
 
         /* Seat 9 — the train crosses the CTA band once, on first reveal */
-        .crossing{ position:relative; height:34px; margin:0 0 18px; overflow:hidden; }
+        .crossing{ position:relative; height:74px; margin:0 0 18px; overflow:hidden; }
         .crossing-track{ position:absolute; left:0; right:0; bottom:6px; width:100%; height:4px; }
-        .cta-train{ position:absolute; bottom:8px; left:0; font-size:26px; line-height:1; will-change:transform; transform:translateX(-20vw); }
-        .cta-train-rock{ display:inline-block; will-change:transform; }
+        .cta-train{ position:absolute; bottom:6px; left:0; line-height:0; will-change:transform; transform:translateX(-20vw); }
+        .cta-train-img{ display:block; width:78px; height:auto; transform:scaleX(-1); will-change:transform; }
         [data-reveal].ctaband.in .cta-train{ animation:cross 7s var(--ease-drift) both; }
-        [data-reveal].ctaband.in .cta-train-rock{ animation:rock 1.1s ease-in-out infinite; }
+        [data-reveal].ctaband.in .cta-train-img{ animation:rock 1.1s ease-in-out infinite; }
         @keyframes cross{ from{ transform:translateX(-20vw); } to{ transform:translateX(120vw); } }
-        @keyframes rock{ 0%,100%{ transform:rotate(-1.5deg); } 50%{ transform:rotate(1.5deg); } }
+        @keyframes rock{ 0%,100%{ transform:scaleX(-1) rotate(-1.5deg); } 50%{ transform:scaleX(-1) rotate(1.5deg); } }
 
 
         /* proof */
@@ -795,7 +787,7 @@ export default function App() {
         .ctaband .mono{ display:block; margin-top:16px; opacity:.75; }
         .ctaband .btn{ background:${T.pineDeep}; color:${T.cream}; }
 
-        footer .roots{ width:120px; margin:0 auto 10px; }
+        footer .roots{ width:78px; margin:0 auto 10px; }
         .footer-give{ margin-top:10px; }
         .footer-social{ margin-top:6px; }
         footer a{ color:${T.marigold}; text-decoration:none; border-bottom:1px solid ${T.marigold}66; }
@@ -957,7 +949,7 @@ export default function App() {
             <svg className="crossing-track" viewBox="0 0 1200 4" preserveAspectRatio="none">
               <line className="draw-on" x1="0" y1="2" x2="1200" y2="2" stroke={T.pineDeep} strokeOpacity=".45" strokeWidth="3" strokeDasharray="10 12" />
             </svg>
-            <span className="cta-train"><span className="cta-train-rock">🚂</span></span>
+            <span className="cta-train"><img className="cta-train-img" src={climbingTrainArt} alt="" width="760" height="672" loading="lazy" decoding="async" /></span>
           </div>
           <h2 className="display">{c.cta_head}</h2>
           <p>{c.cta_sub}</p>

@@ -89,16 +89,23 @@ try {
   }
   await settle(1200);
   Object.assign(report, await page.evaluate(() => {
+    const cs = (sel) => { const el = document.querySelector(sel); return el ? getComputedStyle(el) : null; };
     const els = [...document.querySelectorAll("[data-reveal]")];
     return {
       revealTotal: els.length,
       revealAfterScroll: els.filter((e) => e.classList.contains("in")).length,
       revealOpacities: [...new Set(els.map((e) => getComputedStyle(e).opacity))],
       drawOnOffsets: [...new Set([...document.querySelectorAll(".draw-on")].map((e) => getComputedStyle(e).strokeDashoffset))],
-      sunSpinDuration: getComputedStyle(document.querySelector(".vinyl-disc")).animationDuration,
-      sunParallax: getComputedStyle(document.querySelector(".hero")).getPropertyValue("--sun-shift"),
-      railClimb: document.querySelector(".rail-train")?.style.getPropertyValue("--climb"),
-      seedIcoOpacity: getComputedStyle(document.querySelector(".seed-ico")).opacity,
+      sunSpinDuration: cs(".vinyl-disc")?.animationDuration ?? null,
+      sunParallax: cs(".hero")?.getPropertyValue("--sun-shift") ?? null,
+      railClimb: document.querySelector(".rail-train")?.style.getPropertyValue("--climb") ?? null,
+      // real art now fills the mark seats — assert each one actually decoded
+      markArt: [".vinyl-disc", ".rail-train-img", ".cta-train-img", "img.roots", ".divider-img"].map((sel) => {
+        const els = [...document.querySelectorAll(sel)];
+        return `${sel}: ${els.length} el, ${els.filter((e) => e.naturalWidth > 0).length} loaded`;
+      }),
+      dividerWipesOpen: [...document.querySelectorAll(".divider-wipe")]
+        .every((w) => /matrix\(1, 0, 0, 1, (\d+)/.test(getComputedStyle(w).transform)),
     };
   }));
 

@@ -3,8 +3,8 @@
   "prefersReducedMotion": false,
   "rafRuns": true,
   "revealBeforeScroll": 0,
-  "revealTotal": 38,
-  "revealAfterScroll": 38,
+  "revealTotal": 39,
+  "revealAfterScroll": 39,
   "revealOpacities": [
     "1"
   ],
@@ -14,9 +14,16 @@
   "sunSpinDuration": "45s",
   "sunParallax": "40.0px",
   "railClimb": "-12.0deg",
-  "seedIcoOpacity": "1",
+  "markArt": [
+    ".vinyl-disc: 1 el, 1 loaded",
+    ".rail-train-img: 1 el, 1 loaded",
+    ".cta-train-img: 1 el, 1 loaded",
+    "img.roots: 4 el, 4 loaded",
+    ".divider-img: 4 el, 4 loaded"
+  ],
+  "dividerWipesOpen": true,
   "imagesWithoutDimensions": 0,
-  "imageCount": 9,
+  "imageCount": 21,
   "brokenImages": [],
   "reducedMotion": {
     "grainHidden": true,

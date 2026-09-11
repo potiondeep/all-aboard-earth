@@ -11,6 +11,10 @@
     <!-- Fonts are self-hosted: Google Fonts cost a DNS + connect + CSS round
          trip before the font file is even requested, and the hero headline
          (Anton) is the LCP element, so that chain set the LCP floor. -->
+    <!-- The hero record is the largest above-the-fold element. Served from
+         /art (stable path, no bundler hash) so it can be preloaded here rather
+         than discovered only once React has rendered. -->
+    <link rel="preload" href="/art/vinyl-sun.webp" as="image" fetchpriority="high" />
     <link rel="preload" href="/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin />
     <style>

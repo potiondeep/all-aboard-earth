@@ -9,16 +9,24 @@ Last checked: 2026-09-11 (verified against production).
 
 ## Still on placeholders
 
-| Asset | Seat | Placeholder in use | Animation already wired |
-|---|---|---|---|
-| `vinyl-sun.png` | 1 — hero | `<VinylSun />` coded SVG (rays + grooved record + SIDE A label) | 45s/rev spin, spins up to 22s on hover, 0.15x scroll parallax capped ±40px |
-| `divider-wave-mountain-a.png` | 3 — dividers | `<WaveMountainDivider />` coded SVG | `stroke-dashoffset` draw-on over 1.4s, static wobble filter |
-| `divider-wave-mountain-b.png` | 3 — dividers | same component with `flip` (mirrored via `scaleX(-1)`) | same |
-| `seed-mark.png` | 2, 4, 11 | `<SeedGlyph />` / `<RootsMark />` coded SVG | marquee separator; per-cell tinted icons that scale 0.6→1; footer sign-off grow-in |
-| `climbing-train.png` | 9, 10 | rail: coded SVG loco. CTA crossing: 🚂 emoji | rail train rotates to climb angle + 120ms settle; CTA train crosses −20vw→120vw over 7s with ±1.5° rock |
+**None.** Every asset the brief named is now real art, sourced from
+`~/Desktop/AAE-web-art` on 2026-09-11.
 
-The CTA-band train (Seat 9) is the weakest placeholder — an emoji standing in for
-drawn art. It is the first one worth replacing.
+| Asset | Seat | What shipped |
+|---|---|---|
+| `vinyl-sun.png` | 1 — hero | Tree-ring record with a glowing sun label. Masked to a circle so the 45s spin reads cleanly, and served from `/art` (stable path) so it can be preloaded. |
+| `divider-wave-mountain-a` / `-b` | 3 — dividers | The two ultra-wide 5856x704 wave-to-mountain paintings, full-bleed, alternating. B is drawn mirrored, so the old `scaleX(-1)` flip was removed. |
+| `seed-mark.png` | 4, 11 | Felt sprout with roots, at section ends and as the footer sign-off. |
+| `climbing-train.png` | 9, 10 | Felt solar train with musical-note steam — on the scroll rail, and crossing the CTA band (flipped to face its direction of travel). |
+
+Three of these were JPEGs with a **checkerboard painted into the pixels** — fake
+transparency, not real alpha. Adobe's `image_remove_background` cut them properly;
+local colour-keying would have eaten the train's cream steam and the seed's pale
+roots, since both collide with the checker's own greys.
+
+The coded SVG placeholders were deleted with them, except the small `SeedGlyph`,
+which still draws the 22px marquee separator — the detailed seed art turns to mush
+at that size.
 
 ## Resolved — no longer missing
 
