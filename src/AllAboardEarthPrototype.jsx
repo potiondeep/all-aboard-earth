@@ -1,20 +1,30 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import artPhotovoltaic from "./assets/careers/photovoltaic-tech.webp";
-import artWatershed from "./assets/careers/watershed-specialist.webp";
-import artFungi from "./assets/careers/fungi-biochemist.webp";
-import artOceanFarmer from "./assets/careers/ocean-farmer.webp";
+import { cardArt, CAREER_PAGE } from "./wixCardArt.js";
 import sceneGreenCareers from "./assets/scenes/green-careers.webp";
 import sceneEarthRests from "./assets/scenes/earth-rests.webp";
 
-// Card art is language-independent, so it lives outside the copy object
-// and is matched to cards by position.
+// Card art is language-independent, so it lives outside the copy object and is
+// matched to cards by position. Art streams from the Wix CMS, so replacing the
+// image on a Cool Careers item updates this homepage too — no redeploy needed.
 const CARD_ART = [
-  { src: artPhotovoltaic, alt: "Photovoltaic power technician standing on a solar array" },
-  { src: artWatershed, alt: "Watershed restoration specialist at a mountain stream with a beaver" },
-  { src: artFungi, alt: "Fungi biochemist examining cultivated mushrooms" },
-  { src: artOceanFarmer, alt: "3D ocean farmer hauling kelp aboard a boat" },
-];
+  {
+    slug: "photovoltaic-power-technician",
+    alt: "Photovoltaic Power Technician — designs and installs solar power systems",
+  },
+  {
+    slug: "watershed-restoration-specialist",
+    alt: "Watershed Restoration Specialist — restores riverbanks, aquifers and beaver habitat",
+  },
+  {
+    slug: "fungi-biochemist",
+    alt: "Fungi Biochemist — cultivates fungi for food, medicine and industry",
+  },
+  {
+    slug: "3d-ocean-farmer",
+    alt: "3D Ocean Farmer — grows seaweed and shellfish in layered ocean habitats",
+  },
+].map((c) => ({ ...c, src: cardArt(c.slug), href: CAREER_PAGE(c.slug) }));
 
 /* ============================================================
    ALL ABOARD EARTH — "UP WE GO!" HOMEPAGE PROTOTYPE v3
@@ -332,8 +342,10 @@ function CareerCard({ c, i, art }) {
           <span className="mono">{c.stat} ★★★★</span>
         </div>
         <div className="ccard-art" style={{ background: c.hue }}>
-          {art ? (
-            <img className="ccard-img" src={art.src} alt={art.alt} loading="lazy" decoding="async" width="520" height="735" />
+          {art && art.src ? (
+            <a className="ccard-link" href={art.href} target="_blank" rel="noopener noreferrer">
+              <img className="ccard-img" src={art.src} alt={art.alt} loading="lazy" decoding="async" width="600" height="840" />
+            </a>
           ) : (
           /* mini vinyl sun echo */
           <svg viewBox="0 0 100 100" className="ccard-svg">
@@ -475,6 +487,7 @@ export default function App() {
         .ccard-art{ position:relative; border-radius:10px; height:150px; overflow:hidden; border:2px solid ${T.pineDeep}; }
         .ccard-svg{ position:absolute; inset:0; width:100%; height:100%; }
         .ccard-img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 22%; display:block; }
+        .ccard-link{ position:absolute; inset:0; display:block; }
         .scene{ margin-top:30px; border:3px solid ${T.pineDeep}; border-radius:16px; overflow:hidden; line-height:0; box-shadow:0 18px 40px #0006; }
         .scene img{ width:100%; height:clamp(180px,30vw,340px); object-fit:cover; display:block; }
         .ccard-role{ font-family:'Anton'; font-size:21px; margin-top:12px; }
