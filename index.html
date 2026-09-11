@@ -14,7 +14,14 @@
     <!-- The hero record is the largest above-the-fold element. Served from
          /art (stable path, no bundler hash) so it can be preloaded here rather
          than discovered only once React has rendered. -->
-    <link rel="preload" href="/art/vinyl-sun.webp" as="image" fetchpriority="high" />
+    <link
+      rel="preload"
+      as="image"
+      href="/art/vinyl-sun.webp"
+      imagesrcset="/art/vinyl-sun.webp 740w, /art/vinyl-sun-1040.webp 1040w"
+      imagesizes="(max-width: 783px) 64vw, 499px"
+      fetchpriority="high"
+    />
     <link rel="preload" href="/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin />
     <style>

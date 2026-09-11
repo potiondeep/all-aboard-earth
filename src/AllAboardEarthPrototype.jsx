@@ -273,6 +273,8 @@ function VinylSun() {
       <img
         className="vinyl-disc"
         src="/art/vinyl-sun.webp"
+        srcSet="/art/vinyl-sun.webp 740w, /art/vinyl-sun-1040.webp 1040w"
+        sizes="(max-width: 783px) 64vw, 499px"
         alt=""
         width="740"
         height="740"

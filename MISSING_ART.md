@@ -67,10 +67,12 @@ card can be re-pointed by changing one slug.
 | SEO | 100 | 100 | — |
 
 Median of three mobile runs and one desktop. The real art cost roughly 0.4s of
-mobile LCP (1.8-2.0s before it), so the hero record was cut to 740px / q62 to
-stay under the 2.5s bar. Desktop retina wants ~998px for that seat and gets 740,
-so it is marginally soft there; a `srcset` would close the gap at the cost of
-complicating the preload.
+mobile LCP (1.8-2.0s before it), so the hero record ships at two widths behind a
+`srcset` — 740px/q62 (104KB) and 1040px/q58 (180KB) — with `sizes` mirroring the
+CSS (`86%` of `min(74vw, 580px)`). Mobile and 1x desktop take the 740; only
+retina desktop pulls the 1040. The preload carries the same `imagesrcset` and
+`imagesizes`, so exactly one file is fetched rather than one preloaded and a
+different one chosen.
 
 ## Open for Michael
 
