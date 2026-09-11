@@ -47,15 +47,29 @@ card can be re-pointed by changing one slug.
   the turbine art is now a card and would otherwise appear twice on one page.
   One-line change if you would rather it repeat.
 
+## Lighthouse — measured on production, 2026-09-11
+
+| | mobile | desktop | brief's target |
+|---|---|---|---|
+| Performance | 98-99 | 100 | >= 85 mobile — **pass** |
+| LCP | 1.8-2.0s | 0.4s | <= 2.5s — **pass** |
+| CLS | 0.000 | 0.000 | < 0.05 — **pass** |
+| Accessibility | 93 | 93 | — |
+| Best practices | 100 | 100 | — |
+| SEO | 100 | 100 | — |
+
+Scores are the median of four mobile / two desktop runs. Before the font work
+mobile swung between 84 and 98 with LCP 1.7-3.4s; self-hosting the woff2 subsets
+removed the Google Fonts round-trip that set the floor, and the numbers are now
+stable run to run.
+
 ## Open for Michael
 
-1. **Button contrast fails WCAG AA.** Cream text on Coral (`.btn`) is about
-   2.6:1; AA wants 4.5:1 for body text, 3:1 for large. This is a brand-colour
-   call, not a bug, so nothing was changed. Switching button text from Cream to
-   Pine Deep would clear it comfortably and keeps both brand colours.
-2. **Mobile LCP is 3.3s** against the brief's 2.5s target (mobile Performance
-   still scores 86, over the 85 bar). It is bound by first render of the JS
-   bundle on a throttled CPU, not by images. Real fixes are code-splitting or
-   pre-rendering the hero, both larger jobs.
-3. **Spanish body copy** still differs from English in the hero (`hero_sub`);
+1. **Button contrast fails WCAG AA** and is the only thing holding accessibility
+   at 93. Cream text on Coral (`.btn`) is about 2.6:1; AA wants 4.5:1 for body
+   text and 3:1 for large. This is a brand-colour call, so nothing was changed.
+   Switching button text from Cream to Pine Deep clears it comfortably and keeps
+   both brand colours. Lighthouse also flags the outlined "WE GO!" headline,
+   which is a deliberate effect it cannot evaluate — ignore that one.
+2. **Spanish body copy** still differs from English in the hero (`hero_sub`);
    ES card names, marquee and footer were updated, the mission paragraph was not.
