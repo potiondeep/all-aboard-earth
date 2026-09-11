@@ -129,7 +129,7 @@ const copy = {
     hero_line1: "¡ARRIBA",
     hero_line2: "VAMOS!",
     hero_sub:
-      "Somos el equipo que convierte el cuidado de la Tierra en cultura — hip-hop, historias, juegos y productos que hacen subir al planeta (y a la gente). Toma asiento. La Tierra entera va a bordo.",
+      "Un movimiento de hip-hop regenerativo — música que siembra semillas, levanta comunidades y sube a la próxima generación a bordo rumbo a un planeta próspero.",
     hero_cta: "🚂 Súbete — estamos abordando",
     hero_cta2: "Siente la vibra →",
     marquee: "¡ARRIBA VAMOS! · UP WE GO! · ¡ARRIBA VAMOS! · UP WE GO! · ",
@@ -576,10 +576,10 @@ export default function App() {
         .lang{ display:flex; border:2px solid ${T.cream}44; border-radius:999px; overflow:hidden; }
         .lang button{ background:none; border:none; color:${T.cream}; font-family:'Space Mono'; font-size:12px; padding:6px 12px; cursor:pointer; }
         .lang button.on{ background:${T.marigold}; color:${T.pineDeep}; font-weight:700; }
-        .btn{ display:inline-block; background:${T.coral}; color:${T.cream}; border:none; border-radius:999px; padding:12px 22px; font-family:'Bricolage Grotesque'; font-weight:700; font-size:15px; cursor:pointer; transition:transform .2s var(--ease-settle); box-shadow:0 0 0 0 ${T.coral}55; }
+        .btn{ display:inline-block; background:${T.coral}; color:${T.pineDeep}; border:none; border-radius:999px; padding:12px 22px; font-family:'Bricolage Grotesque'; font-weight:700; font-size:15px; cursor:pointer; transition:transform .2s var(--ease-settle); box-shadow:0 0 0 0 ${T.coral}55; }
         .btn:hover{ transform:translateY(-3px) rotate(-1deg); box-shadow:0 10px 24px ${T.coral}55; }
         .btn.big{ padding:18px 34px; font-size:18px; }
-        .btn.ghost{ background:transparent; border:2px solid ${T.cream}55; box-shadow:none; }
+        .btn.ghost{ background:transparent; color:${T.cream}; border:2px solid ${T.cream}55; box-shadow:none; }
         .btn.ghost:hover{ border-color:${T.marigold}; color:${T.marigold}; }
         a.btn{ text-decoration:none; }
         .hero-accent{ position:relative; z-index:2; font-family:'Anton'; color:${T.marigold}; font-size:clamp(14px,2.2vw,20px); letter-spacing:.14em; margin-top:10px; line-height:26px; min-height:26px; }
@@ -790,7 +790,7 @@ export default function App() {
         .ctaband h2{ font-size:clamp(34px,6vw,66px); }
         .ctaband p{ margin:16px 0 26px; font-size:17px; font-weight:600; }
         .ctaband .mono{ display:block; margin-top:16px; opacity:.75; }
-        .ctaband .btn{ background:${T.pineDeep}; }
+        .ctaband .btn{ background:${T.pineDeep}; color:${T.cream}; }
 
         footer .roots{ width:120px; margin:0 auto 10px; }
         .footer-give{ margin-top:10px; }

@@ -65,11 +65,11 @@ stable run to run.
 
 ## Open for Michael
 
-1. **Button contrast fails WCAG AA** and is the only thing holding accessibility
-   at 93. Cream text on Coral (`.btn`) is about 2.6:1; AA wants 4.5:1 for body
-   text and 3:1 for large. This is a brand-colour call, so nothing was changed.
-   Switching button text from Cream to Pine Deep clears it comfortably and keeps
-   both brand colours. Lighthouse also flags the outlined "WE GO!" headline,
-   which is a deliberate effect it cannot evaluate — ignore that one.
-2. **Spanish body copy** still differs from English in the hero (`hero_sub`);
-   ES card names, marquee and footer were updated, the mission paragraph was not.
+Nothing outstanding. Button contrast and the Spanish mission line were both
+resolved on 2026-09-11:
+
+- `.btn` text moved from Cream to Pine Deep on Coral, 2.81:1 -> 5.73:1, clearing
+  WCAG AA. Ghost buttons and the CTA band keep Cream, since both sit on dark
+  grounds (14.1:1 and 16.1:1).
+- The Spanish hero now mirrors the English mission rather than carrying the
+  older, longer crew line.
