@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { cardArt, CAREER_PAGE } from "./wixCardArt.js";
 import sceneGreenCareers from "./assets/scenes/green-careers.webp";
 import sceneEarthRests from "./assets/scenes/earth-rests.webp";
+import sceneRaccoon from "./assets/scenes/felt-raccoon.webp";
+import sceneWindMonkey from "./assets/scenes/felt-wind-monkey.webp";
 
 // Card art is language-independent, so it lives outside the copy object and is
 // matched to cards by position. Art streams from the Wix CMS, so replacing the
@@ -52,6 +54,9 @@ const LINKS = {
   grooves: "https://www.allaboardearth.com/grooves",
 };
 
+// Seat 4 — one hue per frequency cell (declared after T)
+const FREQ_HUES = [T.marigold, T.coral, T.sky, T.leaf];
+
 const copy = {
   en: {
     nav_cta: "Book a pilot demo",
@@ -64,6 +69,7 @@ const copy = {
     hero_cta: "🚂 Hop on — now boarding",
     hero_cta2: "Feel the vibe →",
     marquee: "UP WE GO! · UP WE GO! · ",
+    marquee_phrase: "UP WE GO!",
     t1_label: "TRACK 01 · THE MOVEMENT",
     t1_head: "ONE MOVEMENT. FOUR FREQUENCIES.",
     t1_sub:
@@ -121,6 +127,7 @@ const copy = {
     hero_cta: "🚂 Súbete — estamos abordando",
     hero_cta2: "Siente la vibra →",
     marquee: "¡ARRIBA VAMOS! · UP WE GO! · ¡ARRIBA VAMOS! · UP WE GO! · ",
+    marquee_phrase: "¡ARRIBA VAMOS!",
     t1_label: "PISTA 01 · EL MOVIMIENTO",
     t1_head: "UN MOVIMIENTO. CUATRO FRECUENCIAS.",
     t1_sub:
@@ -214,7 +221,8 @@ function useReveal(lang) {
    ============================================================ */
 function VinylSun() {
   return (
-    <svg className="vinyl-sun" viewBox="0 0 400 400" aria-hidden="true">
+    <div className="vinyl-wrap" aria-hidden="true">
+    <svg className="vinyl-sun" viewBox="0 0 400 400">
       <defs>
         <radialGradient id="sunGrad" cx="50%" cy="40%">
           <stop offset="0%" stopColor={T.marigold} />
@@ -246,6 +254,7 @@ function VinylSun() {
         <text x="200" y="234" textAnchor="middle" fontFamily="'Space Mono', monospace" fontSize="10" fill={T.pineDeep} letterSpacing="1">33⅓ RPM</text>
       </g>
     </svg>
+    </div>
   );
 }
 
@@ -265,6 +274,19 @@ function WaveMountainDivider({ flip }) {
         <path className="draw-on draw-on-b" d={wavePath} fill="none" stroke={T.marigold} strokeWidth="3" strokeLinecap="round" transform="translate(0,12)" opacity=".55" />
       </svg>
     </div>
+  );
+}
+
+/* Seat 2/4 — compact seed glyph. Stands in for seed-mark.png until the
+   drawn asset lands; see MISSING_ART.md. */
+function SeedGlyph({ className = "", hue }) {
+  return (
+    <svg className={"seed " + className} viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 20 V10" stroke={hue || "currentColor"} strokeWidth="2" strokeLinecap="round" fill="none" />
+      <path d="M12 12 q-6,-5 -9,-2 q3,6 9,2" fill={hue || "currentColor"} />
+      <path d="M12 10 q6,-5 9,-2 q-3,6 -9,2" fill={hue || "currentColor"} />
+      <ellipse cx="12" cy="19" rx="4" ry="3.2" fill={hue || "currentColor"} opacity=".85" />
+    </svg>
   );
 }
 
@@ -298,6 +320,19 @@ function RootsMark() {
 function ClimbingTrain() {
   const [p, setP] = useState(0);
   const [settling, setSettling] = useState(false);
+  const [travel, setTravel] = useState(0);
+  const trainRef = useRef(null);
+
+  // translateY needs pixels (percentages resolve against the element, not the rail)
+  useEffect(() => {
+    const measure = () => {
+      const rail = trainRef.current?.parentElement;
+      if (rail) setTravel(Math.max(0, rail.clientHeight - trainRef.current.offsetHeight));
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
   useEffect(() => {
     let raf = 0;
     let stopTimer = 0;
@@ -325,8 +360,9 @@ function ClimbingTrain() {
     <div className="rail" aria-hidden="true">
       <div className="rail-track" />
       <div
+        ref={trainRef}
         className={"rail-train" + (settling ? " settling" : "")}
-        style={{ bottom: `calc(${(p * 100).toFixed(2)}% - ${(p * 84).toFixed(1)}px)`, "--climb": `${(-6 - p * 6).toFixed(1)}deg` }}
+        style={{ "--y": `${travel * (1 - p)}px`, "--climb": `${(-6 - p * 6).toFixed(1)}deg` }}
       >
         <svg viewBox="0 0 44 84" width="34" height="66">
           {/* steam puffs */}
@@ -495,6 +531,8 @@ export default function App() {
           .cta-train{ left:auto !important; right:0 !important; }
           .draw-on{ stroke-dasharray:none !important; stroke-dashoffset:0 !important; transition:none !important; }
           .seed-grow{ opacity:1 !important; transform:none !important; }
+          .photoprint, .poster, .panel{ animation:none !important; }
+          .cta-train{ animation:none !important; left:auto !important; right:8px !important; }
         }
 
         /* nav */
@@ -505,7 +543,7 @@ export default function App() {
         .lang{ display:flex; border:2px solid ${T.cream}44; border-radius:999px; overflow:hidden; }
         .lang button{ background:none; border:none; color:${T.cream}; font-family:'Space Mono'; font-size:12px; padding:6px 12px; cursor:pointer; }
         .lang button.on{ background:${T.marigold}; color:${T.pineDeep}; font-weight:700; }
-        .btn{ display:inline-block; background:${T.coral}; color:${T.cream}; border:none; border-radius:999px; padding:12px 22px; font-family:'Bricolage Grotesque'; font-weight:700; font-size:15px; cursor:pointer; transition:transform .2s, box-shadow .2s; box-shadow:0 0 0 0 ${T.coral}55; }
+        .btn{ display:inline-block; background:${T.coral}; color:${T.cream}; border:none; border-radius:999px; padding:12px 22px; font-family:'Bricolage Grotesque'; font-weight:700; font-size:15px; cursor:pointer; transition:transform .2s var(--ease-settle); box-shadow:0 0 0 0 ${T.coral}55; }
         .btn:hover{ transform:translateY(-3px) rotate(-1deg); box-shadow:0 10px 24px ${T.coral}55; }
         .btn.big{ padding:18px 34px; font-size:18px; }
         .btn.ghost{ background:transparent; border:2px solid ${T.cream}55; box-shadow:none; }
@@ -515,11 +553,12 @@ export default function App() {
 
         /* hero + vinyl sun */
         .hero{ position:relative; padding:clamp(40px,8vh,90px) clamp(16px,4vw,48px) 0; text-align:center; }
-        .vinyl-sun{ position:absolute; left:50%; top:56%; width:min(74vw,580px);
-          z-index:0; animation:rise 1.6s var(--ease-settle) both;
-          /* parallax: sun drifts slower than the type (0.85x), capped at 40px */
-          transform:translateX(-50%) translate3d(0, var(--sun-shift, 0px), 0); will-change:transform; }
-        @keyframes rise{ from{ top:95%; opacity:0; } to{ top:56%; opacity:1; } }
+        /* wrapper owns position + entrance; svg owns parallax. Both transform-only. */
+        .vinyl-wrap{ position:absolute; left:50%; top:56%; width:min(74vw,580px);
+          z-index:0; transform:translateX(-50%); animation:rise 1.6s var(--ease-settle) both; will-change:transform; }
+        .vinyl-sun{ display:block; width:100%;
+          transform:translate3d(0, var(--sun-shift, 0px), 0); will-change:transform; }
+        @keyframes rise{ from{ transform:translateX(-50%) translateY(70vh); opacity:0; } to{ transform:translateX(-50%) translateY(0); opacity:1; } }
         /* the whole record turns, 45s/rev; hover spins it up like a turntable */
         .vinyl-disc{ transform-origin:200px 200px; animation:spin 45s linear infinite; transition:none; }
         .hero:hover .vinyl-disc{ animation-duration:22s; }
@@ -537,7 +576,12 @@ export default function App() {
         .marquee{ background:${T.marigold}; color:${T.pineDeep}; overflow:hidden; transform:rotate(-1.5deg) scale(1.02); padding:10px 0; }
         .marquee-inner{ display:inline-block; white-space:nowrap; font-family:'Anton'; font-size:22px; letter-spacing:.1em; animation:slide 35s linear infinite; }
         .marquee:hover .marquee-inner{ animation-play-state:paused; }
-        .seed-sep{ display:inline-block; width:22px; height:22px; vertical-align:-4px; margin:0 .5em; }
+        .marquee-unit{ display:inline-flex; align-items:center; }
+        .seed-sep{ width:22px; height:22px; margin:0 .55em; color:${T.pineDeep}; flex:none; }
+        .seed-ico{ width:38px; height:38px; }
+        /* Seat 4 — seeds grow rather than fade, staggered across the grid */
+        [data-reveal].freq .seed-ico{ transform:scale(.6); opacity:0; transition:transform .8s var(--ease-settle), opacity .8s var(--ease-settle); }
+        [data-reveal].freq.in .seed-ico{ transform:scale(1); opacity:1; }
         @keyframes slide{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
 
         /* wave→mountain dividers */
@@ -551,9 +595,10 @@ export default function App() {
         /* climbing train rail */
         .rail{ position:fixed; right:14px; top:80px; bottom:20px; width:44px; z-index:40; pointer-events:none; }
         .rail-track{ position:absolute; left:50%; top:0; bottom:0; width:0; border-left:3px dashed ${T.cream}33; transform:translateX(-50%); }
-        .rail-train{ position:absolute; left:50%; display:flex; flex-direction:column; align-items:center;
-          transform:translateX(-50%) rotate(var(--climb, 0deg)); transition:bottom .15s linear, transform .3s var(--ease-settle); will-change:transform; }
-        .rail-train.settling{ transform:translateX(-50%) rotate(calc(var(--climb, 0deg) * .4)); }
+        .rail-train{ position:absolute; left:50%; top:0; display:flex; flex-direction:column; align-items:center;
+          transform:translateX(-50%) translateY(var(--y, 0px)) rotate(var(--climb, 0deg));
+          transition:transform .3s var(--ease-settle); will-change:transform; }
+        .rail-train.settling{ transform:translateX(-50%) translateY(var(--y, 0px)) rotate(calc(var(--climb, 0deg) * .4)); }
         .rail-label{ writing-mode:vertical-rl; font-size:9px; color:${T.marigold}; margin-top:6px; letter-spacing:.2em; }
         .puff{ animation:puff 2.2s ease-in-out infinite; transform-origin:center; }
         .puff.p2{ animation-delay:.4s; } .puff.p3{ animation-delay:.9s; }
@@ -583,8 +628,22 @@ export default function App() {
 
         /* comic panels */
         .panels{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; margin-top:36px; }
-        .panel{ background:${T.cream}; color:${T.pineDeep}; border-radius:18px; padding:26px 22px; border:3px solid ${T.pineDeep}; box-shadow:8px 8px 0 ${T.coral}; transition:transform .25s, box-shadow .25s; }
-        .panel:hover{ transform:translate(-4px,-4px) rotate(-.5deg); box-shadow:14px 14px 0 ${T.coral}; }
+        /* Seat 6 — deal the panels in like comic pages */
+        .panel{ position:relative; transition:transform .5s var(--ease-settle); will-change:transform; }
+        .panel::before{
+          content:""; position:absolute; inset:0; pointer-events:none; opacity:.07; border-radius:inherit;
+          background-image:radial-gradient(currentColor 1px, transparent 1.1px);
+          background-size:6px 6px;
+        }
+        .panel:nth-child(1){ transform:rotate(-1.5deg); }
+        .panel:nth-child(2){ transform:rotate(.8deg); }
+        .panel:nth-child(3){ transform:rotate(-.6deg); }
+        [data-reveal].panel{ transform:translateY(24px) rotate(4deg); }
+        [data-reveal].panel.in:nth-child(1){ transform:translateY(0) rotate(-1.5deg); }
+        [data-reveal].panel.in:nth-child(2){ transform:translateY(0) rotate(.8deg); }
+        [data-reveal].panel.in:nth-child(3){ transform:translateY(0) rotate(-.6deg); }
+        .panel{ background:${T.cream}; color:${T.pineDeep}; border-radius:18px; padding:26px 22px; border:3px solid ${T.pineDeep}; box-shadow:8px 8px 0 ${T.coral}; transition:transform .25s var(--ease-settle); }
+        .panel:hover{ transform:translate(-4px,-10px) rotate(-.5deg); box-shadow:14px 14px 0 ${T.coral}; }
         .panel h3{ font-family:'Anton'; font-size:30px; margin-bottom:10px; }
         .panel:nth-child(2){ box-shadow:8px 8px 0 ${T.marigold}; }
         .panel:nth-child(2):hover{ box-shadow:14px 14px 0 ${T.marigold}; }
@@ -640,6 +699,50 @@ export default function App() {
         }
         @keyframes cardfloat{ 0%,100%{ transform:translateY(-4px); } 50%{ transform:translateY(4px); } }
 
+        /* Seat 5 — pitch copy beside pinned-poster feature art */
+        .feature{ display:grid; grid-template-columns:1fr; gap:30px; align-items:start; }
+        @media (min-width:860px){ .feature{ grid-template-columns:55% 45%; gap:38px; } }
+        .poster{
+          background:${T.cream}; padding:12px 12px 14px; border-radius:6px;
+          transform:rotate(2deg) scale(var(--poster-scale,1));
+          box-shadow:0 20px 44px #0008; line-height:0;
+          transition:transform .9s var(--ease-settle);
+          will-change:transform;
+        }
+        [data-reveal].poster{ --poster-scale:1.05; }
+        [data-reveal].poster.in{ --poster-scale:1; }
+        .poster img{ width:100%; height:auto; display:block; border-radius:3px; }
+
+        /* Seat 8 — the felt raccoon, framed like a photo print */
+        .photoprint{
+          margin-top:34px; background:${T.cream}; padding:14px 14px 10px; border-radius:8px;
+          transform:rotate(-1deg); box-shadow:0 18px 40px #0007;
+          animation:printfloat 7s var(--ease-drift) infinite; will-change:transform;
+        }
+        .photoprint img{ width:100%; height:clamp(180px,26vw,300px); object-fit:cover; display:block; border-radius:4px; }
+        .photoprint figcaption{ color:${T.pineDeep}; text-align:center; padding-top:10px; font-size:11px; letter-spacing:.1em; }
+        @keyframes printfloat{ 0%,100%{ transform:rotate(-1deg) translateY(-3px); } 50%{ transform:rotate(-1deg) translateY(3px); } }
+
+        .collage{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:22px; }
+        .collage img{
+          width:100%; height:clamp(90px,13vw,150px); object-fit:cover; display:block;
+          background:${T.cream}; border:7px solid ${T.cream}; border-bottom-width:20px; border-radius:3px;
+          box-shadow:0 10px 22px #0007;
+        }
+        .collage img:nth-child(1){ transform:rotate(-3deg); }
+        .collage img:nth-child(2){ transform:rotate(1.5deg); }
+        .collage img:nth-child(3){ transform:rotate(-1deg); }
+
+        /* Seat 9 — the train crosses the CTA band once, on first reveal */
+        .crossing{ position:relative; height:34px; margin:0 0 18px; overflow:hidden; }
+        .crossing-track{ position:absolute; left:0; right:0; bottom:6px; width:100%; height:4px; }
+        .cta-train{ position:absolute; bottom:8px; left:0; font-size:26px; line-height:1; will-change:transform; transform:translateX(-20vw); }
+        .cta-train-rock{ display:inline-block; will-change:transform; }
+        [data-reveal].ctaband.in .cta-train{ animation:cross 7s var(--ease-drift) both; }
+        [data-reveal].ctaband.in .cta-train-rock{ animation:rock 1.1s ease-in-out infinite; }
+        @keyframes cross{ from{ transform:translateX(-20vw); } to{ transform:translateX(120vw); } }
+        @keyframes rock{ 0%,100%{ transform:rotate(-1.5deg); } 50%{ transform:rotate(1.5deg); } }
+
         .scene{ margin-top:30px; border:3px solid ${T.pineDeep}; border-radius:16px; overflow:hidden; line-height:0; box-shadow:0 18px 40px #0006; }
         .scene img{ width:100%; height:clamp(180px,30vw,340px); object-fit:cover; display:block; }
 
@@ -656,6 +759,7 @@ export default function App() {
         .ctaband .mono{ display:block; margin-top:16px; opacity:.75; }
         .ctaband .btn{ background:${T.pineDeep}; }
 
+        footer .roots{ width:120px; margin:0 auto 10px; }
         footer{ text-align:center; padding:30px; font-family:'Space Mono'; font-size:12px; color:${T.cream}88; letter-spacing:.12em; }
       `}</style>
 
@@ -699,7 +803,14 @@ export default function App() {
       </header>
 
       <div className="marquee">
-        <div className="marquee-inner">{c.marquee + c.marquee + c.marquee}</div>
+        <div className="marquee-inner">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <span key={i} className="marquee-unit">
+              {c.marquee_phrase}
+              <SeedGlyph className="seed-sep wobble" />
+            </span>
+          ))}
+        </div>
       </div>
 
       {/* TRACK 01 — THE MOVEMENT */}
@@ -711,7 +822,9 @@ export default function App() {
           {c.freqs.map(([ico, h, p, lead], i) => (
             <div className={"freq" + (lead ? " lead" : "")} data-reveal key={h} style={{ transitionDelay: `${i * 90}ms` }}>
               {lead && <span className="boarding-badge">{c.boarding}</span>}
-              <div className="ico">{ico}</div>
+              <div className="ico" title={ico}>
+                <SeedGlyph className="seed-ico" hue={FREQ_HUES[i % FREQ_HUES.length]} />
+              </div>
               <h4>{h}</h4>
               <p>{p}</p>
             </div>
@@ -728,13 +841,21 @@ export default function App() {
           <span className="signal" />
           <span className="mono label" style={{ marginBottom: 0 }}>{c.t2_label}</span>
         </div>
-        <h2 className="display" data-reveal>{c.t2_head}</h2>
-        <p className="lede" data-reveal>{c.t2_body}</p>
+        <div className="feature">
+          <div>
+            <h2 className="display" data-reveal>{c.t2_head}</h2>
+            <p className="lede" data-reveal>{c.t2_body}</p>
         <div className="tags" data-reveal>
           {c.t2_tags.map((t) => <span className="tag" key={t}>{t}</span>)}
         </div>
-        <div className="scene" data-reveal>
-          <img src={sceneGreenCareers} alt="A felt roadrunner racing past a desert solar array" loading="lazy" decoding="async" width="1400" height="785" />
+          </div>
+          <figure className="poster" data-reveal>
+            <img
+              src={cardArt("wind-power-technician", 760, 1064)}
+              alt="Wind Power Technician — installs and maintains wind turbines"
+              loading="lazy" decoding="async" width="760" height="1064"
+            />
+          </figure>
         </div>
       </section>
 
@@ -778,8 +899,14 @@ export default function App() {
             <div key={h}><h4>{h}</h4><p>{p}</p></div>
           ))}
         </div>
-        <div className="scene" data-reveal>
-          <img src={sceneEarthRests} alt="A felt Earth character resting on a green hillside under felt clouds" loading="lazy" decoding="async" width="1400" height="785" />
+        <figure className="photoprint" data-reveal>
+          <img src={sceneRaccoon} alt="A felt raccoon farmer driving a tractor through a solar-powered vegetable field" loading="lazy" decoding="async" width="1100" height="457" />
+          <figcaption className="mono">Handmade heroes. Real classrooms.</figcaption>
+        </figure>
+        <div className="collage" data-reveal aria-hidden="true">
+          <img src={sceneGreenCareers} alt="" loading="lazy" decoding="async" width="1400" height="785" />
+          <img src={sceneEarthRests} alt="" loading="lazy" decoding="async" width="1400" height="785" />
+          <img src={sceneWindMonkey} alt="" loading="lazy" decoding="async" width="760" height="426" />
         </div>
         <RootsMark />
       </section>
@@ -787,6 +914,12 @@ export default function App() {
       {/* CTA */}
       <div style={{ padding: "0 16px" }}>
         <div className="ctaband" data-reveal>
+          <div className="crossing" aria-hidden="true">
+            <svg className="crossing-track" viewBox="0 0 1200 4" preserveAspectRatio="none">
+              <line className="draw-on" x1="0" y1="2" x2="1200" y2="2" stroke={T.pineDeep} strokeOpacity=".45" strokeWidth="3" strokeDasharray="10 12" />
+            </svg>
+            <span className="cta-train"><span className="cta-train-rock">🚂</span></span>
+          </div>
           <h2 className="display">{c.cta_head}</h2>
           <p>{c.cta_sub}</p>
           <a className="btn big" href={LINKS.contact}>{c.cta_btn}</a>
@@ -794,7 +927,10 @@ export default function App() {
         </div>
       </div>
 
-      <footer>{c.footer}</footer>
+      <footer>
+        <RootsMark />
+        <div>{c.footer}</div>
+      </footer>
     </div>
   );
 }
