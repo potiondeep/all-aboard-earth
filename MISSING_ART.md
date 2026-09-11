@@ -34,21 +34,28 @@ drawn art. It is the first one worth replacing.
 All 40 Cool Careers illustrations are reachable through `src/wixCardArt.js`, so any
 card can be re-pointed by changing one slug.
 
-## Open questions for Michael
+## Resolved 2026-09-11
 
-1. **Card roster is 4, the brief names 5.** The brief lists solar-rigger,
-   water-guardian, soil-scientist, wind-tech and aquaponics — the *original*
-   prototype names, which we replaced with real CMS careers earlier by your
-   choice. Current four: Photovoltaic Power Technician, Watershed Restoration
-   Specialist, Fungi Biochemist, 3D Ocean Farmer. Aquaponics and soil-microbiologist
-   art is ready if you want a 5th and 6th card; `.cards` is `auto-fit`, so adding
-   them reflows cleanly.
-2. **Seat 4 icons.** The brief replaces the four channel emoji (🎮 🎤 📺 🧵) with
-   one tinted seed-mark per cell. Implemented as written, but it does cost the
-   at-a-glance distinction between Cool Careers / hip-hop / series / product. Say
-   the word and the emoji come back alongside the seed.
-3. **Seat 11 footer.** The brief says "Tessa Foundation donation line + socials as
-   built" — neither exists in the prototype, so nothing was carried over. Send the
-   donation URL and social handles and they go in.
-4. **Spanish body copy** still differs from English in the hero (`hero_sub`); the
-   ES card names and marquee were updated, the mission paragraph was not.
+- **Card roster** is now five, as requested: Solar Technician, Watershed
+  Restoration Specialist, Soil Microbiologist, Aquaponics Technician, Wind
+  Technician. They deal as one row at >=1000px and wrap below.
+- **Seat 4 icons** reverted to the original emoji (game / mic / screen / thread);
+  the seed grow-in motion was dropped with them.
+- **Seat 11 footer** carries the Tessa Foundation donation line
+  (https://www.tessafoundation.org/donate) and @allaboardearth.
+- **Seat 5 poster** moved from the wind technician to the 3D Ocean Farmer, since
+  the turbine art is now a card and would otherwise appear twice on one page.
+  One-line change if you would rather it repeat.
+
+## Open for Michael
+
+1. **Button contrast fails WCAG AA.** Cream text on Coral (`.btn`) is about
+   2.6:1; AA wants 4.5:1 for body text, 3:1 for large. This is a brand-colour
+   call, not a bug, so nothing was changed. Switching button text from Cream to
+   Pine Deep would clear it comfortably and keeps both brand colours.
+2. **Mobile LCP is 3.3s** against the brief's 2.5s target (mobile Performance
+   still scores 86, over the 85 bar). It is bound by first render of the JS
+   bundle on a throttled CPU, not by images. Real fixes are code-splitting or
+   pre-rendering the hero, both larger jobs.
+3. **Spanish body copy** still differs from English in the hero (`hero_sub`);
+   ES card names, marquee and footer were updated, the mission paragraph was not.

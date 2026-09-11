@@ -12,19 +12,23 @@ import sceneWindMonkey from "./assets/scenes/felt-wind-monkey.webp";
 const CARD_ART = [
   {
     slug: "photovoltaic-power-technician",
-    alt: "Photovoltaic Power Technician — designs and installs solar power systems",
+    alt: "Solar Technician — designs and installs photovoltaic power systems",
   },
   {
     slug: "watershed-restoration-specialist",
     alt: "Watershed Restoration Specialist — restores riverbanks, aquifers and beaver habitat",
   },
   {
-    slug: "fungi-biochemist",
-    alt: "Fungi Biochemist — cultivates fungi for food, medicine and industry",
+    slug: "soil-microbiologist",
+    alt: "Soil Microbiologist — studies the living soil that feeds everything above it",
   },
   {
-    slug: "3d-ocean-farmer",
-    alt: "3D Ocean Farmer — grows seaweed and shellfish in layered ocean habitats",
+    slug: "aquaponics-technician",
+    alt: "Aquaponics Technician — runs closed-loop systems where fish and plants feed each other",
+  },
+  {
+    slug: "wind-power-technician",
+    alt: "Wind Technician — installs and maintains wind turbines",
   },
 ].map((c) => ({ ...c, src: cardArt(c.slug), href: CAREER_PAGE(c.slug) }));
 
@@ -97,10 +101,11 @@ const copy = {
     t4_head: "COLLECT YOUR FUTURE",
     t4_sub: "Every career is a character. Every character is a doorway. (Go ahead — pick them up.)",
     cards: [
-      { role: "PHOTOVOLTAIC TECH", stat: "SUN PWR", num: "07", flavor: "Catches daylight, feeds the grid.", hue: T.marigold },
+      { role: "SOLAR TECHNICIAN", stat: "SUN PWR", num: "07", flavor: "Catches daylight, feeds the grid.", hue: T.marigold },
       { role: "WATERSHED SPECIALIST", stat: "FLOW", num: "12", flavor: "Keeps the acequias singing.", hue: T.sky },
-      { role: "FUNGI BIOCHEMIST", stat: "ROOTS", num: "03", flavor: "Reads the ground like liner notes.", hue: T.leaf },
-      { role: "3D OCEAN FARMER", stat: "TIDE", num: "21", flavor: "Grows kelp forests between the tides.", hue: T.coral },
+      { role: "SOIL MICROBIOLOGIST", stat: "ROOTS", num: "03", flavor: "Reads the ground like liner notes.", hue: T.leaf },
+      { role: "AQUAPONICS TECH", stat: "CYCLE", num: "15", flavor: "Fish feed the greens, greens clean the water.", hue: T.cream },
+      { role: "WIND TECHNICIAN", stat: "LIFT", num: "21", flavor: "Climbs towers, harvests sky.", hue: T.coral },
     ],
     t5_label: "TRACK 05 · THE PROOF",
     t5_head: "BORN IN NEW MEXICO. READY FOR YOUR DISTRICT.",
@@ -115,6 +120,7 @@ const copy = {
     cta_btn: "Book a pilot demo",
     cta_alt: "or say hola: hello@allaboardearth.com",
     footer: "ALL ABOARD EARTH · UP WE GO! 🌱",
+    give: "Donations are held for us by our fiscal sponsor,",
   },
   es: {
     nav_cta: "Reserva una demo",
@@ -155,10 +161,11 @@ const copy = {
     t4_head: "COLECCIONA TU FUTURO",
     t4_sub: "Cada carrera es un personaje. Cada personaje, una puerta. (Anda — tómalas en tus manos.)",
     cards: [
-      { role: "TÉCNICA FOTOVOLTAICA", stat: "SOL", num: "07", flavor: "Atrapa la luz, alimenta la red.", hue: T.marigold },
+      { role: "TÉCNICA SOLAR", stat: "SOL", num: "07", flavor: "Atrapa la luz, alimenta la red.", hue: T.marigold },
       { role: "GUARDIANA DE CUENCAS", stat: "FLUJO", num: "12", flavor: "Mantiene cantando las acequias.", hue: T.sky },
-      { role: "BIOQUÍMICA DE HONGOS", stat: "RAÍCES", num: "03", flavor: "Lee la tierra como un vinilo.", hue: T.leaf },
-      { role: "GRANJERO OCEÁNICO 3D", stat: "MAREA", num: "21", flavor: "Cultiva algas entre las mareas.", hue: T.coral },
+      { role: "MICROBIÓLOGA DE SUELOS", stat: "RAÍCES", num: "03", flavor: "Lee la tierra como un vinilo.", hue: T.leaf },
+      { role: "TÉCNICA DE ACUAPONÍA", stat: "CICLO", num: "15", flavor: "Los peces nutren; las plantas limpian.", hue: T.cream },
+      { role: "TÉCNICO EÓLICO", stat: "VUELO", num: "21", flavor: "Sube torres, cosecha cielo.", hue: T.coral },
     ],
     t5_label: "PISTA 05 · LA PRUEBA",
     t5_head: "NACIDO EN NUEVO MÉXICO. LISTO PARA TU DISTRITO.",
@@ -173,6 +180,7 @@ const copy = {
     cta_btn: "Reserva una demo piloto",
     cta_alt: "o di hola: hello@allaboardearth.com",
     footer: "ALL ABOARD EARTH · ¡ARRIBA VAMOS! 🌱",
+    give: "Las donaciones las administra nuestro patrocinador fiscal,",
   },
 };
 
@@ -644,7 +652,7 @@ export default function App() {
         .freq:hover{ border-color:${T.marigold}; transform:translateY(-4px); }
         .freq.lead{ border-color:${T.marigold}; background:${T.marigold}14; }
         .freq .ico{ font-size:30px; }
-        .freq h4{ font-family:'Anton'; font-size:18px; margin:10px 0 6px; letter-spacing:.03em; }
+        .freq h3{ font-family:'Anton'; font-size:18px; margin:10px 0 6px; letter-spacing:.03em; }
         .freq p{ font-size:14px; line-height:1.5; color:${T.cream}bb; }
         .boarding-badge{ position:absolute; top:-12px; right:14px; background:${T.coral}; color:${T.cream}; font-family:'Space Mono'; font-size:10px; letter-spacing:.12em; padding:5px 10px; border-radius:999px; animation:blink 1.6s ease-in-out infinite; }
         @keyframes blink{ 0%,100%{ opacity:1; } 50%{ opacity:.55; } }
@@ -677,7 +685,9 @@ export default function App() {
         .panel p{ line-height:1.55; font-size:15px; }
 
         /* trading cards */
-        .cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:22px; margin-top:40px; }
+        .cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:18px; margin-top:40px; }
+        /* five careers deal as one row on desktop rather than 4 + an orphan */
+        @media (min-width:1000px){ .cards{ grid-template-columns:repeat(5,1fr); } }
         .ccard{ perspective:900px; }
         .ccard-inner{
           position:relative; aspect-ratio:2 / 2.8; border-radius:18px; overflow:hidden;
@@ -772,7 +782,7 @@ export default function App() {
         /* proof */
         .proof{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:2px; margin-top:36px; border:2px solid ${T.cream}33; border-radius:18px; overflow:hidden; }
         .proof > div{ background:${T.pineDeep}; padding:26px 22px; }
-        .proof h4{ font-family:'Anton'; font-size:19px; color:${T.marigold}; margin-bottom:8px; letter-spacing:.03em; }
+        .proof h3{ font-family:'Anton'; font-size:19px; color:${T.marigold}; margin-bottom:8px; letter-spacing:.03em; }
         .proof p{ font-size:14.5px; line-height:1.55; color:${T.cream}cc; }
 
         /* CTA */
@@ -783,6 +793,10 @@ export default function App() {
         .ctaband .btn{ background:${T.pineDeep}; }
 
         footer .roots{ width:120px; margin:0 auto 10px; }
+        .footer-give{ margin-top:10px; }
+        .footer-social{ margin-top:6px; }
+        footer a{ color:${T.marigold}; text-decoration:none; border-bottom:1px solid ${T.marigold}66; }
+        footer a:hover{ border-bottom-color:${T.marigold}; }
         footer{ text-align:center; padding:30px; font-family:'Space Mono'; font-size:12px; color:${T.cream}88; letter-spacing:.12em; }
       `}</style>
 
@@ -811,6 +825,7 @@ export default function App() {
         </div>
       </nav>
 
+      <main>
       {/* HERO — THE MOVEMENT */}
       <header className="hero">
         <VinylSun />
@@ -845,10 +860,8 @@ export default function App() {
           {c.freqs.map(([ico, h, p, lead], i) => (
             <div className={"freq" + (lead ? " lead" : "")} data-reveal key={h} style={{ transitionDelay: `${i * 90}ms` }}>
               {lead && <span className="boarding-badge">{c.boarding}</span>}
-              <div className="ico" title={ico}>
-                <SeedGlyph className="seed-ico" hue={FREQ_HUES[i % FREQ_HUES.length]} />
-              </div>
-              <h4>{h}</h4>
+              <div className="ico">{ico}</div>
+              <h3>{h}</h3>
               <p>{p}</p>
             </div>
           ))}
@@ -874,8 +887,8 @@ export default function App() {
           </div>
           <figure className="poster" data-reveal>
             <img
-              src={cardArt("wind-power-technician", 760, 1064)}
-              alt="Wind Power Technician — installs and maintains wind turbines"
+              src={cardArt("3d-ocean-farmer", 760, 1064)}
+              alt="3D Ocean Farmer — grows seaweed and shellfish in layered ocean habitats"
               loading="lazy" decoding="async" width="760" height="1064"
             />
           </figure>
@@ -919,7 +932,7 @@ export default function App() {
         <h2 className="display" data-reveal>{c.t5_head}</h2>
         <div className="proof" data-reveal>
           {c.t5_points.map(([h, p]) => (
-            <div key={h}><h4>{h}</h4><p>{p}</p></div>
+            <div key={h}><h3>{h}</h3><p>{p}</p></div>
           ))}
         </div>
         <figure className="photoprint" data-reveal>
@@ -950,9 +963,20 @@ export default function App() {
         </div>
       </div>
 
+      </main>
+
       <footer>
         <RootsMark />
         <div>{c.footer}</div>
+        <p className="footer-give">
+          {c.give}{" "}
+          <a href="https://www.tessafoundation.org/donate" target="_blank" rel="noopener noreferrer">
+            Tessa Foundation
+          </a>
+        </p>
+        <p className="footer-social">
+          <a href="https://www.instagram.com/allaboardearth" target="_blank" rel="noopener noreferrer">@allaboardearth</a>
+        </p>
       </footer>
     </div>
   );
