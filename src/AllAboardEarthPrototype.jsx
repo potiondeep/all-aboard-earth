@@ -51,10 +51,13 @@ const T = {
   leaf: "#3FA968",
 };
 
-// Swap these when the real destinations exist (Wix Bookings, etc.)
+// Phase 2: the pilot-demo CTAs now point at a real Wix Bookings service
+// (School Performance, serviceId 9ef0367c-376f-46b3-8589-e68e6d58af21).
+// Wix owns the calendar, confirmations and payments; this site stays static.
+// The earlier /contact placeholder was a 404 — never point a CTA there again.
 const LINKS = {
   coolCareers: "#cool-careers",
-  contact: "https://www.allaboardearth.com/contact",
+  booking: "https://www.allaboardearth.com/service-page/school-performance",
   grooves: "https://www.allaboardearth.com/grooves",
 };
 
@@ -821,7 +824,7 @@ export default function App() {
             <button className={lang === "en" ? "on" : ""} onClick={() => setLang("en")}>EN</button>
             <button className={lang === "es" ? "on" : ""} onClick={() => setLang("es")}>ES</button>
           </div>
-          <a className="btn" href={LINKS.contact}>{c.nav_cta}</a>
+          <a className="btn" href={LINKS.booking}>{c.nav_cta}</a>
         </div>
       </nav>
 
@@ -958,7 +961,7 @@ export default function App() {
           </div>
           <h2 className="display">{c.cta_head}</h2>
           <p>{c.cta_sub}</p>
-          <a className="btn big" href={LINKS.contact}>{c.cta_btn}</a>
+          <a className="btn big" href={LINKS.booking}>{c.cta_btn}</a>
           <span className="mono">{c.cta_alt}</span>
         </div>
       </div>
