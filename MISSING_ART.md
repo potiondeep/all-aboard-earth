@@ -55,24 +55,27 @@ card can be re-pointed by changing one slug.
   the turbine art is now a card and would otherwise appear twice on one page.
   One-line change if you would rather it repeat.
 
-## Lighthouse — measured on production, 2026-09-11 (after the art landed)
+## Lighthouse — measured on production, 2026-09-11 (final)
 
 | | mobile | desktop | brief's target |
 |---|---|---|---|
-| Performance | 96-98 | 100 | >= 85 mobile — **pass** |
-| LCP | 2.3-2.4s | 0.5s | <= 2.5s — **pass** |
+| Performance | 97 | 100 | >= 85 mobile — **pass** |
+| LCP | 2.38s | 0.5s | <= 2.5s — **pass** |
 | CLS | 0.000 | 0.000 | < 0.05 — **pass** |
 | Accessibility | 100 | 100 | — |
 | Best practices | 100 | 100 | — |
 | SEO | 100 | 100 | — |
 
-Median of three mobile runs and one desktop. The real art cost roughly 0.4s of
-mobile LCP (1.8-2.0s before it), so the hero record ships at two widths behind a
-`srcset` — 740px/q62 (104KB) and 1040px/q58 (180KB) — with `sizes` mirroring the
-CSS (`86%` of `min(74vw, 580px)`). Mobile and 1x desktop take the 740; only
-retina desktop pulls the 1040. The preload carries the same `imagesrcset` and
-`imagesizes`, so exactly one file is fetched rather than one preloaded and a
-different one chosen.
+Mobile is the **median of six runs** (LCP 2.29-2.59s, perf 95-98) — single runs on
+this page swing ~0.3s, so one sample is not a reading. Desktop is one run.
+
+The real art cost roughly 0.4s of mobile LCP (1.8-2.0s before it). The hero record
+ships at two widths behind a `srcset` — 740px/q62 (104KB) and 1040px/q58 (180KB) —
+with `sizes` mirroring the CSS (`86%` of `min(74vw, 580px)`). Mobile and 1x desktop
+take the 740; only retina desktop pulls the 1040. The preload carries the same
+`imagesrcset`/`imagesizes`, so exactly one file is fetched rather than one preloaded
+and a different one chosen. Verified: Lighthouse mobile (412px @ 1.75) downloads
+only the 740, at High priority.
 
 ## Open for Michael
 
