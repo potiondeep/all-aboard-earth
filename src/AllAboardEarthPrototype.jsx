@@ -274,8 +274,8 @@ function VinylSun() {
         className="vinyl-disc"
         src="/art/vinyl-sun.webp"
         alt=""
-        width="520"
-        height="520"
+        width="740"
+        height="740"
         fetchPriority="high"
         decoding="async"
       />
@@ -579,7 +579,7 @@ export default function App() {
           z-index:0; transform:translateX(-50%); animation:rise 1.6s var(--ease-settle) both; will-change:transform; }
         .vinyl-sun{ display:block; width:100%; position:absolute; inset:0;
           transform:translate3d(0, var(--sun-shift, 0px), 0); will-change:transform; }
-        .vinyl-disc{ position:relative; display:block; width:86%; margin:7% auto;
+        .vinyl-disc{ position:relative; display:block; width:86%; height:auto; margin:7% auto;
           transform:translate3d(0, var(--sun-shift, 0px), 0) rotate(0deg); will-change:transform; }
         @keyframes rise{ from{ transform:translateX(-50%) translateY(70vh); opacity:0; } to{ transform:translateX(-50%) translateY(0); opacity:1; } }
         /* the whole record turns, 45s/rev; hover spins it up like a turntable */
