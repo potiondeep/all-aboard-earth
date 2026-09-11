@@ -1,0 +1,27 @@
+{
+  "visibilityState": "visible",
+  "prefersReducedMotion": false,
+  "rafRuns": true,
+  "revealBeforeScroll": 0,
+  "revealTotal": 38,
+  "revealAfterScroll": 38,
+  "revealOpacities": [
+    "1"
+  ],
+  "drawOnOffsets": [
+    "0px"
+  ],
+  "sunSpinDuration": "45s",
+  "sunParallax": "40.0px",
+  "railClimb": "-12.0deg",
+  "seedIcoOpacity": "1",
+  "imagesWithoutDimensions": 0,
+  "imageCount": 9,
+  "brokenImages": [],
+  "reducedMotion": {
+    "grainHidden": true,
+    "revealsVisible": true,
+    "stillRunning": []
+  },
+  "mobileHorizontalScroll": false
+}

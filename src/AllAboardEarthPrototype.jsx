@@ -200,7 +200,7 @@ function useSunParallax() {
 
 function useReveal(lang) {
   useEffect(() => {
-    const els = document.querySelectorAll("[data-reveal]");
+    const els = Array.from(document.querySelectorAll("[data-reveal]"));
     const io = new IntersectionObserver(
       (entries) =>
         entries.forEach((e) => {
@@ -212,7 +212,27 @@ function useReveal(lang) {
       { threshold: 0.15 }
     );
     els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+
+    // Safety net: IntersectionObserver callbacks do not run while the tab is
+    // hidden, so a page loaded in a background tab can sit fully transparent.
+    // Sweep anything already on screen whenever we become visible.
+    const sweep = () => {
+      if (document.visibilityState !== "visible") return;
+      for (const el of els) {
+        if (el.classList.contains("in")) continue;
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) {
+          el.classList.add("in");
+          io.unobserve(el);
+        }
+      }
+    };
+    sweep();
+    document.addEventListener("visibilitychange", sweep);
+    return () => {
+      io.disconnect();
+      document.removeEventListener("visibilitychange", sweep);
+    };
   }, [lang]);
 }
 
@@ -532,7 +552,12 @@ export default function App() {
           .draw-on{ stroke-dasharray:none !important; stroke-dashoffset:0 !important; transition:none !important; }
           .seed-grow{ opacity:1 !important; transform:none !important; }
           .photoprint, .poster, .panel{ animation:none !important; }
-          .cta-train{ animation:none !important; left:auto !important; right:8px !important; }
+          .cta-train{ animation:none !important; transform:translateX(0) !important; left:auto !important; right:8px !important; }
+          .cta-train-rock{ animation:none !important; }
+          /* the record and the pulsing badges stop too */
+          .vinyl-disc{ animation:none !important; }
+          .boarding-badge, .signal{ animation:none !important; opacity:1 !important; }
+          .ccard-glare{ display:none !important; }
         }
 
         /* nav */
