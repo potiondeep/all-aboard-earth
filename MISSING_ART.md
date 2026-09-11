@@ -5,7 +5,7 @@ animated right now** using a coded SVG placeholder. When the real asset lands,
 drop it into `src/assets/`, swap the import, delete the placeholder component —
 **no other change is needed**, the animation and layout stay exactly as they are.
 
-Last checked: 2026-09-11.
+Last checked: 2026-09-11 (verified against production).
 
 ## Still on placeholders
 

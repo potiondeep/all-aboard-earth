@@ -547,7 +547,7 @@ export default function App() {
           .puff{ animation:none !important; }
           /* remaster seats */
           .grain{ display:none; }
-          .scene img, .ccard-inner, .rail-train, .cta-train{ transition:none !important; animation:none !important; transform:none !important; }
+          .ccard-inner, .rail-train, .cta-train{ transition:none !important; animation:none !important; transform:none !important; }
           .cta-train{ left:auto !important; right:0 !important; }
           .draw-on{ stroke-dasharray:none !important; stroke-dashoffset:0 !important; transition:none !important; }
           .seed-grow{ opacity:1 !important; transform:none !important; }
@@ -768,8 +768,6 @@ export default function App() {
         @keyframes cross{ from{ transform:translateX(-20vw); } to{ transform:translateX(120vw); } }
         @keyframes rock{ 0%,100%{ transform:rotate(-1.5deg); } 50%{ transform:rotate(1.5deg); } }
 
-        .scene{ margin-top:30px; border:3px solid ${T.pineDeep}; border-radius:16px; overflow:hidden; line-height:0; box-shadow:0 18px 40px #0006; }
-        .scene img{ width:100%; height:clamp(180px,30vw,340px); object-fit:cover; display:block; }
 
         /* proof */
         .proof{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:2px; margin-top:36px; border:2px solid ${T.cream}33; border-radius:18px; overflow:hidden; }
