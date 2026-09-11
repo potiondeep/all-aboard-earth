@@ -274,8 +274,8 @@ function VinylSun() {
         className="vinyl-disc"
         src="/art/vinyl-sun.webp"
         alt=""
-        width="640"
-        height="640"
+        width="520"
+        height="520"
         fetchPriority="high"
         decoding="async"
       />
