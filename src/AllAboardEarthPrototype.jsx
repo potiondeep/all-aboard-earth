@@ -1,5 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
 
+import artPhotovoltaic from "./assets/careers/photovoltaic-tech.webp";
+import artWatershed from "./assets/careers/watershed-specialist.webp";
+import artFungi from "./assets/careers/fungi-biochemist.webp";
+import artOceanFarmer from "./assets/careers/ocean-farmer.webp";
+import sceneGreenCareers from "./assets/scenes/green-careers.webp";
+import sceneEarthRests from "./assets/scenes/earth-rests.webp";
+
+// Card art is language-independent, so it lives outside the copy object
+// and is matched to cards by position.
+const CARD_ART = [
+  { src: artPhotovoltaic, alt: "Photovoltaic power technician standing on a solar array" },
+  { src: artWatershed, alt: "Watershed restoration specialist at a mountain stream with a beaver" },
+  { src: artFungi, alt: "Fungi biochemist examining cultivated mushrooms" },
+  { src: artOceanFarmer, alt: "3D ocean farmer hauling kelp aboard a boat" },
+];
+
 /* ============================================================
    ALL ABOARD EARTH — "UP WE GO!" HOMEPAGE PROTOTYPE v3
    Symbol systems woven in:
@@ -65,10 +81,10 @@ const copy = {
     t4_head: "COLLECT YOUR FUTURE",
     t4_sub: "Every career is a character. Every character is a doorway. (Go ahead — pick them up.)",
     cards: [
-      { role: "SOLAR RIGGER", stat: "SUN PWR", num: "07", flavor: "Catches daylight, feeds the grid.", hue: T.marigold },
-      { role: "WATER GUARDIAN", stat: "FLOW", num: "12", flavor: "Keeps the acequias singing.", hue: T.sky },
-      { role: "SOIL SCIENTIST", stat: "ROOTS", num: "03", flavor: "Reads the ground like liner notes.", hue: T.leaf },
-      { role: "WIND TECH", stat: "LIFT", num: "21", flavor: "Climbs towers, harvests sky.", hue: T.coral },
+      { role: "PHOTOVOLTAIC TECH", stat: "SUN PWR", num: "07", flavor: "Catches daylight, feeds the grid.", hue: T.marigold },
+      { role: "WATERSHED SPECIALIST", stat: "FLOW", num: "12", flavor: "Keeps the acequias singing.", hue: T.sky },
+      { role: "FUNGI BIOCHEMIST", stat: "ROOTS", num: "03", flavor: "Reads the ground like liner notes.", hue: T.leaf },
+      { role: "3D OCEAN FARMER", stat: "TIDE", num: "21", flavor: "Grows kelp forests between the tides.", hue: T.coral },
     ],
     t5_label: "TRACK 05 · THE PROOF",
     t5_head: "BORN IN NEW MEXICO. READY FOR YOUR DISTRICT.",
@@ -122,10 +138,10 @@ const copy = {
     t4_head: "COLECCIONA TU FUTURO",
     t4_sub: "Cada carrera es un personaje. Cada personaje, una puerta. (Anda — tómalas en tus manos.)",
     cards: [
-      { role: "TÉCNICA SOLAR", stat: "SOL", num: "07", flavor: "Atrapa la luz, alimenta la red.", hue: T.marigold },
-      { role: "GUARDIÁN DEL AGUA", stat: "FLUJO", num: "12", flavor: "Mantiene cantando las acequias.", hue: T.sky },
-      { role: "CIENTÍFICA DEL SUELO", stat: "RAÍCES", num: "03", flavor: "Lee la tierra como un vinilo.", hue: T.leaf },
-      { role: "TÉCNICO EÓLICO", stat: "VUELO", num: "21", flavor: "Sube torres, cosecha cielo.", hue: T.coral },
+      { role: "TÉCNICA FOTOVOLTAICA", stat: "SOL", num: "07", flavor: "Atrapa la luz, alimenta la red.", hue: T.marigold },
+      { role: "GUARDIANA DE CUENCAS", stat: "FLUJO", num: "12", flavor: "Mantiene cantando las acequias.", hue: T.sky },
+      { role: "BIOQUÍMICA DE HONGOS", stat: "RAÍCES", num: "03", flavor: "Lee la tierra como un vinilo.", hue: T.leaf },
+      { role: "GRANJERO OCEÁNICO 3D", stat: "MAREA", num: "21", flavor: "Cultiva algas entre las mareas.", hue: T.coral },
     ],
     t5_label: "PISTA 05 · LA PRUEBA",
     t5_head: "NACIDO EN NUEVO MÉXICO. LISTO PARA TU DISTRITO.",
@@ -289,7 +305,7 @@ function ClimbingTrain() {
 }
 
 /* ---------- tilting trading card ---------- */
-function CareerCard({ c, i }) {
+function CareerCard({ c, i, art }) {
   const ref = useRef(null);
   const [t, setT] = useState({ rx: 0, ry: 0 });
   const move = (e) => {
@@ -316,7 +332,10 @@ function CareerCard({ c, i }) {
           <span className="mono">{c.stat} ★★★★</span>
         </div>
         <div className="ccard-art" style={{ background: c.hue }}>
-          {/* mini vinyl sun echo */}
+          {art ? (
+            <img className="ccard-img" src={art.src} alt={art.alt} loading="lazy" decoding="async" width="520" height="735" />
+          ) : (
+          /* mini vinyl sun echo */
           <svg viewBox="0 0 100 100" className="ccard-svg">
             <circle cx="50" cy="26" r="15" fill={T.cream} />
             <circle cx="50" cy="26" r="10" fill="none" stroke={T.pineDeep} strokeOpacity=".3" strokeWidth="1.5" />
@@ -324,6 +343,7 @@ function CareerCard({ c, i }) {
             <path d="M-10,105 L20,66 L45,95 L70,58 L105,100 Z" fill={T.pineDeep} />
             <path d="M-10,110 Q15,98 35,104 T80,102 T115,106" fill="none" stroke={T.cream} strokeOpacity=".5" strokeWidth="2" />
           </svg>
+          )}
         </div>
         <div className="ccard-role">{c.role}</div>
         <div className="ccard-flavor">{c.flavor}</div>
@@ -454,6 +474,9 @@ export default function App() {
         .ccard-top{ display:flex; justify-content:space-between; margin-bottom:10px; font-weight:700; }
         .ccard-art{ position:relative; border-radius:10px; height:150px; overflow:hidden; border:2px solid ${T.pineDeep}; }
         .ccard-svg{ position:absolute; inset:0; width:100%; height:100%; }
+        .ccard-img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 22%; display:block; }
+        .scene{ margin-top:30px; border:3px solid ${T.pineDeep}; border-radius:16px; overflow:hidden; line-height:0; box-shadow:0 18px 40px #0006; }
+        .scene img{ width:100%; height:clamp(180px,30vw,340px); object-fit:cover; display:block; }
         .ccard-role{ font-family:'Anton'; font-size:21px; margin-top:12px; }
         .ccard-flavor{ font-size:13.5px; margin-top:6px; opacity:.8; line-height:1.4; }
 
@@ -535,6 +558,9 @@ export default function App() {
         <div className="tags" data-reveal>
           {c.t2_tags.map((t) => <span className="tag" key={t}>{t}</span>)}
         </div>
+        <div className="scene" data-reveal>
+          <img src={sceneGreenCareers} alt="A felt roadrunner racing past a desert solar array" loading="lazy" decoding="async" width="1400" height="785" />
+        </div>
       </section>
 
       <WaveMountainDivider flip />
@@ -562,7 +588,7 @@ export default function App() {
         <h2 className="display" data-reveal>{c.t4_head}</h2>
         <p className="lede" data-reveal>{c.t4_sub}</p>
         <div className="cards">
-          {c.cards.map((card, i) => <CareerCard c={card} i={i} key={card.role} />)}
+          {c.cards.map((card, i) => <CareerCard c={card} i={i} art={CARD_ART[i]} key={card.role} />)}
         </div>
       </section>
 
@@ -576,6 +602,9 @@ export default function App() {
           {c.t5_points.map(([h, p]) => (
             <div key={h}><h4>{h}</h4><p>{p}</p></div>
           ))}
+        </div>
+        <div className="scene" data-reveal>
+          <img src={sceneEarthRests} alt="A felt Earth character resting on a green hillside under felt clouds" loading="lazy" decoding="async" width="1400" height="785" />
         </div>
         <RootsMark />
       </section>
