@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { cardArt, CAREER_PAGE } from "./wixCardArt.js";
 import Logo3D from "./Logo3D.jsx";
+import Seed from "./ornaments/Seed.jsx";
 import sceneGreenCareers from "./assets/scenes/green-careers.webp";
 import sceneEarthRests from "./assets/scenes/earth-rests.webp";
 import sceneRaccoon from "./assets/scenes/felt-raccoon.webp";
@@ -423,35 +424,11 @@ function WaveMountainDivider({ flip }) {
   );
 }
 
-/* Seat 2/4 — compact seed glyph. Stands in for seed-mark.png until the
-   drawn asset lands; see MISSING_ART.md. */
-function SeedGlyph({ className = "", hue }) {
-  return (
-    <svg className={"seed " + className} viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M12 20 V10" stroke={hue || "currentColor"} strokeWidth="2" strokeLinecap="round" fill="none" />
-      <path d="M12 12 q-6,-5 -9,-2 q3,6 9,2" fill={hue || "currentColor"} />
-      <path d="M12 10 q6,-5 9,-2 q-3,6 -9,2" fill={hue || "currentColor"} />
-      <ellipse cx="12" cy="19" rx="4" ry="3.2" fill={hue || "currentColor"} opacity=".85" />
-    </svg>
-  );
-}
-
 /* ============================================================
    🌱 ROOTS & SEED — what grounds each idea
    ============================================================ */
 function RootsMark() {
-  return (
-    <img
-      className="roots seed-grow"
-      src={seedMarkArt}
-      alt=""
-      width="520"
-      height="624"
-      loading="lazy"
-      decoding="async"
-      data-reveal
-    />
-  );
+  return <Seed className="roots" variant="mark" />;
 }
 
 /* ============================================================
@@ -661,6 +638,9 @@ export default function App() {
           .draw-on{ stroke-dasharray:none !important; stroke-dashoffset:0 !important; transition:none !important; }
           .divider-wipe{ transform:translateX(101%) !important; transition:none !important; }
           .seed-grow{ opacity:1 !important; transform:none !important; }
+          .seed-roots path, #seed-stem{ stroke-dashoffset:0 !important; transition:none !important; }
+          #seed-hull, .seed-leaf{ transform:none !important; opacity:1 !important; transition:none !important; }
+          .seed-sway, .seed .seed-leaf{ animation:none !important; }
           .photoprint, .poster, .panel{ animation:none !important; }
           .cta-train{ animation:none !important; transform:translateX(0) !important; left:auto !important; right:8px !important; }
           .cta-train-img{ animation:none !important; }
@@ -766,7 +746,7 @@ export default function App() {
         .marquee-inner{ display:inline-block; white-space:nowrap; font-family:'Anton'; font-size:22px; line-height:36px; letter-spacing:.1em; animation:slide 35s linear infinite; }
         .marquee:hover .marquee-inner{ animation-play-state:paused; }
         .marquee-unit{ display:inline-flex; align-items:center; }
-        .seed-sep{ width:22px; height:22px; margin:0 .55em; color:${T.pineDeep}; flex:none; }
+        .seed-sep{ width:20px; height:26px; margin:0 .55em; color:${T.pineDeep}; flex:none; }
         .seed-ico{ width:38px; height:38px; }
         /* Seat 4 — seeds grow rather than fade, staggered across the grid */
         [data-reveal].freq .seed-ico{ transform:scale(.6); opacity:0; transition:transform .8s var(--ease-settle), opacity .8s var(--ease-settle); }
@@ -783,7 +763,52 @@ export default function App() {
         [data-reveal].in .divider-wipe{ transform:translateX(101%); }
 
         /* roots mark */
-        .roots{ display:block; width:104px; height:auto; margin:40px auto 0; }
+        .roots{ display:block; width:104px; height:auto; margin:40px auto 0; color:${T.marigold}; }
+
+        /* 🌱 germination — roots down, stem overlapping, leaves last */
+        .seed{ overflow:visible; }
+        .seed-roots path{
+          stroke-dasharray:var(--len,60); stroke-dashoffset:var(--len,60);
+          transition:stroke-dashoffset var(--rootMs,900ms) var(--ease-settle);
+        }
+        #seed-root-1{ --len:34; transition-delay:0ms; }
+        #seed-root-2{ --len:42; transition-delay:120ms; }
+        #seed-root-3{ --len:32; transition-delay:240ms; }
+        .seed.is-grown .seed-roots path{ stroke-dashoffset:0; }
+
+        #seed-hull{ transform-box:fill-box; transform-origin:50% 50%; transform:scale(0); transition:transform 420ms var(--ease-settle); }
+        .seed.is-grown #seed-hull{ transform:scale(1); }
+
+        #seed-stem{
+          stroke-dasharray:40; stroke-dashoffset:40;
+          transition:stroke-dashoffset var(--stemMs,600ms) var(--ease-settle);
+          transition-delay:var(--stemDelay,300ms);
+        }
+        .seed.is-grown #seed-stem{ stroke-dashoffset:0; }
+
+        .seed-leaf{
+          transform-box:fill-box; transform-origin:0% 100%;
+          transform:scale(.4) rotate(-12deg); opacity:0;
+          transition:transform var(--leafMs,700ms) cubic-bezier(.34,1.56,.64,1), opacity 260ms linear;
+        }
+        #seed-leaf-l{ transition-delay:var(--leafDelay,760ms); }
+        #seed-leaf-r{ transform-origin:100% 100%; transition-delay:calc(var(--leafDelay,760ms) + 80ms); }
+        .seed.is-grown .seed-leaf{ transform:scale(1) rotate(0deg); opacity:1; }
+
+        /* idle life, only once grown — sway from the base, leaves desynced */
+        .seed.is-grown .seed-sway{ transform-box:fill-box; transform-origin:50% 100%; animation:seed-sway 6s var(--ease-drift) infinite; }
+        .seed.is-grown #seed-leaf-l{ animation:leaf-l 5s var(--ease-drift) infinite 1.6s; }
+        .seed.is-grown #seed-leaf-r{ animation:leaf-r 7s var(--ease-drift) infinite 1.6s; }
+        @keyframes seed-sway{ 0%,100%{ transform:rotate(-1.5deg); } 50%{ transform:rotate(1.5deg); } }
+        @keyframes leaf-l{ 0%,100%{ transform:rotate(-2deg); } 50%{ transform:rotate(2deg); } }
+        @keyframes leaf-r{ 0%,100%{ transform:rotate(2deg); } 50%{ transform:rotate(-2deg); } }
+
+        /* bullet glyphs germinate in 450ms total */
+        .seed--glyph{ --rootMs:200ms; --stemMs:160ms; --stemDelay:120ms; --leafMs:220ms; --leafDelay:230ms; }
+
+        /* hover perk */
+        .freq:hover .seed-leaf, .seed:hover .seed-leaf{ animation:leaf-perk 400ms var(--ease-settle); }
+        @keyframes leaf-perk{ 50%{ transform:scale(1) rotate(4deg); } }
 
         /* climbing train rail */
         .rail{ position:fixed; right:14px; top:80px; bottom:20px; width:44px; z-index:40; pointer-events:none; }
@@ -954,7 +979,7 @@ export default function App() {
         .ctaband .btn{ background:${T.pineDeep}; color:${T.cream}; }
         .cta-stamp{ font-size:clamp(20px,3.4vw,34px); color:${T.pineDeep}; letter-spacing:.06em; margin-bottom:6px; opacity:.9; }
 
-        footer .roots{ width:78px; margin:0 auto 10px; }
+        footer .roots{ width:56px; margin:0 auto 10px; }
         .footer-give{ margin-top:10px; }
         .footer-social{ margin-top:6px; }
         footer a{ color:${T.marigold}; text-decoration:none; border-bottom:1px solid ${T.marigold}66; }
@@ -1011,7 +1036,7 @@ export default function App() {
           {Array.from({ length: 6 }).map((_, i) => (
             <span key={i} className="marquee-unit">
               {c.marquee_phrase}
-              <SeedGlyph className="seed-sep wobble" />
+              <Seed className="seed-sep" variant="glyph" />
             </span>
           ))}
         </div>
