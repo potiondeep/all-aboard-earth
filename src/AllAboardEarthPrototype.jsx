@@ -71,25 +71,24 @@ const FREQ_HUES = [T.marigold, T.coral, T.sky, T.leaf];
 const copy = {
   en: {
     nav_cta: "Book a pilot demo",
-    hero_eyebrow: "ALL ABOARD EARTH · A MOVEMENT WITH A SOUNDTRACK",
-    hero_line1: "UP",
-    hero_line2: "WE GO!",
-    hero_accent: "¡ARRIBA VAMOS!",
+    hero_eyebrow: "ALL ABOARD EARTH · SIDE A · 33⅓ RPM",
+    hero_line1: "THE EARTH NEEDS DREAMERS",
+    hero_line2: "WHO GOT THE SKILLS TO PAY THE BILLS!",
+    hero_accent: "¡Arriba vamos!",
     hero_sub:
-      "A regenerative hip-hop movement — music that plants seeds, lifts communities, and puts the next generation on board for a thriving planet.",
-    hero_cta: "🚂 Hop on — now boarding",
-    hero_cta2: "Feel the vibe →",
+      "All Aboard Earth is a movement igniting the visionary willpower of humanity to foster ecological health through green career pathways, environmental edutainment and regenerative art.",
+    hero_cta: "Explore Cool Careers",
+    hero_cta2: "Hear the Music",
     marquee: "UP WE GO! · UP WE GO! · ",
     marquee_phrase: "UP WE GO!",
     t1_label: "TRACK 01 · THE MOVEMENT",
-    t1_head: "ONE MOVEMENT. FOUR FREQUENCIES.",
+    t1_head: "ONE MOVEMENT. THREE ENGINES.",
     t1_sub:
-      "All Aboard Earth broadcasts the same signal through four channels — music, stories, play, and product. Different frequencies, one groove: heal the planet, lift the people.",
+      "Three engines drive the same mission — igniting the visionary willpower to foster ecological health.",
     freqs: [
-      ["🎮", "Cool Careers", "Game-powered pathways into the green economy — the flagship, boarding now.", true],
-      ["🎤", "Regenerative Hip-Hop", "Live shows that turn assemblies and arenas into anthems.", false],
-      ["📺", "Animated Series", "Felt-world stories that make ecology unforgettable.", false],
-      ["🧵", "Regen Product Line", "Regeneratively grown threads + woven felt characters.", false],
+      ["🚂", "Green Career Pathways", "School programs making green futures the coolest gig in town.", true],
+      ["🎵", "Environmental Edutainment", "Music, shows and workshops that turn ecology into anthems.", false],
+      ["🎨", "Regenerative Art", "Murals, campaigns and card-game worlds that mobilize communities.", false],
     ],
     boarding: "NOW BOARDING",
     t2_label: "TRACK 02 · NOW BOARDING",
@@ -122,6 +121,7 @@ const copy = {
       ["Bilingual by design", "Full English / Spanish delivery, because the movement speaks both."],
       ["Culture included", "Live regenerative hip-hop assemblies turn launch day into the loudest field trip of the year."],
     ],
+    cta_stamp: "UP WE GO!",
     cta_head: "PUT YOUR SCHOOL ON THE MAP.",
     cta_sub: "Thirty groovy minutes. One demo. Your students' new favorite class.",
     cta_btn: "Book a pilot demo",
@@ -131,25 +131,24 @@ const copy = {
   },
   es: {
     nav_cta: "Reserva una demo",
-    hero_eyebrow: "ALL ABOARD EARTH · UN MOVIMIENTO CON BANDA SONORA",
-    hero_accent: "UP WE GO!",
-    hero_line1: "¡ARRIBA",
-    hero_line2: "VAMOS!",
+    hero_eyebrow: "ALL ABOARD EARTH · LADO A · 33⅓ RPM",
+    hero_line1: "LA TIERRA NECESITA SOÑADORES",
+    hero_line2: "¡CON EL TALENTO PARA LOGRARLO!",
+    hero_accent: "Up we go!",
     hero_sub:
-      "Un movimiento de hip-hop regenerativo — música que siembra semillas, levanta comunidades y sube a la próxima generación a bordo rumbo a un planeta próspero.",
-    hero_cta: "🚂 Súbete — estamos abordando",
-    hero_cta2: "Siente la vibra →",
+      "All Aboard Earth es un movimiento que enciende la voluntad visionaria de la humanidad para fomentar la salud ecológica mediante rutas de carreras verdes, edutenimiento ambiental y arte regenerativo.",
+    hero_cta: "Explora Cool Careers",
+    hero_cta2: "Escucha la música",
     marquee: "¡ARRIBA VAMOS! · UP WE GO! · ¡ARRIBA VAMOS! · UP WE GO! · ",
     marquee_phrase: "¡ARRIBA VAMOS!",
     t1_label: "PISTA 01 · EL MOVIMIENTO",
-    t1_head: "UN MOVIMIENTO. CUATRO FRECUENCIAS.",
+    t1_head: "UN MOVIMIENTO. TRES MOTORES.",
     t1_sub:
-      "All Aboard Earth transmite la misma señal por cuatro canales — música, historias, juego y producto. Distintas frecuencias, un solo groove: sanar el planeta, elevar a la gente.",
+      "Tres motores impulsan la misma misión — encender la voluntad visionaria para fomentar la salud ecológica.",
     freqs: [
-      ["🎮", "Cool Careers", "Rutas en modo videojuego hacia la economía verde — la nave insignia, abordando ahora.", true],
-      ["🎤", "Hip-Hop Regenerativo", "Shows en vivo que convierten asambleas y arenas en himnos.", false],
-      ["📺", "Serie Animada", "Historias de fieltro que hacen inolvidable la ecología.", false],
-      ["🧵", "Línea Regenerativa", "Textiles regenerativos + personajes de fieltro tejido.", false],
+      ["🚂", "Carreras Verdes", "Programas escolares que hacen del futuro verde el mejor oficio del barrio.", true],
+      ["🎵", "Edutenimiento Ambiental", "Música, shows y talleres que convierten la ecología en himnos.", false],
+      ["🎨", "Arte Regenerativo", "Murales, campañas y mundos de cartas que movilizan comunidades.", false],
     ],
     boarding: "ABORDANDO",
     t2_label: "PISTA 02 · ABORDANDO AHORA",
@@ -182,6 +181,7 @@ const copy = {
       ["Bilingüe de raíz", "Entrega completa en inglés y español, porque el movimiento habla los dos."],
       ["Cultura incluida", "Conciertos de hip-hop regenerativo que convierten el lanzamiento en la excursión más sonora del año."],
     ],
+    cta_stamp: "¡ARRIBA VAMOS!",
     cta_head: "PON TU ESCUELA EN EL MAPA.",
     cta_sub: "Treinta minutos con groove. Una demo. La nueva clase favorita de tus estudiantes.",
     cta_btn: "Reserva una demo piloto",
@@ -254,6 +254,22 @@ function useReveal(lang) {
 /* ============================================================
    ☀️🎶 VINYL SUN — a record pressed from daylight
    ============================================================ */
+/* Kinetic headline — one span per word so the line lands word by word.
+   --i drives the stagger; the Marigold line adds a 150ms head start offset. */
+function KineticLine({ text, className = "" }) {
+  const words = text.split(" ");
+  return (
+    <h1 className={"display hero-word " + className}>
+      {words.map((w, i) => (
+        <span key={`${w}-${i}`} style={{ "--i": i }}>
+          {w}
+          {i < words.length - 1 ? "\u00A0" : ""}
+        </span>
+      ))}
+    </h1>
+  );
+}
+
 function VinylSun() {
   return (
     <div className="vinyl-wrap" aria-hidden="true">
@@ -590,9 +606,10 @@ export default function App() {
         .sun-rays{ transform-origin:200px 200px; animation:spin 60s linear infinite; }
         @keyframes spin{ to{ transform:rotate(360deg); } }
         .hero-eyebrow{ position:relative; z-index:2; color:${T.marigold}; margin-bottom:14px; line-height:18px; min-height:18px; }
-        .hero-word{ position:relative; z-index:2; font-size:clamp(64px,17vw,220px); color:${T.cream}; }
-        .hero-word span{ display:inline-block; animation:pop .8s cubic-bezier(.2,.9,.3,1.3) both; }
-        .hero-word.l2 span{ animation-delay:.15s; color:${T.pineDeep}; -webkit-text-stroke:2px ${T.cream}; text-stroke:2px ${T.cream}; }
+        .hero-word{ position:relative; z-index:2; font-size:clamp(32px,6.4vw,86px); color:${T.cream}; max-width:16ch; margin:0 auto; }
+        .hero-word.l2{ font-size:clamp(24px,4.6vw,62px); color:${T.marigold}; max-width:22ch; }
+        .hero-word span{ display:inline-block; animation:pop .8s cubic-bezier(.2,.9,.3,1.3) both; animation-delay:calc(var(--i, 0) * 70ms); }
+        .hero-word.l2 span{ animation-delay:calc(150ms + var(--i, 0) * 70ms); }
         @keyframes pop{ from{ transform:translateY(60px) scale(.9); opacity:0; } to{ transform:none; opacity:1; } }
         .hero-sub{ position:relative; z-index:2; max-width:580px; margin:22px auto 26px; font-size:17px; line-height:1.55; color:${T.cream}dd; }
         .hero-ctas{ position:relative; z-index:2; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; padding-bottom:70px; }
@@ -788,6 +805,7 @@ export default function App() {
         .ctaband p{ margin:16px 0 26px; font-size:17px; font-weight:600; }
         .ctaband .mono{ display:block; margin-top:16px; opacity:.75; }
         .ctaband .btn{ background:${T.pineDeep}; color:${T.cream}; }
+        .cta-stamp{ font-size:clamp(20px,3.4vw,34px); color:${T.pineDeep}; letter-spacing:.06em; margin-bottom:6px; opacity:.9; }
 
         footer .roots{ width:78px; margin:0 auto 10px; }
         .footer-give{ margin-top:10px; }
@@ -827,8 +845,8 @@ export default function App() {
       <header className="hero">
         <VinylSun />
         <div className="mono hero-eyebrow">{c.hero_eyebrow}</div>
-        <h1 className="display hero-word"><span>{c.hero_line1}</span></h1>
-        <h1 className="display hero-word l2"><span>{c.hero_line2}</span></h1>
+        <KineticLine text={c.hero_line1} />
+        <KineticLine text={c.hero_line2} className="l2" />
         <div className="hero-accent">{c.hero_accent}</div>
         <p className="hero-sub">{c.hero_sub}</p>
         <div className="hero-ctas">
@@ -953,6 +971,7 @@ export default function App() {
             </svg>
             <span className="cta-train"><img className="cta-train-img" src={climbingTrainArt} alt="" width="760" height="672" loading="lazy" decoding="async" /></span>
           </div>
+          <div className="cta-stamp display">{c.cta_stamp}</div>
           <h2 className="display">{c.cta_head}</h2>
           <p>{c.cta_sub}</p>
           <a className="btn big" href={LINKS.booking}>{c.cta_btn}</a>
