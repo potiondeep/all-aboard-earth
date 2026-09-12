@@ -9,24 +9,32 @@ Last checked: 2026-09-11 (verified against production).
 
 ## Still on placeholders
 
-**None.** Every asset the brief named is now real art, sourced from
-`~/Desktop/AAE-web-art` on 2026-09-11.
+**None.** V2 hero art landed 2026-09-12.
 
 | Asset | Seat | What shipped |
 |---|---|---|
-| `vinyl-sun.png` | 1 — hero | Tree-ring record with a glowing sun label. Masked to a circle so the 45s spin reads cleanly, and served from `/art` (stable path) so it can be preloaded. |
-| `divider-wave-mountain-a` / `-b` | 3 — dividers | The two ultra-wide 5856x704 wave-to-mountain paintings, full-bleed, alternating. B is drawn mirrored, so the old `scaleX(-1)` flip was removed. |
-| `seed-mark.png` | 4, 11 | Felt sprout with roots, at section ends and as the footer sign-off. |
-| `climbing-train.png` | 9, 10 | Felt solar train with musical-note steam — on the scroll rail, and crossing the CTA band (flipped to face its direction of travel). |
+| `felt-earth.webm` / `-hevc.mov` | B — hero | The Flow clip, chroma-keyed off its pink background. 560x560, VP9-alpha 571KB + HEVC-alpha 1.6MB; each browser fetches only the one it can decode. |
+| `felt-earth-poster.webp` | B — hero | Derived from the same keyed pipeline, so it matches frame one exactly and there is no jump when the video takes over. Preloaded; it is what first paint shows. |
 
-Three of these were JPEGs with a **checkerboard painted into the pixels** — fake
-transparency, not real alpha. Adobe's `image_remove_background` cut them properly;
-local colour-keying would have eaten the train's cream steam and the seed's pale
-roots, since both collide with the checker's own greys.
+### Keying notes (for when the next clip arrives)
 
-The coded SVG placeholders were deleted with them, except the small `SeedGlyph`,
-which still draws the 22px marquee separator — the detailed seed art turns to mush
-at that size.
+The brief said key `#FF00FF`, but the plate is **not** pure magenta — it is an
+unevenly lit pink running roughly `#B32F72` to `#E966B2`. A `colorkey` at
+`#FF00FF` removes nothing. What works:
+
+- `chromakey=0xD34C97:0.11:0.06` — chromakey (YUV) rather than colorkey (RGB),
+  so the uneven lighting does not matter. **Similarity is the whole game:** at
+  0.05-0.08 a pink rim survives, at 0.14 it starts eating the globe, 0.11 is the
+  window where the background is gone and the felt fibers are intact.
+- A `geq` despill that only fires where **both** R and B exceed G. That is
+  magenta specifically — the ocean's blue has low R, the clouds are neutral, the
+  land is green-dominant, so none of them are touched.
+- `crop=840:840:553:149` before scaling — the globe only occupies x 583-1364,
+  y 193-945 across the whole clip, so the rest is wasted pixels.
+
+`ffprobe` reports `pix_fmt=yuv420p` for a correct VP9-alpha file and ffmpeg's own
+decoder drops the alpha — neither means the key failed. Check `alpha_mode=1` in
+the tags, or test in a browser.
 
 ## Resolved — no longer missing
 

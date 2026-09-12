@@ -192,8 +192,8 @@ const copy = {
 };
 
 /* ---------- scroll-reveal hook ---------- */
-/* Seat 1 — hero parallax: the sun drifts at 0.85x scroll, capped at +-40px.
-   rAF-throttled and transform-only, so it never touches layout. */
+/* Seat B — hero parallax: Earth and starfield move at different rates, so the
+   depth is real rather than painted. rAF-throttled and transform-only. */
 function useSunParallax() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -203,8 +203,10 @@ function useSunParallax() {
     const onScroll = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        const shift = Math.max(-40, Math.min(40, window.scrollY * 0.15));
-        hero.style.setProperty("--sun-shift", `${shift.toFixed(1)}px`);
+        const y = window.scrollY;
+        // independent layers: the Earth trails scroll slightly more than the stars
+        hero.style.setProperty("--earth-shift", `${Math.max(-60, Math.min(60, y * 0.10)).toFixed(1)}px`);
+        hero.style.setProperty("--star-shift", `${Math.max(-40, Math.min(40, y * 0.20)).toFixed(1)}px`);
       });
     };
     onScroll();
@@ -254,6 +256,97 @@ function useReveal(lang) {
 /* ============================================================
    ☀️🎶 VINYL SUN — a record pressed from daylight
    ============================================================ */
+/* Seat B — the felt Earth in space.
+   Two <video>s play the same clip offset by the crossfade window, so the loop
+   seam is covered rather than cut: while A runs out its last 600ms, B starts
+   from zero and the pair crossfades on opacity. Sources are ordered
+   HEVC-alpha first (Safari) then VP9-alpha (Chrome/Firefox); each browser
+   takes the first it can decode, so only one file is ever fetched. */
+const EARTH_XFADE = 0.6;
+
+function FeltEarth() {
+  const aRef = useRef(null);
+  const bRef = useRef(null);
+  const [front, setFront] = useState("a");
+  // The poster carries first paint; the 1MB clip only starts after load, so it
+  // never competes with the hero copy (which is the LCP element).
+  const [videoReady, setVideoReady] = useState(false);
+  const reduced =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  useEffect(() => {
+    if (reduced) return;
+    const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 400));
+    const arm = () => idle(() => setVideoReady(true), { timeout: 2000 });
+    if (document.readyState === "complete") arm();
+    else {
+      window.addEventListener("load", arm, { once: true });
+      return () => window.removeEventListener("load", arm);
+    }
+  }, [reduced]);
+
+  useEffect(() => {
+    if (!videoReady) return;
+    const a = aRef.current;
+    const b = bRef.current;
+    if (!a || !b) return;
+    a.play().catch(() => {});
+    let raf = 0;
+    let armed = true;
+    const tick = () => {
+      raf = requestAnimationFrame(tick);
+      const lead = front === "a" ? a : b;
+      const follow = front === "a" ? b : a;
+      if (!lead.duration) return;
+      if (armed && lead.currentTime >= lead.duration - EARTH_XFADE) {
+        armed = false;
+        follow.currentTime = 0;
+        follow.play().catch(() => {});
+        setFront((f) => (f === "a" ? "b" : "a"));
+        setTimeout(() => { armed = true; }, EARTH_XFADE * 1000);
+      }
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [front, videoReady]);
+
+  const sources = (
+    <>
+      <source src="/art/felt-earth-hevc.mov" type="video/quicktime" />
+      <source src="/art/felt-earth.webm" type="video/webm" />
+    </>
+  );
+  const common = { muted: true, playsInline: true, "aria-hidden": true };
+
+  return (
+    <>
+      <div className="starfield" aria-hidden="true">
+        <div className="stars stars-far" />
+        <div className="stars stars-near" />
+      </div>
+      <div className="earth-wrap" aria-hidden="true">
+        {/* always present: it is the LCP-guarded still and the video's backdrop */}
+        <img
+          className="earth-still"
+          src="/art/felt-earth-poster.webp"
+          alt=""
+          width="560"
+          height="560"
+          fetchPriority="high"
+          decoding="async"
+        />
+        {videoReady && !reduced && (
+          <>
+            <video ref={aRef} preload="auto" {...common} className={"earth-vid" + (front === "a" ? " on" : "")}>{sources}</video>
+            <video ref={bRef} preload="metadata" {...common} className={"earth-vid" + (front === "b" ? " on" : "")}>{sources}</video>
+          </>
+        )}
+      </div>
+    </>
+  );
+}
+
 /* Kinetic headline — one span per word so the line lands word by word.
    --i drives the stagger; the Marigold line adds a 150ms head start offset. */
 function KineticLine({ text, className = "" }) {
@@ -553,6 +646,9 @@ export default function App() {
           .puff{ animation:none !important; }
           /* remaster seats */
           .grain{ display:none; }
+          .stars{ animation:none !important; }
+          .starfield{ transform:none !important; }
+          .earth-vid, .earth-still{ transform:none !important; transition:none !important; }
           .ccard-inner, .rail-train, .cta-train{ transition:none !important; animation:none !important; transform:none !important; }
           .cta-train{ left:auto !important; right:0 !important; }
           .draw-on{ stroke-dasharray:none !important; stroke-dashoffset:0 !important; transition:none !important; }
@@ -581,38 +677,61 @@ export default function App() {
         .btn.ghost{ background:transparent; color:${T.cream}; border:2px solid ${T.cream}55; box-shadow:none; }
         .btn.ghost:hover{ border-color:${T.marigold}; color:${T.marigold}; }
         a.btn{ text-decoration:none; }
-        .hero-accent{ position:relative; z-index:2; font-family:'Anton'; color:${T.marigold}; font-size:clamp(14px,2.2vw,20px); letter-spacing:.14em; margin-top:10px; line-height:26px; min-height:26px; }
+        .hero-accent{ position:relative; z-index:3; font-family:'Anton'; color:${T.marigold}; font-size:clamp(14px,2.2vw,20px); letter-spacing:.14em; margin-top:10px; line-height:26px; min-height:26px; }
 
         /* hero + vinyl sun */
-        .hero{ position:relative; padding:clamp(40px,8vh,90px) clamp(16px,4vw,48px) 0; text-align:center; }
-        /* The record art is light tan, so cream copy laid over it loses contrast.
-           A soft pine scrim sits between the art (z 0) and the type (z 2). */
+        .hero{ position:relative; padding:clamp(40px,8vh,90px) clamp(16px,4vw,48px) 0; text-align:center;
+          background:${T.pineDeep}; overflow:hidden; }
+        /* The scrim was tuned for the light-tan record. The felt Earth is already
+           mid-dark, so it only needs enough to hold the copy — much lighter, and
+           it sits above the Earth (z 1) but below the type (z 3). */
         .hero::after{
-          content:""; position:absolute; left:50%; top:38%; width:min(92vw,900px); height:62%;
-          transform:translateX(-50%); z-index:1; pointer-events:none;
-          background:radial-gradient(ellipse at 50% 45%, ${T.pine}e6 0%, ${T.pine}c4 42%, ${T.pine}00 72%);
+          content:""; position:absolute; left:50%; top:34%; width:min(92vw,860px); height:56%;
+          transform:translateX(-50%); z-index:2; pointer-events:none;
+          background:radial-gradient(ellipse at 50% 46%, ${T.pineDeep}b8 0%, ${T.pineDeep}7a 46%, ${T.pineDeep}00 74%);
         }
-        /* wrapper owns position + entrance; svg owns parallax. Both transform-only. */
-        .vinyl-wrap{ position:absolute; aspect-ratio:1; left:50%; top:56%; width:min(74vw,580px);
-          z-index:0; transform:translateX(-50%); animation:rise 1.6s var(--ease-settle) both; will-change:transform; }
-        .vinyl-sun{ display:block; width:100%; position:absolute; inset:0;
-          transform:translate3d(0, var(--sun-shift, 0px), 0); will-change:transform; }
-        .vinyl-disc{ position:relative; display:block; width:86%; height:auto; margin:7% auto;
-          transform:translate3d(0, var(--sun-shift, 0px), 0) rotate(0deg); will-change:transform; }
-        @keyframes rise{ from{ transform:translateX(-50%) translateY(70vh); opacity:0; } to{ transform:translateX(-50%) translateY(0); opacity:1; } }
-        /* the whole record turns, 45s/rev; hover spins it up like a turntable */
-        .vinyl-disc{ animation:spin 45s linear infinite; }
-        .hero:hover .vinyl-disc{ animation-duration:22s; }
-        .sun-rays{ transform-origin:200px 200px; animation:spin 60s linear infinite; }
-        @keyframes spin{ to{ transform:rotate(360deg); } }
-        .hero-eyebrow{ position:relative; z-index:2; color:${T.marigold}; margin-bottom:14px; line-height:18px; min-height:18px; }
-        .hero-word{ position:relative; z-index:2; font-size:clamp(32px,6.4vw,86px); color:${T.cream}; max-width:16ch; margin:0 auto; }
+        /* Seat B — the felt Earth in space. Parallax lives on the wrappers and
+           drift on the inner tiles, so the two transforms never overwrite
+           each other. Stars 0.20x scroll, Earth 0.10x — real separation. */
+        .starfield{
+          position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+          transform:translate3d(0, var(--star-shift, 0px), 0); will-change:transform;
+        }
+        .stars{ position:absolute; inset:-25%; background-repeat:repeat; }
+        .stars-far{
+          opacity:.30;
+          background-image:radial-gradient(circle, ${T.cream} 0 1px, transparent 1.4px);
+          background-size:132px 132px;
+          animation:drift-far 160s linear infinite;
+        }
+        .stars-near{
+          opacity:.42;
+          background-image:radial-gradient(circle, ${T.cream} 0 1.5px, transparent 2px);
+          background-size:207px 207px;
+          animation:drift-near 110s linear infinite;
+        }
+        @keyframes drift-far{ from{ transform:translate3d(0,0,0); } to{ transform:translate3d(-132px,132px,0); } }
+        @keyframes drift-near{ from{ transform:translate3d(0,0,0); } to{ transform:translate3d(207px,207px,0); } }
+
+        .earth-wrap{
+          position:absolute; left:50%; top:54%; width:min(84vw,55vmin); aspect-ratio:1;
+          z-index:1; transform:translate(-50%,-50%) translate3d(0, var(--earth-shift, 0px), 0);
+          will-change:transform;
+        }
+        .earth-vid, .earth-still{
+          position:absolute; inset:0; width:100%; height:100%; object-fit:contain; display:block;
+        }
+        .earth-vid{ opacity:0; transition:opacity .6s linear; will-change:opacity; }
+        .earth-vid.on{ opacity:1; }
+
+        .hero-eyebrow{ position:relative; z-index:3; color:${T.marigold}; margin-bottom:14px; line-height:18px; min-height:18px; }
+        .hero-word{ position:relative; z-index:3; font-size:clamp(32px,6.4vw,86px); color:${T.cream}; max-width:16ch; margin:0 auto; }
         .hero-word.l2{ font-size:clamp(24px,4.6vw,62px); color:${T.marigold}; max-width:22ch; }
         .hero-word span{ display:inline-block; animation:pop .8s cubic-bezier(.2,.9,.3,1.3) both; animation-delay:calc(var(--i, 0) * 70ms); }
         .hero-word.l2 span{ animation-delay:calc(150ms + var(--i, 0) * 70ms); }
         @keyframes pop{ from{ transform:translateY(60px) scale(.9); opacity:0; } to{ transform:none; opacity:1; } }
-        .hero-sub{ position:relative; z-index:2; max-width:580px; margin:22px auto 26px; font-size:17px; line-height:1.55; color:${T.cream}dd; }
-        .hero-ctas{ position:relative; z-index:2; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; padding-bottom:70px; }
+        .hero-sub{ position:relative; z-index:3; max-width:580px; margin:22px auto 26px; font-size:17px; line-height:1.55; color:${T.cream}dd; }
+        .hero-ctas{ position:relative; z-index:3; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; padding-bottom:70px; }
 
         /* marquee */
         .marquee{ background:${T.marigold}; color:${T.pineDeep}; overflow:hidden; transform:rotate(-1.5deg) scale(1.02); padding:10px 0; height:56px; }
@@ -843,7 +962,7 @@ export default function App() {
       <main>
       {/* HERO — THE MOVEMENT */}
       <header className="hero">
-        <VinylSun />
+        <FeltEarth />
         <div className="mono hero-eyebrow">{c.hero_eyebrow}</div>
         <KineticLine text={c.hero_line1} />
         <KineticLine text={c.hero_line2} className="l2" />
