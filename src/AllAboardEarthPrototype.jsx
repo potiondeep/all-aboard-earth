@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { cardArt, CAREER_PAGE } from "./wixCardArt.js";
 import Logo3D from "./Logo3D.jsx";
 import Seed from "./ornaments/Seed.jsx";
+import Divider from "./ornaments/Divider.jsx";
 import sceneGreenCareers from "./assets/scenes/green-careers.webp";
 import sceneEarthRests from "./assets/scenes/earth-rests.webp";
 import sceneRaccoon from "./assets/scenes/felt-raccoon.webp";
@@ -209,6 +210,11 @@ function useSunParallax() {
         // independent layers: the Earth trails scroll slightly more than the stars
         hero.style.setProperty("--earth-shift", `${Math.max(-60, Math.min(60, y * 0.10)).toFixed(1)}px`);
         hero.style.setProperty("--star-shift", `${Math.max(-40, Math.min(40, y * 0.20)).toFixed(1)}px`);
+        // dividers ride at 0.94x — tiny, but it separates them from the sections
+        for (const d of document.querySelectorAll(".divider")) {
+          const mid = d.getBoundingClientRect().top + window.innerHeight * -0.5;
+          d.style.setProperty("--divider-shift", `${Math.max(-26, Math.min(26, mid * 0.06)).toFixed(1)}px`);
+        }
       });
     };
     onScroll();
@@ -406,22 +412,7 @@ function VinylSun() {
    the signal starts as water and rises into peaks
    ============================================================ */
 function WaveMountainDivider({ flip }) {
-  return (
-    <div className={"divider" + (flip ? " flip" : "")} data-reveal aria-hidden="true">
-      <img
-        className="divider-img"
-        src={flip ? dividerB : dividerA}
-        alt=""
-        loading="lazy"
-        decoding="async"
-        width="1600"
-        height="192"
-      />
-      {/* wipe: a pine curtain slides off to the right — transform-only, so the
-          reveal stays on the compositor (clip-path would not) */}
-      <span className="divider-wipe" />
-    </div>
-  );
+  return <Divider flip={flip} />;
 }
 
 /* ============================================================
@@ -636,7 +627,9 @@ export default function App() {
           .ccard-inner, .rail-train, .cta-train{ transition:none !important; animation:none !important; transform:none !important; }
           .cta-train{ left:auto !important; right:0 !important; }
           .draw-on{ stroke-dasharray:none !important; stroke-dashoffset:0 !important; transition:none !important; }
-          .divider-wipe{ transform:translateX(101%) !important; transition:none !important; }
+          .mask-wave, .mask-ridge{ stroke-dashoffset:0 !important; transition:none !important; }
+          .div-wave-a, .div-wave-b{ animation:none !important; }
+          .divider{ transform:none !important; }
           .seed-grow{ opacity:1 !important; transform:none !important; }
           .seed-roots path, #seed-stem{ stroke-dashoffset:0 !important; transition:none !important; }
           #seed-hull, .seed-leaf{ transform:none !important; opacity:1 !important; transition:none !important; }
@@ -754,13 +747,25 @@ export default function App() {
         @keyframes slide{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
 
         /* wave→mountain dividers */
-        .divider{ position:relative; width:100%; margin:0 auto; overflow:hidden; line-height:0; }
-        .divider-img{ width:100%; height:clamp(84px,11vw,150px); object-fit:cover; display:block; }
-        .divider-wipe{
-          position:absolute; inset:0; background:${T.pine}; pointer-events:none;
-          transform:translateX(0); transition:transform 1.4s var(--ease-settle); will-change:transform;
+        .divider{ position:relative; width:100%; margin:0 auto; overflow:hidden; line-height:0;
+          transform:translate3d(0, var(--divider-shift, 0px), 0); will-change:transform; }
+        .divider-svg{ width:100%; height:clamp(84px,11vw,150px); display:block; }
+        .divider.flip .divider-svg{ transform:none; }
+
+        /* the mask sweeps the horizon: wave first, ridge overlapping in at 600ms */
+        .mask-wave, .mask-ridge{
+          stroke-dasharray:100; stroke-dashoffset:100;
+          transition:stroke-dashoffset 1200ms var(--ease-settle);
         }
-        [data-reveal].in .divider-wipe{ transform:translateX(101%); }
+        .mask-ridge{ transition-duration:1100ms; transition-delay:600ms; }
+        .divider.is-drawn .mask-wave,
+        .divider.is-drawn .mask-ridge{ stroke-dashoffset:0; }
+
+        /* living water — only the wave side, desynced so it reads as ocean */
+        .div-wave-a{ animation:wave-bob-a 7s var(--ease-drift) infinite; will-change:transform; }
+        .div-wave-b{ animation:wave-bob-b 9s var(--ease-drift) infinite; will-change:transform; }
+        @keyframes wave-bob-a{ 0%,100%{ transform:translateY(-3px); } 50%{ transform:translateY(3px); } }
+        @keyframes wave-bob-b{ 0%,100%{ transform:translateY(2.5px); } 50%{ transform:translateY(-2.5px); } }
 
         /* roots mark */
         .roots{ display:block; width:104px; height:auto; margin:40px auto 0; color:${T.marigold}; }
