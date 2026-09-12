@@ -35,6 +35,9 @@ export default function Divider({ flip = false }) {
   // SVG <image> has no loading="lazy", so the paintings would otherwise fetch
   // eagerly and compete with the hero for LCP. Gate them on proximity instead.
   const [near, setNear] = useState(false);
+  // Once the sweep finishes the mask is fully open, so it is pure cost: it would
+  // keep compositing every frame underneath the two bobbing wave layers. Drop it.
+  const [maskDone, setMaskDone] = useState(false);
   const art = flip ? dividerB : dividerA;
 
   useEffect(() => {
@@ -43,6 +46,7 @@ export default function Divider({ flip = false }) {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setDrawn(true);
       setNear(true);
+      setMaskDone(true);
       return;
     }
     const draw = new IntersectionObserver(
@@ -50,6 +54,8 @@ export default function Divider({ flip = false }) {
         if (e.isIntersecting) {
           setDrawn(true);
           draw.disconnect();
+          // wave 1200ms + ridge 600ms delay + 1100ms, plus a little slack
+          setTimeout(() => setMaskDone(true), 2000);
         }
       },
       { threshold: 0.25 }
@@ -115,7 +121,7 @@ export default function Divider({ flip = false }) {
           </clipPath>
         </defs>
 
-        <g mask={`url(#${maskId})`}>
+        <g mask={maskDone ? undefined : `url(#${maskId})`}>
           {near && <>
           <image href={art} x="0" y="0" width={VB_W} height={VB_H} preserveAspectRatio="none" />
           <g clipPath={`url(#${clipId})`}>
