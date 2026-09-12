@@ -16,6 +16,26 @@ Last checked: 2026-09-11 (verified against production).
 | `felt-earth.webm` / `-hevc.mov` | B — hero | The Flow clip, chroma-keyed off its pink background. 560x560, VP9-alpha 571KB + HEVC-alpha 1.6MB; each browser fetches only the one it can decode. |
 | `felt-earth-poster.webp` | B — hero | Derived from the same keyed pipeline, so it matches frame one exactly and there is no jump when the video takes over. Preloaded; it is what first paint shows. |
 
+### Train wheels — blocked, needs your call
+
+The felt train is split into layers rather than redrawn: the fixed felt steam
+plume is cropped off (steam is procedural SVG now, which is what lets puff rate
+track scroll velocity) and the body rides as a transformed layer.
+
+**Wheel rotation is not implemented, and one honest attempt says it cannot be
+from this artwork.** A connecting rod runs horizontally across both wheel faces.
+Rotating a circular crop of a wheel would sweep that rod around with it — a real
+connecting rod translates while the crank pin orbits, so a spinning rod reads as
+broken rather than as motion. Cutting the rod out would leave a hole needing
+inpainting.
+
+Everything else in the train brief is live: velocity-linked chug, velocity-linked
+puff rate (clamped 2-8/sec), climb angle and settle, arrival flourish, the CTA
+crossing with its self-laying dotted track, and the space variant.
+
+To unblock the wheels, a side-view with the wheels, rod and body on separate
+layers would do it — you offered to regenerate one.
+
 ### Logo vectorization (Seat C)
 
 `public/art/logo.svg` was traced here from the graffiti PNG — 49 paths in four

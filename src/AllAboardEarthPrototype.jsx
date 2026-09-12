@@ -4,13 +4,13 @@ import { cardArt, CAREER_PAGE } from "./wixCardArt.js";
 import Logo3D from "./Logo3D.jsx";
 import Seed from "./ornaments/Seed.jsx";
 import Divider from "./ornaments/Divider.jsx";
+import Train, { useScrollMotion } from "./ornaments/Train.jsx";
 import sceneGreenCareers from "./assets/scenes/green-careers.webp";
 import sceneEarthRests from "./assets/scenes/earth-rests.webp";
 import sceneRaccoon from "./assets/scenes/felt-raccoon.webp";
 import sceneWindMonkey from "./assets/scenes/felt-wind-monkey.webp";
 import dividerA from "./assets/marks/divider-wave-mountain-a.webp";
 import dividerB from "./assets/marks/divider-wave-mountain-b.webp";
-import climbingTrainArt from "./assets/marks/climbing-train.webp";
 import seedMarkArt from "./assets/marks/seed-mark.webp";
 
 // Card art is language-independent, so it lives outside the copy object and is
@@ -428,6 +428,7 @@ function RootsMark() {
 function ClimbingTrain() {
   const [p, setP] = useState(0);
   const [settling, setSettling] = useState(false);
+  const { moving } = useScrollMotion();
   const [travel, setTravel] = useState(0);
   const trainRef = useRef(null);
 
@@ -469,10 +470,10 @@ function ClimbingTrain() {
       <div className="rail-track" />
       <div
         ref={trainRef}
-        className={"rail-train" + (settling ? " settling" : "")}
+        className={"rail-train" + (settling ? " settling" : "") + (moving ? " moving" : "")}
         style={{ "--y": `${travel * (1 - p)}px`, "--climb": `${(-6 - p * 6).toFixed(1)}deg` }}
       >
-        <img className="rail-train-img" src={climbingTrainArt} alt="" width="760" height="672" loading="lazy" decoding="async" />
+        <Train variant="rail" />
         <span className="rail-label mono">UP WE GO</span>
       </div>
     </div>
@@ -636,7 +637,9 @@ export default function App() {
           .seed-sway, .seed .seed-leaf{ animation:none !important; }
           .photoprint, .poster, .panel{ animation:none !important; }
           .cta-train{ animation:none !important; transform:translateX(0) !important; left:auto !important; right:8px !important; }
-          .cta-train-img{ animation:none !important; }
+          .train-puff{ animation:none !important; opacity:0 !important; }
+          .train--rail, .cta-train .train-body{ animation:none !important; }
+          .train--space{ display:none !important; }
           /* the record and the pulsing badges stop too */
           .vinyl-disc{ animation:none !important; }
           .boarding-badge, .signal{ animation:none !important; opacity:1 !important; }
@@ -822,7 +825,54 @@ export default function App() {
           transform:translateX(-50%) translateY(var(--y, 0px)) rotate(var(--climb, 0deg));
           transition:transform .3s var(--ease-settle); will-change:transform; }
         .rail-train.settling{ transform:translateX(-50%) translateY(var(--y, 0px)) rotate(calc(var(--climb, 0deg) * .4)); }
-        .rail-train-img{ width:52px; height:auto; display:block; filter:drop-shadow(0 3px 6px #0008); }
+        /* 🚂 shared train layers */
+        .train{ position:relative; display:block; line-height:0; }
+        .train-body{ width:100%; height:auto; display:block; filter:drop-shadow(0 3px 7px #0009); }
+        .train-steam{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; }
+        .train-puff{
+          fill:${T.cream}; opacity:0; transform-box:fill-box; transform-origin:50% 50%;
+          transform:scale(.6); will-change:transform, opacity;
+        }
+        .train.is-steaming .train-puff{
+          animation:puff var(--puffCycle,1s) linear infinite;
+          animation-delay:calc(var(--i) * (var(--puffCycle,1s) / 5));
+        }
+        @keyframes puff{
+          0%   { opacity:0;   transform:translate(0,0) scale(.6); }
+          22%  { opacity:.8;  }
+          100% { opacity:0;   transform:translate(-26px,-54px) scale(1.4); }
+        }
+
+        /* rail companion */
+        .train--rail{ width:56px; }
+        .rail-train.moving .train--rail{ animation:chug .125s steps(2,end) infinite; }
+        @keyframes chug{ 0%,100%{ transform:translateY(-1px); } 50%{ transform:translateY(1px); } }
+        .rail-train.settling .train--rail{ animation:none; }
+        .train--rail.is-arrived{ animation:arrive-bob 1.1s var(--ease-settle) 1; }
+        @keyframes arrive-bob{ 0%,100%{ transform:translateY(0); } 40%{ transform:translateY(-5px); } }
+
+        /* CTA crossing */
+        .train--crossing{ width:86px; }
+
+        /* space variant — a tiny traveller crossing behind the Earth */
+        .train--space{
+          position:absolute; z-index:0; width:clamp(34px,5vw,58px); opacity:.5;
+          left:0; top:62%; pointer-events:none;
+          animation:space-cross 60s linear infinite;
+          will-change:transform;
+        }
+        .train--space .train-body{ filter:drop-shadow(0 0 10px ${T.sky}66); }
+        .train--space .train-steam{ display:none; }
+        .train--space::after{
+          content:""; position:absolute; right:-6%; top:42%; width:34%; height:16%;
+          border-radius:50%; background:radial-gradient(circle, ${T.marigold}cc, transparent 70%);
+          animation:exhaust 2s var(--ease-drift) infinite;
+        }
+        @keyframes space-cross{
+          from{ transform:translate3d(-22vw, 0, 0) rotate(-6deg); }
+          to  { transform:translate3d(118vw, -42vh, 0) rotate(-6deg); }
+        }
+        @keyframes exhaust{ 0%,100%{ opacity:.4; } 50%{ opacity:.9; } }
         .rail-label{ writing-mode:vertical-rl; font-size:9px; color:${T.marigold}; margin-top:6px; letter-spacing:.2em; }
         .puff{ animation:puff 2.2s ease-in-out infinite; transform-origin:center; }
         .puff.p2{ animation-delay:.4s; } .puff.p3{ animation-delay:.9s; }
@@ -963,11 +1013,11 @@ export default function App() {
         .crossing{ position:relative; height:74px; margin:0 0 18px; overflow:hidden; }
         .crossing-track{ position:absolute; left:0; right:0; bottom:6px; width:100%; height:4px; }
         .cta-train{ position:absolute; bottom:6px; left:0; line-height:0; will-change:transform; transform:translateX(-20vw); }
-        .cta-train-img{ display:block; width:78px; height:auto; transform:scaleX(-1); will-change:transform; }
+        .cta-train .train{ transform:scaleX(-1); }
         [data-reveal].ctaband.in .cta-train{ animation:cross 7s var(--ease-drift) both; }
-        [data-reveal].ctaband.in .cta-train-img{ animation:rock 1.1s ease-in-out infinite; }
+        [data-reveal].ctaband.in .cta-train .train-body{ animation:rock 1.2s ease-in-out infinite; }
         @keyframes cross{ from{ transform:translateX(-20vw); } to{ transform:translateX(120vw); } }
-        @keyframes rock{ 0%,100%{ transform:scaleX(-1) rotate(-1.5deg); } 50%{ transform:scaleX(-1) rotate(1.5deg); } }
+        @keyframes rock{ 0%,100%{ transform:rotate(-1.5deg); } 50%{ transform:rotate(1.5deg); } }
 
 
         /* proof */
@@ -1021,6 +1071,7 @@ export default function App() {
       {/* HERO — THE MOVEMENT */}
       <header className="hero">
         <Starfield />
+        <Train variant="space" />
         <div className="hero-mark">
           <FeltEarth />
           <Logo3D className="hero-logo" />
@@ -1150,7 +1201,7 @@ export default function App() {
             <svg className="crossing-track" viewBox="0 0 1200 4" preserveAspectRatio="none">
               <line className="draw-on" x1="0" y1="2" x2="1200" y2="2" stroke={T.pineDeep} strokeOpacity=".45" strokeWidth="3" strokeDasharray="10 12" />
             </svg>
-            <span className="cta-train"><img className="cta-train-img" src={climbingTrainArt} alt="" width="760" height="672" loading="lazy" decoding="async" /></span>
+            <span className="cta-train"><Train variant="crossing" /></span>
           </div>
           <div className="cta-stamp display">{c.cta_stamp}</div>
           <h2 className="display">{c.cta_head}</h2>
