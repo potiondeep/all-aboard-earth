@@ -32,6 +32,9 @@ export default function Divider({ flip = false }) {
   const uid = useId().replace(/:/g, "");
   const ref = useRef(null);
   const [drawn, setDrawn] = useState(false);
+  // SVG <image> has no loading="lazy", so the paintings would otherwise fetch
+  // eagerly and compete with the hero for LCP. Gate them on proximity instead.
+  const [near, setNear] = useState(false);
   const art = flip ? dividerB : dividerA;
 
   useEffect(() => {
@@ -39,19 +42,33 @@ export default function Divider({ flip = false }) {
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setDrawn(true);
+      setNear(true);
       return;
     }
-    const io = new IntersectionObserver(
+    const draw = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) {
           setDrawn(true);
-          io.disconnect();
+          draw.disconnect();
         }
       },
       { threshold: 0.25 }
     );
-    io.observe(el);
-    return () => io.disconnect();
+    const load = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setNear(true);
+          load.disconnect();
+        }
+      },
+      { rootMargin: "500px" }
+    );
+    draw.observe(el);
+    load.observe(el);
+    return () => {
+      draw.disconnect();
+      load.disconnect();
+    };
   }, []);
 
   const maskId = `divmask-${uid}`;
@@ -99,11 +116,13 @@ export default function Divider({ flip = false }) {
         </defs>
 
         <g mask={`url(#${maskId})`}>
+          {near && <>
           <image href={art} x="0" y="0" width={VB_W} height={VB_H} preserveAspectRatio="none" />
           <g clipPath={`url(#${clipId})`}>
             <image className="div-wave-a" href={art} x="0" y="0" width={VB_W} height={VB_H} preserveAspectRatio="none" opacity="0.7" />
             <image className="div-wave-b" href={art} x="0" y="0" width={VB_W} height={VB_H} preserveAspectRatio="none" opacity="0.4" />
           </g>
+          </>}
         </g>
       </svg>
     </div>
