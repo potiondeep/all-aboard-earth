@@ -250,7 +250,7 @@ export default function Logo3D({ className = "" }) {
   const layers = reduced ? 1 : 7;
 
   return (
-    <div ref={hostRef} className={"logo3d " + className} aria-label="All Aboard Earth">
+    <div ref={hostRef} className={"logo3d " + className} role="img" aria-label="All Aboard Earth">
       {mode === "webgl" ? (
         <canvas ref={canvasRef} className="logo3d-canvas" aria-hidden="true" />
       ) : (
