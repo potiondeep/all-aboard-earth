@@ -16,6 +16,23 @@ Last checked: 2026-09-11 (verified against production).
 | `felt-earth.webm` / `-hevc.mov` | B — hero | The Flow clip, chroma-keyed off its pink background. 560x560, VP9-alpha 571KB + HEVC-alpha 1.6MB; each browser fetches only the one it can decode. |
 | `felt-earth-poster.webp` | B — hero | Derived from the same keyed pipeline, so it matches frame one exactly and there is no jump when the video takes over. Preloaded; it is what first paint shows. |
 
+### Logo vectorization (Seat C)
+
+`public/art/logo.svg` was traced here from the graffiti PNG — 49 paths in four
+groups, one per brand colour, no white box. Verified against the source: all
+four colours present as separate paths, letterforms intact, the spiral's every
+turn and the star preserved.
+
+Colours sampled from the file, not guessed — the brief's estimates were all
+slightly off: blue `#25AAE1` (not #29ABE2), yellow `#FDCB25` (not #FFCB2E),
+green `#8CC640` (not #8CC63E), pink `#ED1579` (not #EC1E79).
+
+Route: resize to 2000px wide, flatten onto white, then per colour
+`-fuzz 26%` isolate → threshold → `potrace --turdsize 8 --alphamax 1.0`, then
+recombine the four `<g>`s under one viewBox with pink at the back and the green
+spiral on top. Coverage sanity-checks at pink 11%, yellow 7%, blue 3%, green 2%.
+No upscale was needed — detail held at 2000px.
+
 ### Keying notes (for when the next clip arrives)
 
 The brief said key `#FF00FF`, but the plate is **not** pure magenta — it is an

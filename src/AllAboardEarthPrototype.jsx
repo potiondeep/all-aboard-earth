@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 
 import { cardArt, CAREER_PAGE } from "./wixCardArt.js";
+import Logo3D from "./Logo3D.jsx";
 import sceneGreenCareers from "./assets/scenes/green-careers.webp";
 import sceneEarthRests from "./assets/scenes/earth-rests.webp";
 import sceneRaccoon from "./assets/scenes/felt-raccoon.webp";
@@ -330,6 +331,8 @@ function FeltEarth() {
         <img
           className="earth-still"
           src="/art/felt-earth-poster.webp"
+          srcSet="/art/felt-earth-poster-400.webp 400w, /art/felt-earth-poster.webp 560w"
+          sizes="min(84vw, 55vmin)"
           alt=""
           width="560"
           height="560"
@@ -647,6 +650,7 @@ export default function App() {
           /* remaster seats */
           .grain{ display:none; }
           .stars{ animation:none !important; }
+          .logo3d-css img{ transform:none !important; transition:none !important; animation:none !important; }
           .starfield{ transform:none !important; }
           .earth-vid, .earth-still{ transform:none !important; transition:none !important; }
           .ccard-inner, .rail-train, .cta-train{ transition:none !important; animation:none !important; transform:none !important; }
@@ -680,7 +684,7 @@ export default function App() {
         .hero-accent{ position:relative; z-index:3; font-family:'Anton'; color:${T.marigold}; font-size:clamp(14px,2.2vw,20px); letter-spacing:.14em; margin-top:10px; line-height:26px; min-height:26px; }
 
         /* hero + vinyl sun */
-        .hero{ position:relative; padding:clamp(40px,8vh,90px) clamp(16px,4vw,48px) 0; text-align:center;
+        .hero{ position:relative; padding:clamp(20px,4vh,52px) clamp(16px,4vw,48px) 0; text-align:center;
           background:${T.pineDeep}; overflow:hidden; }
         /* The scrim was tuned for the light-tan record. The felt Earth is already
            mid-dark, so it only needs enough to hold the copy — much lighter, and
@@ -724,14 +728,31 @@ export default function App() {
         .earth-vid{ opacity:0; transition:opacity .6s linear; will-change:opacity; }
         .earth-vid.on{ opacity:1; }
 
+        /* Seat C — the extruded mark, frontmost in the hero stack */
+        .logo3d{ position:relative; z-index:4; width:min(50vw,244px); aspect-ratio:900/777; margin:0 auto 10px; }
+        .logo3d-canvas{ width:100%; height:100%; display:block; }
+        .logo3d-css{ position:relative; width:100%; height:100%; perspective:900px; }
+        .logo3d-css img{
+          position:absolute; inset:0; width:100%; height:100%; object-fit:contain; display:block;
+          transform:rotateX(8deg) rotateY(-10deg) translateZ(calc(var(--d) * 2px));
+          transition:transform .5s var(--ease-settle);
+        }
+        .logo3d-css.still img{ transform:none; transition:none; }
+        /* touch devices: idle sway + float instead of cursor tracking */
+        .logo3d-css.drift img{ animation:logo-sway 7s var(--ease-drift) infinite; }
+        @keyframes logo-sway{
+          0%,100%{ transform:rotateX(6deg) rotateY(-7deg) translateZ(calc(var(--d) * 2px)) translateY(-2px); }
+          50%    { transform:rotateX(9deg) rotateY(7deg)  translateZ(calc(var(--d) * 2px)) translateY(2px); }
+        }
+
         .hero-eyebrow{ position:relative; z-index:3; color:${T.marigold}; margin-bottom:14px; line-height:18px; min-height:18px; }
         .hero-word{ position:relative; z-index:3; font-size:clamp(32px,6.4vw,86px); color:${T.cream}; max-width:16ch; margin:0 auto; }
         .hero-word.l2{ font-size:clamp(24px,4.6vw,62px); color:${T.marigold}; max-width:22ch; }
         .hero-word span{ display:inline-block; animation:pop .8s cubic-bezier(.2,.9,.3,1.3) both; animation-delay:calc(var(--i, 0) * 70ms); }
         .hero-word.l2 span{ animation-delay:calc(150ms + var(--i, 0) * 70ms); }
         @keyframes pop{ from{ transform:translateY(60px) scale(.9); opacity:0; } to{ transform:none; opacity:1; } }
-        .hero-sub{ position:relative; z-index:3; max-width:580px; margin:22px auto 26px; font-size:17px; line-height:1.55; color:${T.cream}dd; }
-        .hero-ctas{ position:relative; z-index:3; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; padding-bottom:70px; }
+        .hero-sub{ position:relative; z-index:3; max-width:580px; margin:16px auto 22px; font-size:17px; line-height:1.55; color:${T.cream}dd; }
+        .hero-ctas{ position:relative; z-index:3; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; padding-bottom:48px; }
 
         /* marquee */
         .marquee{ background:${T.marigold}; color:${T.pineDeep}; overflow:hidden; transform:rotate(-1.5deg) scale(1.02); padding:10px 0; height:56px; }
@@ -963,6 +984,7 @@ export default function App() {
       {/* HERO — THE MOVEMENT */}
       <header className="hero">
         <FeltEarth />
+        <Logo3D className="hero-logo" />
         <div className="mono hero-eyebrow">{c.hero_eyebrow}</div>
         <KineticLine text={c.hero_line1} />
         <KineticLine text={c.hero_line2} className="l2" />
