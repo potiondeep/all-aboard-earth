@@ -687,7 +687,7 @@ export default function App() {
         .hero-accent{ position:relative; z-index:3; font-family:'Anton'; color:${T.marigold}; font-size:clamp(14px,2.2vw,20px); letter-spacing:.14em; margin-top:10px; line-height:26px; min-height:26px; }
 
         /* hero + vinyl sun */
-        .hero{ position:relative; padding:clamp(20px,4vh,52px) clamp(16px,4vw,48px) 0; text-align:center;
+        .hero{ position:relative; padding:clamp(84px,11vh,112px) clamp(16px,4vw,48px) 0; text-align:center;
           background:${T.pineDeep}; overflow:hidden; }
         /* Seat B — starfield behind everything in the hero */
         .starfield{
@@ -713,9 +713,9 @@ export default function App() {
         /* the mark block: Earth directly behind, extruded logo in front, shared centre */
         .hero-mark{
           position:relative; z-index:4;
-          width:min(50vw,244px); aspect-ratio:900/777;
+          width:min(32vw,158px); aspect-ratio:900/777;
           /* bottom margin clears the globe's overhang so it never sits on the kicker */
-          margin:0 auto clamp(56px,8vw,74px);
+          margin:0 auto clamp(78px,12vw,102px);
         }
         .earth-wrap{
           position:absolute; left:50%; top:50%;
@@ -725,6 +725,13 @@ export default function App() {
         }
         .earth-vid, .earth-still{
           position:absolute; inset:0; width:100%; height:100%; object-fit:contain; display:block;
+          /* Static drop-shadows, so they follow the globe's real alpha silhouette
+             rather than a guessed circle: a dark contact shadow gives it weight,
+             a cyan one reads as atmosphere. Never animated. */
+          filter:
+            drop-shadow(0 16px 30px rgba(0,0,0,.55))
+            drop-shadow(0 0 22px rgba(111,211,255,.28))
+            drop-shadow(0 0 60px rgba(111,211,255,.12));
         }
         .earth-vid{ opacity:0; transition:opacity .6s linear; will-change:opacity; }
         .earth-vid.on{ opacity:1; }
@@ -752,7 +759,7 @@ export default function App() {
         .hero-word.l2 span{ animation-delay:calc(150ms + var(--i, 0) * 70ms); }
         @keyframes pop{ from{ transform:translateY(60px) scale(.9); opacity:0; } to{ transform:none; opacity:1; } }
         .hero-sub{ position:relative; z-index:3; max-width:580px; margin:16px auto 22px; font-size:17px; line-height:1.55; color:${T.cream}dd; }
-        .hero-ctas{ position:relative; z-index:3; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; padding-bottom:48px; }
+        .hero-ctas{ position:relative; z-index:3; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; padding-bottom:38px; }
 
         /* marquee */
         .marquee{ background:${T.marigold}; color:${T.pineDeep}; overflow:hidden; transform:rotate(-1.5deg) scale(1.02); padding:10px 0; height:56px; }
