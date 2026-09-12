@@ -321,12 +321,7 @@ function FeltEarth() {
   const common = { muted: true, playsInline: true, "aria-hidden": true };
 
   return (
-    <>
-      <div className="starfield" aria-hidden="true">
-        <div className="stars stars-far" />
-        <div className="stars stars-near" />
-      </div>
-      <div className="earth-wrap" aria-hidden="true">
+    <div className="earth-wrap" aria-hidden="true">
         {/* always present: it is the LCP-guarded still and the video's backdrop */}
         <img
           className="earth-still"
@@ -344,9 +339,17 @@ function FeltEarth() {
             <video ref={aRef} preload="auto" {...common} className={"earth-vid" + (front === "a" ? " on" : "")}>{sources}</video>
             <video ref={bRef} preload="metadata" {...common} className={"earth-vid" + (front === "b" ? " on" : "")}>{sources}</video>
           </>
-        )}
-      </div>
-    </>
+      )}
+    </div>
+  );
+}
+
+function Starfield() {
+  return (
+    <div className="starfield" aria-hidden="true">
+      <div className="stars stars-far" />
+      <div className="stars stars-near" />
+    </div>
   );
 }
 
@@ -686,17 +689,7 @@ export default function App() {
         /* hero + vinyl sun */
         .hero{ position:relative; padding:clamp(20px,4vh,52px) clamp(16px,4vw,48px) 0; text-align:center;
           background:${T.pineDeep}; overflow:hidden; }
-        /* The scrim was tuned for the light-tan record. The felt Earth is already
-           mid-dark, so it only needs enough to hold the copy — much lighter, and
-           it sits above the Earth (z 1) but below the type (z 3). */
-        .hero::after{
-          content:""; position:absolute; left:50%; top:34%; width:min(92vw,860px); height:56%;
-          transform:translateX(-50%); z-index:2; pointer-events:none;
-          background:radial-gradient(ellipse at 50% 46%, ${T.pineDeep}b8 0%, ${T.pineDeep}7a 46%, ${T.pineDeep}00 74%);
-        }
-        /* Seat B — the felt Earth in space. Parallax lives on the wrappers and
-           drift on the inner tiles, so the two transforms never overwrite
-           each other. Stars 0.20x scroll, Earth 0.10x — real separation. */
+        /* Seat B — starfield behind everything in the hero */
         .starfield{
           position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden;
           transform:translate3d(0, var(--star-shift, 0px), 0); will-change:transform;
@@ -717,9 +710,17 @@ export default function App() {
         @keyframes drift-far{ from{ transform:translate3d(0,0,0); } to{ transform:translate3d(-132px,132px,0); } }
         @keyframes drift-near{ from{ transform:translate3d(0,0,0); } to{ transform:translate3d(207px,207px,0); } }
 
+        /* the mark block: Earth directly behind, extruded logo in front, shared centre */
+        .hero-mark{
+          position:relative; z-index:4;
+          width:min(50vw,244px); aspect-ratio:900/777;
+          /* bottom margin clears the globe's overhang so it never sits on the kicker */
+          margin:0 auto clamp(56px,8vw,74px);
+        }
         .earth-wrap{
-          position:absolute; left:50%; top:54%; width:min(84vw,55vmin); aspect-ratio:1;
-          z-index:1; transform:translate(-50%,-50%) translate3d(0, var(--earth-shift, 0px), 0);
+          position:absolute; left:50%; top:50%;
+          width:min(62vw,322px); aspect-ratio:1; z-index:0;
+          transform:translate(-50%,-50%) translate3d(0, var(--earth-shift, 0px), 0);
           will-change:transform;
         }
         .earth-vid, .earth-still{
@@ -728,8 +729,8 @@ export default function App() {
         .earth-vid{ opacity:0; transition:opacity .6s linear; will-change:opacity; }
         .earth-vid.on{ opacity:1; }
 
-        /* Seat C — the extruded mark, frontmost in the hero stack */
-        .logo3d{ position:relative; z-index:4; width:min(50vw,244px); aspect-ratio:900/777; margin:0 auto 10px; }
+        /* Seat C — the extruded mark, in front of the Earth */
+        .logo3d{ position:relative; z-index:2; width:100%; height:100%; }
         .logo3d-canvas{ width:100%; height:100%; display:block; }
         .logo3d-css{ position:relative; width:100%; height:100%; perspective:900px; }
         .logo3d-css img{
@@ -738,7 +739,6 @@ export default function App() {
           transition:transform .5s var(--ease-settle);
         }
         .logo3d-css.still img{ transform:none; transition:none; }
-        /* touch devices: idle sway + float instead of cursor tracking */
         .logo3d-css.drift img{ animation:logo-sway 7s var(--ease-drift) infinite; }
         @keyframes logo-sway{
           0%,100%{ transform:rotateX(6deg) rotateY(-7deg) translateZ(calc(var(--d) * 2px)) translateY(-2px); }
@@ -983,8 +983,11 @@ export default function App() {
       <main>
       {/* HERO — THE MOVEMENT */}
       <header className="hero">
-        <FeltEarth />
-        <Logo3D className="hero-logo" />
+        <Starfield />
+        <div className="hero-mark">
+          <FeltEarth />
+          <Logo3D className="hero-logo" />
+        </div>
         <div className="mono hero-eyebrow">{c.hero_eyebrow}</div>
         <KineticLine text={c.hero_line1} />
         <KineticLine text={c.hero_line2} className="l2" />

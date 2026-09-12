@@ -16,12 +16,14 @@ Open copy/content questions. Art gaps live in `MISSING_ART.md`.
    these with official wording whenever you have it — they are all in the `es`
    block of `src/AllAboardEarthPrototype.jsx`.
 
-2. **Safari alpha check.** The hero video ships HEVC-with-alpha for Safari and
-   VP9-with-alpha for everyone else. Chrome is verified automatically; Safari
-   could not be, because screen capture is permission-blocked for this process.
-   Open the site in Safari and confirm the Earth floats on the starfield with no
-   magenta box behind it. If it shows a box, tell me and I will fall back to the
-   WebM + radial-mask route.
+2. ~~**Safari alpha check.**~~ **Fixed 2026-09-12.** Safari was ignoring the
+   HEVC alpha channel and showing the raw RGB, which under the keyed area was
+   still the original magenta. The clip is now re-encoded so every fully-keyed
+   pixel is painted Pine (`#0E2A1B`) *while keeping alpha 0* — so a browser that
+   honours alpha sees a clean cut-out, and one that ignores it sees a pine
+   square on a pine hero, which is invisible. Verified by discarding the alpha
+   channel entirely: the result is indistinguishable from the alpha-honoured
+   render.
 
 3. **Hero button targets.** "Explore Cool Careers" jumps to the `#cool-careers`
    section; "Hear the Music" goes to `/grooves`. Both unchanged from V1 — say if
