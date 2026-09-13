@@ -16,25 +16,37 @@ Last checked: 2026-09-11 (verified against production).
 | `felt-earth.webm` / `-hevc.mov` | B — hero | The Flow clip, chroma-keyed off its pink background. 560x560, VP9-alpha 571KB + HEVC-alpha 1.6MB; each browser fetches only the one it can decode. |
 | `felt-earth-poster.webp` | B — hero | Derived from the same keyed pipeline, so it matches frame one exactly and there is no jump when the video takes over. Preloaded; it is what first paint shows. |
 
-### Train wheels — blocked, needs your call
+### Train wheels — waiting on regenerated art (2026-09-13)
 
-The felt train is split into layers rather than redrawn: the fixed felt steam
-plume is cropped off (steam is procedural SVG now, which is what lets puff rate
-track scroll velocity) and the body rides as a transformed layer.
+The new `train.jpeg` (Desktop/AAE-web-art) fixed the connecting-rod problem and
+slices cleanly: background keyed, body layer, three separate wheel layers,
+`steamOrigin: { x: 0.241, y: 0.02 }` of the trimmed 779x553 layer
+(proof: `remaster-proof/checkpoint/train-layer-slices.png`).
 
-**Wheel rotation is not implemented, and one honest attempt says it cannot be
-from this artwork.** A connecting rod runs horizontally across both wheel faces.
-Rotating a circular crop of a wheel would sweep that rod around with it — a real
-connecting rod translates while the crank pin orbits, so a spinning rod reads as
-broken rather than as motion. Cutting the rod out would leave a hole needing
-inpainting.
+**Still blocked:** nothing was painted behind the spokes. Rotating a wheel
+exposes its old spoke positions as dark slits in the chassis (16 "spokes").
+Decision 2026-09-13: **regenerate** rather than fill. Two Nano Banana edits,
+both with `train.jpeg` attached:
 
-Everything else in the train brief is live: velocity-linked chug, velocity-linked
-puff rate (clamped 2-8/sec), climb angle and settle, arrival flourish, the CTA
-crossing with its self-laying dotted track, and the space variant.
+1. **Body, no wheels** — "Edit this exact image. Keep the locomotive identical:
+   same needle-felt texture, colours, proportions, camera angle, framing, position
+   and scale on the canvas. Do not move, resize or restyle anything. Remove the
+   three wheels completely. Where they were, felt the blue lower chassis skirt as
+   it looks with nothing in front of it: the same blue felt and the same bottom
+   edge, running straight across. Below that edge show only the flat magenta
+   background: no far-side wheels, no axles, no wheel arches, no shadow. Solid flat
+   magenta background edge to edge. No steam, no smoke, no ground."
+2. **One wheel, alone** — "Using the wheels on this locomotive as reference,
+   make ONE wheel on its own: the same needle-felted wooden-toy wheel, tan felt rim
+   with its two-tone rings, exactly eight straight spokes evenly spaced 45° apart,
+   the pale turned-wood hub cap. Perfectly flat side-on view, a true circle, not
+   an ellipse, centred and filling about 80% of a square 1:1 canvas. No axle, no
+   connecting rod, no chassis, nothing behind it: the gaps between the spokes
+   show plain background. Solid flat magenta background, no shadow, no gradient."
 
-To unblock the wheels, a side-view with the wheels, rod and body on separate
-layers would do it — you offered to regenerate one.
+One wheel is reused three times (they are the same art), and even 45° spokes
+mean rotation never wobbles. Exact alignment of the body edit is not required:
+it gets registered to the original before slicing.
 
 ### Logo vectorization (Seat C)
 

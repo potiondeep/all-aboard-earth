@@ -619,6 +619,8 @@ export default function App() {
           .cta-train{ left:auto !important; right:0 !important; }
           .draw-on{ stroke-dasharray:none !important; stroke-dashoffset:0 !important; transition:none !important; }
           .seed-grow{ opacity:1 !important; transform:none !important; }
+          .dv-bob, .dv-layer, .dv-tide, .dv-tide-inner{ animation:none !important; transform:none !important; }
+          .dv-region{ opacity:1 !important; }
           .sm-roots, .sm-pod{ transform:scaleY(1) !important; transition:none !important; }
           .seed-leaves{ transform:none !important; opacity:1 !important; transition:none !important; }
           .seed-sway, .seed-leaves{ animation:none !important; }
@@ -737,8 +739,35 @@ export default function App() {
         @keyframes slide{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
 
         /* wave→mountain dividers — static, no motion or filters (they read as fuzz) */
-        .divider{ position:relative; width:100%; margin:0 auto; overflow:hidden; line-height:0; }
-        .divider-img{ width:100%; height:clamp(84px,11vw,150px); display:block; object-fit:fill; }
+        .divider{ position:relative; width:100%; height:clamp(84px,11vw,150px); margin:0 auto; overflow:hidden; line-height:0; }
+        /* section bleed: the banner's top and bottom edges fade into whatever section sits beside it */
+        .dv-bleed{ position:absolute; inset:0;
+          -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 18%, #000 82%, transparent 100%);
+                  mask-image:linear-gradient(to bottom, transparent 0, #000 18%, #000 82%, transparent 100%); }
+        .dv-region, .dv-layer, .dv-bob{ position:absolute; inset:0; }
+        .dv-layer{ will-change:transform; }
+        .dv-img{ position:absolute; inset:0; width:100%; height:100%; object-fit:fill; display:block; }
+        /* horizon dissolve: static feathered masks; only the regions' opacity changes on scroll.
+           The land region sits underneath and is fully opaque wherever the wave feather thins,
+           so at rest the two recombine into the whole painting. */
+        .dv-region{ will-change:opacity; }
+        .dv-mask-left{ -webkit-mask-image:linear-gradient(to right, #000 41.5%, transparent 56.5%); mask-image:linear-gradient(to right, #000 41.5%, transparent 56.5%); }
+        .dv-mask-right-cover{ -webkit-mask-image:linear-gradient(to right, transparent 26.5%, #000 41.5%); mask-image:linear-gradient(to right, transparent 26.5%, #000 41.5%); }
+        .dv-mask-right{ -webkit-mask-image:linear-gradient(to right, transparent 43.5%, #000 58.5%); mask-image:linear-gradient(to right, transparent 43.5%, #000 58.5%); }
+        .dv-mask-left-cover{ -webkit-mask-image:linear-gradient(to right, #000 58.5%, transparent 73.5%); mask-image:linear-gradient(to right, #000 58.5%, transparent 73.5%); }
+        /* tide wipe: a 115%-wide clip with a feathered right edge slides in; its content counter-slides */
+        .dv-tide{ position:absolute; top:0; bottom:0; left:0; width:115%; overflow:hidden; will-change:transform;
+          -webkit-mask-image:linear-gradient(to right, #000 86.96%, transparent 100%); mask-image:linear-gradient(to right, #000 86.96%, transparent 100%); }
+        .dv-tide-inner{ position:absolute; top:0; bottom:0; left:0; width:86.9565%; will-change:transform; }
+        /* living water: whole-pixel steps only, so the engraving never sits on a half pixel */
+        .divider.is-live .dv-bob{ animation:dv-sea-bob 7s infinite; }
+        @keyframes dv-sea-bob{
+          0%  { transform:translate3d(0,0,0);    animation-timing-function:steps(3, jump-end); }
+          25% { transform:translate3d(0,-3px,0); animation-timing-function:steps(3, jump-end); }
+          50% { transform:translate3d(0,0,0);    animation-timing-function:steps(3, jump-end); }
+          75% { transform:translate3d(0,3px,0);  animation-timing-function:steps(3, jump-end); }
+          100%{ transform:translate3d(0,0,0); }
+        }
 
         /* roots mark */
         .roots{ display:block; width:96px; height:auto; margin:40px auto 0; }
