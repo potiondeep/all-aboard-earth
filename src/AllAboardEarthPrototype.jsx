@@ -208,11 +208,6 @@ function useSunParallax() {
         // independent layers: the Earth trails scroll slightly more than the stars
         hero.style.setProperty("--earth-shift", `${Math.max(-60, Math.min(60, y * 0.10)).toFixed(1)}px`);
         hero.style.setProperty("--star-shift", `${Math.max(-40, Math.min(40, y * 0.20)).toFixed(1)}px`);
-        // dividers ride at 0.94x — tiny, but it separates them from the sections
-        for (const d of document.querySelectorAll(".divider")) {
-          const mid = d.getBoundingClientRect().top + window.innerHeight * -0.5;
-          d.style.setProperty("--divider-shift", `${Math.max(-26, Math.min(26, mid * 0.06)).toFixed(1)}px`);
-        }
       });
     };
     onScroll();
@@ -591,9 +586,6 @@ export default function App() {
           background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
           background-repeat:repeat;
         }
-        /* wobble is applied statically to line art — never animated, never on text */
-        .wobble{ filter:url(#wobble); }
-
         /* Seat 3 — dividers draw themselves on as they enter view */
         .draw-on{ stroke-dasharray:2400; stroke-dashoffset:2400; transition:stroke-dashoffset 1.4s var(--ease-settle); }
         .draw-on-b{ transition-delay:.18s; }
@@ -626,9 +618,6 @@ export default function App() {
           .ccard-inner, .rail-train, .cta-train{ transition:none !important; animation:none !important; transform:none !important; }
           .cta-train{ left:auto !important; right:0 !important; }
           .draw-on{ stroke-dasharray:none !important; stroke-dashoffset:0 !important; transition:none !important; }
-          .mask-wave, .mask-ridge{ stroke-dashoffset:0 !important; transition:none !important; }
-          .div-wave-a, .div-wave-b{ animation:none !important; }
-          .divider{ transform:none !important; }
           .seed-grow{ opacity:1 !important; transform:none !important; }
           .sm-roots, .sm-pod{ transform:scaleY(1) !important; transition:none !important; }
           .seed-leaves{ transform:none !important; opacity:1 !important; transition:none !important; }
@@ -747,26 +736,9 @@ export default function App() {
         [data-reveal].freq.in .seed-ico{ transform:scale(1); opacity:1; }
         @keyframes slide{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
 
-        /* wave→mountain dividers */
-        .divider{ position:relative; width:100%; margin:0 auto; overflow:hidden; line-height:0;
-          transform:translate3d(0, var(--divider-shift, 0px), 0); will-change:transform; }
-        .divider-svg{ width:100%; height:clamp(84px,11vw,150px); display:block; }
-        .divider.flip .divider-svg{ transform:none; }
-
-        /* the mask sweeps the horizon: wave first, ridge overlapping in at 600ms */
-        .mask-wave, .mask-ridge{
-          stroke-dasharray:100; stroke-dashoffset:100;
-          transition:stroke-dashoffset 1200ms var(--ease-settle);
-        }
-        .mask-ridge{ transition-duration:1100ms; transition-delay:600ms; }
-        .divider.is-drawn .mask-wave,
-        .divider.is-drawn .mask-ridge{ stroke-dashoffset:0; }
-
-        /* living water — only the wave side, desynced so it reads as ocean */
-        .div-wave-a{ animation:wave-bob-a 7s var(--ease-drift) infinite; will-change:transform; }
-        .div-wave-b{ animation:wave-bob-b 9s var(--ease-drift) infinite; will-change:transform; }
-        @keyframes wave-bob-a{ 0%,100%{ transform:translateY(-3px); } 50%{ transform:translateY(3px); } }
-        @keyframes wave-bob-b{ 0%,100%{ transform:translateY(2.5px); } 50%{ transform:translateY(-2.5px); } }
+        /* wave→mountain dividers — static, no motion or filters (they read as fuzz) */
+        .divider{ position:relative; width:100%; margin:0 auto; overflow:hidden; line-height:0; }
+        .divider-img{ width:100%; height:clamp(84px,11vw,150px); display:block; object-fit:fill; }
 
         /* roots mark */
         .roots{ display:block; width:96px; height:auto; margin:40px auto 0; }
@@ -815,26 +787,6 @@ export default function App() {
         [data-reveal].freq.in .seed-ico{ transform:scale(1); opacity:1; }
         @keyframes slide{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
 
-        /* wave→mountain dividers */
-        .divider{ position:relative; width:100%; margin:0 auto; overflow:hidden; line-height:0;
-          transform:translate3d(0, var(--divider-shift, 0px), 0); will-change:transform; }
-        .divider-svg{ width:100%; height:clamp(84px,11vw,150px); display:block; }
-        .divider.flip .divider-svg{ transform:none; }
-
-        /* the mask sweeps the horizon: wave first, ridge overlapping in at 600ms */
-        .mask-wave, .mask-ridge{
-          stroke-dasharray:100; stroke-dashoffset:100;
-          transition:stroke-dashoffset 1200ms var(--ease-settle);
-        }
-        .mask-ridge{ transition-duration:1100ms; transition-delay:600ms; }
-        .divider.is-drawn .mask-wave,
-        .divider.is-drawn .mask-ridge{ stroke-dashoffset:0; }
-
-        /* living water — only the wave side, desynced so it reads as ocean */
-        .div-wave-a{ animation:wave-bob-a 7s var(--ease-drift) infinite; will-change:transform; }
-        .div-wave-b{ animation:wave-bob-b 9s var(--ease-drift) infinite; will-change:transform; }
-        @keyframes wave-bob-a{ 0%,100%{ transform:translateY(-3px); } 50%{ transform:translateY(3px); } }
-        @keyframes wave-bob-b{ 0%,100%{ transform:translateY(2.5px); } 50%{ transform:translateY(-2.5px); } }
 
         /* roots mark */
         .roots{ display:block; width:104px; height:auto; margin:40px auto 0; color:${T.marigold}; }
@@ -1109,16 +1061,6 @@ export default function App() {
       `}</style>
 
       <div className="grain" aria-hidden="true" />
-
-      {/* shared hand-drawn edge wobble, used statically by line art */}
-      <svg width="0" height="0" aria-hidden="true" style={{ position: "absolute" }}>
-        <defs>
-          <filter id="wobble">
-            <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="7" result="n" />
-            <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" xChannelSelector="R" yChannelSelector="G" />
-          </filter>
-        </defs>
-      </svg>
 
       <ClimbingTrain />
 

@@ -41,12 +41,14 @@ for (const c of CASES) {
   await settle(2600); // reveal + mask drop
 
   const m = await page.evaluate(() => {
-    const svg = document.querySelector(".divider .divider-svg");
-    const img = document.querySelector(".divider image");
-    if (!svg || !img) return null;
-    const r = svg.getBoundingClientRect();
-    return { cssW: Math.round(r.width), cssH: Math.round(r.height), href: (img.getAttribute("href") || "").split("/").pop() };
+    const img = document.querySelector(".divider img");
+    if (!img || !img.currentSrc) return null;
+    const r = img.getBoundingClientRect();
+    const running = document.getAnimations().filter((a) => a.effect?.target?.closest?.(".divider")).length;
+    return { cssW: Math.round(r.width), cssH: Math.round(r.height), href: img.currentSrc.split("/").pop(),
+             filter: getComputedStyle(img).filter, transform: getComputedStyle(img.parentElement).transform, running };
   });
+  if (m) console.log(`         filter=${m.filter} transform=${m.transform} animations=${m.running}`);
 
   const el = await page.$(".divider");
   if (el) await el.screenshot({ path: `${OUT}/divider-${c.label}.png` });
