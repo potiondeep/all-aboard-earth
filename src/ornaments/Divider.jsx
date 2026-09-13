@@ -1,6 +1,27 @@
 import React, { useEffect, useId, useRef, useState } from "react";
-import dividerA from "../assets/marks/divider-wave-mountain-a.webp";
-import dividerB from "../assets/marks/divider-wave-mountain-b.webp";
+import aSm from "../assets/marks/divider-wave-mountain-a-1600.webp";
+import aMd from "../assets/marks/divider-wave-mountain-a-2560.webp";
+import aLg from "../assets/marks/divider-wave-mountain-a-3840.webp";
+import bSm from "../assets/marks/divider-wave-mountain-b-1600.webp";
+import bMd from "../assets/marks/divider-wave-mountain-b-2560.webp";
+import bLg from "../assets/marks/divider-wave-mountain-b-3840.webp";
+
+/* The divider is full-bleed, so its intrinsic width has to cover the whole
+ * viewport at the device's pixel ratio — a 1600px asset is only 0.42x on a
+ * 1920 screen at DPR 2, which is exactly what read as "blurry". SVG <image>
+ * has no srcset, so pick the rung once at mount and fetch only that one. */
+const RUNGS = {
+  a: [[1600, aSm], [2560, aMd], [3840, aLg]],
+  b: [[1600, bSm], [2560, bMd], [3840, bLg]],
+};
+
+function pickArt(variant) {
+  const rungs = RUNGS[variant];
+  if (typeof window === "undefined") return rungs[0][1];
+  // DPR above 2 buys nothing visible here and costs real bytes on phones
+  const need = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2);
+  return (rungs.find(([w]) => w >= need) || rungs[rungs.length - 1])[1];
+}
 
 /**
  * 🌊 Wave → mountain divider.
@@ -38,7 +59,7 @@ export default function Divider({ flip = false }) {
   // Once the sweep finishes the mask is fully open, so it is pure cost: it would
   // keep compositing every frame underneath the two bobbing wave layers. Drop it.
   const [maskDone, setMaskDone] = useState(false);
-  const art = flip ? dividerB : dividerA;
+  const [art] = useState(() => pickArt(flip ? "b" : "a"));
 
   useEffect(() => {
     const el = ref.current;

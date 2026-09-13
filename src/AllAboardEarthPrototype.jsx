@@ -9,8 +9,6 @@ import sceneGreenCareers from "./assets/scenes/green-careers.webp";
 import sceneEarthRests from "./assets/scenes/earth-rests.webp";
 import sceneRaccoon from "./assets/scenes/felt-raccoon.webp";
 import sceneWindMonkey from "./assets/scenes/felt-wind-monkey.webp";
-import dividerA from "./assets/marks/divider-wave-mountain-a.webp";
-import dividerB from "./assets/marks/divider-wave-mountain-b.webp";
 import seedMarkArt from "./assets/marks/seed-mark.webp";
 
 // Card art is language-independent, so it lives outside the copy object and is
