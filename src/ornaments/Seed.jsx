@@ -1,20 +1,32 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useId, useRef, useState } from "react";
+import seedArt from "../assets/marks/seed-mark.webp";
 
 /**
- * 🌱 The seed sprout — hand-authored SVG, not a trace.
+ * 🌱 The seed sprout — the felt art, animated. Same principle as the dividers:
+ * keep the artwork, drive it with masks rather than redrawing it as line work.
  *
- * Why hand-authored: the felt seed art is a photographic render. potrace turns
- * it into a blob of contours with no separable root/stem/leaf, and a stroke
- * draw-on needs real stroked paths with known lengths. Six named paths give
- * exactly the handles the germination needs, at ~1KB instead of 68KB.
+ * The sprout is sliced into three horizontal bands (roots / pod+stem / leaves)
+ * and each is revealed by its own mask rect that SCALES rather than clips —
+ * scaleY is a transform, so the growth stays on the compositor instead of
+ * forcing clip-path recalcs.
  *
- * Growth order (once, at 40% in view): roots draw down, the stem overlaps in
- * 300ms later, leaves unfurl last with a slight overshoot. Then it sways.
+ * Order: roots grow downward, the pod overlaps in 300ms later growing upward,
+ * the leaves unfurl last from their base with a slight overshoot.
  */
 
-const useGrow = (threshold = 0.4) => {
+const W = 520;
+const H = 624;
+
+// bands overlap slightly so no seam shows between them
+const LEAVES = { y: 0, h: 236 };
+const POD = { y: 192, h: 252 };
+const ROOTS = { y: 418, h: H - 418 };
+
+export default function Seed({ className = "", variant = "mark" }) {
+  const uid = useId().replace(/:/g, "");
   const ref = useRef(null);
   const [grown, setGrown] = useState(false);
+
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -29,62 +41,45 @@ const useGrow = (threshold = 0.4) => {
           io.disconnect();
         }
       },
-      { threshold }
+      { threshold: 0.4 }
     );
     io.observe(el);
     return () => io.disconnect();
-  }, [threshold]);
-  return [ref, grown];
-};
+  }, []);
 
-export default function Seed({ className = "", variant = "mark", hue }) {
-  const [ref, grown] = useGrow(0.4);
-  const stroke = hue || "currentColor";
+  const m = (k) => `seed-${k}-${uid}`;
 
   return (
     <svg
       ref={ref}
-      className={
-        "seed seed--" + variant + (grown ? " is-grown" : "") + " " + className
-      }
-      viewBox="0 0 100 140"
+      className={`seed seed--${variant} ${grown ? "is-grown" : ""} ${className}`}
+      viewBox={`0 0 ${W} ${H}`}
       role="presentation"
       aria-hidden="true"
     >
+      <defs>
+        {/* each mask rect scales from the edge the growth should start at */}
+        <mask id={m("roots")} maskUnits="userSpaceOnUse" x="0" y="0" width={W} height={H}>
+          <rect className="sm-roots" x="0" y={ROOTS.y} width={W} height={ROOTS.h} fill="#fff" />
+        </mask>
+        <mask id={m("pod")} maskUnits="userSpaceOnUse" x="0" y="0" width={W} height={H}>
+          <rect className="sm-pod" x="0" y={POD.y} width={W} height={POD.h} fill="#fff" />
+        </mask>
+        <mask id={m("leaves")} maskUnits="userSpaceOnUse" x="0" y="0" width={W} height={H}>
+          <rect x="0" y={LEAVES.y} width={W} height={LEAVES.h} fill="#fff" />
+        </mask>
+      </defs>
+
       <g className="seed-sway">
-        {/* roots first — they draw downward from under the hull */}
-        <g className="seed-roots" fill="none" strokeLinecap="round">
-          <path id="seed-root-1" d="M50 92 C46 104, 38 110, 30 122" stroke={stroke} strokeWidth="3.2" />
-          <path id="seed-root-2" d="M50 92 C50 106, 51 116, 50 132" stroke={stroke} strokeWidth="3.6" />
-          <path id="seed-root-3" d="M50 92 C55 103, 63 109, 71 120" stroke={stroke} strokeWidth="3.2" />
+        <g mask={`url(#${m("roots")})`}>
+          <image href={seedArt} x="0" y="0" width={W} height={H} />
         </g>
-
-        {/* the hull sits at the origin of everything */}
-        <ellipse id="seed-hull" cx="50" cy="84" rx="11" ry="8.5" fill={stroke} />
-
-        {/* stem climbs out of the hull */}
-        <path
-          id="seed-stem"
-          d="M50 78 C50 66, 50 56, 50 42"
-          fill="none"
-          stroke={stroke}
-          strokeWidth="3.6"
-          strokeLinecap="round"
-        />
-
-        {/* leaves unfurl last, each about its own base */}
-        <path
-          id="seed-leaf-l"
-          className="seed-leaf"
-          d="M50 52 C38 50, 28 42, 26 32 C37 30, 47 38, 50 52 Z"
-          fill={stroke}
-        />
-        <path
-          id="seed-leaf-r"
-          className="seed-leaf"
-          d="M50 46 C62 43, 72 34, 74 24 C63 22, 53 31, 50 46 Z"
-          fill={stroke}
-        />
+        <g mask={`url(#${m("pod")})`}>
+          <image href={seedArt} x="0" y="0" width={W} height={H} />
+        </g>
+        <g className="seed-leaves" mask={`url(#${m("leaves")})`}>
+          <image href={seedArt} x="0" y="0" width={W} height={H} />
+        </g>
       </g>
     </svg>
   );

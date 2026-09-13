@@ -632,9 +632,9 @@ export default function App() {
           .div-wave-a, .div-wave-b{ animation:none !important; }
           .divider{ transform:none !important; }
           .seed-grow{ opacity:1 !important; transform:none !important; }
-          .seed-roots path, #seed-stem{ stroke-dashoffset:0 !important; transition:none !important; }
-          #seed-hull, .seed-leaf{ transform:none !important; opacity:1 !important; transition:none !important; }
-          .seed-sway, .seed .seed-leaf{ animation:none !important; }
+          .sm-roots, .sm-pod{ transform:scaleY(1) !important; transition:none !important; }
+          .seed-leaves{ transform:none !important; opacity:1 !important; transition:none !important; }
+          .seed-sway, .seed-leaves{ animation:none !important; }
           .photoprint, .poster, .panel{ animation:none !important; }
           .cta-train{ animation:none !important; transform:translateX(0) !important; left:auto !important; right:8px !important; }
           .train-puff{ animation:none !important; opacity:0 !important; }
@@ -664,7 +664,7 @@ export default function App() {
 
         /* hero + vinyl sun */
         .hero{ position:relative; padding:clamp(84px,11vh,112px) clamp(16px,4vw,48px) 0; text-align:center;
-          background:${T.pineDeep}; overflow:hidden; }
+          background:${T.pine}; overflow:hidden; }
         /* Seat B — starfield behind everything in the hero */
         .starfield{
           position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden;
@@ -742,6 +742,74 @@ export default function App() {
         .marquee-inner{ display:inline-block; white-space:nowrap; font-family:'Anton'; font-size:22px; line-height:36px; letter-spacing:.1em; animation:slide 35s linear infinite; }
         .marquee:hover .marquee-inner{ animation-play-state:paused; }
         .marquee-unit{ display:inline-flex; align-items:center; }
+        .seed-sep{ width:26px; height:31px; margin:0 .5em; flex:none; vertical-align:-6px; }
+        .seed-ico{ width:38px; height:38px; }
+        /* Seat 4 — seeds grow rather than fade, staggered across the grid */
+        [data-reveal].freq .seed-ico{ transform:scale(.6); opacity:0; transition:transform .8s var(--ease-settle), opacity .8s var(--ease-settle); }
+        [data-reveal].freq.in .seed-ico{ transform:scale(1); opacity:1; }
+        @keyframes slide{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+
+        /* wave→mountain dividers */
+        .divider{ position:relative; width:100%; margin:0 auto; overflow:hidden; line-height:0;
+          transform:translate3d(0, var(--divider-shift, 0px), 0); will-change:transform; }
+        .divider-svg{ width:100%; height:clamp(84px,11vw,150px); display:block; }
+        .divider.flip .divider-svg{ transform:none; }
+
+        /* the mask sweeps the horizon: wave first, ridge overlapping in at 600ms */
+        .mask-wave, .mask-ridge{
+          stroke-dasharray:100; stroke-dashoffset:100;
+          transition:stroke-dashoffset 1200ms var(--ease-settle);
+        }
+        .mask-ridge{ transition-duration:1100ms; transition-delay:600ms; }
+        .divider.is-drawn .mask-wave,
+        .divider.is-drawn .mask-ridge{ stroke-dashoffset:0; }
+
+        /* living water — only the wave side, desynced so it reads as ocean */
+        .div-wave-a{ animation:wave-bob-a 7s var(--ease-drift) infinite; will-change:transform; }
+        .div-wave-b{ animation:wave-bob-b 9s var(--ease-drift) infinite; will-change:transform; }
+        @keyframes wave-bob-a{ 0%,100%{ transform:translateY(-3px); } 50%{ transform:translateY(3px); } }
+        @keyframes wave-bob-b{ 0%,100%{ transform:translateY(2.5px); } 50%{ transform:translateY(-2.5px); } }
+
+        /* roots mark */
+        .roots{ display:block; width:96px; height:auto; margin:40px auto 0; }
+
+        /* 🌱 germination — the felt art, revealed by scaling mask rects.
+           scaleY is a transform, so growth stays on the compositor. */
+        .seed{ overflow:visible; }
+        .sm-roots, .sm-pod{
+          transform-box:fill-box; transform:scaleY(0);
+          transition:transform 900ms var(--ease-settle);
+        }
+        .sm-roots{ transform-origin:50% 0%; }               /* grows downward */
+        .sm-pod{ transform-origin:50% 100%; transition-duration:600ms; transition-delay:300ms; }
+        .seed.is-grown .sm-roots,
+        .seed.is-grown .sm-pod{ transform:scaleY(1); }
+
+        .seed-leaves{
+          transform-box:fill-box; transform-origin:50% 100%;
+          transform:scale(.4) rotate(-12deg); opacity:0;
+          transition:transform 700ms cubic-bezier(.34,1.56,.64,1) 760ms, opacity 300ms linear 760ms;
+        }
+        .seed.is-grown .seed-leaves{ transform:scale(1) rotate(0deg); opacity:1; }
+
+        /* idle life, once grown */
+        .seed.is-grown .seed-sway{
+          transform-box:fill-box; transform-origin:50% 100%;
+          animation:seed-sway 6s var(--ease-drift) infinite;
+        }
+        .seed.is-grown .seed-leaves{ animation:leaf-drift 5s var(--ease-drift) infinite 1.6s; }
+        @keyframes seed-sway{ 0%,100%{ transform:rotate(-1.5deg); } 50%{ transform:rotate(1.5deg); } }
+        @keyframes leaf-drift{ 0%,100%{ transform:rotate(-2deg); } 50%{ transform:rotate(2deg); } }
+
+        /* bullet glyphs germinate in ~450ms */
+        .seed--glyph .sm-roots{ transition-duration:200ms; }
+        .seed--glyph .sm-pod{ transition-duration:170ms; transition-delay:120ms; }
+        .seed--glyph .seed-leaves{ transition-delay:250ms; transition-duration:220ms; }
+
+        /* hover perk */
+        .seed:hover .seed-leaves{ animation:leaf-perk 400ms var(--ease-settle); }
+        @keyframes leaf-perk{ 50%{ transform:scale(1.04) rotate(4deg); } }
+
         .seed-sep{ width:20px; height:26px; margin:0 .55em; color:${T.pineDeep}; flex:none; }
         .seed-ico{ width:38px; height:38px; }
         /* Seat 4 — seeds grow rather than fade, staggered across the grid */
