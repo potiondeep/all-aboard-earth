@@ -1,17 +1,20 @@
 /**
  * Divider motion settings, shared by every divider and the ?tune panel.
  *
- * PREVIEW-ONLY: the panel exists so the scroll-linked treatments can be
- * compared on a live URL. Settings come from the URL first
- * (?divider=dissolve|tide|static&cap=6&floor=0.15), then localStorage.
+ * Production: tide wipe, no depth parallax (chosen 2026-09-13 on the preview).
+ * The ?tune panel stays available for revisiting; its saved choices only
+ * apply while ?tune is in the URL, so they can never change what visitors see.
+ * URL overrides: ?divider=dissolve|tide|static&cap=6&floor=0.15
  */
-const DEFAULTS = { mode: "dissolve", cap: 30, floor: 0.15 };
+const DEFAULTS = { mode: "tide", cap: 0, floor: 0.15 };
 const KEY = "aae-divider-tune";
 
 function read() {
-  let saved = {};
-  try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch {}
   const q = typeof location !== "undefined" ? new URLSearchParams(location.search) : new URLSearchParams();
+  let saved = {};
+  if (q.has("tune")) {
+    try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch {}
+  }
   const out = { ...DEFAULTS, ...saved };
   if (q.has("divider")) out.mode = q.get("divider");
   if (q.has("cap")) out.cap = Math.max(0, Math.min(30, Number(q.get("cap")) || 0));
