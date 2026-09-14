@@ -609,7 +609,7 @@ export default function App() {
           .photoprint, .poster, .panel{ animation:none !important; }
           .cta-train{ animation:none !important; transform:translateX(0) !important; left:auto !important; right:8px !important; }
           .train-puff{ animation:none !important; opacity:0 !important; }
-          .train--rail, .cta-train .train-body{ animation:none !important; }
+          .train--rail, .cta-train .train{ animation:none !important; }
           .train--space{ display:none !important; }
           /* the record and the pulsing badges stop too */
           .vinyl-disc{ animation:none !important; }
@@ -850,7 +850,10 @@ export default function App() {
         @keyframes leaf-perk{ 50%{ transform:scale(1) rotate(4deg); } }
 
         /* climbing train rail */
-        .rail{ position:fixed; right:14px; top:80px; bottom:20px; width:44px; z-index:40; pointer-events:none; }
+        /* the rail rides the right gutter; the train grows with the space it has, never onto content */
+        .rail{ --railW:clamp(56px, calc((100vw - 1100px) / 2 - 28px), 132px);
+          position:fixed; right:max(14px, calc(((100vw - 1100px) / 2 - var(--railW)) / 2)); top:80px; bottom:20px;
+          width:var(--railW); z-index:40; pointer-events:none; }
         .rail-track{ position:absolute; left:50%; top:0; bottom:0; width:0; border-left:3px dashed ${T.cream}33; transform:translateX(-50%); }
         .rail-train{ position:absolute; left:50%; top:0; display:flex; flex-direction:column; align-items:center;
           transform:translateX(-50%) translateY(var(--y, 0px)) rotate(var(--climb, 0deg));
@@ -858,24 +861,30 @@ export default function App() {
         .rail-train.settling{ transform:translateX(-50%) translateY(var(--y, 0px)) rotate(calc(var(--climb, 0deg) * .4)); }
         /* 🚂 shared train layers */
         .train{ position:relative; display:block; line-height:0; }
-        .train-body{ width:100%; height:auto; display:block; filter:drop-shadow(0 3px 7px #0009); }
+        /* the art faces left and every variant travels right/up, so the whole stack is mirrored */
+        .train-stack{ position:relative; transform:scaleX(-1); }
+        /* shadows sit on each layer, not on the stack: a filter on a transformed stack whose
+           children are composited gets clipped to a hard rectangle in Chrome */
+        .train-body, .train-wheel{ filter:drop-shadow(0 3px 7px #0009); }
+        .train-body{ width:100%; height:auto; display:block; }
+        .train-wheel{ position:absolute; height:auto; aspect-ratio:1; }
         .train-steam{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; }
         .train-puff{
           fill:${T.cream}; opacity:0; transform-box:fill-box; transform-origin:50% 50%;
           transform:scale(.6); will-change:transform, opacity;
         }
         .train.is-steaming .train-puff{
-          animation:puff var(--puffCycle,1s) linear infinite;
+          animation:train-puff var(--puffCycle,1s) linear infinite;
           animation-delay:calc(var(--i) * (var(--puffCycle,1s) / 5));
         }
-        @keyframes puff{
+        @keyframes train-puff{
           0%   { opacity:0;   transform:translate(0,0) scale(.6); }
           22%  { opacity:.8;  }
-          100% { opacity:0;   transform:translate(-26px,-54px) scale(1.4); }
+          100% { opacity:0;   transform:translate(30px,-60px) scale(1.4); }
         }
 
         /* rail companion */
-        .train--rail{ width:56px; }
+        .train--rail{ width:var(--railW, 56px); }
         .rail-train.moving .train--rail{ animation:chug .125s steps(2,end) infinite; }
         @keyframes chug{ 0%,100%{ transform:translateY(-1px); } 50%{ transform:translateY(1px); } }
         .rail-train.settling .train--rail{ animation:none; }
@@ -883,19 +892,26 @@ export default function App() {
         @keyframes arrive-bob{ 0%,100%{ transform:translateY(0); } 40%{ transform:translateY(-5px); } }
 
         /* CTA crossing */
-        .train--crossing{ width:86px; }
+        /* steam stays inside the marigold band */
+        .train--crossing.is-steaming .train-puff{ animation-name:train-puff-short; }
+        @keyframes train-puff-short{
+          0%   { opacity:0;   transform:translate(0,0) scale(.6); }
+          22%  { opacity:.8;  }
+          100% { opacity:0;   transform:translate(22px,-34px) scale(1.3); }
+        }
+        .train--crossing{ width:clamp(140px, 22vw, 250px); }
 
         /* space variant — a tiny traveller crossing behind the Earth */
         .train--space{
-          position:absolute; z-index:0; width:clamp(34px,5vw,58px); opacity:.5;
+          position:absolute; z-index:0; width:clamp(96px,13vw,190px); opacity:.92;
           left:0; top:62%; pointer-events:none;
           animation:space-cross 60s linear infinite;
           will-change:transform;
         }
-        .train--space .train-body{ filter:drop-shadow(0 0 10px ${T.sky}66); }
+        .train--space .train-body{ filter:drop-shadow(0 0 14px ${T.sky}66); }
         .train--space .train-steam{ display:none; }
         .train--space::after{
-          content:""; position:absolute; right:-6%; top:42%; width:34%; height:16%;
+          content:""; position:absolute; left:-10%; top:46%; width:34%; height:18%;
           border-radius:50%; background:radial-gradient(circle, ${T.marigold}cc, transparent 70%);
           animation:exhaust 2s var(--ease-drift) infinite;
         }
@@ -1041,12 +1057,13 @@ export default function App() {
         .collage img:nth-child(3){ transform:rotate(-1deg); }
 
         /* Seat 9 — the train crosses the CTA band once, on first reveal */
-        .crossing{ position:relative; height:74px; margin:0 0 18px; overflow:hidden; }
+        /* clip only sideways (the train enters and leaves off the band's edges); steam and
+           shadow may rise above the strip. Browsers without overflow:clip fall back to hidden. */
+        .crossing{ position:relative; height:clamp(112px, 17vw, 192px); margin:0 0 18px; overflow:hidden; overflow-x:clip; overflow-y:visible; }
         .crossing-track{ position:absolute; left:0; right:0; bottom:6px; width:100%; height:4px; }
         .cta-train{ position:absolute; bottom:6px; left:0; line-height:0; will-change:transform; transform:translateX(-20vw); }
-        .cta-train .train{ transform:scaleX(-1); }
         [data-reveal].ctaband.in .cta-train{ animation:cross 7s var(--ease-drift) both; }
-        [data-reveal].ctaband.in .cta-train .train-body{ animation:rock 1.2s ease-in-out infinite; }
+        [data-reveal].ctaband.in .cta-train .train{ transform-origin:50% 90%; animation:rock 1.2s ease-in-out infinite; }
         @keyframes cross{ from{ transform:translateX(-20vw); } to{ transform:translateX(120vw); } }
         @keyframes rock{ 0%,100%{ transform:rotate(-1.5deg); } 50%{ transform:rotate(1.5deg); } }
 
