@@ -13,18 +13,21 @@ import React, { useEffect, useRef, useState } from "react";
  * within ~900px of the viewport (a <video> would otherwise download its poster
  * at page load), it plays only while visible, and reduced motion gets the
  * poster alone. Sources: VP9 WebM first, H.264 MP4 for browsers without VP9.
+ * With `sm`, phones get a lighter `-sm` encode via <source media> (and poster).
  */
+const SMALL = "(max-width: 700px)";
 const FADE = 1.0;
 const reducedMotion = () =>
   typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-export default function FeltLoop({ name, dir = "tile", width, height, alt = "", className = "", mode = "pingpong" }) {
+export default function FeltLoop({ name, dir = "tile", width, height, alt = "", className = "", mode = "pingpong", sm = false }) {
   const vidRef = useRef(null);
   const fadeRef = useRef(null);
   const [reduced] = useState(reducedMotion);
   const [near, setNear] = useState(false);
   const base = `/art/felt/${dir}/${name}`;
-  const poster = `${base}-poster.webp`;
+  const small = sm && typeof window !== "undefined" && window.matchMedia(SMALL).matches;
+  const poster = `${base}${small ? "-sm" : ""}-poster.webp`;
 
   useEffect(() => {
     const v = vidRef.current;
@@ -101,6 +104,8 @@ export default function FeltLoop({ name, dir = "tile", width, height, alt = "", 
         preload="none"
         aria-hidden="true"
       >
+        {sm && <source media={SMALL} src={`${base}-sm.webm`} type="video/webm" />}
+        {sm && <source media={SMALL} src={`${base}-sm.mp4`} type="video/mp4" />}
         <source src={`${base}.webm`} type="video/webm" />
         <source src={`${base}.mp4`} type="video/mp4" />
       </video>

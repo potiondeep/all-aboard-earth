@@ -6,7 +6,6 @@ import Seed from "./ornaments/Seed.jsx";
 import Divider from "./ornaments/Divider.jsx";
 import FeltLoop from "./ornaments/FeltLoop.jsx";
 import Train, { useScrollMotion } from "./ornaments/Train.jsx";
-import sceneEarthRests from "./assets/scenes/earth-rests.webp";
 import seedMarkArt from "./assets/marks/seed-mark.webp";
 
 // Felt animations under the meditating Earth. The roadrunner and raccoon play
@@ -1040,7 +1039,7 @@ export default function App() {
           transform:rotate(-1deg); box-shadow:0 18px 40px #0007;
           animation:printfloat 7s var(--ease-drift) infinite; will-change:transform;
         }
-        .photoprint img{ width:100%; height:clamp(180px,26vw,300px); object-fit:cover; display:block; border-radius:4px; }
+        .photoprint img, .photoprint video{ width:100%; height:clamp(180px,26vw,300px); object-fit:cover; display:block; border-radius:4px; }
         .photoprint figcaption{ color:${T.pineDeep}; text-align:center; padding-top:10px; font-size:11px; letter-spacing:.1em; }
         @keyframes printfloat{ 0%,100%{ transform:rotate(-1deg) translateY(-3px); } 50%{ transform:rotate(-1deg) translateY(3px); } }
 
@@ -1224,8 +1223,8 @@ export default function App() {
           ))}
         </div>
         <figure className="photoprint" data-reveal>
-          {/* the meditating Earth: a still until its felt animation is generated */}
-          <img src={sceneEarthRests} alt="A felt Earth meditating on a flowering island beneath soft felt clouds" loading="lazy" decoding="async" width="1400" height="785" />
+          {/* the meditating Earth, ping-pong looped; phones get the lighter encode */}
+          <FeltLoop name="felt-8" dir="frame" sm width="1600" height="800" alt="A felt Earth meditating on a flowering island beneath soft felt clouds" />
           <figcaption className="mono">Handmade heroes. Real classrooms.</figcaption>
         </figure>
         <div className="collage" data-reveal aria-hidden="true">
