@@ -4,11 +4,10 @@ import { cardArt, CAREER_PAGE } from "./wixCardArt.js";
 import Logo3D from "./Logo3D.jsx";
 import Seed from "./ornaments/Seed.jsx";
 import Divider from "./ornaments/Divider.jsx";
+import FeltLoop from "./ornaments/FeltLoop.jsx";
 import Train, { useScrollMotion } from "./ornaments/Train.jsx";
 import sceneGreenCareers from "./assets/scenes/green-careers.webp";
 import sceneEarthRests from "./assets/scenes/earth-rests.webp";
-import sceneRaccoon from "./assets/scenes/felt-raccoon.webp";
-import sceneWindMonkey from "./assets/scenes/felt-wind-monkey.webp";
 import seedMarkArt from "./assets/marks/seed-mark.webp";
 
 // Card art is language-independent, so it lives outside the copy object and is
@@ -1042,19 +1041,19 @@ export default function App() {
           transform:rotate(-1deg); box-shadow:0 18px 40px #0007;
           animation:printfloat 7s var(--ease-drift) infinite; will-change:transform;
         }
-        .photoprint img{ width:100%; height:clamp(180px,26vw,300px); object-fit:cover; display:block; border-radius:4px; }
+        .photoprint img, .photoprint video{ width:100%; height:clamp(180px,26vw,300px); object-fit:cover; display:block; border-radius:4px; }
         .photoprint figcaption{ color:${T.pineDeep}; text-align:center; padding-top:10px; font-size:11px; letter-spacing:.1em; }
         @keyframes printfloat{ 0%,100%{ transform:rotate(-1deg) translateY(-3px); } 50%{ transform:rotate(-1deg) translateY(3px); } }
 
         .collage{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:22px; }
-        .collage img{
+        .collage img, .collage video{
           width:100%; height:clamp(90px,13vw,150px); object-fit:cover; display:block;
           background:${T.cream}; border:7px solid ${T.cream}; border-bottom-width:20px; border-radius:3px;
           box-shadow:0 10px 22px #0007;
         }
-        .collage img:nth-child(1){ transform:rotate(-3deg); }
-        .collage img:nth-child(2){ transform:rotate(1.5deg); }
-        .collage img:nth-child(3){ transform:rotate(-1deg); }
+        .collage > :nth-child(1){ transform:rotate(-3deg); }
+        .collage > :nth-child(2){ transform:rotate(1.5deg); }
+        .collage > :nth-child(3){ transform:rotate(-1deg); }
 
         /* Seat 9 — the train crosses the CTA band once, on first reveal */
         /* clip only sideways (the train enters and leaves off the band's edges); steam and
@@ -1221,13 +1220,13 @@ export default function App() {
           ))}
         </div>
         <figure className="photoprint" data-reveal>
-          <img src={sceneRaccoon} alt="A felt raccoon farmer driving a tractor through a solar-powered vegetable field" loading="lazy" decoding="async" width="1100" height="457" />
+          <FeltLoop name="felt-1" width="1280" height="532" alt="A felt raccoon farmer driving a tractor through a solar-powered vegetable field" />
           <figcaption className="mono">Handmade heroes. Real classrooms.</figcaption>
         </figure>
         <div className="collage" data-reveal aria-hidden="true">
           <img src={sceneGreenCareers} alt="" loading="lazy" decoding="async" width="1400" height="785" />
           <img src={sceneEarthRests} alt="" loading="lazy" decoding="async" width="1400" height="785" />
-          <img src={sceneWindMonkey} alt="" loading="lazy" decoding="async" width="760" height="426" />
+          <FeltLoop name="felt-11" width="1280" height="718" />
         </div>
         <RootsMark />
       </section>
