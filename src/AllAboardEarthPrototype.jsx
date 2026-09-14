@@ -617,7 +617,6 @@ export default function App() {
           .cta-train{ animation:none !important; transform:translateX(0) !important; left:auto !important; right:8px !important; }
           .train-puff{ animation:none !important; opacity:0 !important; }
           .train--rail, .cta-train .train{ animation:none !important; }
-          .train--space{ display:none !important; }
           /* the record and the pulsing badges stop too */
           .vinyl-disc{ animation:none !important; }
           .boarding-badge, .signal{ animation:none !important; opacity:1 !important; }
@@ -899,25 +898,6 @@ export default function App() {
         }
         .train--crossing{ width:clamp(140px, 22vw, 250px); }
 
-        /* space variant — a tiny traveller crossing behind the Earth */
-        .train--space{
-          position:absolute; z-index:0; width:clamp(96px,13vw,190px); opacity:.92;
-          left:0; top:62%; pointer-events:none;
-          animation:space-cross 60s linear infinite;
-          will-change:transform;
-        }
-        .train--space .train-body{ filter:drop-shadow(0 0 14px ${T.sky}66); }
-        .train--space .train-steam{ display:none; }
-        .train--space::after{
-          content:""; position:absolute; left:-10%; top:46%; width:34%; height:18%;
-          border-radius:50%; background:radial-gradient(circle, ${T.marigold}cc, transparent 70%);
-          animation:exhaust 2s var(--ease-drift) infinite;
-        }
-        @keyframes space-cross{
-          from{ transform:translate3d(-22vw, 0, 0) rotate(-6deg); }
-          to  { transform:translate3d(118vw, -42vh, 0) rotate(-6deg); }
-        }
-        @keyframes exhaust{ 0%,100%{ opacity:.4; } 50%{ opacity:.9; } }
         .rail-label{ writing-mode:vertical-rl; font-size:9px; color:${T.marigold}; margin-top:6px; letter-spacing:.2em; }
         .puff{ animation:puff 2.2s ease-in-out infinite; transform-origin:center; }
         .puff.p2{ animation-delay:.4s; } .puff.p3{ animation-delay:.9s; }
@@ -1116,7 +1096,6 @@ export default function App() {
       {/* HERO — THE MOVEMENT */}
       <header className="hero">
         <Starfield />
-        <Train variant="space" />
         <div className="hero-mark">
           <FeltEarth />
           <Logo3D className="hero-logo" />
