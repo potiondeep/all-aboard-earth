@@ -681,12 +681,18 @@ export default function App() {
         }
         /* Static drop-shadows, so they follow the globe's real alpha silhouette
            rather than a guessed circle: a dark contact shadow gives it weight,
-           a cyan one reads as atmosphere. Never animated. */
-        .earth-still, .earth-media{
+           a cyan one reads as atmosphere. Never animated.
+           They live ONLY on the still, which always sits directly under the video
+           with the same silhouette. iOS Safari computes a filter on a <video> (or
+           on anything containing one) from its rectangle, not its alpha, and paints
+           the shadow as a tinted square behind the transparent corners. The values
+           are the two stacked layers (still + video) this used to be, compounded
+           into one: 1-(1-a)^2. */
+        .earth-still{
           filter:
-            drop-shadow(0 16px 30px rgba(0,0,0,.55))
-            drop-shadow(0 0 22px rgba(111,211,255,.28))
-            drop-shadow(0 0 60px rgba(111,211,255,.12));
+            drop-shadow(0 16px 30px rgba(0,0,0,.80))
+            drop-shadow(0 0 22px rgba(111,211,255,.48))
+            drop-shadow(0 0 60px rgba(111,211,255,.23));
         }
         .earth-vid{ opacity:0; }
         .earth-vid.on{ opacity:1; }
