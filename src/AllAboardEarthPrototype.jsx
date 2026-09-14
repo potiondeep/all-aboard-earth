@@ -624,7 +624,12 @@ export default function App() {
         }
 
         /* nav */
-        nav{ display:flex; align-items:center; justify-content:space-between; padding:20px clamp(16px,4vw,48px); position:sticky; top:0; z-index:50; background:linear-gradient(${T.pine} 70%, transparent); }
+        /* no backing: the nav sits over the hero's starfield, and a bar here cut a line through the
+           planet's space. (It scrolls away with the page — .page's overflow keeps sticky from pinning it.) */
+        nav{ display:flex; align-items:center; justify-content:space-between; padding:20px clamp(16px,4vw,48px); position:sticky; top:0; z-index:50; background:transparent; }
+        /* the hero runs up behind the nav: pulled up 120px (more than the nav is ever tall)
+           and given the same 120px back as padding, so nothing below moves */
+        main{ margin-top:-120px; }
         .brand{ font-family:'Anton'; font-size:18px; letter-spacing:.06em; }
         .brand b{ color:${T.marigold}; }
         .navr{ display:flex; gap:12px; align-items:center; }
@@ -640,7 +645,7 @@ export default function App() {
         .hero-accent{ position:relative; z-index:3; font-family:'Anton'; color:${T.marigold}; font-size:clamp(14px,2.2vw,20px); letter-spacing:.14em; margin-top:10px; line-height:26px; min-height:26px; }
 
         /* hero + vinyl sun */
-        .hero{ position:relative; padding:clamp(84px,11vh,112px) clamp(16px,4vw,48px) 0; text-align:center;
+        .hero{ position:relative; padding:calc(clamp(84px,11vh,112px) + 120px) clamp(16px,4vw,48px) 0; text-align:center;
           background:${T.pine}; overflow:hidden; }
         /* Seat B — starfield behind everything in the hero */
         .starfield{
