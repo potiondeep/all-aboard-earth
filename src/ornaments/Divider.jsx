@@ -42,7 +42,6 @@ import b_sea_3840 from "../assets/divider-layers/b-sea-3840.webp";
  *   dissolve  wave region and mountain region crossfade across a 15% feather
  *   tide      (A/B alternate) a feathered edge uncovers the painting left→right
  *   parallax  far 0.9× · mid 1.0× · near 1.05× scroll speed, capped
- *   water     the near-sea layer bobs ±3px on 7s, whole pixels only
  */
 
 const RUNGS = [1600, 2560, 3840];

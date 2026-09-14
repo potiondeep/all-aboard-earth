@@ -4,12 +4,19 @@ import { cardArt, CAREER_PAGE } from "./wixCardArt.js";
 import Logo3D from "./Logo3D.jsx";
 import Seed from "./ornaments/Seed.jsx";
 import Divider from "./ornaments/Divider.jsx";
+import FeltLoop from "./ornaments/FeltLoop.jsx";
 import Train, { useScrollMotion } from "./ornaments/Train.jsx";
-import sceneGreenCareers from "./assets/scenes/green-careers.webp";
 import sceneEarthRests from "./assets/scenes/earth-rests.webp";
-import sceneRaccoon from "./assets/scenes/felt-raccoon.webp";
-import sceneWindMonkey from "./assets/scenes/felt-wind-monkey.webp";
 import seedMarkArt from "./assets/marks/seed-mark.webp";
+
+// Felt animations under the meditating Earth. The roadrunner and raccoon play
+// forward and fade back to their first frame (reversed motion reads wrong for
+// them); the wind monkey ping-pongs. Other characters will live on other pages.
+const FELT_WALL = [
+  { name: "felt-9", h: 404, mode: "fade" }, // roadrunner, solar farm
+  { name: "felt-1", h: 298, mode: "fade" }, // raccoon, tractor
+  { name: "felt-11", h: 404 },              // monkey, wind turbine
+];
 
 // Card art is language-independent, so it lives outside the copy object and is
 // matched to cards by position. Art streams from the Wix CMS, so replacing the
@@ -601,7 +608,7 @@ export default function App() {
           .cta-train{ left:auto !important; right:0 !important; }
           .draw-on{ stroke-dasharray:none !important; stroke-dashoffset:0 !important; transition:none !important; }
           .seed-grow{ opacity:1 !important; transform:none !important; }
-          .dv-bob, .dv-layer, .dv-tide, .dv-tide-inner{ animation:none !important; transform:none !important; }
+          .dv-layer, .dv-tide, .dv-tide-inner{ transform:none !important; }
           .dv-region{ opacity:1 !important; }
           .sm-roots, .sm-pod{ transform:scaleY(1) !important; transition:none !important; }
           .seed-leaves{ transform:none !important; opacity:1 !important; transition:none !important; }
@@ -743,15 +750,6 @@ export default function App() {
         .dv-tide{ position:absolute; top:0; bottom:0; left:0; width:115%; overflow:hidden; will-change:transform;
           -webkit-mask-image:linear-gradient(to right, #000 86.96%, transparent 100%); mask-image:linear-gradient(to right, #000 86.96%, transparent 100%); }
         .dv-tide-inner{ position:absolute; top:0; bottom:0; left:0; width:86.9565%; will-change:transform; }
-        /* living water: whole-pixel steps only, so the engraving never sits on a half pixel */
-        .divider.is-live .dv-bob{ animation:dv-sea-bob 7s infinite; }
-        @keyframes dv-sea-bob{
-          0%  { transform:translate3d(0,0,0);    animation-timing-function:steps(3, jump-end); }
-          25% { transform:translate3d(0,-3px,0); animation-timing-function:steps(3, jump-end); }
-          50% { transform:translate3d(0,0,0);    animation-timing-function:steps(3, jump-end); }
-          75% { transform:translate3d(0,3px,0);  animation-timing-function:steps(3, jump-end); }
-          100%{ transform:translate3d(0,0,0); }
-        }
 
         /* roots mark */
         .roots{ display:block; width:96px; height:auto; margin:40px auto 0; }
@@ -1047,14 +1045,19 @@ export default function App() {
         @keyframes printfloat{ 0%,100%{ transform:rotate(-1deg) translateY(-3px); } 50%{ transform:rotate(-1deg) translateY(3px); } }
 
         .collage{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:22px; }
-        .collage img{
-          width:100%; height:clamp(90px,13vw,150px); object-fit:cover; display:block;
+        .polaroid{
+          position:relative; line-height:0; overflow:hidden;
           background:${T.cream}; border:7px solid ${T.cream}; border-bottom-width:20px; border-radius:3px;
           box-shadow:0 10px 22px #0007;
         }
-        .collage img:nth-child(1){ transform:rotate(-3deg); }
-        .collage img:nth-child(2){ transform:rotate(1.5deg); }
-        .collage img:nth-child(3){ transform:rotate(-1deg); }
+        .polaroid video, .polaroid img{ width:100%; height:clamp(90px,13vw,150px); object-fit:cover; display:block; }
+        .polaroid:nth-child(1){ transform:rotate(-3deg); }
+        .polaroid:nth-child(2){ transform:rotate(1.5deg); }
+        .polaroid:nth-child(3){ transform:rotate(-1deg); }
+        /* fade mode: the first frame fades in over the clip's tail, then drops instantly */
+        .felt-fade{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; pointer-events:none; }
+        .felt-fade.on{ opacity:1; transition:opacity 1s linear; }
+        .sr-only{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 
         /* Seat 9 — the train crosses the CTA band once, on first reveal */
         /* clip only sideways (the train enters and leaves off the band's edges); steam and
@@ -1221,13 +1224,14 @@ export default function App() {
           ))}
         </div>
         <figure className="photoprint" data-reveal>
-          <img src={sceneRaccoon} alt="A felt raccoon farmer driving a tractor through a solar-powered vegetable field" loading="lazy" decoding="async" width="1100" height="457" />
+          {/* the meditating Earth: a still until its felt animation is generated */}
+          <img src={sceneEarthRests} alt="A felt Earth meditating on a flowering island beneath soft felt clouds" loading="lazy" decoding="async" width="1400" height="785" />
           <figcaption className="mono">Handmade heroes. Real classrooms.</figcaption>
         </figure>
         <div className="collage" data-reveal aria-hidden="true">
-          <img src={sceneGreenCareers} alt="" loading="lazy" decoding="async" width="1400" height="785" />
-          <img src={sceneEarthRests} alt="" loading="lazy" decoding="async" width="1400" height="785" />
-          <img src={sceneWindMonkey} alt="" loading="lazy" decoding="async" width="760" height="426" />
+          {FELT_WALL.map((f) => (
+            <FeltLoop key={f.name} className="polaroid" name={f.name} width="520" height={f.h} mode={f.mode} />
+          ))}
         </div>
         <RootsMark />
       </section>
