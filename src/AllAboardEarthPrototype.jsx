@@ -4,6 +4,7 @@ import { cardArt, CAREER_PAGE } from "./wixCardArt.js";
 import Logo3D from "./Logo3D.jsx";
 import Seed from "./ornaments/Seed.jsx";
 import Divider from "./ornaments/Divider.jsx";
+import CtaCrossing from "./ornaments/CtaCrossing.jsx";
 import FeltLoop from "./ornaments/FeltLoop.jsx";
 import Train, { useScrollMotion } from "./ornaments/Train.jsx";
 import seedMarkArt from "./assets/marks/seed-mark.webp";
@@ -1063,10 +1064,14 @@ export default function App() {
            shadow may rise above the strip. Browsers without overflow:clip fall back to hidden. */
         .crossing{ position:relative; height:clamp(112px, 17vw, 192px); margin:0 0 18px; overflow:hidden; overflow-x:clip; overflow-y:visible; }
         .crossing-track{ position:absolute; left:0; right:0; bottom:6px; width:100%; height:4px; }
-        .cta-train{ position:absolute; bottom:6px; left:0; line-height:0; will-change:transform; transform:translateX(-20vw); }
-        [data-reveal].ctaband.in .cta-train{ animation:cross 7s var(--ease-drift) both; }
-        [data-reveal].ctaband.in .cta-train .train{ transform-origin:50% 90%; animation:rock 1.2s ease-in-out infinite; }
-        @keyframes cross{ from{ transform:translateX(-20vw); } to{ transform:translateX(120vw); } }
+        /* position is written by CtaCrossing from scroll; parked off the left edge until then */
+        .cta-train{ position:absolute; bottom:6px; left:0; line-height:0; will-change:transform; transform:translate3d(-110%,0,0); }
+        /* it faces its direction of travel; the turn is a quick flip through its axis */
+        .cta-face{ display:block; transition:transform .22s var(--ease-settle); }
+        .cta-face.is-reversed{ transform:scaleX(-1); }
+        .cta-train.is-moving .cta-face > .train{ animation:chug .125s steps(2,end) infinite; }
+        /* idling when the page stops: a gentle rock, and the steam keeps puffing */
+        .cta-train .train{ transform-origin:50% 90%; animation:rock 1.2s ease-in-out infinite; }
         @keyframes rock{ 0%,100%{ transform:rotate(-1.5deg); } 50%{ transform:rotate(1.5deg); } }
 
 
@@ -1238,12 +1243,7 @@ export default function App() {
       {/* CTA */}
       <div style={{ padding: "0 16px" }}>
         <div className="ctaband" data-reveal>
-          <div className="crossing" aria-hidden="true">
-            <svg className="crossing-track" viewBox="0 0 1200 4" preserveAspectRatio="none">
-              <line className="draw-on" x1="0" y1="2" x2="1200" y2="2" stroke={T.pineDeep} strokeOpacity=".45" strokeWidth="3" strokeDasharray="10 12" />
-            </svg>
-            <span className="cta-train"><Train variant="crossing" /></span>
-          </div>
+          <CtaCrossing trackColor={T.pineDeep} />
           <div className="cta-stamp display">{c.cta_stamp}</div>
           <h2 className="display">{c.cta_head}</h2>
           <p>{c.cta_sub}</p>

@@ -78,13 +78,19 @@ function useRollingWheels(variant, hostRef, wheelRefs) {
     const tick = () => {
       raf = requestAnimationFrame(tick);
       if (!visible) return;
+      // measure travel on the element that moves with scroll, not the rocking/chugging train itself,
+      // so idle rock never reads as distance and the wheels stay still while parked
+      const mover = host.closest(".cta-train, .rail-train") || host;
       const r = host.getBoundingClientRect();
-      const pos = variant === "rail" ? -r.top : r.left; // up the rail / rightward = forward
+      const m = mover.getBoundingClientRect();
+      const pos = variant === "rail" ? -m.top : m.left; // up the rail / rightward = forward
       if (lastPos !== null) {
         const d = pos - lastPos;
         if (d !== 0) {
           const circumference = Math.PI * WHEEL_D * r.width;
-          angle -= (d / circumference) * 360; // negative in the mirrored frame = clockwise on screen
+          // a turned-around train (CTA crossing heading left) mirrors the frame again
+          const facing = Number(host.closest("[data-facing]")?.dataset.facing || 1);
+          angle -= facing * (d / circumference) * 360; // negative in the mirrored frame = clockwise on screen
           const t = `rotate(${angle.toFixed(2)}deg)`;
           for (const w of wheelRefs.current) if (w) w.style.transform = t;
         }
