@@ -258,45 +258,19 @@ function useReveal(lang) {
    ☀️🎶 VINYL SUN — a record pressed from daylight
    ============================================================ */
 /* Seat B — the felt Earth in space.
-   The clip is a ~quarter turn, not a full revolution, so its ends show different
-   longitudes and no cut can be truly seamless. Loop handling, selectable with
-   ?earth= while we compare on the live URL:
-
-     original  the shipped 0.6s symmetric crossfade (both fade at once, so the
-               globe dips to ~75% opacity mid-fade)
-     xfade     1.75s crossfade; the incoming copy fades in ON TOP of the outgoing
-               one, which stays fully opaque underneath — no opacity dip
-     trim      xfade, looping only 0.75s→7.62s: the frame pair furthest apart in
-               time that is most alike, which also removes the opening drift
-     pingpong  forward then reversed, natively looped (one pre-encoded file)
-     glow      trim + a soft atmospheric pulse timed to the crossfade window
-
+   The clip is a ~quarter turn, not a full revolution, so its two ends show
+   different longitudes and any forward-only loop has a visible seam. It plays
+   ping-pong instead: the file holds the frames forward then reversed, so both
+   ends are the same frame and the native loop is seamless. Chosen 2026-09-13
+   over crossfade, trim and glow variants after comparing them live.
    Sources are ordered HEVC-alpha first (Safari) then VP9-alpha (Chrome/Firefox);
    each browser takes the first it can decode, so only one file is ever fetched. */
-const EARTH_MODES = {
-  original: { xfade: 0.6, inT: 0, outT: null, symmetric: true },
-  xfade: { xfade: 1.75, inT: 0, outT: null },
-  trim: { xfade: 1.75, inT: 0.75, outT: 7.62 },
-  pingpong: { pingpong: true },
-  glow: { xfade: 1.75, inT: 0.75, outT: 7.62, glow: true },
-};
-const EARTH_DEFAULT = "glow";
-
-function earthMode() {
-  if (typeof location === "undefined") return EARTH_DEFAULT;
-  const m = new URLSearchParams(location.search).get("earth");
-  return m && EARTH_MODES[m] ? m : EARTH_DEFAULT;
-}
-
 function FeltEarth() {
-  const wrapRef = useRef(null);
-  const aRef = useRef(null);
-  const bRef = useRef(null);
-  const [mode] = useState(earthMode);
-  const cfg = EARTH_MODES[mode];
+  const vidRef = useRef(null);
   // The poster carries first paint; the clip only starts after load, so it
   // never competes with the hero copy (which is the LCP element).
   const [videoReady, setVideoReady] = useState(false);
+  const [playing, setPlaying] = useState(false);
   const reduced =
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -313,69 +287,11 @@ function FeltEarth() {
   }, [reduced]);
 
   useEffect(() => {
-    if (!videoReady) return;
-    const wrap = wrapRef.current;
-    const a = aRef.current;
-    const b = bRef.current;
-    if (!a) return;
-    a.classList.add("on", "top");
-    if (cfg.pingpong) { a.play().catch(() => {}); return; }
-    if (!b) return;
-
-    wrap.style.setProperty("--xfade", `${cfg.xfade}s`);
-    let lead = a, follow = b, armed = true, raf = 0, timer = 0;
-    const cue = (v) => { try { v.currentTime = cfg.inT; } catch {} };
-    cue(a); cue(b);                       // follower sits pre-seeked, decoded and paused
-    a.play().catch(() => {});
-
-    const tick = () => {
-      raf = requestAnimationFrame(tick);
-      if (!armed || !lead.duration) return;
-      const end = cfg.outT ? Math.min(cfg.outT, lead.duration) : lead.duration;
-      if (lead.currentTime < end - cfg.xfade) return;
-      armed = false;
-      follow.play().catch(() => {});
-      if (cfg.glow) {
-        wrap.classList.remove("seam");
-        void wrap.offsetWidth;            // restart the pulse animation
-        wrap.classList.add("seam");
-      }
-      if (cfg.symmetric) {
-        // the shipped behaviour, kept only for comparison
-        follow.classList.add("on");
-        lead.classList.remove("on");
-      } else {
-        follow.classList.add("top", "on"); // fades in over the still-opaque lead
-        lead.classList.remove("top");
-      }
-      timer = setTimeout(() => {
-        const done = lead;
-        if (!cfg.symmetric) done.classList.remove("on");  // hidden instantly, underneath
-        done.pause();
-        cue(done);                         // ready for the next handoff
-        lead = follow; follow = done; armed = true;
-      }, cfg.xfade * 1000);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => { cancelAnimationFrame(raf); clearTimeout(timer); };
-  }, [videoReady, cfg]);
-
-  const sources = cfg.pingpong ? (
-    <>
-      <source src="/art/felt-earth-pingpong-hevc.mov" type="video/quicktime" />
-      <source src="/art/felt-earth-pingpong.webm" type="video/webm" />
-    </>
-  ) : (
-    <>
-      <source src="/art/felt-earth-hevc.mov" type="video/quicktime" />
-      <source src="/art/felt-earth.webm" type="video/webm" />
-    </>
-  );
-  const common = { muted: true, playsInline: true, preload: "auto", "aria-hidden": true };
+    if (videoReady) vidRef.current?.play().catch(() => {});
+  }, [videoReady]);
 
   return (
-    <div ref={wrapRef} className={"earth-wrap earth--" + mode} aria-hidden="true">
-        {cfg.glow && <div className="earth-halo" />}
+    <div className="earth-wrap" aria-hidden="true">
         {/* always present: it is the LCP-guarded still and the video's backdrop */}
         <img
           className="earth-still"
@@ -390,8 +306,20 @@ function FeltEarth() {
         />
         {videoReady && !reduced && (
           <div className="earth-media">
-            <video ref={aRef} {...common} loop={!!cfg.pingpong} className="earth-vid">{sources}</video>
-            {!cfg.pingpong && <video ref={bRef} {...common} className="earth-vid">{sources}</video>}
+            {/* the poster is frame one, so revealing on "playing" has no jump */}
+            <video
+              ref={vidRef}
+              className={"earth-vid" + (playing ? " on" : "")}
+              muted
+              playsInline
+              loop
+              preload="auto"
+              aria-hidden="true"
+              onPlaying={() => setPlaying(true)}
+            >
+              <source src="/art/felt-earth-pingpong-hevc.mov" type="video/quicktime" />
+              <source src="/art/felt-earth-pingpong.webm" type="video/webm" />
+            </video>
           </div>
       )}
     </div>
@@ -747,27 +675,15 @@ export default function App() {
         }
         /* Static drop-shadows, so they follow the globe's real alpha silhouette
            rather than a guessed circle: a dark contact shadow gives it weight,
-           a cyan one reads as atmosphere. Never animated. The videos share ONE
-           filter on their wrapper, so the silhouette — and the shadow — stays
-           constant while the two copies hand over. */
+           a cyan one reads as atmosphere. Never animated. */
         .earth-still, .earth-media{
           filter:
             drop-shadow(0 16px 30px rgba(0,0,0,.55))
             drop-shadow(0 0 22px rgba(111,211,255,.28))
             drop-shadow(0 0 60px rgba(111,211,255,.12));
         }
-        .earth-vid{ opacity:0; z-index:1; will-change:opacity; }
-        .earth-vid.top{ z-index:2; transition:opacity var(--xfade, .6s) linear; }
+        .earth-vid{ opacity:0; }
         .earth-vid.on{ opacity:1; }
-        .earth--original .earth-vid{ transition:opacity .6s linear; }
-        /* seam mask: the atmosphere swells a touch while the copies hand over */
-        .earth-halo{
-          position:absolute; inset:-9%; border-radius:50%; opacity:0; pointer-events:none;
-          background:radial-gradient(circle, transparent 60%, rgba(111,211,255,.30) 67%, rgba(111,211,255,.10) 74%, transparent 80%);
-          will-change:opacity;
-        }
-        .earth-wrap.seam .earth-halo{ animation:earth-seam-glow var(--xfade, 1.75s) ease-in-out 1; }
-        @keyframes earth-seam-glow{ 0%{ opacity:0; } 50%{ opacity:1; } 100%{ opacity:0; } }
 
         /* Seat C — the extruded mark, in front of the Earth */
         .logo3d{ position:relative; z-index:2; width:100%; height:100%; }

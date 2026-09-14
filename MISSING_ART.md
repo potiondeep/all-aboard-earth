@@ -13,7 +13,7 @@ Last checked: 2026-09-11 (verified against production).
 
 | Asset | Seat | What shipped |
 |---|---|---|
-| `felt-earth.webm` / `-hevc.mov` | B — hero | The Flow clip, chroma-keyed off its pink background. 560x560, VP9-alpha 571KB + HEVC-alpha 1.6MB; each browser fetches only the one it can decode. |
+| `felt-earth-pingpong.webm` / `-pingpong-hevc.mov` | B — hero | The Flow clip, chroma-keyed off its pink background, played ping-pong (frames forward then reversed, natively looped) because the clip is a quarter turn and any forward loop shows a seam. 560x560, VP9-alpha 1.4MB + HEVC-alpha 3.1MB; each browser fetches only the one it can decode. |
 | `felt-earth-poster.webp` | B — hero | Derived from the same keyed pipeline, so it matches frame one exactly and there is no jump when the video takes over. Preloaded; it is what first paint shows. |
 
 ### Train wheels — waiting on regenerated art (2026-09-13)
