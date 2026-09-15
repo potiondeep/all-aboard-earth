@@ -274,7 +274,7 @@ export default function CoolCareers() {
             <div className="cc-tiles">
               {c.teachers.map(([b, s, h]) => (
                 <div key={b} className="cc-tile">
-                  <b style={{ color: h === "leaf" ? "#1F6B3A" : h === "sky" ? "#1C6A8A" : h === "marigold" ? "#C97D12" : "#D2502C" }}>{b}</b>
+                  <b style={{ color: h === "leaf" ? "#1F6B3A" : h === "sky" ? "#1C6A8A" : h === "marigold" ? "#8A5300" : "#A8391A" }}>{b}</b>
                   <span>{s}</span>
                 </div>
               ))}
