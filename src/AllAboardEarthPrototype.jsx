@@ -54,6 +54,9 @@ const CARD_ART = [
    🚂 Scroll-climbing train on the right rail
    ============================================================ */
 
+// the three engines each have their own page now
+const ENGINE_LINKS = [LINKS.coolCareers, LINKS.edutainment, LINKS.regenArt];
+
 // Seat 4 — one hue per frequency cell (declared after T)
 const FREQ_HUES = [T.marigold, T.coral, T.sky, T.leaf];
 
@@ -913,7 +916,8 @@ export default function App() {
 
         /* frequencies */
         .freqs{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-top:36px; }
-        .freq{ position:relative; border:2px solid ${T.cream}2b; border-radius:16px; padding:22px; transition:border-color .25s, transform .25s; }
+        .freq{ position:relative; display:block; text-decoration:none; color:inherit; border:2px solid ${T.cream}2b; border-radius:16px; padding:22px; transition:border-color .25s, transform .25s; }
+        .freq:focus-visible{ outline:3px solid ${T.sky}; outline-offset:3px; }
         .freq:hover{ border-color:${T.marigold}; transform:translateY(-4px); }
         .freq.lead{ border-color:${T.marigold}; background:${T.marigold}14; }
         .freq .ico{ font-size:30px; }
@@ -1128,12 +1132,12 @@ export default function App() {
         <p className="lede" data-reveal>{c.t1_sub}</p>
         <div className="freqs">
           {c.freqs.map(([ico, h, p, lead], i) => (
-            <div className={"freq" + (lead ? " lead" : "")} data-reveal key={h} style={{ transitionDelay: `${i * 90}ms` }}>
+            <a className={"freq" + (lead ? " lead" : "")} href={ENGINE_LINKS[i]} data-reveal key={h} style={{ transitionDelay: `${i * 90}ms` }}>
               {lead && <span className="boarding-badge">{c.boarding}</span>}
               <div className="ico">{ico}</div>
               <h3>{h}</h3>
               <p>{p}</p>
-            </div>
+            </a>
           ))}
         </div>
         <RootsMark />

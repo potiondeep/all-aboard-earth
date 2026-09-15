@@ -36,6 +36,16 @@ Open copy/content questions. Art gaps live in `MISSING_ART.md`.
      `cool-careers.allaboardearth.com`. The old Wix "Access the game portal"
      button went to `/cool-careers/game` (the card-game rules page) instead.
 
+5. **New sub pages — Spanish and a couple of specifics.**
+   - `/edutainment` and `/regenerative-art` are fully bilingual, but the Spanish
+     is my rendering (`src/pages/edutainmentCopy.js`, `src/pages/regenArtCopy.js`).
+   - Photo captions are my descriptions of what's in each shot — correct any that
+     name the wrong place, project or people.
+   - Both pages' CTAs point at the same Wix booking service as the rest of the
+     site. If commissions or show bookings should go somewhere else, say where.
+   - The mural film streams from the Wix CDN (113MB, 2:37) and only loads when
+     pressed. A trimmed, self-hosted cut would load faster if you want one.
+
 ## Resolved
 
 - Cool Careers card count (2026-09-14): 100+ — the page says "100+ career cards"

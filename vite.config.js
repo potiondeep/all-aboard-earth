@@ -12,6 +12,8 @@ export default defineConfig({
       input: {
         main: resolve(import.meta.dirname, 'index.html'),
         coolCareers: resolve(import.meta.dirname, 'cool-careers/index.html'),
+        edutainment: resolve(import.meta.dirname, 'edutainment/index.html'),
+        regenArt: resolve(import.meta.dirname, 'regenerative-art/index.html'),
       },
     },
   },

@@ -4,6 +4,8 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "rewrites": [
-    { "source": "/cool-careers", "destination": "/cool-careers/index.html" }
+    { "source": "/cool-careers", "destination": "/cool-careers/index.html" },
+    { "source": "/edutainment", "destination": "/edutainment/index.html" },
+    { "source": "/regenerative-art", "destination": "/regenerative-art/index.html" }
   ]
 }
