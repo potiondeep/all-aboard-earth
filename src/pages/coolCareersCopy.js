@@ -45,7 +45,6 @@ export const ccCopy = {
     ],
     pilot_title: "Pilot free with one class period —",
     pilot_hi: " 2026–27 cohort now booking.",
-    pilot_sub: "Santa Fe & Albuquerque districts piloting",
 
     video_title: "Cool Careers",
     video_sub: "Workforce Development for Sustainability",
@@ -106,7 +105,6 @@ export const ccCopy = {
     ],
     pilot_title: "Piloto gratis con una sola clase —",
     pilot_hi: " inscripciones abiertas para 2026–27.",
-    pilot_sub: "Distritos de Santa Fe y Albuquerque en piloto",
 
     video_title: "Cool Careers",
     video_sub: "Desarrollo laboral para la sostenibilidad",

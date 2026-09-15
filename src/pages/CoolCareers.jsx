@@ -176,7 +176,6 @@ export default function CoolCareers() {
         .cc-pilot{ margin-top:clamp(28px,4vh,40px); padding-top:24px; border-top:2px dashed #C9B58A; }
         .cc-pilot p{ font-weight:800; font-size:clamp(17px,2vw,21px); }
         .cc-pilot p span{ color:#1F6B3A; }
-        .cc-pilot small{ display:block; margin-top:6px; font-size:14px; color:#4B5563; }
 
         /* music video */
         .cc-video{ position:relative; max-width:960px; margin:0 auto; aspect-ratio:16/9; border-radius:20px; overflow:hidden;
@@ -195,6 +194,8 @@ export default function CoolCareers() {
         .cc-portal{ display:grid; gap:clamp(24px,4vw,48px); align-items:center; grid-template-columns:1fr;
           background:${T.marigold}; color:${T.pineDeep}; border-radius:28px; padding:clamp(28px,5vw,56px); transform:rotate(.4deg); }
         @media (min-width:860px){ .cc-portal{ grid-template-columns:1.1fr .9fr; } }
+        /* clear room between the paper overview and the tilted yellow box */
+        .cc-portal-wrap{ padding-top:clamp(56px,9vh,96px); }
         .cc-portal .cc-label{ color:${T.pineDeep}; opacity:.75; }
         .cc-portal h2{ font-size:clamp(38px,5.4vw,68px); margin-bottom:14px; }
         .cc-portal p{ font-size:18px; line-height:1.45; font-weight:500; margin-bottom:22px; }
@@ -294,14 +295,13 @@ export default function CoolCareers() {
 
             <div className="cc-pilot">
               <p>{c.pilot_title}<span>{c.pilot_hi}</span></p>
-              <small>{c.pilot_sub} · <a href="mailto:hello@allaboardearth.com">hello@allaboardearth.com</a></small>
             </div>
           </div>
         </section>
 
         {/* GAME PORTAL */}
         <section aria-labelledby="cc-portal-title">
-          <div className="cc-wrap" style={{ paddingTop: 0 }}>
+          <div className="cc-wrap cc-portal-wrap">
             <div className="cc-portal">
               <div>
                 <div className="mono cc-label">{c.portal_label}</div>
