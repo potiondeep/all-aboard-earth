@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { T, LINKS } from "./theme.js";
 
 import { cardArt, CAREER_PAGE } from "./wixCardArt.js";
 import Logo3D from "./Logo3D.jsx";
@@ -52,26 +53,6 @@ const CARD_ART = [
    🌱 Roots & seeds grounding sections
    🚂 Scroll-climbing train on the right rail
    ============================================================ */
-
-const T = {
-  pine: "#0E2A1B",
-  pineDeep: "#081D12",
-  cream: "#FFF4DF",
-  marigold: "#FFB53C",
-  coral: "#FF5C39",
-  sky: "#6FD3FF",
-  leaf: "#3FA968",
-};
-
-// Phase 2: the pilot-demo CTAs now point at a real Wix Bookings service
-// (School Performance, serviceId 9ef0367c-376f-46b3-8589-e68e6d58af21).
-// Wix owns the calendar, confirmations and payments; this site stays static.
-// The earlier /contact placeholder was a 404 — never point a CTA there again.
-const LINKS = {
-  coolCareers: "#cool-careers",
-  booking: "https://www.allaboardearth.com/service-page/school-performance",
-  grooves: "https://www.allaboardearth.com/grooves",
-};
 
 // Seat 4 — one hue per frequency cell (declared after T)
 const FREQ_HUES = [T.marigold, T.coral, T.sky, T.leaf];
@@ -549,7 +530,14 @@ function CareerCard({ c, i, art }) {
 }
 
 export default function App() {
-  const [lang, setLang] = useState("en");
+  // language choice is shared with the sub pages
+  const [lang, setLang] = useState(() => {
+    try { return localStorage.getItem("aae-lang") === "es" ? "es" : "en"; } catch { return "en"; }
+  });
+  useEffect(() => {
+    document.documentElement.lang = lang;
+    try { localStorage.setItem("aae-lang", lang); } catch {}
+  }, [lang]);
   const c = copy[lang];
   useReveal(lang);
   useSunParallax();
