@@ -10,7 +10,6 @@ const YT_ID = "G1IOqfjphIw"; // "Cool Careers" music video, All Aboard Earth on 
 
 const reducedMotion = () =>
   typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const isSmall = () => typeof window !== "undefined" && window.matchMedia("(max-width: 700px)").matches;
 
 /** Felt electric school buses charging — the hero backdrop. Poster first, clip after load. */
 function BusLoop({ caption }) {
@@ -18,15 +17,18 @@ function BusLoop({ caption }) {
   const [ready, setReady] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [reduced] = useState(reducedMotion);
-  const sm = isSmall() ? "-sm" : "";
+  const figRef = useRef(null);
+  // the frame is at most 760 css px wide: the 960px encode covers it unless the screen is dense
+  const sm = typeof window !== "undefined" && Math.min(760, window.innerWidth) * (window.devicePixelRatio || 1) > 1000 ? "" : "-sm";
   const base = "/art/cool-careers/electric-buses";
 
+  // near the bottom of the page: fetch nothing until it's approached
   useEffect(() => {
-    if (reduced) return;
-    const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 400));
-    const arm = () => idle(() => setReady(true), { timeout: 2000 });
-    if (document.readyState === "complete") arm();
-    else { window.addEventListener("load", arm, { once: true }); return () => window.removeEventListener("load", arm); }
+    const el = figRef.current;
+    if (reduced || !el) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setReady(true); io.disconnect(); } }, { rootMargin: "600px 0px" });
+    io.observe(el);
+    return () => io.disconnect();
   }, [reduced]);
 
   useEffect(() => {
@@ -38,8 +40,8 @@ function BusLoop({ caption }) {
   }, [ready]);
 
   return (
-    <figure className="cc-buses" aria-label={caption}>
-      <img className="cc-buses-media" src={`${base}${sm}-poster.webp`} alt="" width="1600" height="896" decoding="async" />
+    <figure ref={figRef} className="cc-buses" aria-label={caption}>
+      <img className="cc-buses-media" src={`${base}${sm}-poster.webp`} alt="" width="1600" height="896" loading="lazy" decoding="async" />
       {ready && (
         <video ref={vidRef} className={"cc-buses-media cc-buses-vid" + (playing ? " on" : "")} muted loop playsInline preload="auto"
                aria-hidden="true" onPlaying={() => setPlaying(true)}>
@@ -66,7 +68,7 @@ function MusicVideo({ label, title }) {
         />
       ) : (
         <button className="cc-video-facade" onClick={() => setOn(true)} aria-label={label}>
-          <img src="/art/cool-careers/cool-careers-video.webp" alt="" width="1280" height="720" loading="lazy" decoding="async" />
+          <img src="/art/cool-careers/cool-careers-video.webp" alt="" width="1280" height="720" fetchPriority="high" decoding="async" />
           <span className="cc-play" aria-hidden="true">▶</span>
         </button>
       )}
@@ -121,21 +123,26 @@ export default function CoolCareers() {
         .btn:focus-visible, .lang button:focus-visible, .cc-video-facade:focus-visible{ outline:3px solid ${T.sky}; outline-offset:3px; }
         @media (max-width:560px){ .brand{ font-size:15px; } .navr .btn{ display:none; } }
 
-        /* hero — headline first, then the felt buses charging get a full-width band of their own */
-        .cc-hero{ position:relative; background:radial-gradient(120% 90% at 50% 0%, #163A26 0%, ${T.pine} 60%); overflow:hidden; }
-        .cc-hero-inner{ position:relative; z-index:2; max-width:1100px; margin:0 auto; text-align:center;
-          padding:calc(clamp(84px,11vh,112px) + 20px) clamp(16px,4vw,48px) clamp(28px,4vh,44px); }
-        .cc-kicker{ font-size:12px; letter-spacing:.2em; color:${T.marigold}; margin-bottom:16px; }
-        .cc-hero h1{ font-size:clamp(42px,7.6vw,104px); color:${T.cream}; }
-        .cc-hero h1 span{ display:block; color:${T.marigold}; }
+        /* top — title, tagline, the music video */
+        .cc-top{ background:radial-gradient(120% 80% at 50% 0%, #163A26 0%, ${T.pine} 62%); text-align:center;
+          padding:calc(clamp(84px,11vh,112px) + 12px) clamp(16px,4vw,48px) clamp(40px,6vh,64px); }
+        .cc-top h1{ font-size:clamp(52px,9vw,120px); color:${T.cream}; }
+        .cc-tagline{ margin:10px auto clamp(24px,4vh,36px); font-family:'Space Mono', ui-monospace, monospace; font-size:clamp(13px,1.6vw,17px);
+          letter-spacing:.16em; text-transform:uppercase; color:${T.marigold}; }
+
+        /* headline + game portal */
+        .cc-hero{ text-align:center; max-width:1100px; margin:0 auto; padding:clamp(28px,5vh,56px) clamp(16px,4vw,48px) clamp(56px,9vh,96px); }
+        .cc-hero h2{ font-size:clamp(40px,7vw,96px); color:${T.cream}; }
+        .cc-hero h2 span{ display:block; color:${T.marigold}; }
         .cc-band{ margin:24px auto 26px; max-width:760px; background:${T.pineDeep}; border:2px solid ${T.cream}22; border-radius:16px;
           padding:14px 20px; font-size:clamp(16px,1.8vw,20px); font-weight:600; line-height:1.4; }
         .cc-band b{ font-weight:800; }
         .cc-actions{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
-        .cc-buses{ position:relative; margin:0; width:100%; aspect-ratio:16/9; max-height:82vh; min-height:240px; overflow:hidden;
-          -webkit-mask-image:linear-gradient(180deg, transparent 0, #000 12%, #000 86%, transparent 100%);
-                  mask-image:linear-gradient(180deg, transparent 0, #000 12%, #000 86%, transparent 100%); }
-        .cc-buses-media{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 62%; display:block; }
+
+        /* the felt buses, framed small by the closing CTA — stretched full-bleed they show their seams */
+        .cc-buses{ position:relative; width:min(760px, 100%); aspect-ratio:16/9; margin:0 auto clamp(26px,4vh,36px); overflow:hidden;
+          border:6px solid ${T.cream}; border-radius:18px; box-shadow:0 18px 40px #0008; transform:rotate(.6deg); background:${T.pineDeep}; }
+        .cc-buses-media{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
         .cc-buses-vid{ opacity:0; }
         .cc-buses-vid.on{ opacity:1; }
 
@@ -172,10 +179,6 @@ export default function CoolCareers() {
         .cc-pilot small{ display:block; margin-top:6px; font-size:14px; color:#4B5563; }
 
         /* music video */
-        .cc-section-head{ text-align:center; margin-bottom:28px; }
-        .cc-section-head .cc-label{ color:${T.marigold}; }
-        .cc-section-head h2{ font-size:clamp(38px,6vw,76px); }
-        .cc-section-head p{ margin-top:12px; font-size:18px; color:${T.cream}cc; }
         .cc-video{ position:relative; max-width:960px; margin:0 auto; aspect-ratio:16/9; border-radius:20px; overflow:hidden;
           border:6px solid ${T.cream}; box-shadow:0 22px 50px #0009; background:#000; transform:rotate(-.6deg); }
         .cc-video iframe, .cc-video-facade, .cc-video-facade img{ position:absolute; inset:0; width:100%; height:100%; border:0; display:block; }
@@ -186,6 +189,7 @@ export default function CoolCareers() {
           background:${T.coral}; color:${T.pineDeep}; font-size:34px; display:grid; place-items:center; padding-left:6px;
           box-shadow:0 10px 30px #0008; transition:transform .25s var(--ease-settle); }
         .cc-video-facade:hover .cc-play{ transform:scale(1.08); }
+        @media (max-width:560px){ .cc-play{ width:60px; height:60px; margin:-30px 0 0 -30px; font-size:22px; padding-left:4px; } .cc-video, .cc-buses{ border-width:4px; } }
 
         /* game portal */
         .cc-portal{ display:grid; gap:clamp(24px,4vw,48px); align-items:center; grid-template-columns:1fr;
@@ -211,7 +215,7 @@ export default function CoolCareers() {
         @media (prefers-reduced-motion: reduce){
           .btn, .cc-video-facade img, .cc-play{ transition:none !important; }
           .btn:hover, .cc-video-facade:hover img, .cc-video-facade:hover .cc-play{ transform:none !important; }
-          .cc-video, .cc-portal{ transform:none; }
+          .cc-video, .cc-portal, .cc-buses{ transform:none; }
         }
       `}</style>
 
@@ -227,20 +231,23 @@ export default function CoolCareers() {
       </nav>
 
       <main>
-        <header className="cc-hero">
-          <div className="cc-hero-inner">
-            <div className="mono cc-kicker">{c.hero_kicker}</div>
-            <h1 className="display">{c.hero_title}<span>{c.hero_title_b}</span></h1>
-            <p className="cc-band">
-              {c.hero_band.map(([t, h], i) => (h ? <b key={i} style={{ color: hue(h) }}>{t}</b> : <React.Fragment key={i}>{t}</React.Fragment>))}
-            </p>
-            <div className="cc-actions">
-              <a className="btn big" href={LINKS.gamePortal}>{c.hero_portal}</a>
-              <a className="btn big ghost" href="#music-video">{c.hero_video}</a>
-            </div>
-          </div>
-          <BusLoop caption={c.hero_caption} />
+        {/* TOP — the Cool Careers music video */}
+        <header className="cc-top">
+          <h1 className="display">{c.video_title}</h1>
+          <p className="cc-tagline">{c.video_sub}</p>
+          <MusicVideo label={c.video_play} title={c.video_title} />
         </header>
+
+        {/* HEADLINE + GAME PORTAL */}
+        <section className="cc-hero" aria-labelledby="cc-headline">
+          <h2 id="cc-headline" className="display">{c.hero_title}<span>{c.hero_title_b}</span></h2>
+          <p className="cc-band">
+            {c.hero_band.map(([t, h], i) => (h ? <b key={i} style={{ color: hue(h) }}>{t}</b> : <React.Fragment key={i}>{t}</React.Fragment>))}
+          </p>
+          <div className="cc-actions">
+            <a className="btn big" href={LINKS.gamePortal}>{c.hero_portal}</a>
+          </div>
+        </section>
 
         {/* PROGRAM OVERVIEW — the one-pager */}
         <section className="cc-paper" aria-labelledby="cc-why">
@@ -292,18 +299,6 @@ export default function CoolCareers() {
           </div>
         </section>
 
-        {/* MUSIC VIDEO */}
-        <section id="music-video" aria-labelledby="cc-video-title">
-          <div className="cc-wrap">
-            <div className="cc-section-head">
-              <div className="mono cc-label">{c.video_label}</div>
-              <h2 id="cc-video-title" className="display">{c.video_title}</h2>
-              <p>{c.video_sub}</p>
-            </div>
-            <MusicVideo label={c.video_play} title={c.video_title} />
-          </div>
-        </section>
-
         {/* GAME PORTAL */}
         <section aria-labelledby="cc-portal-title">
           <div className="cc-wrap" style={{ paddingTop: 0 }}>
@@ -321,6 +316,7 @@ export default function CoolCareers() {
 
         <section className="cc-cta">
           <div className="cc-wrap" style={{ paddingTop: 0 }}>
+            <BusLoop caption={c.hero_caption} />
             <h2 className="display">{c.cta_head}</h2>
             <p>{c.cta_sub}</p>
             <a className="btn big" href={LINKS.booking}>{c.cta_btn}</a>

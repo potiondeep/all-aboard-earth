@@ -5,12 +5,10 @@ export const ccCopy = {
   en: {
     nav_home: "Home",
     nav_cta: "Book a pilot demo",
-    hero_kicker: "ALL ABOARD EARTH · COOL CAREERS",
     hero_title: "Play a game. Find a future.",
     hero_title_b: "One class period.",
     hero_band: [["Standards-aligned", "marigold"], [", ", null], ["zero-student-data", "sky"], [", ", null], ["CTE-funded", "leaf"], [" career exploration that plugs into an existing class period.", null]],
     hero_portal: "Open the game portal",
-    hero_video: "Watch the music video",
     hero_caption: "Felt school buses charging up on sun and wind.",
 
     why_label: "WHY NOW",
@@ -24,9 +22,9 @@ export const ccCopy = {
       ["Play", " a 2-player digital card game about real regenerative careers"],
       ["Tell", " their own nature story"],
       ["Reveal", " their career avatar"],
-      ["Follow real pathways", " — videos, programs, internships & mentors on 90+ career cards"],
+      ["Follow real pathways", " — videos, programs, internships & mentors on 100+ career cards"],
     ],
-    students_foot: "90+ cards, mapped to National Career Clusters.",
+    students_foot: "100+ cards, mapped to National Career Clusters.",
     pipeline: "This pipeline starts in class.",
     teachers_label: "WHAT TEACHERS GET",
     teachers: [
@@ -49,9 +47,8 @@ export const ccCopy = {
     pilot_hi: " 2026–27 cohort now booking.",
     pilot_sub: "Santa Fe & Albuquerque districts piloting",
 
-    video_label: "THE ANTHEM",
     video_title: "Cool Careers",
-    video_sub: "The Cool Careers music video.",
+    video_sub: "Workforce Development for Sustainability",
     video_play: "Play the Cool Careers music video",
 
     portal_label: "THE GAME PORTAL",
@@ -69,12 +66,10 @@ export const ccCopy = {
   es: {
     nav_home: "Inicio",
     nav_cta: "Reserva una demo",
-    hero_kicker: "ALL ABOARD EARTH · COOL CAREERS",
     hero_title: "Juega. Encuentra un futuro.",
     hero_title_b: "Una sola clase.",
     hero_band: [["Alineado a estándares", "marigold"], [", ", null], ["cero datos estudiantiles", "sky"], [", ", null], ["financiable por CTE", "leaf"], [": exploración de carreras que se integra a una clase existente.", null]],
     hero_portal: "Abre el portal del juego",
-    hero_video: "Mira el video musical",
     hero_caption: "Autobuses escolares de fieltro cargándose con sol y viento.",
 
     why_label: "POR QUÉ AHORA",
@@ -88,9 +83,9 @@ export const ccCopy = {
       ["Juegan", " un juego de cartas digital para 2 jugadores sobre carreras regenerativas reales"],
       ["Cuentan", " su propia historia con la naturaleza"],
       ["Descubren", " su avatar de carrera"],
-      ["Siguen rutas reales", " — videos, programas, pasantías y mentores en más de 90 cartas de carreras"],
+      ["Siguen rutas reales", " — videos, programas, pasantías y mentores en más de 100 cartas de carreras"],
     ],
-    students_foot: "Más de 90 cartas, alineadas a los National Career Clusters.",
+    students_foot: "Más de 100 cartas, alineadas a los National Career Clusters.",
     pipeline: "Esta ruta empieza en el salón.",
     teachers_label: "LO QUE RECIBEN LOS MAESTROS",
     teachers: [
@@ -113,9 +108,8 @@ export const ccCopy = {
     pilot_hi: " inscripciones abiertas para 2026–27.",
     pilot_sub: "Distritos de Santa Fe y Albuquerque en piloto",
 
-    video_label: "EL HIMNO",
     video_title: "Cool Careers",
-    video_sub: "El video musical de Cool Careers.",
+    video_sub: "Desarrollo laboral para la sostenibilidad",
     video_play: "Reproducir el video musical de Cool Careers",
 
     portal_label: "EL PORTAL DEL JUEGO",

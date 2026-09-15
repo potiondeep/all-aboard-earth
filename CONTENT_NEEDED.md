@@ -29,9 +29,7 @@ Open copy/content questions. Art gaps live in `MISSING_ART.md`.
    section; "Hear the Music" goes to `/grooves`. Both unchanged from V1 — say if
    either should point somewhere else now.
 
-4. **Cool Careers page (`/cool-careers`) — three things to confirm.**
-   - **Card count.** The one-pager (and so this page) says "90+ career cards";
-     the live game portal says "Browse all 85 cards". Say which number is right.
+4. **Cool Careers page (`/cool-careers`) — two things to confirm.**
    - **Spanish.** The page is fully bilingual, but the Spanish is my rendering of
      the one-pager, not official — `src/pages/coolCareersCopy.js`, `es` block.
    - **Portal link.** Both portal buttons go to the game platform itself,
@@ -39,6 +37,9 @@ Open copy/content questions. Art gaps live in `MISSING_ART.md`.
      button went to `/cool-careers/game` (the card-game rules page) instead.
 
 ## Resolved
+
+- Cool Careers card count (2026-09-14): 100+ — the page says "100+ career cards"
+  (the one-pager said 90+, the game portal still says "all 85 cards").
 
 - Official mission (2026-09-12) — verbatim in the hero body and the meta
   description.

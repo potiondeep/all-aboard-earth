@@ -10,11 +10,11 @@ for (const [label, w, h, dpr, reduce] of [["desktop", 1440, 900, 1, false], ["ph
   await p.emulateMediaFeatures([{ name: "prefers-reduced-motion", value: reduce ? "reduce" : "no-preference" }]);
   await p.setViewport({ width: w, height: h, deviceScaleFactor: dpr });
   const res = await p.goto(`${BASE}/cool-careers/`, { waitUntil: "networkidle2" });
-  await wait(3500);
+  await p.evaluate(async () => { document.querySelector(".cc-buses").scrollIntoView({ block: "center" }); await new Promise((r) => setTimeout(r, 3500)); });
   const info = await p.evaluate(() => {
     const v = document.querySelector(".cc-buses-vid");
     return {
-      title: document.title, h1: document.querySelector("h1")?.innerText.replace(/\n/g, " / "),
+      title: document.title, h1: document.querySelector("h1")?.innerText, tagline: document.querySelector(".cc-tagline")?.innerText, headline: document.querySelector("#cc-headline")?.innerText.replace(/\n/g, " / "), order: [...document.querySelectorAll("main > *")].map((e) => e.className || e.tagName), cards: [...document.body.innerText.matchAll(/\d+\+ (?:career )?cards/g)].map((m) => m[0]),
       bus: v ? { src: v.currentSrc.split("/").pop(), t: +v.currentTime.toFixed(1), shown: v.classList.contains("on") } : "poster only",
       stats: [...document.querySelectorAll(".cc-stat .n")].map((n) => n.textContent),
       steps: document.querySelectorAll(".cc-step").length, tiles: document.querySelectorAll(".cc-tile").length, checks: document.querySelectorAll(".cc-district li").length,
@@ -41,6 +41,6 @@ await p.goto(`${BASE}/`, { waitUntil: "networkidle2" });
 await p.evaluate(() => [...document.querySelectorAll(".lang button")].find((x) => x.textContent === "ES").click()); await wait(300);
 const heroHref = await p.evaluate(() => [...document.querySelectorAll("a")].find((a) => a.getAttribute("href") === "/cool-careers")?.textContent);
 await p.goto(`${BASE}/cool-careers/`, { waitUntil: "networkidle2" });
-console.log("lang carry-over:", await p.evaluate(() => document.querySelector("h1").innerText.replace(/\n/g, " / ")), "| homepage link to /cool-careers:", heroHref);
+console.log("lang carry-over:", await p.evaluate(() => document.querySelector(".cc-tagline").innerText), "| homepage link to /cool-careers:", heroHref);
 await p.evaluate(() => localStorage.removeItem("aae-lang"));
 await b.close();
