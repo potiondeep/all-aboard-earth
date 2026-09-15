@@ -50,6 +50,7 @@ export const ccCopy = {
     video_sub: "Workforce Development for Sustainability",
     video_play: "Play the Cool Careers music video",
 
+    eagle_alt: "A felt eagle in a work harness holding a solar panel.",
     portal_label: "THE GAME PORTAL",
     portal_title: "Step inside the game.",
     portal_sub: "Students set up an explorer profile, link up with a classmate to play, meet their career avatar, and ride the Green Line — no accounts, no student data.",
@@ -110,6 +111,7 @@ export const ccCopy = {
     video_sub: "Desarrollo laboral para la sostenibilidad",
     video_play: "Reproducir el video musical de Cool Careers",
 
+    eagle_alt: "Un águila de fieltro con arnés de trabajo sosteniendo un panel solar.",
     portal_label: "EL PORTAL DEL JUEGO",
     portal_title: "Entra al juego.",
     portal_sub: "Los estudiantes crean su perfil de explorador, se conectan con un compañero para jugar, conocen su avatar de carrera y viajan en la Línea Verde — sin cuentas, sin datos estudiantiles.",

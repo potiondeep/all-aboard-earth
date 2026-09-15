@@ -11,6 +11,40 @@ const YT_ID = "G1IOqfjphIw"; // "Cool Careers" music video, All Aboard Earth on 
 const reducedMotion = () =>
   typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+/** The felt solar eagle, background removed, perched on the game portal box. */
+function Eagle({ label }) {
+  const ref = useRef(null);
+  const [ready, setReady] = useState(false);
+  const [reduced] = useState(reducedMotion);
+  useEffect(() => {
+    const el = ref.current;
+    if (reduced || !el) return;
+    const near = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setReady(true); near.disconnect(); } }, { rootMargin: "600px 0px" });
+    near.observe(el);
+    const play = new IntersectionObserver(([e]) => { const v = el.querySelector("video"); if (v) e.isIntersecting ? v.play().catch(() => {}) : v.pause(); }, { threshold: 0.2 });
+    play.observe(el);
+    return () => { near.disconnect(); play.disconnect(); };
+  }, [reduced]);
+
+  // the observer above can fire before the <video> exists, so start it on mount too
+  useEffect(() => {
+    if (!ready) return;
+    ref.current?.querySelector("video")?.play().catch(() => {});
+  }, [ready]);
+  return (
+    <div ref={ref} className="cc-eagle" role="img" aria-label={label}>
+      {ready ? (
+        <video muted loop playsInline preload="auto" poster="/art/cool-careers/eagle-poster.webp" width="560" height="558" aria-hidden="true">
+          <source src="/art/cool-careers/eagle-hevc.mov" type="video/quicktime" />
+          <source src="/art/cool-careers/eagle.webm" type="video/webm" />
+        </video>
+      ) : (
+        <img src="/art/cool-careers/eagle-poster.webp" alt="" width="560" height="558" loading="lazy" decoding="async" />
+      )}
+    </div>
+  );
+}
+
 /** Felt electric school buses charging — the hero backdrop. Poster first, clip after load. */
 function BusLoop({ caption }) {
   const vidRef = useRef(null);
@@ -196,6 +230,10 @@ export default function CoolCareers() {
         @media (min-width:860px){ .cc-portal{ grid-template-columns:1.1fr .9fr; } }
         /* clear room between the paper overview and the tilted yellow box */
         .cc-portal-wrap{ padding-top:clamp(56px,9vh,96px); }
+        /* the solar eagle stands on the box's top edge — its feet overlap the yellow */
+        .cc-eagle{ position:relative; z-index:2; width:clamp(128px,17vw,208px); margin:0 auto -6%; display:block; line-height:0;
+          filter:drop-shadow(0 14px 18px #0006); }
+        .cc-eagle video, .cc-eagle img{ width:100%; height:auto; display:block; }
         .cc-portal .cc-label{ color:${T.pineDeep}; opacity:.75; }
         .cc-portal h2{ font-size:clamp(38px,5.4vw,68px); margin-bottom:14px; }
         .cc-portal p{ font-size:18px; line-height:1.45; font-weight:500; margin-bottom:22px; }
@@ -302,6 +340,7 @@ export default function CoolCareers() {
         {/* GAME PORTAL */}
         <section aria-labelledby="cc-portal-title">
           <div className="cc-wrap cc-portal-wrap">
+            <Eagle label={c.eagle_alt} />
             <div className="cc-portal">
               <div>
                 <div className="mono cc-label">{c.portal_label}</div>
