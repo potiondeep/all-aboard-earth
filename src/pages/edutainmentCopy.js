@@ -124,6 +124,6 @@ export const EVENTS = [
     ["img", "ev-meadow", "Three costumed performers playing in a green meadow"],
   ]},
   { id: "solarface", label: "Solar panel", items: [
-    ["img", "ev-solarface", "A performer's face peeking over a solar panel against a blue sky", null, "50% 32%"],
+    ["video", "ev-solardance", "A performer dancing behind a solar panel in the desert", null, "50% 26%"],
   ]},
 ];
