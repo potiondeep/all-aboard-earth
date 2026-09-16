@@ -10,11 +10,9 @@ export const edCopy = {
     live_label: "LIVE PERFORMANCE",
     live_h: "The show walks on stage as a zebra, a giraffe and a bee.",
     live_p: "Costumed characters, call-and-response hooks and a table of real food: assemblies, festivals, farmers markets and street corners. Kids meet the ecosystem as characters they can talk back to — and leave singing the science.",
-    live_points: [
-      ["School assemblies", "One class period or a whole cafeteria — the show that opens the Cool Careers conversation."],
-      ["Festivals & markets", "Outdoor stages, plazas and farmers markets, bilingual and all ages."],
-      ["Street & community", "Marches, block parties, pueblo plazas — the boombox goes where the people are."],
-    ],
+    news_label: "ON THE NEWS",
+    news_title: "KRQE Environmental Activism",
+    news_play: "Play the KRQE news segment about All Aboard Earth",
     gallery_label: "ON STAGE",
     gallery_cap: "Live sets across New Mexico — hover to hold a frame.",
 
@@ -29,7 +27,6 @@ export const edCopy = {
     boombox_cap: "The Earth boombox — where the garden meets the speaker.",
     bus_alt: "The All Aboard Earth bus painted as the Earth, animals riding along",
 
-    solar_cap: "Solar dance.",
 
     booking_label: "BOOK THE LIVE SHOW",
     booking_h: "School assemblies & community events.",
@@ -50,11 +47,9 @@ export const edCopy = {
     live_label: "PRESENTACIÓN EN VIVO",
     live_h: "El show sube al escenario como cebra, jirafa y abeja.",
     live_p: "Personajes con vestuario, coros de llamada y respuesta y una mesa con comida real: asambleas escolares, festivales, mercados de agricultores y esquinas. Los niños conocen el ecosistema como personajes que les responden — y se van cantando la ciencia.",
-    live_points: [
-      ["Asambleas escolares", "Una clase o toda la cafetería — el show que abre la conversación de Cool Careers."],
-      ["Festivales y mercados", "Escenarios al aire libre, plazas y mercados, bilingüe y para todas las edades."],
-      ["Calle y comunidad", "Marchas, fiestas de barrio, plazas de los pueblos — el boombox va donde está la gente."],
-    ],
+    news_label: "EN LAS NOTICIAS",
+    news_title: "KRQE Environmental Activism",
+    news_play: "Reproducir el reportaje de KRQE sobre All Aboard Earth",
     gallery_label: "EN ESCENA",
     gallery_cap: "Presentaciones en vivo por todo Nuevo México — pasa el cursor para detener una imagen.",
 
@@ -69,7 +64,6 @@ export const edCopy = {
     boombox_cap: "El boombox de la Tierra — donde el jardín se encuentra con la bocina.",
     bus_alt: "El autobús All Aboard Earth pintado como la Tierra, con animales viajando",
 
-    solar_cap: "Baile solar.",
 
     booking_label: "RESERVA EL SHOW EN VIVO",
     booking_h: "Asambleas escolares y eventos comunitarios.",

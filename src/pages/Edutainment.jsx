@@ -1,28 +1,27 @@
 import React, { useEffect, useRef, useState } from "react";
 import { T, LINKS } from "../theme.js";
-import { SiteNav, SiteFooter, chromeCss, useLang, reducedMotion, useLoopVideo } from "./chrome.jsx";
+import { SiteNav, SiteFooter, chromeCss, useLang, reducedMotion } from "./chrome.jsx";
 import { edCopy, EVENTS } from "./edutainmentCopy.js";
 
 /* ============================================================
    🎤 ENVIRONMENTAL EDUTAINMENT — live performance + music production
    ============================================================ */
 
-function Loop({ base, width, height, caption, className = "" }) {
-  const ref = useRef(null);
-  const [reduced] = useState(reducedMotion);
-  const ready = useLoopVideo(ref, { reduced });
+/** YouTube facade: thumbnail and play button; the player only loads on click. */
+function NewsVideo({ id, label, title, poster }) {
+  const [on, setOn] = useState(false);
   return (
-    <figure ref={ref} className={`ed-loop ${className}`}>
-      {ready && !reduced ? (
-        <video muted loop playsInline preload="auto" poster={`${base}-poster.webp`} width={width} height={height} aria-hidden="true">
-          <source src={`${base}.webm`} type="video/webm" />
-          <source src={`${base}.mp4`} type="video/mp4" />
-        </video>
+    <div className="ed-news">
+      {on ? (
+        <iframe src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`} title={title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
       ) : (
-        <img src={`${base}-poster.webp`} alt="" width={width} height={height} loading="lazy" decoding="async" />
+        <button className="ed-news-facade" onClick={() => setOn(true)} aria-label={label}>
+          <img src={poster} alt="" width="1280" height="720" loading="lazy" decoding="async" />
+          <span className="ed-play" aria-hidden="true">▶</span>
+        </button>
       )}
-      <figcaption>{caption}</figcaption>
-    </figure>
+    </div>
   );
 }
 
@@ -113,18 +112,24 @@ export default function Edutainment() {
           box-shadow:0 22px 50px #0009; transform:rotate(-.5deg); }
         .ed-actions{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:clamp(22px,3vh,30px); }
 
-        .ed-split{ display:grid; gap:clamp(24px,4vw,52px); align-items:start; grid-template-columns:1fr; }
-        @media (min-width:900px){ .ed-split{ grid-template-columns:1.05fr .95fr; } }
+        /* the live-performance headline runs the full width */
+        .ed-live-h{ font-size:clamp(38px,6.4vw,84px); margin-bottom:18px; }
+        .ed-live-p{ max-width:900px; font-size:clamp(17px,1.9vw,20px); }
+        .ed-news-label{ margin:clamp(30px,5vh,48px) 0 14px; }
+        .ed-news{ position:relative; aspect-ratio:16/9; max-width:1000px; border-radius:20px; overflow:hidden;
+          border:6px solid ${T.cream}; box-shadow:0 22px 50px #0009; background:#000; transform:rotate(-.4deg); }
+        .ed-news iframe, .ed-news-facade, .ed-news-facade img{ position:absolute; inset:0; width:100%; height:100%; border:0; display:block; }
+        .ed-news-facade{ cursor:pointer; background:#000; padding:0; }
+        .ed-news-facade img{ object-fit:cover; transition:transform .5s var(--ease-settle), filter .5s; }
+        .ed-news-facade:hover img{ transform:scale(1.03); filter:brightness(.85); }
+        .ed-play{ position:absolute; left:50%; top:50%; width:92px; height:92px; margin:-46px 0 0 -46px; border-radius:50%;
+          background:${T.coral}; color:${T.pineDeep}; font-size:34px; display:grid; place-items:center; padding-left:6px; box-shadow:0 10px 30px #0008; }
+        @media (max-width:560px){ .ed-play{ width:60px; height:60px; margin:-30px 0 0 -30px; font-size:22px; padding-left:4px; } .ed-news{ border-width:4px; } }
         .ed-points{ list-style:none; margin-top:26px; display:grid; gap:12px; }
         .ed-points li{ background:#12301F; border:2px solid ${T.cream}1f; border-radius:16px; padding:16px 18px; }
         .ed-points b{ display:block; font-size:17px; margin-bottom:4px; }
         .ed-points span{ font-size:15px; line-height:1.45; color:${T.cream}bb; }
 
-        .ed-loop{ margin:0; }
-        .ed-loop video, .ed-loop img{ width:100%; height:auto; display:block; border-radius:18px; border:5px solid ${T.cream};
-          box-shadow:0 16px 36px #0008; background:${T.pineDeep}; }
-        .ed-loop figcaption{ margin-top:10px; font-family:'Space Mono', ui-monospace, monospace; font-size:12px; color:${T.cream}99; letter-spacing:.06em; }
-        .ed-loop.tilt video, .ed-loop.tilt img{ transform:rotate(.8deg); }
 
         /* the wall: one tile per event, fixed shape so cycling never reflows */
         .ed-gallery{ display:grid; gap:12px; grid-template-columns:repeat(2,1fr); }
@@ -171,7 +176,8 @@ export default function Edutainment() {
         .ed-cta h2{ font-size:clamp(32px,4.8vw,58px); margin-bottom:12px; text-shadow:0 3px 22px ${T.pineDeep}; }
         .ed-cta p{ font-size:18px; font-weight:500; margin-bottom:22px; color:${T.cream}e6; text-shadow:0 2px 14px ${T.pineDeep}; }
         @media (prefers-reduced-motion: reduce){
-          .ed-hero-art img, .ed-tile, .ed-cta, .ed-boombox img, .ed-loop.tilt video, .ed-loop.tilt img{ transform:none !important; }
+          .ed-hero-art img, .ed-tile, .ed-cta, .ed-boombox img, .ed-news{ transform:none !important; }
+          .ed-news-facade img{ transition:none !important; } .ed-news-facade:hover img{ transform:none !important; }
           .ed-frame{ transition:none !important; }
         }
       `}</style>
@@ -195,17 +201,11 @@ export default function Edutainment() {
 
         {/* LIVE PERFORMANCE */}
         <section className="pg-wrap" aria-labelledby="ed-live">
-          <div className="ed-split">
-            <div>
-              <div className="pg-label">{c.live_label}</div>
-              <h2 id="ed-live" className="display pg-h2">{c.live_h}</h2>
-              <p className="pg-lede">{c.live_p}</p>
-              <ul className="ed-points">
-                {c.live_points.map(([b, s]) => <li key={b}><b>{b}</b><span>{s}</span></li>)}
-              </ul>
-            </div>
-            <Loop base="/art/edutainment/solardance" width="480" height="854" caption={c.solar_cap} className="tilt" />
-          </div>
+          <div className="pg-label">{c.live_label}</div>
+          <h2 id="ed-live" className="display ed-live-h">{c.live_h}</h2>
+          <p className="pg-lede ed-live-p">{c.live_p}</p>
+          <div className="pg-label ed-news-label">{c.news_label}</div>
+          <NewsVideo id="JjrR9mBG1kI" label={c.news_play} title={c.news_title} poster="/art/edutainment/news-video.webp" />
         </section>
 
         {/* STAGE GALLERY */}
