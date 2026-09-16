@@ -34,12 +34,12 @@ function Eagle({ label }) {
   return (
     <div ref={ref} className="cc-eagle" role="img" aria-label={label}>
       {ready ? (
-        <video muted loop playsInline preload="auto" poster="/art/cool-careers/eagle-poster.webp" width="560" height="558" aria-hidden="true">
+        <video muted loop playsInline preload="auto" poster="/art/cool-careers/eagle-poster.webp" width="560" height="546" aria-hidden="true">
           <source src="/art/cool-careers/eagle-hevc.mov" type="video/quicktime" />
           <source src="/art/cool-careers/eagle.webm" type="video/webm" />
         </video>
       ) : (
-        <img src="/art/cool-careers/eagle-poster.webp" alt="" width="560" height="558" loading="lazy" decoding="async" />
+        <img src="/art/cool-careers/eagle-poster.webp" alt="" width="560" height="546" loading="lazy" decoding="async" />
       )}
     </div>
   );
