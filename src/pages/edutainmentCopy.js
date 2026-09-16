@@ -79,11 +79,11 @@ export const edCopy = {
 export const EVENTS = [
   { id: "market", label: "Farmers market, April 2019", items: [
     ["img", "stage-3", "Two performers in zebra and giraffe costumes with arms raised", null, "50% 20%"],
-    ["img", "stage-4", "Performers behind a rainbow table loaded with fresh produce", null, "50% 26%"],
+    ["img", "stage-4", "Performers behind a rainbow table loaded with fresh produce", null, "50% 8%"],
     ["img", "stage-5", "The giraffe character greeting the crowd across the table", null, "50% 24%"],
     ["img", "stage-6", "Both performers mid-song with arms wide"],
     ["img", "stage-7", "The zebra character leaning into the microphone"],
-    ["img", "stage-8", "The pair dancing behind the produce table", null, "50% 24%"],
+    ["img", "stage-8", "The pair dancing behind the produce table", null, "50% 8%"],
     ["img", "stage-9", "A performer in a giraffe hood behind a keyboard and vegetables"],
     ["img", "stage-10", "Wide shot of the set with the crowd on the grass", null, "50% 26%"],
     ["img", "stage-2", "A small child shaking hands with a costumed performer", null, "50% 22%"],
