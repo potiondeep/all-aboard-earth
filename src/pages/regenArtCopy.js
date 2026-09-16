@@ -5,7 +5,6 @@ export const raCopy = {
     title: "Regenerative Art",
     tagline: "Healing communities and the land with art — heralding a renaissance of planetary stewardship.",
     cta_commission: "Commission a project",
-    cta_see: "See the work",
 
     materials_label: "MATERIALS CARRY THE MESSAGE",
     materials_h: "Art that heals what it's made from.",
@@ -49,7 +48,6 @@ export const raCopy = {
     title: "Arte Regenerativo",
     tagline: "Sanando comunidades y la tierra con arte — anunciando un renacimiento de la custodia planetaria.",
     cta_commission: "Encarga un proyecto",
-    cta_see: "Mira el trabajo",
 
     materials_label: "LOS MATERIALES LLEVAN EL MENSAJE",
     materials_h: "Arte que sana aquello de lo que está hecho.",

@@ -70,6 +70,7 @@ const copy = {
     hero_sub:
       "All Aboard Earth is a movement igniting the visionary willpower of humanity to foster ecological health through green career pathways, environmental edutainment and regenerative art.",
     hero_cta: "Explore Cool Careers",
+    hero_cta3: "See the Art",
     hero_cta2: "Hear the Music",
     marquee: "UP WE GO! · UP WE GO! · ",
     marquee_phrase: "UP WE GO!",
@@ -130,6 +131,7 @@ const copy = {
     hero_sub:
       "All Aboard Earth es un movimiento que enciende la voluntad visionaria de la humanidad para fomentar la salud ecológica mediante rutas de carreras verdes, edutenimiento ambiental y arte regenerativo.",
     hero_cta: "Explora Cool Careers",
+    hero_cta3: "Mira el Arte",
     hero_cta2: "Escucha la música",
     marquee: "¡ARRIBA VAMOS! · UP WE GO! · ¡ARRIBA VAMOS! · UP WE GO! · ",
     marquee_phrase: "¡ARRIBA VAMOS!",
@@ -1111,6 +1113,7 @@ export default function App() {
         <div className="hero-ctas">
           <a className="btn big" href={LINKS.coolCareers}>{c.hero_cta}</a>
           <a className="btn big ghost" href={LINKS.grooves}>{c.hero_cta2}</a>
+          <a className="btn big ghost" href={LINKS.regenArt}>{c.hero_cta3}</a>
         </div>
       </header>
 

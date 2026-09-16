@@ -27,10 +27,10 @@ function MuralVideo({ label }) {
 function EcoHomeLoop({ caption }) {
   const ref = useRef(null);
   const [reduced] = useState(reducedMotion);
-  const ready = useLoopVideo(ref, { reduced });
+  const ready = useLoopVideo(ref, { reduced });   // it sits at the top, so this resolves immediately
   const sm = typeof window !== "undefined" && window.innerWidth * (window.devicePixelRatio || 1) <= 1100 ? "-sm" : "";
   return (
-    <figure ref={ref} className="ra-eco">
+    <figure ref={ref}>
       {ready && !reduced ? (
         <video muted loop playsInline preload="auto" poster="/art/regen-art/eco-home-poster.webp" width="1280" height="572" aria-hidden="true">
           <source src={`/art/regen-art/eco-home${sm}.webm`} type="video/webm" />
@@ -56,8 +56,9 @@ export default function RegenArt() {
       <style>{chromeCss + `
         .ra-actions{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:clamp(22px,3vh,30px); }
         .ra-hero-art{ max-width:1100px; margin:0 auto; padding:0 clamp(16px,4vw,48px); }
-        .ra-hero-art img{ width:100%; height:auto; display:block; border-radius:20px; border:6px solid ${T.cream};
+        .ra-hero-art img, .ra-hero-art video{ width:100%; height:auto; display:block; border-radius:20px; border:6px solid ${T.cream};
           box-shadow:0 22px 50px #0009; transform:rotate(.5deg); }
+        .ra-hero-art figure{ margin:0; }
 
         .ra-split{ display:grid; gap:clamp(24px,4vw,52px); align-items:start; grid-template-columns:1fr; }
         @media (min-width:900px){ .ra-split{ grid-template-columns:1fr 1fr; } }
@@ -85,8 +86,6 @@ export default function RegenArt() {
           background:${T.coral}; color:${T.pineDeep}; font-size:34px; display:grid; place-items:center; padding-left:6px; box-shadow:0 10px 30px #0008; }
         @media (max-width:560px){ .ra-play{ width:60px; height:60px; margin:-30px 0 0 -30px; font-size:22px; padding-left:4px; } .ra-video, .ra-hero-art img{ border-width:4px; } }
 
-        .ra-eco{ margin:clamp(24px,4vh,36px) 0 0; }
-        .ra-eco video, .ra-eco img{ width:100%; height:auto; display:block; border-radius:20px; border:6px solid ${T.cream}; box-shadow:0 20px 44px #0009; }
 
         .ra-cta{ text-align:center; background:${T.coral}; color:${T.pineDeep}; border-radius:28px; padding:clamp(30px,5vw,56px); transform:rotate(.4deg); }
         .ra-cta h2{ font-size:clamp(32px,4.8vw,58px); margin-bottom:12px; }
@@ -106,14 +105,11 @@ export default function RegenArt() {
           <p className="pg-tagline">{c.tagline}</p>
           <div className="ra-actions">
             <a className="btn big" href={LINKS.booking}>{c.cta_commission}</a>
-            <a className="btn big ghost" href="#mural">{c.cta_see}</a>
           </div>
         </header>
 
         <div className="ra-hero-art">
-          <img src="/art/regen-art/mural-2-1400.webp" srcSet="/art/regen-art/mural-2-700.webp 700w, /art/regen-art/mural-2-1400.webp 1400w"
-               sizes="(max-width: 1100px) 100vw, 1100px" alt="A crew on scaffolding in front of a finished sunburst mural" width="1400" height="933"
-               fetchPriority="high" decoding="async" />
+          <EcoHomeLoop caption={c.felt_h} />
         </div>
 
         {/* MATERIALS */}
@@ -179,14 +175,6 @@ export default function RegenArt() {
               <figcaption>{c.objects_caps[1]}</figcaption>
             </figure>
           </div>
-        </section>
-
-        {/* FELT WORLD + EARTH BUS */}
-        <section className="pg-wrap" style={{ paddingTop: 0 }} aria-labelledby="ra-felt">
-          <div className="pg-label">{c.felt_label}</div>
-          <h2 id="ra-felt" className="display pg-h2">{c.felt_h}</h2>
-          <p className="pg-lede">{c.felt_p}</p>
-          <EcoHomeLoop caption={c.felt_h} />
         </section>
 
         <section className="pg-wrap" style={{ paddingTop: 0 }}>
