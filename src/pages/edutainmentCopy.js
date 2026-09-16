@@ -31,6 +31,10 @@ export const edCopy = {
 
     solar_cap: "Solar dance.",
 
+    booking_label: "BOOK THE LIVE SHOW",
+    booking_h: "School assemblies & community events.",
+    booking_p: "One class period or a whole cafeteria; a festival stage, a plaza, a farmers market or a block party. Bilingual, all ages, and it travels — the show that opens the Cool Careers conversation.",
+    booking_points: ["Assemblies & residencies", "Festivals & markets", "Community & street events"],
     cta_head: "Bring the show to your stage.",
     cta_sub: "Assemblies, festivals, markets and community events — bilingual, all ages.",
     footer: "ALL ABOARD EARTH · UP WE GO! 🌱",
@@ -67,6 +71,10 @@ export const edCopy = {
 
     solar_cap: "Baile solar.",
 
+    booking_label: "RESERVA EL SHOW EN VIVO",
+    booking_h: "Asambleas escolares y eventos comunitarios.",
+    booking_p: "Una clase o toda la cafetería; un escenario de festival, una plaza, un mercado de agricultores o una fiesta de barrio. Bilingüe, para todas las edades, y viaja — el show que abre la conversación de Cool Careers.",
+    booking_points: ["Asambleas y residencias", "Festivales y mercados", "Eventos comunitarios y de calle"],
     cta_head: "Lleva el show a tu escenario.",
     cta_sub: "Asambleas, festivales, mercados y eventos comunitarios — bilingüe, todas las edades.",
     footer: "ALL ABOARD EARTH · ¡ARRIBA VAMOS! 🌱",
@@ -78,7 +86,7 @@ export const edCopy = {
 // stop on whichever frame the pointer lands on. Single-media events stay still.
 export const EVENTS = [
   { id: "market", label: "Farmers market, April 2019", items: [
-    ["img", "stage-3", "Two performers in zebra and giraffe costumes with arms raised", null, "50% 20%"],
+    ["img", "stage-3", "Two performers in zebra and giraffe costumes with arms raised", null, "50% 4%"],
     ["img", "stage-4", "Performers behind a rainbow table loaded with fresh produce", null, "50% 8%"],
     ["img", "stage-5", "The giraffe character greeting the crowd across the table", null, "50% 24%"],
     ["img", "stage-6", "Both performers mid-song with arms wide"],

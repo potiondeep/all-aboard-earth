@@ -11,7 +11,8 @@ const YT_ID = "G1IOqfjphIw"; // "Cool Careers" music video, All Aboard Earth on 
 const reducedMotion = () =>
   typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/** The felt solar eagle, background removed, perched on the game portal box. */
+/** The felt solar eagle. It keeps its white studio background, and the overview
+ *  section is painted the same white so the two merge with no visible edge. */
 function Eagle({ label }) {
   const ref = useRef(null);
   const [ready, setReady] = useState(false);
@@ -34,12 +35,12 @@ function Eagle({ label }) {
   return (
     <div ref={ref} className="cc-eagle" role="img" aria-label={label}>
       {ready ? (
-        <video muted loop playsInline preload="auto" poster="/art/cool-careers/eagle-poster.webp" width="560" height="546" aria-hidden="true">
-          <source src="/art/cool-careers/eagle-hevc.mov" type="video/quicktime" />
-          <source src="/art/cool-careers/eagle.webm" type="video/webm" />
+        <video muted loop playsInline preload="auto" poster="/art/cool-careers/eagle-plain-poster.webp" width="560" height="546" aria-hidden="true">
+          <source src="/art/cool-careers/eagle-plain.webm" type="video/webm" />
+          <source src="/art/cool-careers/eagle-plain.mp4" type="video/mp4" />
         </video>
       ) : (
-        <img src="/art/cool-careers/eagle-poster.webp" alt="" width="560" height="546" loading="lazy" decoding="async" />
+        <img src="/art/cool-careers/eagle-plain-poster.webp" alt="" width="560" height="546" loading="lazy" decoding="async" />
       )}
     </div>
   );
@@ -129,7 +130,7 @@ export default function CoolCareers() {
         html, body { background:${T.pine}; }
         .cc-page{
           --ease-settle: cubic-bezier(.22, 1, .36, 1);
-          --ink:#12203A; --paper:#F4EAD7; --tile:#E9DFC2; --tile-edge:#D9C68E;
+          --ink:#12203A; --paper:#FDFDFD; --card:#F4EAD7; --tile:#EFE4C8; --tile-edge:#D9C68E;
           background:${T.pine}; color:${T.cream}; font-family:'Bricolage Grotesque', system-ui, sans-serif;
           min-height:100vh; overflow-x:hidden; -webkit-font-smoothing:antialiased;
         }
@@ -186,7 +187,7 @@ export default function CoolCareers() {
         .cc-label{ font-size:12px; letter-spacing:.22em; color:#1F6B3A; margin-bottom:14px; }
         .cc-grid{ display:grid; gap:clamp(28px,4vw,48px); grid-template-columns:1fr; }
         @media (min-width:900px){ .cc-grid{ grid-template-columns:1fr 1fr; } }
-        .cc-card{ background:#fff; border:2.5px solid var(--ink); border-radius:18px; box-shadow:6px 6px 0 #0000001a; }
+        .cc-card{ background:var(--card); border:2.5px solid var(--ink); border-radius:18px; box-shadow:6px 6px 0 #0000001a; }
         .cc-stat{ padding:18px 20px 14px; margin-bottom:14px; display:grid; grid-template-columns:auto 1fr; column-gap:16px; align-items:start; }
         .cc-stat .n{ font-family:'Anton'; font-size:clamp(46px,5.4vw,64px); line-height:.9; white-space:nowrap; }
         .cc-stat p{ font-weight:700; font-size:16px; line-height:1.3; padding-top:6px; }
@@ -202,7 +203,7 @@ export default function CoolCareers() {
         .cc-tile{ background:var(--tile); border:2px solid var(--tile-edge); border-radius:14px; padding:16px 14px; }
         .cc-tile b{ display:block; font-family:'Anton'; font-weight:400; font-size:clamp(22px,2.2vw,28px); line-height:1; margin-bottom:10px; }
         .cc-tile span{ font-size:14px; font-weight:600; line-height:1.3; }
-        .cc-district{ margin-top:clamp(32px,5vh,48px); border:3px solid #1F6B3A; border-radius:18px; background:#fff; padding:22px clamp(18px,3vw,30px); box-shadow:6px 6px 0 #0000001a; }
+        .cc-district{ margin-top:clamp(32px,5vh,48px); border:3px solid #1F6B3A; border-radius:18px; background:var(--card); padding:22px clamp(18px,3vw,30px); box-shadow:6px 6px 0 #0000001a; }
         .cc-district ul{ list-style:none; display:grid; gap:10px 34px; grid-template-columns:1fr; }
         @media (min-width:800px){ .cc-district ul{ grid-template-columns:1fr 1fr; } }
         .cc-district li{ position:relative; padding-left:26px; font-size:15px; line-height:1.4; }
@@ -230,10 +231,21 @@ export default function CoolCareers() {
         @media (min-width:860px){ .cc-portal{ grid-template-columns:1.1fr .9fr; } }
         /* clear room between the paper overview and the tilted yellow box */
         .cc-portal-wrap{ padding-top:clamp(56px,9vh,96px); }
-        /* the solar eagle stands on the box's top edge — its feet overlap the yellow */
-        .cc-eagle{ position:relative; z-index:2; width:clamp(128px,17vw,208px); margin:0 auto -6%; display:block; line-height:0;
-          filter:drop-shadow(0 14px 18px #0006); }
-        .cc-eagle video, .cc-eagle img{ width:100%; height:auto; display:block; }
+        /* the solar eagle fills the open space beside "This pipeline starts in class." */
+        .cc-pipeline-row{ display:flex; align-items:flex-end; justify-content:space-between; gap:clamp(16px,3vw,40px);
+          margin:clamp(40px,6vh,64px) 0 22px; }
+        .cc-pipeline-row .cc-pipeline{ margin:0; }
+        .cc-eagle{ flex:none; width:clamp(120px,18vw,230px); line-height:0; margin-bottom:-6px; }
+        /* the clip's own white is a hair off the section's after compression, so melt its
+           edges rather than chase an exact match */
+        .cc-eagle video, .cc-eagle img{ width:100%; height:auto; display:block;
+          -webkit-mask-image:linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%),
+                             linear-gradient(to bottom, transparent 0, #000 6%, #000 94%, transparent 100%);
+          -webkit-mask-composite:source-in;
+          mask-image:linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%),
+                     linear-gradient(to bottom, transparent 0, #000 6%, #000 94%, transparent 100%);
+          mask-composite:intersect; }
+        @media (max-width:560px){ .cc-eagle{ width:110px; } }
         .cc-portal .cc-label{ color:${T.pineDeep}; opacity:.75; }
         .cc-portal h2{ font-size:clamp(38px,5.4vw,68px); margin-bottom:14px; }
         .cc-portal p{ font-size:18px; line-height:1.45; font-weight:500; margin-bottom:22px; }
@@ -315,7 +327,10 @@ export default function CoolCareers() {
               </div>
             </div>
 
-            <p className="cc-pipeline">{c.pipeline}</p>
+            <div className="cc-pipeline-row">
+              <p className="cc-pipeline">{c.pipeline}</p>
+              <Eagle label={c.eagle_alt} />
+            </div>
             <h2 className="mono cc-label">{c.teachers_label}</h2>
             <div className="cc-tiles">
               {c.teachers.map(([b, s, h]) => (
@@ -340,7 +355,6 @@ export default function CoolCareers() {
         {/* GAME PORTAL */}
         <section aria-labelledby="cc-portal-title">
           <div className="cc-wrap cc-portal-wrap">
-            <Eagle label={c.eagle_alt} />
             <div className="cc-portal">
               <div>
                 <div className="mono cc-label">{c.portal_label}</div>
