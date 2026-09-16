@@ -28,8 +28,9 @@ function Loop({ base, width, height, caption, className = "" }) {
 
 /**
  * One event in the wall. Events with several photos/clips cycle every 2.8s and
- * stop on whatever frame the pointer (or keyboard focus) lands on. Single-media
- * events never move. Only cycles while on screen; reduced motion holds frame one.
+ * stop on whatever frame the pointer (or keyboard focus) lands on; clicking (or
+ * Enter/Space) steps to the next frame. Single-media events never move. Only
+ * cycles while on screen; reduced motion holds frame one.
  */
 function EventTile({ event, label }) {
   const ref = useRef(null);
@@ -38,6 +39,7 @@ function EventTile({ event, label }) {
   const [seen, setSeen] = useState(false);
   const [reduced] = useState(reducedMotion);
   const many = event.items.length > 1;
+  const next = () => setI((n) => (n + 1) % event.items.length);
 
   useEffect(() => {
     const el = ref.current;
@@ -61,22 +63,25 @@ function EventTile({ event, label }) {
       onMouseLeave={() => setHold(false)}
       onFocus={() => setHold(true)}
       onBlur={() => setHold(false)}
+      onClick={many ? next : undefined}
+      onKeyDown={many ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); next(); } } : undefined}
       tabIndex={many ? 0 : -1}
-      aria-label={many ? `${label} — ${event.items.length} frames` : undefined}
+      role={many ? "button" : undefined}
+      aria-label={many ? `${label} — ${event.items.length} photos, ${i + 1} showing. Click for the next.` : undefined}
     >
-      {event.items.map(([kind, name, alt, w], n) => {
+      {event.items.map(([kind, name, alt, w, pos], n) => {
         const on = n === i;
         if (kind === "video") {
           return (
             <span key={name} className={"ed-frame" + (on ? " on" : "")} aria-hidden={!on}>
               {seen && !reduced ? (
-                <video muted loop playsInline preload="none" poster={`/art/edutainment/${name}-poster.webp`}
+                <video muted loop playsInline preload="none" poster={`/art/edutainment/${name}-poster.webp`} style={pos ? { objectPosition: pos } : undefined}
                        ref={(v) => { if (v) (on ? v.play().catch(() => {}) : v.pause()); }}>
                   <source src={`/art/edutainment/${name}.webm`} type="video/webm" />
                   <source src={`/art/edutainment/${name}.mp4`} type="video/mp4" />
                 </video>
               ) : (
-                <img src={`/art/edutainment/${name}-poster.webp`} alt={alt} loading="lazy" decoding="async" />
+                <img src={`/art/edutainment/${name}-poster.webp`} alt={alt} style={pos ? { objectPosition: pos } : undefined} loading="lazy" decoding="async" />
               )}
             </span>
           );
@@ -87,7 +92,7 @@ function EventTile({ event, label }) {
             <img src={`/art/edutainment/${name}-700.webp`}
                  srcSet={`/art/edutainment/${name}-700.webp 700w, /art/edutainment/${name}-${big}.webp ${big}w`}
                  sizes="(max-width: 700px) 50vw, (max-width: 1100px) 33vw, 260px"
-                 alt={alt} loading={n === 0 ? "lazy" : "lazy"} decoding="async" />
+                 alt={alt} style={pos ? { objectPosition: pos } : undefined} loading="lazy" decoding="async" />
           </span>
         );
       })}
