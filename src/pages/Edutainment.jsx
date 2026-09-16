@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { T, LINKS } from "../theme.js";
 import { SiteNav, SiteFooter, chromeCss, useLang, reducedMotion, useLoopVideo } from "./chrome.jsx";
-import { edCopy, STAGE } from "./edutainmentCopy.js";
+import { edCopy, EVENTS } from "./edutainmentCopy.js";
 
 /* ============================================================
    🎤 ENVIRONMENTAL EDUTAINMENT — live performance + music production
@@ -22,6 +22,76 @@ function Loop({ base, width, height, caption, className = "" }) {
         <img src={`${base}-poster.webp`} alt="" width={width} height={height} loading="lazy" decoding="async" />
       )}
       <figcaption>{caption}</figcaption>
+    </figure>
+  );
+}
+
+/**
+ * One event in the wall. Events with several photos/clips cycle every 2.8s and
+ * stop on whatever frame the pointer (or keyboard focus) lands on. Single-media
+ * events never move. Only cycles while on screen; reduced motion holds frame one.
+ */
+function EventTile({ event, label }) {
+  const ref = useRef(null);
+  const [i, setI] = useState(0);
+  const [hold, setHold] = useState(false);
+  const [seen, setSeen] = useState(false);
+  const [reduced] = useState(reducedMotion);
+  const many = event.items.length > 1;
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setSeen(e.isIntersecting), { rootMargin: "300px 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!many || reduced || hold || !seen) return;
+    const t = setInterval(() => setI((n) => (n + 1) % event.items.length), 2800);
+    return () => clearInterval(t);
+  }, [many, reduced, hold, seen, event.items.length]);
+
+  return (
+    <figure
+      ref={ref}
+      className={"ed-tile" + (many ? " is-many" : "")}
+      onMouseEnter={() => setHold(true)}
+      onMouseLeave={() => setHold(false)}
+      onFocus={() => setHold(true)}
+      onBlur={() => setHold(false)}
+      tabIndex={many ? 0 : -1}
+      aria-label={many ? `${label} — ${event.items.length} frames` : undefined}
+    >
+      {event.items.map(([kind, name, alt, w], n) => {
+        const on = n === i;
+        if (kind === "video") {
+          return (
+            <span key={name} className={"ed-frame" + (on ? " on" : "")} aria-hidden={!on}>
+              {seen && !reduced ? (
+                <video muted loop playsInline preload="none" poster={`/art/edutainment/${name}-poster.webp`}
+                       ref={(v) => { if (v) (on ? v.play().catch(() => {}) : v.pause()); }}>
+                  <source src={`/art/edutainment/${name}.webm`} type="video/webm" />
+                  <source src={`/art/edutainment/${name}.mp4`} type="video/mp4" />
+                </video>
+              ) : (
+                <img src={`/art/edutainment/${name}-poster.webp`} alt={alt} loading="lazy" decoding="async" />
+              )}
+            </span>
+          );
+        }
+        const big = w || 1400;
+        return (
+          <span key={name} className={"ed-frame" + (on ? " on" : "")} aria-hidden={!on}>
+            <img src={`/art/edutainment/${name}-700.webp`}
+                 srcSet={`/art/edutainment/${name}-700.webp 700w, /art/edutainment/${name}-${big}.webp ${big}w`}
+                 sizes="(max-width: 700px) 50vw, (max-width: 1100px) 33vw, 260px"
+                 alt={alt} loading={n === 0 ? "lazy" : "lazy"} decoding="async" />
+          </span>
+        );
+      })}
+      {many && <span className="ed-dots" aria-hidden="true">{event.items.map((_, n) => <i key={n} className={n === i ? "on" : ""} />)}</span>}
     </figure>
   );
 }
@@ -51,28 +121,41 @@ export default function Edutainment() {
         .ed-loop figcaption{ margin-top:10px; font-family:'Space Mono', ui-monospace, monospace; font-size:12px; color:${T.cream}99; letter-spacing:.06em; }
         .ed-loop.tilt video, .ed-loop.tilt img{ transform:rotate(.8deg); }
 
-        /* stage gallery — a wall of photographs */
-        .ed-gallery{ columns:2; column-gap:12px; }
-        @media (min-width:760px){ .ed-gallery{ columns:3; } }
-        @media (min-width:1100px){ .ed-gallery{ columns:4; } }
-        .ed-gallery figure{ break-inside:avoid; margin:0 0 12px; }
-        .ed-gallery img{ width:100%; height:auto; display:block; border-radius:12px; border:4px solid ${T.cream}; box-shadow:0 12px 26px #0007; }
-        .ed-gallery figure:nth-child(3n+1) img{ transform:rotate(-1.2deg); }
-        .ed-gallery figure:nth-child(3n+2) img{ transform:rotate(.9deg); }
-        .ed-cap{ margin-top:14px; font-family:'Space Mono', ui-monospace, monospace; font-size:12px; color:${T.cream}99; letter-spacing:.06em; text-align:center; }
+        /* the wall: one tile per event, fixed shape so cycling never reflows */
+        .ed-gallery{ display:grid; gap:12px; grid-template-columns:repeat(2,1fr); }
+        @media (min-width:760px){ .ed-gallery{ grid-template-columns:repeat(3,1fr); } }
+        @media (min-width:1100px){ .ed-gallery{ grid-template-columns:repeat(4,1fr); } }
+        .ed-tile{ position:relative; margin:0; aspect-ratio:4/3; border-radius:12px; overflow:hidden;
+          border:4px solid ${T.cream}; box-shadow:0 12px 26px #0007; background:${T.pineDeep}; }
+        .ed-tile:nth-child(3n+1){ transform:rotate(-1.2deg); }
+        .ed-tile:nth-child(3n+2){ transform:rotate(.9deg); }
+        .ed-tile.is-many{ cursor:pointer; }
+        .ed-tile:focus-visible{ outline:3px solid ${T.sky}; outline-offset:3px; }
+        .ed-frame{ position:absolute; inset:0; opacity:0; transition:opacity .6s var(--ease-settle); }
+        .ed-frame.on{ opacity:1; }
+        .ed-frame img, .ed-frame video{ width:100%; height:100%; object-fit:cover; display:block; }
+        .ed-dots{ position:absolute; left:0; right:0; bottom:6px; display:flex; gap:4px; justify-content:center; pointer-events:none; }
+        .ed-dots i{ width:5px; height:5px; border-radius:50%; background:${T.cream}66; box-shadow:0 1px 2px #0008; }
+        .ed-dots i.on{ background:${T.marigold}; }
 
-        .ed-media-row{ display:grid; gap:clamp(18px,3vw,28px); grid-template-columns:1fr; margin-top:clamp(28px,4vh,40px); }
-        @media (min-width:760px){ .ed-media-row{ grid-template-columns:1fr 1fr; } }
-        .ed-media-row img{ width:100%; height:auto; display:block; border-radius:18px; border:5px solid ${T.cream}; box-shadow:0 16px 36px #0008; }
-        .ed-media-row figure{ margin:0; }
-        .ed-media-row figcaption{ margin-top:10px; font-family:'Space Mono', ui-monospace, monospace; font-size:12px; color:${T.cream}99; letter-spacing:.06em; }
+        /* music section: the bullets on the left, the Earth boombox filling the space beside them */
+        .ed-music{ display:grid; gap:clamp(22px,4vw,44px); align-items:start; grid-template-columns:1fr; }
+        @media (min-width:900px){ .ed-music{ grid-template-columns:1.05fr .95fr; } }
+        .ed-boombox{ margin:0; }
+        .ed-boombox img{ width:100%; height:auto; display:block; border-radius:18px; border:5px solid ${T.cream}; box-shadow:0 16px 36px #0008; transform:rotate(.8deg); }
+        .ed-boombox figcaption{ margin-top:10px; font-family:'Space Mono', ui-monospace, monospace; font-size:12px; color:${T.cream}99; letter-spacing:.06em; }
 
-        .ed-cta{ text-align:center; background:${T.marigold}; color:${T.pineDeep}; border-radius:28px; padding:clamp(30px,5vw,56px); transform:rotate(-.4deg); }
-        .ed-cta h2{ font-size:clamp(32px,4.8vw,58px); margin-bottom:12px; }
-        .ed-cta p{ font-size:18px; font-weight:500; margin-bottom:22px; }
-        .ed-cta .btn{ background:${T.pineDeep}; color:${T.cream}; }
+        /* closing CTA sits on the solar disco */
+        .ed-cta{ position:relative; text-align:center; border-radius:28px; overflow:hidden; isolation:isolate;
+          padding:clamp(48px,8vw,104px) clamp(22px,5vw,56px); transform:rotate(-.4deg); color:${T.cream}; }
+        .ed-cta img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-2; }
+        .ed-cta::after{ content:""; position:absolute; inset:0; z-index:-1;
+          background:linear-gradient(180deg, ${T.pineDeep}b8, ${T.pineDeep}8c 45%, ${T.pineDeep}cc); }
+        .ed-cta h2{ font-size:clamp(32px,4.8vw,58px); margin-bottom:12px; text-shadow:0 3px 22px ${T.pineDeep}; }
+        .ed-cta p{ font-size:18px; font-weight:500; margin-bottom:22px; color:${T.cream}e6; text-shadow:0 2px 14px ${T.pineDeep}; }
         @media (prefers-reduced-motion: reduce){
-          .ed-hero-art img, .ed-gallery img, .ed-cta, .ed-loop.tilt video, .ed-loop.tilt img{ transform:none !important; }
+          .ed-hero-art img, .ed-tile, .ed-cta, .ed-boombox img, .ed-loop.tilt video, .ed-loop.tilt img{ transform:none !important; }
+          .ed-frame{ transition:none !important; }
         }
       `}</style>
 
@@ -89,8 +172,8 @@ export default function Edutainment() {
         </header>
 
         <div className="ed-hero-art">
-          <img src="/art/edutainment/stage-3-1400.webp" srcSet="/art/edutainment/stage-3-700.webp 700w, /art/edutainment/stage-3-1400.webp 1400w"
-               sizes="(max-width: 1100px) 100vw, 1100px" alt={STAGE[0][1]} width="1400" height="1050" fetchPriority="high" decoding="async" />
+          <img src="/art/earth-bus-1600.webp" srcSet="/art/earth-bus-800.webp 800w, /art/earth-bus-1600.webp 1600w"
+               sizes="(max-width: 1100px) 100vw, 1100px" alt={c.bus_alt} width="1600" height="951" fetchPriority="high" decoding="async" />
         </div>
 
         {/* LIVE PERFORMANCE */}
@@ -104,7 +187,7 @@ export default function Edutainment() {
                 {c.live_points.map(([b, s]) => <li key={b}><b>{b}</b><span>{s}</span></li>)}
               </ul>
             </div>
-            <Loop base="/art/edutainment/march" width="480" height="638" caption={c.march_cap} className="tilt" />
+            <Loop base="/art/edutainment/solardance" width="480" height="854" caption={c.solar_cap} className="tilt" />
           </div>
         </section>
 
@@ -113,14 +196,7 @@ export default function Edutainment() {
           <div className="pg-label">{c.gallery_label}</div>
           <h2 id="ed-stage" className="sr-only">{c.gallery_label}</h2>
           <div className="ed-gallery">
-            {STAGE.slice(1).map(([name, alt]) => (
-              <figure key={name}>
-                <img src={`/art/edutainment/${name}-700.webp`}
-                     srcSet={`/art/edutainment/${name}-700.webp 700w, /art/edutainment/${name}-1400.webp 1400w`}
-                     sizes="(max-width: 760px) 50vw, (max-width: 1100px) 33vw, 260px"
-                     alt={alt} loading="lazy" decoding="async" />
-              </figure>
-            ))}
+            {EVENTS.map((ev) => <EventTile key={ev.id} event={ev} label={ev.label} />)}
           </div>
           <p className="ed-cap">{c.gallery_cap}</p>
         </section>
@@ -130,25 +206,22 @@ export default function Edutainment() {
           <div className="pg-label">{c.music_label}</div>
           <h2 id="ed-music" className="display pg-h2">{c.music_h}</h2>
           <p className="pg-lede">{c.music_p}</p>
-          <ul className="ed-points" style={{ maxWidth: 680 }}>
-            {c.music_points.map(([b, s]) => <li key={b}><b>{b}</b><span>{s}</span></li>)}
-          </ul>
-          <div className="ed-media-row">
-            <figure>
+          <div className="ed-music">
+            <ul className="ed-points" style={{ marginTop: 0 }}>
+              {c.music_points.map(([b, s]) => <li key={b}><b>{b}</b><span>{s}</span></li>)}
+            </ul>
+            <figure className="ed-boombox">
               <img src="/art/edutainment/earth-boombox-1200.webp" srcSet="/art/edutainment/earth-boombox-600.webp 600w, /art/edutainment/earth-boombox-1200.webp 1200w"
-                   sizes="(max-width: 760px) 100vw, 530px" alt="A boombox overgrown with living plants" loading="lazy" decoding="async" />
+                   sizes="(max-width: 900px) 100vw, 480px" alt="A boombox overgrown with living plants" loading="lazy" decoding="async" />
               <figcaption>{c.boombox_cap}</figcaption>
-            </figure>
-            <figure>
-              <img src="/art/edutainment/solar-disco-1200.webp" srcSet="/art/edutainment/solar-disco-600.webp 600w, /art/edutainment/solar-disco-1200.webp 1200w"
-                   sizes="(max-width: 760px) 100vw, 530px" alt="Dancers on a neon grid dance floor" loading="lazy" decoding="async" />
-              <figcaption>{c.disco_cap}</figcaption>
             </figure>
           </div>
         </section>
 
         <section className="pg-wrap" style={{ paddingTop: 0 }}>
           <div className="ed-cta">
+            <img src="/art/edutainment/solar-disco-1200.webp" srcSet="/art/edutainment/solar-disco-600.webp 600w, /art/edutainment/solar-disco-1200.webp 1200w"
+                 sizes="(max-width: 1100px) 100vw, 1000px" alt="" aria-hidden="true" loading="lazy" decoding="async" />
             <h2 className="display">{c.cta_head}</h2>
             <p>{c.cta_sub}</p>
             <a className="btn big" href={LINKS.booking}>{c.cta_book}</a>

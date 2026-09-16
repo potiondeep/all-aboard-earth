@@ -16,7 +16,7 @@ export const edCopy = {
       ["Street & community", "Marches, block parties, pueblo plazas — the boombox goes where the people are."],
     ],
     gallery_label: "ON STAGE",
-    gallery_cap: "Live sets across New Mexico.",
+    gallery_cap: "Live sets across New Mexico — hover to hold a frame.",
 
     music_label: "MUSIC PRODUCTION",
     music_h: "Songs that teach without sounding like a lesson.",
@@ -27,8 +27,9 @@ export const edCopy = {
       ["Classroom-ready", "Tracks and visuals that plug straight into a lesson."],
     ],
     boombox_cap: "The Earth boombox — where the garden meets the speaker.",
-    disco_cap: "Solar disco: the dance floor runs on sunlight.",
-    march_cap: "The boombox goes where the people are.",
+    bus_alt: "The All Aboard Earth bus painted as the Earth, animals riding along",
+
+    solar_cap: "Solar dance.",
 
     cta_head: "Bring the show to your stage.",
     cta_sub: "Assemblies, festivals, markets and community events — bilingual, all ages.",
@@ -51,7 +52,7 @@ export const edCopy = {
       ["Calle y comunidad", "Marchas, fiestas de barrio, plazas de los pueblos — el boombox va donde está la gente."],
     ],
     gallery_label: "EN ESCENA",
-    gallery_cap: "Presentaciones en vivo por todo Nuevo México.",
+    gallery_cap: "Presentaciones en vivo por todo Nuevo México — pasa el cursor para detener una imagen.",
 
     music_label: "PRODUCCIÓN MUSICAL",
     music_h: "Canciones que enseñan sin sonar a clase.",
@@ -62,8 +63,9 @@ export const edCopy = {
       ["Listas para el salón", "Pistas y visuales que se integran directo a una lección."],
     ],
     boombox_cap: "El boombox de la Tierra — donde el jardín se encuentra con la bocina.",
-    disco_cap: "Disco solar: la pista de baile funciona con luz del sol.",
-    march_cap: "El boombox va donde está la gente.",
+    bus_alt: "El autobús All Aboard Earth pintado como la Tierra, con animales viajando",
+
+    solar_cap: "Baile solar.",
 
     cta_head: "Lleva el show a tu escenario.",
     cta_sub: "Asambleas, festivales, mercados y eventos comunitarios — bilingüe, todas las edades.",
@@ -72,14 +74,54 @@ export const edCopy = {
   },
 };
 
-// stage photographs, with alt text (language-independent ordering)
-export const STAGE = [
-  ["stage-3", "Two performers in zebra and giraffe costumes with arms raised on a grass stage"],
-  ["stage-11", "Costumed performers and a circle of kids singing together at an outdoor show"],
-  ["stage-9", "A performer in a giraffe hood behind a keyboard and a table of vegetables"],
-  ["stage-4", "Performers behind a rainbow table loaded with fresh produce"],
-  ["stage-13", "A butterfly-winged character on a lowrider at a plaza"],
-  ["stage-1", "The band on a shaded outdoor stage with a puppet character"],
-  ["stage-12", "A performer in a blue Earth suit dancing outside an adobe building"],
-  ["stage-2", "A small child shaking hands with a costumed performer"],
+// Events. Several shows have more than one photo or clip: those tiles cycle and
+// stop on whichever frame the pointer lands on. Single-media events stay still.
+export const EVENTS = [
+  { id: "market", label: "Farmers market, April 2019", items: [
+    ["img", "stage-3", "Two performers in zebra and giraffe costumes with arms raised"],
+    ["img", "stage-4", "Performers behind a rainbow table loaded with fresh produce"],
+    ["img", "stage-5", "The giraffe character greeting the crowd across the table"],
+    ["img", "stage-6", "Both performers mid-song with arms wide"],
+    ["img", "stage-7", "The zebra character leaning into the microphone"],
+    ["img", "stage-8", "The pair dancing behind the produce table"],
+    ["img", "stage-9", "A performer in a giraffe hood behind a keyboard and vegetables"],
+    ["img", "stage-10", "Wide shot of the set with the crowd on the grass"],
+    ["img", "stage-2", "A small child shaking hands with a costumed performer"],
+  ]},
+  { id: "school", label: "School workshop on the court", items: [
+    ["img", "ev-school-1", "A zebra-suited performer leading kids seated on a basketball court", 1200],
+    ["img", "ev-school-2", "Kids jumping up to join the dance", 1200],
+    ["img", "ev-school-3", "The performer mid-step with the circle of children", 1200],
+    ["img", "ev-school-4", "Children with arms in the air copying the moves", 1200],
+  ]},
+  { id: "electrify", label: "Electrify — sun puppet on the plaza", items: [
+    ["video", "ev-electrify", "A performer sings beside a giant orange sun puppet"],
+  ]},
+  { id: "sail", label: "Summer stage under the sail", items: [
+    ["video", "ev-sailstage", "Two performers on an outdoor stage under a white shade sail"],
+  ]},
+  { id: "earthday", label: "Earth Day", items: [
+    ["video", "ev-earthday", "Costumed performers behind a decorated table on an outdoor stage"],
+  ]},
+  { id: "crowd", label: "Festival stage", items: [
+    ["img", "stage-11", "Costumed performers and a circle of kids singing together"],
+  ]},
+  { id: "lowrider", label: "Plaza, 2017", items: [
+    ["img", "stage-13", "A butterfly-winged character on a lowrider at a plaza"],
+  ]},
+  { id: "shade", label: "Shaded stage", items: [
+    ["img", "stage-1", "The band on a shaded outdoor stage with a puppet character"],
+  ]},
+  { id: "earthsuit", label: "Adobe plaza", items: [
+    ["img", "stage-12", "A performer in a blue Earth suit dancing outside an adobe building"],
+  ]},
+  { id: "scaffold", label: "Stage rig, 2025", items: [
+    ["img", "ev-scaffold", "Looking up at a performer on stage through the rigging"],
+  ]},
+  { id: "meadow", label: "Meadow set, 2017", items: [
+    ["img", "ev-meadow", "Three costumed performers playing in a green meadow"],
+  ]},
+  { id: "solarface", label: "Solar panel", items: [
+    ["img", "ev-solarface", "A performer's face peeking over a solar panel against a blue sky"],
+  ]},
 ];

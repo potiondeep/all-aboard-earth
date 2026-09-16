@@ -38,7 +38,6 @@ export const raCopy = {
     felt_label: "WHAT WE'RE BUILDING TOWARD",
     felt_h: "A hillside that grows its own power.",
     felt_p: "The felt world is where the ideas get drawn before they get built — homes under living roofs, turbines on the ridge, gardens that feed the street.",
-    bus_cap: "The Earth Bus — the mission on wheels.",
 
     cta_head: "Put it on your wall.",
     cta_sub: "Murals, installations and commissioned work for schools, municipalities, festivals and cultural spaces.",
@@ -83,7 +82,6 @@ export const raCopy = {
     felt_label: "HACIA DÓNDE VAMOS",
     felt_h: "Una ladera que cultiva su propia energía.",
     felt_p: "El mundo de fieltro es donde se dibujan las ideas antes de construirlas — casas bajo techos vivos, turbinas en la cresta, jardines que alimentan la calle.",
-    bus_cap: "El Autobús Tierra — la misión sobre ruedas.",
 
     cta_head: "Ponlo en tu muro.",
     cta_sub: "Murales, instalaciones y obra por encargo para escuelas, municipios, festivales y espacios culturales.",

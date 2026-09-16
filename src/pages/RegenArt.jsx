@@ -87,9 +87,6 @@ export default function RegenArt() {
 
         .ra-eco{ margin:clamp(24px,4vh,36px) 0 0; }
         .ra-eco video, .ra-eco img{ width:100%; height:auto; display:block; border-radius:20px; border:6px solid ${T.cream}; box-shadow:0 20px 44px #0009; }
-        .ra-bus{ margin:clamp(28px,4vh,40px) 0 0; }
-        .ra-bus img{ width:100%; height:auto; display:block; border-radius:20px; }
-        .ra-bus figcaption{ margin-top:10px; font-family:'Space Mono', ui-monospace, monospace; font-size:12px; color:${T.cream}99; letter-spacing:.06em; text-align:center; }
 
         .ra-cta{ text-align:center; background:${T.coral}; color:${T.pineDeep}; border-radius:28px; padding:clamp(30px,5vw,56px); transform:rotate(.4deg); }
         .ra-cta h2{ font-size:clamp(32px,4.8vw,58px); margin-bottom:12px; }
@@ -190,11 +187,6 @@ export default function RegenArt() {
           <h2 id="ra-felt" className="display pg-h2">{c.felt_h}</h2>
           <p className="pg-lede">{c.felt_p}</p>
           <EcoHomeLoop caption={c.felt_h} />
-          <figure className="ra-bus">
-            <img src="/art/regen-art/earth-bus-1600.webp" srcSet="/art/regen-art/earth-bus-800.webp 800w, /art/regen-art/earth-bus-1600.webp 1600w"
-                 sizes="(max-width: 1100px) 100vw, 1000px" alt="The All Aboard Earth bus painted as the Earth, animals riding along" loading="lazy" decoding="async" />
-            <figcaption>{c.bus_cap}</figcaption>
-          </figure>
         </section>
 
         <section className="pg-wrap" style={{ paddingTop: 0 }}>
