@@ -54,9 +54,37 @@
         src: url('/fonts/spacemono-700-latin.woff2') format('woff2');
       }
     </style>
+    <style>
+      /* boot paint — mirrors .hero padding + .hero-mark/.earth-wrap sizing */
+      .boot{ position:absolute; top:0; left:0; right:0; pointer-events:none;
+        --nav-h:100px; --mark-w:min(32vw,158px); --earth-w:min(62vw,322px);
+        --hero-top:calc(0px - (120px - var(--nav-h)));
+        --mark-top:calc(var(--hero-top) + clamp(84px,11vh,112px) + 120px);
+      }
+      @media (min-width:561px){ .boot{ --nav-h:82px; } }
+      .boot-earth{ position:absolute; left:50%; width:var(--earth-w); height:var(--earth-w);
+        top:calc(var(--mark-top) + (var(--mark-w) * 0.8633 / 2) - (var(--earth-w) / 2));
+        transform:translateX(-50%); object-fit:contain; display:block;
+        filter:
+          drop-shadow(0 16px 30px rgba(0,0,0,.80))
+          drop-shadow(0 0 22px rgba(111,211,255,.48))
+          drop-shadow(0 0 60px rgba(111,211,255,.23));
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Boot paint: the Earth poster is the LCP element, but it only exists in
+         React's markup, so on a throttled phone it cannot paint until the bundle
+         has parsed — LCP sat ~1.4s behind FCP. This draws it from HTML at exactly
+         the position the hero gives it (same clamp() maths), and createRoot clears
+         it the moment React mounts, onto the same cached image. -->
+    <div id="root">
+      <div class="boot" aria-hidden="true">
+        <img class="boot-earth" src="/art/felt-earth-poster.webp"
+             srcset="/art/felt-earth-poster-400.webp 400w, /art/felt-earth-poster.webp 560w"
+             sizes="min(84vw, 55vmin)" alt="" width="560" height="560" fetchpriority="high" decoding="async" />
+      </div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
