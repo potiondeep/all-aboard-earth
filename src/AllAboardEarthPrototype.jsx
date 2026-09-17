@@ -269,8 +269,9 @@ function FeltEarth() {
 
   useEffect(() => {
     if (reduced) return;
-    const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 400));
-    const arm = () => idle(() => setVideoReady(true), { timeout: 2000 });
+    // At the doubled size the clip is the page's largest paint, so the sooner it
+    // arrives the sooner LCP settles: start it at load rather than waiting for idle.
+    const arm = () => setVideoReady(true);
     if (document.readyState === "complete") arm();
     else {
       window.addEventListener("load", arm, { once: true });
