@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { T, LINKS } from "./theme.js";
 
 import { cardArt, CAREER_PAGE } from "./wixCardArt.js";
-import Logo3D from "./Logo3D.jsx";
 import Seed from "./ornaments/Seed.jsx";
 import Divider from "./ornaments/Divider.jsx";
 import CtaCrossing from "./ornaments/CtaCrossing.jsx";
@@ -594,7 +593,6 @@ export default function App() {
           /* remaster seats */
           .grain{ display:none; }
           .stars{ animation:none !important; }
-          .logo3d-css img{ transform:none !important; transition:none !important; animation:none !important; }
           .starfield{ transform:none !important; }
           .earth-vid, .earth-still{ transform:none !important; transition:none !important; }
           .ccard-inner, .rail-train, .cta-train{ transition:none !important; animation:none !important; transform:none !important; }
@@ -664,7 +662,7 @@ export default function App() {
         /* the mark block: Earth directly behind, extruded logo in front, shared centre */
         .hero-mark{
           position:relative; z-index:4;
-          width:min(32vw,158px); aspect-ratio:900/777;
+          width:min(43vw,248px); aspect-ratio:3908/3556;
           /* bottom margin clears the globe's overhang so it never sits on the kicker */
           margin:0 auto clamp(78px,12vw,102px);
         }
@@ -695,19 +693,9 @@ export default function App() {
         .earth-vid{ opacity:0; }
         .earth-vid.on{ opacity:1; }
 
-        /* Seat C — the extruded mark, in front of the Earth */
-        .logo3d{ position:relative; z-index:2; width:100%; height:100%; }
-        .logo3d-canvas{ width:100%; height:100%; display:block; }
-        .logo3d-css{ position:relative; width:100%; height:100%; perspective:900px; }
-        .logo3d-css img{
-          position:absolute; inset:0; width:100%; height:100%; object-fit:contain; display:block;
-          transform:rotateX(8deg) rotateY(-10deg) translateZ(calc(var(--d) * 2px));
-          transition:transform .5s var(--ease-settle);
-        }
-        .logo3d-css.still img{ transform:none; transition:none; }
-        .logo3d-css.drift img{ animation:logo-sway 7s var(--ease-drift) infinite; }
-        @keyframes logo-sway{
-          0%,100%{ transform:rotateX(6deg) rotateY(-7deg) translateZ(calc(var(--d) * 2px)) translateY(-2px); }
+        /* Seat C — the felt mark, in front of the Earth */
+        .hero-logo{ position:relative; z-index:2; width:100%; height:auto; display:block;
+          filter:drop-shadow(0 10px 22px rgba(0,0,0,.55)); }
           50%    { transform:rotateX(9deg) rotateY(7deg)  translateZ(calc(var(--d) * 2px)) translateY(2px); }
         }
 
@@ -1103,7 +1091,17 @@ export default function App() {
         <Starfield />
         <div className="hero-mark">
           <FeltEarth />
-          <Logo3D className="hero-logo" />
+          <img
+            className="hero-logo"
+            src="/art/felt-logo-1200.webp"
+            srcSet="/art/felt-logo-600.webp 600w, /art/felt-logo-1200.webp 1200w"
+            sizes="min(43vw, 248px)"
+            alt="All Aboard Earth"
+            width="1200"
+            height="1092"
+            fetchPriority="high"
+            decoding="async"
+          />
         </div>
         <div className="mono hero-eyebrow">{c.hero_eyebrow}</div>
         <KineticLine text={c.hero_line1} />

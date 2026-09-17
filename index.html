@@ -22,6 +22,9 @@
       imagesizes="min(84vw, 55vmin)"
       fetchpriority="high"
     />
+    <link rel="preload" as="image" href="/art/felt-logo-1200.webp"
+      imagesrcset="/art/felt-logo-600.webp 600w, /art/felt-logo-1200.webp 1200w"
+      imagesizes="min(43vw, 248px)" fetchpriority="high" />
     <link rel="preload" href="/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin />
     <style>
@@ -57,13 +60,13 @@
     <style>
       /* boot paint — mirrors .hero padding + .hero-mark/.earth-wrap sizing */
       .boot{ position:absolute; top:0; left:0; right:0; pointer-events:none;
-        --nav-h:100px; --mark-w:min(32vw,158px); --earth-w:min(62vw,322px);
+        --nav-h:100px; --mark-w:min(43vw,248px); --earth-w:min(62vw,322px);
         --hero-top:calc(0px - (120px - var(--nav-h)));
         --mark-top:calc(var(--hero-top) + clamp(84px,11vh,112px) + 120px);
       }
       @media (min-width:561px){ .boot{ --nav-h:82px; } }
       .boot-earth{ position:absolute; left:50%; width:var(--earth-w); height:var(--earth-w);
-        top:calc(var(--mark-top) + (var(--mark-w) * 0.8633 / 2) - (var(--earth-w) / 2));
+        top:calc(var(--mark-top) + (var(--mark-w) * 0.9099 / 2) - (var(--earth-w) / 2));
         transform:translateX(-50%); object-fit:contain; display:block;
         filter:
           drop-shadow(0 16px 30px rgba(0,0,0,.80))
