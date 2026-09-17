@@ -284,8 +284,12 @@ function FeltEarth() {
   }, [videoReady]);
 
   return (
-    <div className="earth-wrap" aria-hidden="true">
-        {/* always present: it is the LCP-guarded still and the video's backdrop */}
+    <div className={"earth-wrap" + (playing ? " playing" : "")} aria-hidden="true">
+        {/* The globe's weight and atmosphere. A plain circle, because the clip's
+            globe drifts ~25px across the loop: hung off the still's alpha instead,
+            the shadow would sit still while the globe moved out from under it. */}
+        <div className="earth-glow" />
+        {/* first paint, and the backdrop until the clip is actually running */}
         <img
           className="earth-still"
           src="/art/felt-earth-poster.webp"
@@ -537,53 +541,59 @@ function CareerCard({ c, i, art }) {
 }
 
 /**
- * The felt mark pivots toward the pointer — the one piece of the old extruded
- * logo worth keeping. Damped follow (lerp 0.08) written straight to the node in
- * a rAF loop, so pointer movement never re-renders React. Transform only.
- * Skipped for coarse pointers (nothing to track) and reduced motion.
+ * The felt mark lands big over the globe and shrinks away as the page scrolls.
+ * Scale only, written straight to the node from one rAF, so scrolling never
+ * re-renders React and nothing under the mark ever moves: its layout box keeps
+ * the size the boot paint reserved for it.
+ * MARK_LAND is the scale it starts at; the CSS pop opens from 1/MARK_LAND, which
+ * is exactly where first paint drew it, so the pop grows out of the painted
+ * frame rather than jumping off it.
  */
-function useLogoTilt(ref) {
+const MARK_LAND = 1.7;              // scale at the top of the page
+const MARK_REST = 0.85;             // scale once you've scrolled past the hero
+const MARK_RUN = 560;               // px of scroll it takes to get there
+
+function useMarkShrink(ref) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (window.matchMedia("(hover: none)").matches) return;
+    // reduced motion: one fixed size, no pop, no scroll response
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      el.style.transform = `scale(${MARK_REST})`;
+      return;
+    }
 
-    const MAX = 14;                 // degrees
-    const target = { x: 0, y: 0 };
-    const cur = { x: 0, y: 0 };
     let raf = 0;
+    let live = true;
+    let last = -1;
 
-    const tick = () => {
-      cur.x += (target.x - cur.x) * 0.08;
-      cur.y += (target.y - cur.y) * 0.08;
-      el.style.transform = `perspective(900px) rotateX(${cur.x.toFixed(2)}deg) rotateY(${cur.y.toFixed(2)}deg)`;
-      const settled = Math.abs(target.x - cur.x) < 0.05 && Math.abs(target.y - cur.y) < 0.05;
-      raf = settled ? 0 : requestAnimationFrame(tick);
-    };
-    const onMove = (e) => {
-      const r = el.getBoundingClientRect();
-      const nx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2 || 1);
-      const ny = (e.clientY - (r.top + r.height / 2)) / (r.height / 2 || 1);
-      target.y = Math.max(-1, Math.min(1, nx)) * MAX;
-      target.x = -Math.max(-1, Math.min(1, ny)) * MAX;
-      if (!raf) raf = requestAnimationFrame(tick);
-    };
-    // only track while the hero is on screen; settle back to flat when it leaves
-    const io = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) window.addEventListener("pointermove", onMove, { passive: true });
-      else {
-        window.removeEventListener("pointermove", onMove);
-        target.x = 0; target.y = 0;
-        if (!raf) raf = requestAnimationFrame(tick);
+    const draw = () => {
+      raf = 0;
+      const p = Math.min(1, Math.max(0, window.scrollY / MARK_RUN));
+      const eased = p * p * (3 - 2 * p);          // smoothstep: leaves the big pose gently
+      const s = MARK_LAND + (MARK_REST - MARK_LAND) * eased;
+      if (Math.abs(s - last) > 0.001) {
+        el.style.transform = `scale(${s.toFixed(4)})`;
+        last = s;
       }
+    };
+    const onScroll = () => { if (live && !raf) raf = requestAnimationFrame(draw); };
+
+    // stop reading scroll once the mark is gone from the screen
+    const io = new IntersectionObserver(([e]) => {
+      live = e.isIntersecting;
+      if (live) onScroll();
     }, { threshold: 0 });
     io.observe(el);
 
+    draw();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
     return () => {
       io.disconnect();
-      window.removeEventListener("pointermove", onMove);
-      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
     };
   }, [ref]);
 }
@@ -601,7 +611,7 @@ export default function App() {
   useReveal(lang);
   useSunParallax();
   const logoRef = useRef(null);
-  useLogoTilt(logoRef);
+  useMarkShrink(logoRef);
 
   return (
     <div className="page">
@@ -652,6 +662,7 @@ export default function App() {
           .stars{ animation:none !important; }
           .starfield{ transform:none !important; }
           .earth-vid, .earth-still{ transform:none !important; transition:none !important; }
+          .hero-logo-pop{ animation:none !important; transform:none !important; }
           .ccard-inner, .rail-train, .cta-train{ transition:none !important; animation:none !important; transform:none !important; }
           .cta-train{ left:auto !important; right:0 !important; }
           .draw-on{ stroke-dasharray:none !important; stroke-dashoffset:0 !important; transition:none !important; }
@@ -732,26 +743,51 @@ export default function App() {
         .earth-vid, .earth-still, .earth-media{
           position:absolute; inset:0; width:100%; height:100%; object-fit:contain; display:block;
         }
-        /* Static drop-shadows, so they follow the globe's real alpha silhouette
-           rather than a guessed circle: a dark contact shadow gives it weight,
-           a cyan one reads as atmosphere. Never animated.
-           They live ONLY on the still, which always sits directly under the video
-           with the same silhouette. iOS Safari computes a filter on a <video> (or
-           on anything containing one) from its rectangle, not its alpha, and paints
-           the shadow as a tinted square behind the transparent corners. The values
-           are the two stacked layers (still + video) this used to be, compounded
-           into one: 1-(1-a)^2. */
-        .earth-still{
-          filter:
-            drop-shadow(0 16px 30px rgba(0,0,0,.80))
-            drop-shadow(0 0 22px rgba(111,211,255,.48))
-            drop-shadow(0 0 60px rgba(111,211,255,.23));
+        /* Static shadows: a dark contact shadow for weight, cyan for atmosphere.
+           Never animated. They sit on their own circle — sized and centred on the
+           globe as measured off the poster's alpha (88% across, centre 48.4/50.3)
+           — so nothing paints a filter on the <video> or on anything containing
+           it. iOS Safari computes such a filter from the rectangle rather than
+           the alpha and paints a tinted square behind the transparent corners.
+           Painted as gradients rather than a box-shadow: a shadow is clipped hard
+           at the edge of the box casting it, and the clip line shows as a drawn
+           arc wherever the globe sits inside that box — which it does, since it
+           drifts and breathes. A gradient has no edge to expose. */
+        .earth-glow{
+          position:absolute; inset:0; pointer-events:none;
+          background:
+            radial-gradient(ellipse 30% 7% at 50% 95%, rgba(0,0,0,.55), rgba(0,0,0,0) 72%),
+            radial-gradient(circle at 48.4% 50.3%,
+              rgba(111,211,255,0) 0 44%,
+              rgba(111,211,255,.52) 47%,
+              rgba(111,211,255,.24) 51%,
+              rgba(111,211,255,.09) 58%,
+              rgba(111,211,255,0) 68%);
         }
+        /* The still is frame one and the clip's globe drifts away from it, so once
+           the clip is genuinely running the still has to go or its frozen rim and
+           halo show along the edge. */
+        .earth-still{ transition:opacity .45s ease; }
+        .earth-wrap.playing .earth-still{ opacity:0; }
         .earth-vid{ opacity:0; }
         .earth-vid.on{ opacity:1; }
 
-        /* Seat C — the felt mark, in front of the Earth */
-        .hero-logo{ position:relative; z-index:2; width:100%; height:auto; display:block;
+        /* Seat C — the felt mark, in front of the Earth.
+           Two nested transforms on purpose: the wrapper plays the landing pop
+           once, the image carries the scroll scale from useMarkShrink. Kept apart
+           because a running animation outranks an inline style, so sharing one
+           node would have the pop freeze the scroll scale at its end value.
+           The pop opens at 1/MARK_LAND — the size the boot paint drew — so it
+           grows out of first paint instead of snapping to a new size. */
+        .hero-logo-pop{
+          position:relative; z-index:2; display:block; will-change:transform;
+          animation:mark-land 1.05s cubic-bezier(.22,1.08,.36,1) both;
+        }
+        @keyframes mark-land{
+          from{ transform:scale(${(1 / MARK_LAND).toFixed(3)}); }
+          to  { transform:none; }
+        }
+        .hero-logo{ width:100%; height:auto; display:block;
           will-change:transform; filter:drop-shadow(0 10px 22px rgba(0,0,0,.55)); }
           50%    { transform:rotateX(9deg) rotateY(7deg)  translateZ(calc(var(--d) * 2px)) translateY(2px); }
         }
@@ -1148,18 +1184,20 @@ export default function App() {
         <Starfield />
         <div className="hero-mark">
           <FeltEarth />
-          <img
-            ref={logoRef}
-            className="hero-logo"
-            src="/art/felt-logo-1200.webp"
-            srcSet="/art/felt-logo-600.webp 600w, /art/felt-logo-1200.webp 1200w"
-            sizes="min(43vw, 248px)"
-            alt="All Aboard Earth"
-            width="1200"
-            height="1092"
-            fetchPriority="high"
-            decoding="async"
-          />
+          <div className="hero-logo-pop">
+            <img
+              ref={logoRef}
+              className="hero-logo"
+              src="/art/felt-logo-1200.webp"
+              srcSet="/art/felt-logo-600.webp 600w, /art/felt-logo-900.webp 900w, /art/felt-logo-1200.webp 1200w"
+              sizes="min(73vw, 422px)"
+              alt="All Aboard Earth"
+              width="1200"
+              height="1092"
+              fetchPriority="high"
+              decoding="async"
+            />
+          </div>
         </div>
         <div className="mono hero-eyebrow">{c.hero_eyebrow}</div>
         <KineticLine text={c.hero_line1} />
