@@ -288,11 +288,11 @@ function FeltEarth() {
         <img
           className="earth-still"
           src="/art/felt-earth-poster.webp"
-          srcSet="/art/felt-earth-poster-400.webp 400w, /art/felt-earth-poster.webp 560w"
-          sizes="min(84vw, 55vmin)"
+          srcSet="/art/felt-earth-poster-400.webp 450w, /art/felt-earth-poster.webp 900w"
+          sizes="min(86vw, 644px)"
           alt=""
-          width="560"
-          height="560"
+          width="900"
+          height="900"
           fetchPriority="high"
           decoding="async"
         />
@@ -309,6 +309,8 @@ function FeltEarth() {
               aria-hidden="true"
               onPlaying={() => setPlaying(true)}
             >
+              <source media="(max-width: 700px)" src="/art/felt-earth-pingpong-sm-hevc.mov" type="video/quicktime" />
+              <source media="(max-width: 700px)" src="/art/felt-earth-pingpong-sm.webm" type="video/webm" />
               <source src="/art/felt-earth-pingpong-hevc.mov" type="video/quicktime" />
               <source src="/art/felt-earth-pingpong.webm" type="video/webm" />
             </video>
@@ -533,6 +535,58 @@ function CareerCard({ c, i, art }) {
   );
 }
 
+/**
+ * The felt mark pivots toward the pointer — the one piece of the old extruded
+ * logo worth keeping. Damped follow (lerp 0.08) written straight to the node in
+ * a rAF loop, so pointer movement never re-renders React. Transform only.
+ * Skipped for coarse pointers (nothing to track) and reduced motion.
+ */
+function useLogoTilt(ref) {
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia("(hover: none)").matches) return;
+
+    const MAX = 14;                 // degrees
+    const target = { x: 0, y: 0 };
+    const cur = { x: 0, y: 0 };
+    let raf = 0;
+
+    const tick = () => {
+      cur.x += (target.x - cur.x) * 0.08;
+      cur.y += (target.y - cur.y) * 0.08;
+      el.style.transform = `perspective(900px) rotateX(${cur.x.toFixed(2)}deg) rotateY(${cur.y.toFixed(2)}deg)`;
+      const settled = Math.abs(target.x - cur.x) < 0.05 && Math.abs(target.y - cur.y) < 0.05;
+      raf = settled ? 0 : requestAnimationFrame(tick);
+    };
+    const onMove = (e) => {
+      const r = el.getBoundingClientRect();
+      const nx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2 || 1);
+      const ny = (e.clientY - (r.top + r.height / 2)) / (r.height / 2 || 1);
+      target.y = Math.max(-1, Math.min(1, nx)) * MAX;
+      target.x = -Math.max(-1, Math.min(1, ny)) * MAX;
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+    // only track while the hero is on screen; settle back to flat when it leaves
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) window.addEventListener("pointermove", onMove, { passive: true });
+      else {
+        window.removeEventListener("pointermove", onMove);
+        target.x = 0; target.y = 0;
+        if (!raf) raf = requestAnimationFrame(tick);
+      }
+    }, { threshold: 0 });
+    io.observe(el);
+
+    return () => {
+      io.disconnect();
+      window.removeEventListener("pointermove", onMove);
+      cancelAnimationFrame(raf);
+    };
+  }, [ref]);
+}
+
 export default function App() {
   // language choice is shared with the sub pages
   const [lang, setLang] = useState(() => {
@@ -545,6 +599,8 @@ export default function App() {
   const c = copy[lang];
   useReveal(lang);
   useSunParallax();
+  const logoRef = useRef(null);
+  useLogoTilt(logoRef);
 
   return (
     <div className="page">
@@ -636,7 +692,7 @@ export default function App() {
         .hero-accent{ position:relative; z-index:3; font-family:'Anton'; color:${T.marigold}; font-size:clamp(14px,2.2vw,20px); letter-spacing:.14em; margin-top:10px; line-height:26px; min-height:26px; }
 
         /* hero + vinyl sun */
-        .hero{ position:relative; padding:calc(clamp(84px,11vh,112px) + 120px) clamp(16px,4vw,48px) 0; text-align:center;
+        .hero{ position:relative; padding:calc(clamp(110px,26vh,250px) + 120px) clamp(16px,4vw,48px) 0; text-align:center;
           background:${T.pine}; overflow:hidden; }
         /* Seat B — starfield behind everything in the hero */
         .starfield{
@@ -664,11 +720,11 @@ export default function App() {
           position:relative; z-index:4;
           width:min(43vw,248px); aspect-ratio:3908/3556;
           /* bottom margin clears the globe's overhang so it never sits on the kicker */
-          margin:0 auto clamp(78px,12vw,102px);
+          margin:0 auto clamp(120px,34vw,258px);
         }
         .earth-wrap{
           position:absolute; left:50%; top:50%;
-          width:min(62vw,322px); aspect-ratio:1; z-index:0;
+          width:min(86vw,644px); aspect-ratio:1; z-index:0;
           transform:translate(-50%,-50%) translate3d(0, var(--earth-shift, 0px), 0);
           will-change:transform;
         }
@@ -695,7 +751,7 @@ export default function App() {
 
         /* Seat C — the felt mark, in front of the Earth */
         .hero-logo{ position:relative; z-index:2; width:100%; height:auto; display:block;
-          filter:drop-shadow(0 10px 22px rgba(0,0,0,.55)); }
+          will-change:transform; filter:drop-shadow(0 10px 22px rgba(0,0,0,.55)); }
           50%    { transform:rotateX(9deg) rotateY(7deg)  translateZ(calc(var(--d) * 2px)) translateY(2px); }
         }
 
@@ -1092,6 +1148,7 @@ export default function App() {
         <div className="hero-mark">
           <FeltEarth />
           <img
+            ref={logoRef}
             className="hero-logo"
             src="/art/felt-logo-1200.webp"
             srcSet="/art/felt-logo-600.webp 600w, /art/felt-logo-1200.webp 1200w"

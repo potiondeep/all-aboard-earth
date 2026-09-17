@@ -18,8 +18,8 @@
       rel="preload"
       as="image"
       href="/art/felt-earth-poster.webp"
-      imagesrcset="/art/felt-earth-poster-400.webp 400w, /art/felt-earth-poster.webp 560w"
-      imagesizes="min(84vw, 55vmin)"
+      imagesrcset="/art/felt-earth-poster-400.webp 450w, /art/felt-earth-poster.webp 900w"
+      imagesizes="min(86vw, 644px)"
       fetchpriority="high"
     />
     <link rel="preload" as="image" href="/art/felt-logo-1200.webp"
@@ -60,9 +60,9 @@
     <style>
       /* boot paint — mirrors .hero padding + .hero-mark/.earth-wrap sizing */
       .boot{ position:absolute; top:0; left:0; right:0; pointer-events:none;
-        --nav-h:100px; --mark-w:min(43vw,248px); --earth-w:min(62vw,322px);
+        --nav-h:100px; --mark-w:min(43vw,248px); --earth-w:min(86vw,644px);
         --hero-top:calc(0px - (120px - var(--nav-h)));
-        --mark-top:calc(var(--hero-top) + clamp(84px,11vh,112px) + 120px);
+        --mark-top:calc(var(--hero-top) + clamp(110px,26vh,250px) + 120px);
       }
       @media (min-width:561px){ .boot{ --nav-h:82px; } }
       .boot-earth{ position:absolute; left:50%; width:var(--earth-w); height:var(--earth-w);
@@ -84,8 +84,8 @@
     <div id="root">
       <div class="boot" aria-hidden="true">
         <img class="boot-earth" src="/art/felt-earth-poster.webp"
-             srcset="/art/felt-earth-poster-400.webp 400w, /art/felt-earth-poster.webp 560w"
-             sizes="min(84vw, 55vmin)" alt="" width="560" height="560" fetchpriority="high" decoding="async" />
+             srcset="/art/felt-earth-poster-400.webp 450w, /art/felt-earth-poster.webp 900w"
+             sizes="min(86vw, 644px)" alt="" width="900" height="900" fetchpriority="high" decoding="async" />
       </div>
     </div>
     <script type="module" src="/src/main.jsx"></script>
