@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { T, LINKS, SPOTIFY_ARTIST_ID, BOOKING_EMAIL } from "../theme.js";
+import { T, LINKS, SPOTIFY_ARTIST_ID } from "../theme.js";
 import { SiteNav, SiteFooter, chromeCss, useLang, reducedMotion } from "./chrome.jsx";
 import { edCopy, EVENTS } from "./edutainmentCopy.js";
 
@@ -155,10 +155,6 @@ export default function Edutainment() {
         @media (min-width:900px){ .ed-music{ grid-template-columns:1.05fr .95fr; } }
         /* Spotify's compact player: full width up to the page's reading measure */
         .ed-spotify{ display:block; width:100%; max-width:720px; height:152px; border:0; border-radius:14px; }
-        /* in the hero row it sits beside the buttons rather than under them */
-        .ed-actions .cta-mail{ align-self:center; margin-top:0; }
-        /* brighter inside the CTA: it sits over the disco photo, not flat pine */
-        .ed-cta .cta-mail{ opacity:.9; text-shadow:0 1px 6px ${T.pineDeep}; }
         .ed-boombox{ margin:0; }
         .ed-boombox img{ width:100%; height:auto; display:block; border-radius:18px; border:5px solid ${T.cream}; box-shadow:0 16px 36px #0008; transform:rotate(.8deg); }
         .ed-boombox figcaption{ margin-top:10px; font-family:'Space Mono', ui-monospace, monospace; font-size:12px; color:${T.cream}99; letter-spacing:.06em; }
@@ -187,7 +183,6 @@ export default function Edutainment() {
           <div className="ed-actions">
             <a className="btn big" href={LINKS.bookingMail}>{c.cta_book}</a>
             <a className="btn big ghost" href={LINKS.spotify}>{c.cta_listen}</a>
-            <a className="cta-mail" href={LINKS.bookingMail}>{BOOKING_EMAIL}</a>
           </div>
         </header>
 
@@ -256,7 +251,6 @@ export default function Edutainment() {
             <h2 className="display">{c.cta_head}</h2>
             <p>{c.cta_sub}</p>
             <a className="btn big" href={LINKS.bookingMail}>{c.cta_book}</a>
-            <div><a className="cta-mail" href={LINKS.bookingMail}>{BOOKING_EMAIL}</a></div>
           </div>
         </section>
       </main>

@@ -12,8 +12,8 @@ export const T = {
 // The band's Spotify artist page — the same one embedded on allaboardearth.com/grooves.
 export const SPOTIFY_ARTIST_ID = "3PxV0vuP14pMfk7HJi1YFE";
 
-// Where enquiries go. Shown as visible text as well as used in the mailto links,
-// because mailto: is inert on a machine with no mail client registered.
+// Where enquiries go. Only the CTA buttons carry it — showing the address beside
+// them as well read as clutter. The home CTA's "or say hola" line still spells it out.
 export const BOOKING_EMAIL = "allaboardearth@gmail.com";
 const mailTo = (subject) => `mailto:${BOOKING_EMAIL}?subject=${encodeURIComponent(subject)}`;
 

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { T, LINKS, BOOKING_EMAIL } from "../theme.js";
+import { T, LINKS } from "../theme.js";
 import { SiteNav, SiteFooter, chromeCss, useLang, reducedMotion, useLoopVideo } from "./chrome.jsx";
 import { raCopy, MURAL_VIDEO } from "./regenArtCopy.js";
 
@@ -182,7 +182,6 @@ export default function RegenArt() {
             <h2 className="display">{c.cta_head}</h2>
             <p>{c.cta_sub}</p>
             <a className="btn big" href={LINKS.commissionMail}>{c.cta_commission}</a>
-            <div><a className="cta-mail" href={LINKS.commissionMail}>{BOOKING_EMAIL}</a></div>
           </div>
         </section>
       </main>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { T, LINKS, BOOKING_EMAIL } from "./theme.js";
+import { T, LINKS } from "./theme.js";
 
 import { cardArt, CAREER_PAGE } from "./wixCardArt.js";
 import Seed from "./ornaments/Seed.jsx";
@@ -68,9 +68,6 @@ const copy = {
     hero_accent: "¡Arriba vamos!",
     hero_sub:
       "All Aboard Earth is a movement igniting the visionary willpower of humanity to foster ecological health through green career pathways, environmental edutainment and regenerative art.",
-    hero_cta: "Explore Cool Careers",
-    hero_cta3: "See the Art",
-    hero_cta2: "Hear the Music",
     marquee: "UP WE GO! · UP WE GO! · ",
     marquee_phrase: "UP WE GO!",
     t1_label: "TRACK 01 · THE MOVEMENT",
@@ -117,7 +114,7 @@ const copy = {
     cta_head: "PUT YOUR SCHOOL ON THE MAP.",
     cta_sub: "Thirty groovy minutes. One demo. Your students' new favorite class.",
     cta_btn: "Book a pilot demo",
-    cta_alt: "or say hola:",
+    cta_alt: "or say hola: allaboardearth@gmail.com",
     footer: "ALL ABOARD EARTH · UP WE GO! 🌱",
     give: "Donations are held for us by our fiscal sponsor,",
   },
@@ -129,9 +126,6 @@ const copy = {
     hero_accent: "Up we go!",
     hero_sub:
       "All Aboard Earth es un movimiento que enciende la voluntad visionaria de la humanidad para fomentar la salud ecológica mediante rutas de carreras verdes, edutenimiento ambiental y arte regenerativo.",
-    hero_cta: "Explora Cool Careers",
-    hero_cta3: "Mira el Arte",
-    hero_cta2: "Escucha la música",
     marquee: "¡ARRIBA VAMOS! · UP WE GO! · ¡ARRIBA VAMOS! · UP WE GO! · ",
     marquee_phrase: "¡ARRIBA VAMOS!",
     t1_label: "PISTA 01 · EL MOVIMIENTO",
@@ -178,7 +172,7 @@ const copy = {
     cta_head: "PON TU ESCUELA EN EL MAPA.",
     cta_sub: "Treinta minutos con groove. Una demo. La nueva clase favorita de tus estudiantes.",
     cta_btn: "Reserva una demo piloto",
-    cta_alt: "o di hola:",
+    cta_alt: "o di hola: allaboardearth@gmail.com",
     footer: "ALL ABOARD EARTH · ¡ARRIBA VAMOS! 🌱",
     give: "Las donaciones las administra nuestro patrocinador fiscal,",
   },
@@ -798,8 +792,7 @@ export default function App() {
         .hero-word span{ display:inline-block; animation:pop .8s cubic-bezier(.2,.9,.3,1.3) both; animation-delay:calc(var(--i, 0) * 70ms); }
         .hero-word.l2 span{ animation-delay:calc(150ms + var(--i, 0) * 70ms); }
         @keyframes pop{ from{ transform:translateY(60px) scale(.9); opacity:0; } to{ transform:none; opacity:1; } }
-        .hero-sub{ position:relative; z-index:3; max-width:580px; margin:16px auto 22px; font-size:17px; line-height:1.55; color:${T.cream}dd; }
-        .hero-ctas{ position:relative; z-index:3; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; padding-bottom:38px; }
+        .hero-sub{ position:relative; z-index:3; max-width:580px; margin:16px auto 60px; font-size:17px; line-height:1.55; color:${T.cream}dd; }
 
         /* marquee */
         .marquee{ background:${T.marigold}; color:${T.pineDeep}; overflow:hidden; transform:rotate(-1.5deg) scale(1.02); padding:10px 0; height:56px; }
@@ -1152,9 +1145,6 @@ export default function App() {
         .ctaband h2{ font-size:clamp(34px,6vw,66px); }
         .ctaband p{ margin:16px 0 26px; font-size:17px; font-weight:600; }
         .ctaband .mono{ display:block; margin-top:16px; opacity:.75; }
-        /* the address in plain sight: mailto: is inert with no mail client registered */
-        .cta-mail{ color:inherit; text-decoration:none; border-bottom:1px solid currentColor; padding-bottom:1px; }
-        .cta-mail:hover{ color:${T.coral}; }
         .ctaband .btn{ background:${T.pineDeep}; color:${T.cream}; }
         .cta-stamp{ font-size:clamp(20px,3.4vw,34px); color:${T.pineDeep}; letter-spacing:.06em; margin-bottom:6px; opacity:.9; }
 
@@ -1207,11 +1197,6 @@ export default function App() {
         <KineticLine text={c.hero_line2} className="l2" />
         <div className="hero-accent">{c.hero_accent}</div>
         <p className="hero-sub">{c.hero_sub}</p>
-        <div className="hero-ctas">
-          <a className="btn big" href={LINKS.gamePortal}>{c.hero_cta}</a>
-          <a className="btn big ghost" href={LINKS.spotify}>{c.hero_cta2}</a>
-          <a className="btn big ghost" href={LINKS.regenArt}>{c.hero_cta3}</a>
-        </div>
       </header>
 
       <div className="marquee">
@@ -1330,7 +1315,7 @@ export default function App() {
           <h2 className="display">{c.cta_head}</h2>
           <p>{c.cta_sub}</p>
           <a className="btn big" href={LINKS.demoMail}>{c.cta_btn}</a>
-          <span className="mono">{c.cta_alt} <a className="cta-mail" href={LINKS.demoMail}>{BOOKING_EMAIL}</a></span>
+          <span className="mono">{c.cta_alt}</span>
         </div>
       </div>
 

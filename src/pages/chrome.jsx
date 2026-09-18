@@ -88,13 +88,6 @@ export const chromeCss = `
     transition:transform .2s var(--ease-settle), box-shadow .2s var(--ease-settle); }
   .btn:hover{ transform:translateY(-3px) rotate(-1deg); box-shadow:0 10px 24px ${T.coral}55; }
   .btn.big{ padding:17px 30px; font-size:17px; }
-  /* The enquiry address in plain sight beside a CTA button: mailto: is inert on a
-     machine with no mail client, and webmail users need something to copy.
-     Inherits its CTA's text colour, so it works on any of the band backgrounds. */
-  .cta-mail{ display:inline-block; margin-top:16px; font-family:'Space Mono', ui-monospace, monospace;
-    font-size:13px; letter-spacing:.04em; color:inherit; opacity:.72; text-decoration:none;
-    border-bottom:1px solid currentColor; padding-bottom:2px; }
-  .cta-mail:hover{ opacity:1; }
   .btn.ghost{ background:transparent; color:${T.cream}; border:2px solid ${T.cream}66; }
   .btn.ghost:hover{ border-color:${T.marigold}; color:${T.marigold}; box-shadow:none; }
   .btn:focus-visible, .lang button:focus-visible, button:focus-visible{ outline:3px solid ${T.sky}; outline-offset:3px; }

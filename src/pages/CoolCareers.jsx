@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { T, LINKS, BOOKING_EMAIL } from "../theme.js";
+import { T, LINKS } from "../theme.js";
 import { ccCopy } from "./coolCareersCopy.js";
 
 /* ============================================================
@@ -373,7 +373,6 @@ export default function CoolCareers() {
             <h2 className="display">{c.cta_head}</h2>
             <p>{c.cta_sub}</p>
             <a className="btn big" href={LINKS.demoMail}>{c.cta_btn}</a>
-            <div><a className="cta-mail" href={LINKS.demoMail}>{BOOKING_EMAIL}</a></div>
           </div>
         </section>
       </main>
