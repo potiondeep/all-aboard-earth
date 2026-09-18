@@ -145,7 +145,7 @@ const copy = {
     hero_eyebrow: "ALL ABOARD EARTH · LADO A · 33⅓ RPM",
     hero_line1: "LA TIERRA NECESITA SOÑADORES",
     hero_line2: "¡CON EL TALENTO PARA LOGRARLO!",
-    hero_accent: "Up we go!",
+    hero_accent: "¡Arriba vamos!",
     hero_sub:
       "All Aboard Earth es un movimiento que enciende la voluntad visionaria de la humanidad para fomentar la salud ecológica mediante rutas de carreras verdes, edutenimiento ambiental y arte regenerativo.",
     marquee: "¡ARRIBA VAMOS! · UP WE GO! · ¡ARRIBA VAMOS! · UP WE GO! · ",
