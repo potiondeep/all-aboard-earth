@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { T, LINKS } from "../theme.js";
+import { T, LINKS, BOOKING_EMAIL } from "../theme.js";
 import { SiteNav, SiteFooter, chromeCss, useLang, reducedMotion, useLoopVideo } from "./chrome.jsx";
 import { raCopy, MURAL_VIDEO } from "./regenArtCopy.js";
 
@@ -97,14 +97,14 @@ export default function RegenArt() {
         }
       `}</style>
 
-      <SiteNav lang={lang} setLang={setLang} cta={c.nav_cta} />
+      <SiteNav lang={lang} setLang={setLang} cta={c.nav_cta} ctaHref={LINKS.commissionMail} />
 
       <main>
         <header className="pg-top">
           <h1 className="display">{c.title}</h1>
           <p className="pg-tagline">{c.tagline}</p>
           <div className="ra-actions">
-            <a className="btn big" href={LINKS.booking}>{c.cta_commission}</a>
+            <a className="btn big" href={LINKS.commissionMail}>{c.cta_commission}</a>
           </div>
         </header>
 
@@ -181,7 +181,8 @@ export default function RegenArt() {
           <div className="ra-cta">
             <h2 className="display">{c.cta_head}</h2>
             <p>{c.cta_sub}</p>
-            <a className="btn big" href={LINKS.booking}>{c.cta_commission}</a>
+            <a className="btn big" href={LINKS.commissionMail}>{c.cta_commission}</a>
+            <div><a className="cta-mail" href={LINKS.commissionMail}>{BOOKING_EMAIL}</a></div>
           </div>
         </section>
       </main>

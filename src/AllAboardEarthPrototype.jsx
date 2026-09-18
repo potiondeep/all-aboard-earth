@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { T, LINKS } from "./theme.js";
+import { T, LINKS, BOOKING_EMAIL } from "./theme.js";
 
 import { cardArt, CAREER_PAGE } from "./wixCardArt.js";
 import Seed from "./ornaments/Seed.jsx";
@@ -117,7 +117,7 @@ const copy = {
     cta_head: "PUT YOUR SCHOOL ON THE MAP.",
     cta_sub: "Thirty groovy minutes. One demo. Your students' new favorite class.",
     cta_btn: "Book a pilot demo",
-    cta_alt: "or say hola: hello@allaboardearth.com",
+    cta_alt: "or say hola:",
     footer: "ALL ABOARD EARTH · UP WE GO! 🌱",
     give: "Donations are held for us by our fiscal sponsor,",
   },
@@ -178,7 +178,7 @@ const copy = {
     cta_head: "PON TU ESCUELA EN EL MAPA.",
     cta_sub: "Treinta minutos con groove. Una demo. La nueva clase favorita de tus estudiantes.",
     cta_btn: "Reserva una demo piloto",
-    cta_alt: "o di hola: hello@allaboardearth.com",
+    cta_alt: "o di hola:",
     footer: "ALL ABOARD EARTH · ¡ARRIBA VAMOS! 🌱",
     give: "Las donaciones las administra nuestro patrocinador fiscal,",
   },
@@ -1152,6 +1152,9 @@ export default function App() {
         .ctaband h2{ font-size:clamp(34px,6vw,66px); }
         .ctaband p{ margin:16px 0 26px; font-size:17px; font-weight:600; }
         .ctaband .mono{ display:block; margin-top:16px; opacity:.75; }
+        /* the address in plain sight: mailto: is inert with no mail client registered */
+        .cta-mail{ color:inherit; text-decoration:none; border-bottom:1px solid currentColor; padding-bottom:1px; }
+        .cta-mail:hover{ color:${T.coral}; }
         .ctaband .btn{ background:${T.pineDeep}; color:${T.cream}; }
         .cta-stamp{ font-size:clamp(20px,3.4vw,34px); color:${T.pineDeep}; letter-spacing:.06em; margin-bottom:6px; opacity:.9; }
 
@@ -1174,7 +1177,7 @@ export default function App() {
             <button className={lang === "en" ? "on" : ""} onClick={() => setLang("en")}>EN</button>
             <button className={lang === "es" ? "on" : ""} onClick={() => setLang("es")}>ES</button>
           </div>
-          <a className="btn" href={LINKS.booking}>{c.nav_cta}</a>
+          <a className="btn" href={LINKS.demoMail}>{c.nav_cta}</a>
         </div>
       </nav>
 
@@ -1326,8 +1329,8 @@ export default function App() {
           <div className="cta-stamp display">{c.cta_stamp}</div>
           <h2 className="display">{c.cta_head}</h2>
           <p>{c.cta_sub}</p>
-          <a className="btn big" href={LINKS.booking}>{c.cta_btn}</a>
-          <span className="mono">{c.cta_alt}</span>
+          <a className="btn big" href={LINKS.demoMail}>{c.cta_btn}</a>
+          <span className="mono">{c.cta_alt} <a className="cta-mail" href={LINKS.demoMail}>{BOOKING_EMAIL}</a></span>
         </div>
       </div>
 

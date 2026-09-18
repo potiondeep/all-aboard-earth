@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { T, LINKS } from "../theme.js";
+import { T, LINKS, BOOKING_EMAIL } from "../theme.js";
 import { ccCopy } from "./coolCareersCopy.js";
 
 /* ============================================================
@@ -277,7 +277,7 @@ export default function CoolCareers() {
             <button className={lang === "en" ? "on" : ""} aria-pressed={lang === "en"} onClick={() => setLang("en")}>EN</button>
             <button className={lang === "es" ? "on" : ""} aria-pressed={lang === "es"} onClick={() => setLang("es")}>ES</button>
           </div>
-          <a className="btn" href={LINKS.booking}>{c.nav_cta}</a>
+          <a className="btn" href={LINKS.demoMail}>{c.nav_cta}</a>
         </div>
       </nav>
 
@@ -372,7 +372,8 @@ export default function CoolCareers() {
             <BusLoop caption={c.hero_caption} />
             <h2 className="display">{c.cta_head}</h2>
             <p>{c.cta_sub}</p>
-            <a className="btn big" href={LINKS.booking}>{c.cta_btn}</a>
+            <a className="btn big" href={LINKS.demoMail}>{c.cta_btn}</a>
+            <div><a className="cta-mail" href={LINKS.demoMail}>{BOOKING_EMAIL}</a></div>
           </div>
         </section>
       </main>
