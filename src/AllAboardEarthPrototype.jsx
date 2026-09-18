@@ -1316,7 +1316,7 @@ export default function App() {
           ))}
         </div>
         <div className="section-cta" data-reveal>
-          <a className="btn big" href={LINKS.gamePortal}>{c.cc_btn}</a>
+          <a className="btn big" href={LINKS.coolCareers}>{c.cc_btn}</a>
         </div>
         <RootsMark />
       </section>
