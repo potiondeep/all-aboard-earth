@@ -12,6 +12,9 @@ export const T = {
 // The band's Spotify artist page — the same one embedded on allaboardearth.com/grooves.
 export const SPOTIFY_ARTIST_ID = "3PxV0vuP14pMfk7HJi1YFE";
 
+// Where booking requests go. Shown as visible text as well as used in the mailto.
+export const BOOKING_EMAIL = "allaboardearth@gmail.com";
+
 export const LINKS = {
   home: "/",
   coolCareers: "/cool-careers",
@@ -22,8 +25,10 @@ export const LINKS = {
   // Performance). The earlier /contact placeholder was a 404 — never point a CTA there.
   booking: "https://www.allaboardearth.com/service-page/school-performance",
   // "Book a show" opens the visitor's own mail app with the request pre-addressed,
-  // rather than sending them through the Wix booking flow.
-  bookingMail: `mailto:allaboardearth@gmail.com?subject=${encodeURIComponent("All Aboard Earth Booking Request")}`,
+  // rather than sending them through the Wix booking flow. The address is also
+  // shown in plain text beside the button: mailto: does nothing on a machine with
+  // no mail client registered, and webmail users need something they can copy.
+  bookingMail: `mailto:${BOOKING_EMAIL}?subject=${encodeURIComponent("All Aboard Earth Booking Request")}`,
   grooves: "https://www.allaboardearth.com/grooves",
   // "Hear the music" goes straight to the artist page, not the Wix grooves page.
   spotify: `https://open.spotify.com/artist/${SPOTIFY_ARTIST_ID}`,
