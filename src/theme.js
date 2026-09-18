@@ -9,6 +9,9 @@ export const T = {
   leaf: "#3FA968",
 };
 
+// The band's Spotify artist page — the same one embedded on allaboardearth.com/grooves.
+export const SPOTIFY_ARTIST_ID = "3PxV0vuP14pMfk7HJi1YFE";
+
 export const LINKS = {
   home: "/",
   coolCareers: "/cool-careers",
@@ -19,6 +22,8 @@ export const LINKS = {
   // Performance). The earlier /contact placeholder was a 404 — never point a CTA there.
   booking: "https://www.allaboardearth.com/service-page/school-performance",
   grooves: "https://www.allaboardearth.com/grooves",
+  // "Hear the music" goes straight to the artist page, not the Wix grooves page.
+  spotify: `https://open.spotify.com/artist/${SPOTIFY_ARTIST_ID}`,
   donate: "https://www.tessafoundation.org/donate",
   instagram: "https://www.instagram.com/allaboardearth",
 };

@@ -1206,7 +1206,7 @@ export default function App() {
         <p className="hero-sub">{c.hero_sub}</p>
         <div className="hero-ctas">
           <a className="btn big" href={LINKS.coolCareers}>{c.hero_cta}</a>
-          <a className="btn big ghost" href={LINKS.grooves}>{c.hero_cta2}</a>
+          <a className="btn big ghost" href={LINKS.spotify}>{c.hero_cta2}</a>
           <a className="btn big ghost" href={LINKS.regenArt}>{c.hero_cta3}</a>
         </div>
       </header>
