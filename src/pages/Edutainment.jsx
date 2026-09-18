@@ -174,14 +174,14 @@ export default function Edutainment() {
         }
       `}</style>
 
-      <SiteNav lang={lang} setLang={setLang} cta={c.nav_cta} />
+      <SiteNav lang={lang} setLang={setLang} cta={c.nav_cta} ctaHref={LINKS.bookingMail} />
 
       <main>
         <header className="pg-top">
           <h1 className="display">{c.title}</h1>
           <p className="pg-tagline">{c.tagline}</p>
           <div className="ed-actions">
-            <a className="btn big" href={LINKS.booking}>{c.cta_book}</a>
+            <a className="btn big" href={LINKS.bookingMail}>{c.cta_book}</a>
             <a className="btn big ghost" href={LINKS.spotify}>{c.cta_listen}</a>
           </div>
         </header>
@@ -250,7 +250,7 @@ export default function Edutainment() {
                  sizes="(max-width: 1100px) 100vw, 1000px" alt="" aria-hidden="true" loading="lazy" decoding="async" />
             <h2 className="display">{c.cta_head}</h2>
             <p>{c.cta_sub}</p>
-            <a className="btn big" href={LINKS.booking}>{c.cta_book}</a>
+            <a className="btn big" href={LINKS.bookingMail}>{c.cta_book}</a>
           </div>
         </section>
       </main>

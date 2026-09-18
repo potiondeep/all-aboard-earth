@@ -37,7 +37,7 @@ export function useLoopVideo(ref, { reduced }) {
   return ready;
 }
 
-export function SiteNav({ lang, setLang, cta }) {
+export function SiteNav({ lang, setLang, cta, ctaHref = LINKS.booking }) {
   return (
     <nav className="pg-nav">
       <a className="brand" href={LINKS.home}>ALL ABOARD <b>EARTH</b></a>
@@ -46,7 +46,7 @@ export function SiteNav({ lang, setLang, cta }) {
           <button className={lang === "en" ? "on" : ""} aria-pressed={lang === "en"} onClick={() => setLang("en")}>EN</button>
           <button className={lang === "es" ? "on" : ""} aria-pressed={lang === "es"} onClick={() => setLang("es")}>ES</button>
         </div>
-        <a className="btn" href={LINKS.booking}>{cta}</a>
+        <a className="btn" href={ctaHref}>{cta}</a>
       </div>
     </nav>
   );

@@ -21,6 +21,9 @@ export const LINKS = {
   // Phase 2: pilot-demo CTAs point at a real Wix Bookings service (School
   // Performance). The earlier /contact placeholder was a 404 — never point a CTA there.
   booking: "https://www.allaboardearth.com/service-page/school-performance",
+  // "Book a show" opens the visitor's own mail app with the request pre-addressed,
+  // rather than sending them through the Wix booking flow.
+  bookingMail: `mailto:allaboardearth@gmail.com?subject=${encodeURIComponent("All Aboard Earth Booking Request")}`,
   grooves: "https://www.allaboardearth.com/grooves",
   // "Hear the music" goes straight to the artist page, not the Wix grooves page.
   spotify: `https://open.spotify.com/artist/${SPOTIFY_ARTIST_ID}`,
