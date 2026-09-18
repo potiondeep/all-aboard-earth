@@ -69,6 +69,8 @@ export default function RegenArt() {
 
         .ra-grid{ display:grid; gap:14px; grid-template-columns:1fr; margin-top:clamp(24px,4vh,36px); }
         @media (min-width:700px){ .ra-grid{ grid-template-columns:1fr 1fr; } }
+        /* the installed wall runs the whole measure; the rest stay paired */
+        .ra-grid .ra-wide{ grid-column:1 / -1; }
         .ra-grid figure{ margin:0; }
         .ra-grid img{ width:100%; height:auto; display:block; border-radius:16px; border:5px solid ${T.cream}; box-shadow:0 14px 32px #0008; }
         .ra-grid figcaption{ margin-top:9px; font-family:'Space Mono', ui-monospace, monospace; font-size:12px; color:${T.cream}99; letter-spacing:.06em; }
@@ -150,9 +152,10 @@ export default function RegenArt() {
           <p className="pg-lede">{c.sculpture_p}</p>
           <div className="ra-grid">
             {SCULPTURE.map((n, i) => (
-              <figure key={n}>
+              <figure key={n} className={i === 0 ? "ra-wide" : undefined}>
                 <img src={`/art/regen-art/${n}-1400.webp`} srcSet={`/art/regen-art/${n}-700.webp 700w, /art/regen-art/${n}-1400.webp 1400w`}
-                     sizes="(max-width: 700px) 100vw, 530px" alt={c.sculpture_caps[i]} loading="lazy" decoding="async" />
+                     sizes={i === 0 ? "(max-width: 1100px) 100vw, 1000px" : "(max-width: 700px) 100vw, 530px"}
+                     alt={c.sculpture_caps[i]} loading="lazy" decoding="async" />
                 <figcaption>{c.sculpture_caps[i]}</figcaption>
               </figure>
             ))}
@@ -179,6 +182,12 @@ export default function RegenArt() {
                    sizes="(max-width: 700px) 100vw, 530px" alt="Campaign poster: Yo' mama is so bright — she electrifies the whole planet"
                    loading="lazy" decoding="async" width="1080" height="1080" />
               <figcaption>{c.objects_caps[2]}</figcaption>
+            </figure>
+            <figure>
+              <img src="/art/regen-art/recycling-is-magic-1080.webp" srcSet="/art/regen-art/recycling-is-magic-600.webp 600w, /art/regen-art/recycling-is-magic-1080.webp 1080w"
+                   sizes="(max-width: 700px) 100vw, 530px" alt="Campaign poster: a wizard stirring a cauldron of cans and bottles — Recycling is Magic"
+                   loading="lazy" decoding="async" width="1080" height="1080" />
+              <figcaption>{c.objects_caps[3]}</figcaption>
             </figure>
           </div>
         </section>

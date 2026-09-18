@@ -32,7 +32,7 @@ export const raCopy = {
     sculpture_caps: ["Installed along the wall", "With the makers", "Cutting the bloom", "Finishing on site"],
 
     objects_label: "SUSTAINABILITY ADVOCACY CAMPAIGNS",
-    objects_caps: ["Honor the Earth — San Ildefonso Pueblo", "Or not. There is no try.", "Yo' mama is so bright — she electrifies the whole planet"],
+    objects_caps: ["Honor the Earth — San Ildefonso Pueblo", "Or not. There is no try.", "Yo' mama is so bright — she electrifies the whole planet", "Recycling is magic"],
 
     felt_label: "WHAT WE'RE BUILDING TOWARD",
     felt_h: "A hillside that grows its own power.",
@@ -75,7 +75,7 @@ export const raCopy = {
     sculpture_caps: ["Instalada a lo largo del muro", "Con quienes la hicieron", "Cortando la flor", "Acabado en sitio"],
 
     objects_label: "CAMPAÑAS DE INCIDENCIA POR LA SOSTENIBILIDAD",
-    objects_caps: ["Honra a la Tierra — Pueblo de San Ildefonso", "O no. No hay intento.", "Yo' mama is so bright — electrifica el planeta entero"],
+    objects_caps: ["Honra a la Tierra — Pueblo de San Ildefonso", "O no. No hay intento.", "Yo' mama is so bright — electrifica el planeta entero", "Reciclar es magia"],
 
     felt_label: "HACIA DÓNDE VAMOS",
     felt_h: "Una ladera que cultiva su propia energía.",
