@@ -150,19 +150,9 @@ export default function Edutainment() {
 
         /* music section: the bullets on the left, the Earth boombox filling the space beside them */
         .ed-music{ display:grid; gap:clamp(22px,4vw,44px); align-items:start; grid-template-columns:1fr; }
-        .ed-music > ul, .ed-music > .ed-booking{ grid-column:1; }
+        .ed-music > ul{ grid-column:1; }
         @media (min-width:900px){ .ed-music > .ed-boombox{ grid-column:2; grid-row:1 / span 2; } }
         @media (min-width:900px){ .ed-music{ grid-template-columns:1.05fr .95fr; } }
-        /* live-show booking, filling the space under the music bullets */
-        .ed-booking{ margin-top:clamp(20px,3vh,30px); background:#12301F; border:2px solid ${T.marigold}66;
-          border-radius:20px; padding:clamp(20px,3vw,28px); }
-        .ed-booking .pg-label{ margin-bottom:10px; }
-        .ed-booking h3{ font-family:'Anton', Impact, sans-serif; text-transform:uppercase; font-weight:400; letter-spacing:.01em;
-          font-size:clamp(24px,3vw,34px); line-height:1; margin-bottom:12px; }
-        .ed-booking p{ font-size:16px; line-height:1.5; color:${T.cream}cc; margin-bottom:16px; }
-        .ed-booking ul{ list-style:none; display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
-        .ed-booking li{ font-family:'Space Mono', ui-monospace, monospace; font-size:12px; letter-spacing:.06em;
-          border:1.5px solid ${T.cream}33; border-radius:999px; padding:6px 12px; color:${T.cream}dd; }
         .ed-boombox{ margin:0; }
         .ed-boombox img{ width:100%; height:auto; display:block; border-radius:18px; border:5px solid ${T.cream}; box-shadow:0 16px 36px #0008; transform:rotate(.8deg); }
         .ed-boombox figcaption{ margin-top:10px; font-family:'Space Mono', ui-monospace, monospace; font-size:12px; color:${T.cream}99; letter-spacing:.06em; }
@@ -225,15 +215,10 @@ export default function Edutainment() {
           <p className="pg-lede">{c.music_p}</p>
           <div className="ed-music">
             <ul className="ed-points" style={{ marginTop: 0 }}>
-              {c.music_points.map(([b, s]) => <li key={b}><b>{b}</b><span>{s}</span></li>)}
+              {/* the live show sits in the same run of bubbles; booking is one
+                  screen below on the closing CTA, so it needs no button here */}
+              {[...c.music_points, c.booking_point].map(([b, s]) => <li key={b}><b>{b}</b><span>{s}</span></li>)}
             </ul>
-            <div className="ed-booking">
-              <div className="mono pg-label">{c.booking_label}</div>
-              <h3>{c.booking_h}</h3>
-              <p>{c.booking_p}</p>
-              <ul>{c.booking_points.map((t) => <li key={t}>{t}</li>)}</ul>
-              <a className="btn" href={LINKS.booking}>{c.cta_book}</a>
-            </div>
             <figure className="ed-boombox">
               <img src="/art/edutainment/earth-boombox-1200.webp" srcSet="/art/edutainment/earth-boombox-600.webp 600w, /art/edutainment/earth-boombox-1200.webp 1200w"
                    sizes="(max-width: 900px) 100vw, 480px" alt="A boombox overgrown with living plants" loading="lazy" decoding="async" />
