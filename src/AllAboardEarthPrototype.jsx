@@ -131,16 +131,7 @@ const copy = {
     ra_head: "REGENERATIVE ART",
     ra_sub: "Healing communities and the land with art — heralding a renaissance of planetary stewardship.",
     ra_alt: "A community mural in progress, painted with the neighbourhood",
-    ra_caption: "Handmade heroes. Real classrooms.",
     ra_btn: "Explore Regenerative Art",
-    t5_label: "TRACK 05 · THE PROOF",
-    t5_head: "BORN IN NEW MEXICO. READY FOR YOUR DISTRICT.",
-    t5_points: [
-      ["Pilot-ready", "Proposals in motion with Santa Fe & Albuquerque public schools for the coming academic year."],
-      ["Standards-aligned", "Mapped to CTE pathways so it plugs into what you already teach — no bolt-on chaos."],
-      ["Bilingual by design", "Full English / Spanish delivery, because the movement speaks both."],
-      ["Culture included", "Live regenerative hip-hop assemblies turn launch day into the loudest field trip of the year."],
-    ],
     cta_stamp: "UP WE GO!",
     cta_head: "LET'S COLLABORATE!",
     cta_sub: "Meet with our team to see how we can empower your community with a new vision of sustainability and regeneration!",
@@ -202,16 +193,7 @@ const copy = {
     ra_head: "ARTE REGENERATIVO",
     ra_sub: "Sanando comunidades y la tierra con arte — anunciando un renacimiento de la custodia planetaria.",
     ra_alt: "Un mural comunitario en proceso, pintado con el vecindario",
-    ra_caption: "Héroes hechos a mano. Aulas reales.",
     ra_btn: "Explora Arte Regenerativo",
-    t5_label: "PISTA 05 · LA PRUEBA",
-    t5_head: "NACIDO EN NUEVO MÉXICO. LISTO PARA TU DISTRITO.",
-    t5_points: [
-      ["Piloto en marcha", "Propuestas en curso con las escuelas públicas de Santa Fe y Albuquerque para el próximo año escolar."],
-      ["Alineado a estándares", "Mapeado a rutas CTE para integrarse a lo que ya enseñas — sin caos añadido."],
-      ["Bilingüe de raíz", "Entrega completa en inglés y español, porque el movimiento habla los dos."],
-      ["Cultura incluida", "Conciertos de hip-hop regenerativo que convierten el lanzamiento en la excursión más sonora del año."],
-    ],
     cta_stamp: "¡ARRIBA VAMOS!",
     cta_head: "¡COLABOREMOS!",
     cta_sub: "Reúnete con nuestro equipo para ver cómo podemos potenciar a tu comunidad con una nueva visión de sostenibilidad y regeneración.",
@@ -1158,7 +1140,7 @@ export default function App() {
         .poster img{ width:100%; height:auto; display:block; border-radius:3px; }
 
         /* Seat 8 — the felt raccoon, framed like a photo print */
-        .photoprint{ margin-top:clamp(16px,2.5vh,26px);
+        .photoprint{ margin-top:clamp(20px,3vh,32px); padding-bottom:12px;
           margin-top:34px; background:${T.cream}; padding:14px 14px 10px; border-radius:8px;
           transform:rotate(-1deg); box-shadow:0 18px 40px #0007;
           animation:printfloat 7s var(--ease-drift) infinite; will-change:transform;
@@ -1199,10 +1181,6 @@ export default function App() {
 
 
         /* proof */
-        .proof{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:2px; margin-top:36px; border:2px solid ${T.cream}33; border-radius:18px; overflow:hidden; }
-        .proof > div{ background:${T.pineDeep}; padding:26px 22px; }
-        .proof h3{ font-family:'Anton'; font-size:19px; color:${T.marigold}; margin-bottom:8px; letter-spacing:.03em; }
-        .proof p{ font-size:14.5px; line-height:1.55; color:${T.cream}cc; }
 
         /* CTA */
         .ctaband{ background:${T.marigold}; color:${T.pineDeep}; text-align:center; border-radius:26px; max-width:1100px; margin:0 auto 80px; padding:clamp(50px,8vh,90px) 24px; transform:rotate(-.6deg); }
@@ -1373,24 +1351,9 @@ export default function App() {
         <figure className="photoprint" data-reveal>
           {/* the meditating Earth, ping-pong looped; phones get the lighter encode */}
           <FeltLoop name="felt-8" dir="frame" sm width="1600" height="800" alt="A felt Earth meditating on a flowering island beneath soft felt clouds" />
-          <figcaption className="mono">{c.ra_caption}</figcaption>
         </figure>
         <div className="section-cta" data-reveal>
           <a className="btn big" href={LINKS.regenArt}>{c.ra_btn}</a>
-        </div>
-        <RootsMark />
-      </section>
-
-      <WaveMountainDivider flip />
-
-      {/* TRACK 05 — THE PROOF */}
-      <section>
-        <span className="mono label" data-reveal>{c.t5_label}</span>
-        <h2 className="display" data-reveal>{c.t5_head}</h2>
-        <div className="proof" data-reveal>
-          {c.t5_points.map(([h, p]) => (
-            <div key={h}><h3>{h}</h3><p>{p}</p></div>
-          ))}
         </div>
         <RootsMark />
       </section>
