@@ -153,8 +153,19 @@ export default function Edutainment() {
         .ed-music > ul{ grid-column:1; }
         @media (min-width:900px){ .ed-music > .ed-boombox{ grid-column:2; grid-row:1 / span 2; } }
         @media (min-width:900px){ .ed-music{ grid-template-columns:1.05fr .95fr; } }
-        /* Spotify's compact player: full width up to the page's reading measure */
-        .ed-spotify{ display:block; width:100%; max-width:720px; height:152px; border:0; border-radius:14px; }
+        /* listen and watch, side by side: the compact player plus the channel */
+        .ed-listen{ display:grid; gap:14px; grid-template-columns:1fr; align-items:stretch; max-width:900px; }
+        @media (min-width:760px){ .ed-listen{ grid-template-columns:minmax(0,1fr) minmax(0,310px); } }
+        .ed-spotify{ display:block; width:100%; height:152px; border:0; border-radius:14px; }
+        .ed-yt{ display:flex; align-items:center; gap:14px; height:152px; padding:16px; border-radius:14px;
+          background:#12301F; border:2px solid ${T.cream}1f; color:${T.cream}; text-decoration:none;
+          transition:transform .3s var(--ease-settle), border-color .3s; }
+        .ed-yt:hover{ transform:translateY(-3px); border-color:${T.marigold}66; }
+        .ed-yt img{ width:84px; height:84px; border-radius:50%; flex:none; display:block; }
+        .ed-yt b{ display:block; font-size:16px; line-height:1.25; margin-bottom:5px; }
+        .ed-yt .handle{ display:block; font-family:'Space Mono', ui-monospace, monospace; font-size:12px;
+          letter-spacing:.06em; color:${T.cream}99; margin-bottom:9px; }
+        .ed-yt .go{ font-size:13px; color:${T.marigold}; }
         .ed-boombox{ margin:0; }
         .ed-boombox img{ width:100%; height:auto; display:block; border-radius:18px; border:5px solid ${T.cream}; box-shadow:0 16px 36px #0008; transform:rotate(.8deg); }
         .ed-boombox figcaption{ margin-top:10px; font-family:'Space Mono', ui-monospace, monospace; font-size:12px; color:${T.cream}99; letter-spacing:.06em; }
@@ -232,16 +243,27 @@ export default function Edutainment() {
         {/* LISTEN — the artist page itself. Lazy, so a below-the-fold third-party
             frame costs nothing at load, and a fixed height so it can't shift. */}
         <section className="pg-wrap" style={{ paddingTop: 0 }} aria-labelledby="ed-listen">
-          <div className="pg-label">{c.spotify_label}</div>
-          <h2 id="ed-listen" className="sr-only">{c.spotify_label}</h2>
-          <iframe
-            className="ed-spotify"
-            src={`https://open.spotify.com/embed/artist/${SPOTIFY_ARTIST_ID}?utm_source=generator&theme=0`}
-            title={c.spotify_title}
-            height="152"
-            loading="lazy"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          />
+          <div className="pg-label">{c.listen_label}</div>
+          <h2 id="ed-listen" className="sr-only">{c.listen_label}</h2>
+          <div className="ed-listen">
+            <iframe
+              className="ed-spotify"
+              src={`https://open.spotify.com/embed/artist/${SPOTIFY_ARTIST_ID}?utm_source=generator&theme=0`}
+              title={c.spotify_title}
+              height="152"
+              loading="lazy"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            />
+            {/* a channel has no embeddable player of its own, so this is a card to it */}
+            <a className="ed-yt" href={LINKS.youtube} target="_blank" rel="noopener noreferrer">
+              <img src="/art/edutainment/youtube-avatar.webp" alt="" width="300" height="300" loading="lazy" decoding="async" />
+              <span>
+                <b>{c.yt_title}</b>
+                <span className="handle">@allaboardearth</span>
+                <span className="go">{c.yt_go}</span>
+              </span>
+            </a>
+          </div>
         </section>
 
         <section className="pg-wrap" style={{ paddingTop: 0 }}>

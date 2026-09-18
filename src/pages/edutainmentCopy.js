@@ -28,8 +28,10 @@ export const edCopy = {
     bus_alt: "The All Aboard Earth bus painted as the Earth, animals riding along",
 
 
-    spotify_label: "LISTEN — ALL ABOARD EARTH ON SPOTIFY",
+    listen_label: "LISTEN & WATCH",
     spotify_title: "All Aboard Earth on Spotify",
+    yt_title: "All Aboard Earth on YouTube",
+    yt_go: "Watch the channel →",
     booking_point: ["School assemblies & community events", "One class period or a whole cafeteria; a festival stage, a plaza, a farmers market or a block party."],
     cta_head: "Bring the show to your stage.",
     cta_sub: "Assemblies, festivals, markets and community events — bilingual, all ages.",
@@ -64,8 +66,10 @@ export const edCopy = {
     bus_alt: "El autobús All Aboard Earth pintado como la Tierra, con animales viajando",
 
 
-    spotify_label: "ESCUCHA — ALL ABOARD EARTH EN SPOTIFY",
+    listen_label: "ESCUCHA Y MIRA",
     spotify_title: "All Aboard Earth en Spotify",
+    yt_title: "All Aboard Earth en YouTube",
+    yt_go: "Ve el canal →",
     booking_point: ["Asambleas escolares y eventos comunitarios", "Una clase o toda la cafetería; un escenario de festival, una plaza, un mercado de agricultores o una fiesta de barrio."],
     cta_head: "Lleva el show a tu escenario.",
     cta_sub: "Asambleas, festivales, mercados y eventos comunitarios — bilingüe, todas las edades.",

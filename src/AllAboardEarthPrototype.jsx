@@ -57,6 +57,24 @@ const CARD_ART = [
 const ENGINE_LINKS = [LINKS.coolCareers, LINKS.edutainment, LINKS.regenArt];
 
 // Seat 4 — one hue per frequency cell (declared after T)
+/** YouTube facade: local poster and a play button; the player loads on click. */
+function YouTubeFacade({ id, title, label, poster }) {
+  const [on, setOn] = useState(false);
+  return (
+    <div className="ytframe">
+      {on ? (
+        <iframe src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`} title={title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
+      ) : (
+        <button className="ytfacade" onClick={() => setOn(true)} aria-label={label}>
+          <img src={poster} alt="" width="1280" height="720" loading="lazy" decoding="async" />
+          <span className="ytplay" aria-hidden="true">▶</span>
+        </button>
+      )}
+    </div>
+  );
+}
+
 const FREQ_HUES = [T.marigold, T.coral, T.sky, T.leaf];
 
 const copy = {
@@ -85,14 +103,15 @@ const copy = {
     t2_body:
       "The clean economy is opening millions of doors this decade — solar fields, watersheds, smart grids, living soil. Cool Careers is our game-powered journey that gives students the front-row seat and the backstage pass. First stop: your school.",
     t2_tags: ["CTE-aligned", "Middle + High School", "Bilingual EN/ES", "Game-based"],
-    t3_label: "TRACK 03 · HOW IT PLAYS",
+    cc_btn: "Explore Cool Careers",
+    t3_label: "HOW IT PLAYS",
     t3_head: "PLAY. LEARN. LAUNCH.",
     t3_cards: [
       { n: "PLAY", d: "Students run story-driven missions — restore a watershed, power a block, grow a food forest. Real stakes, game energy." },
       { n: "LEARN", d: "Every mission maps to CTE standards and real green-career skills. The fun IS the curriculum, not a break from it." },
       { n: "LAUNCH", d: "Missions unlock pathways: certifications, mentors, and local partners. From controller to career." },
     ],
-    t4_label: "TRACK 04 · MEET THE CREW",
+    t4_label: "MEET THE CREW",
     t4_head: "COLLECT YOUR FUTURE",
     t4_sub: "Every career is a character. Every character is a doorway. (Go ahead — pick them up.)",
     cards: [
@@ -102,6 +121,17 @@ const copy = {
       { role: "AQUAPONICS TECH", stat: "CYCLE", num: "15", flavor: "Fish feed the greens, greens clean the water.", hue: T.cream },
       { role: "WIND TECHNICIAN", stat: "LIFT", num: "21", flavor: "Climbs towers, harvests sky.", hue: T.coral },
     ],
+    ed_label: "TRACK 03 · ON STAGE",
+    ed_head: "ENVIRONMENTAL EDUTAINMENT",
+    ed_sub: "Inspiring a new generation of ecological geniuses through live performance and music production.",
+    ed_video: "Up We Go: Education & Activism",
+    ed_play: "Play Up We Go: Education & Activism",
+    ed_btn: "Explore Edutainment",
+    ra_label: "TRACK 04 · ON THE WALLS",
+    ra_head: "REGENERATIVE ART",
+    ra_sub: "Healing communities and the land with art — heralding a renaissance of planetary stewardship.",
+    ra_alt: "A community mural in progress, painted with the neighbourhood",
+    ra_btn: "Explore Regenerative Art",
     t5_label: "TRACK 05 · THE PROOF",
     t5_head: "BORN IN NEW MEXICO. READY FOR YOUR DISTRICT.",
     t5_points: [
@@ -111,8 +141,8 @@ const copy = {
       ["Culture included", "Live regenerative hip-hop assemblies turn launch day into the loudest field trip of the year."],
     ],
     cta_stamp: "UP WE GO!",
-    cta_head: "PUT YOUR SCHOOL ON THE MAP.",
-    cta_sub: "Thirty groovy minutes. One demo. Your students' new favorite class.",
+    cta_head: "LET'S COLLABORATE!",
+    cta_sub: "Meet with our team to see how we can empower your community with a new vision of sustainability and regeneration!",
     cta_btn: "Book a pilot demo",
     cta_alt: "or say hola: allaboardearth@gmail.com",
     footer: "ALL ABOARD EARTH · UP WE GO! 🌱",
@@ -143,14 +173,15 @@ const copy = {
     t2_body:
       "La economía limpia abre millones de puertas esta década — campos solares, cuencas, redes inteligentes, suelo vivo. Cool Careers es nuestro viaje en modo videojuego que da a tus estudiantes el asiento de primera fila y el pase tras bastidores. Primera parada: tu escuela.",
     t2_tags: ["Alineado con CTE", "Secundaria + Prepa", "Bilingüe EN/ES", "Basado en juego"],
-    t3_label: "PISTA 03 · CÓMO SE JUEGA",
+    cc_btn: "Explora Cool Careers",
+    t3_label: "CÓMO SE JUEGA",
     t3_head: "JUEGA. APRENDE. DESPEGA.",
     t3_cards: [
       { n: "JUEGA", d: "Misiones con historia — restaurar una cuenca, energizar un barrio, cultivar un bosque comestible. Retos reales, energía de juego." },
       { n: "APRENDE", d: "Cada misión se alinea con estándares CTE y habilidades verdes reales. La diversión ES el currículo." },
       { n: "DESPEGA", d: "Las misiones abren caminos: certificaciones, mentores y aliados locales. Del control a la carrera." },
     ],
-    t4_label: "PISTA 04 · CONOCE AL EQUIPO",
+    t4_label: "CONOCE AL EQUIPO",
     t4_head: "COLECCIONA TU FUTURO",
     t4_sub: "Cada carrera es un personaje. Cada personaje, una puerta. (Anda — tómalas en tus manos.)",
     cards: [
@@ -160,6 +191,17 @@ const copy = {
       { role: "TÉCNICA DE ACUAPONÍA", stat: "CICLO", num: "15", flavor: "Los peces nutren; las plantas limpian.", hue: T.cream },
       { role: "TÉCNICO EÓLICO", stat: "VUELO", num: "21", flavor: "Sube torres, cosecha cielo.", hue: T.coral },
     ],
+    ed_label: "PISTA 03 · EN ESCENA",
+    ed_head: "EDUTAINMENT AMBIENTAL",
+    ed_sub: "Inspirando a una nueva generación de genios ecológicos a través de la presentación en vivo y la producción musical.",
+    ed_video: "Up We Go: Education & Activism",
+    ed_play: "Reproducir Up We Go: Education & Activism",
+    ed_btn: "Explora Edutainment",
+    ra_label: "PISTA 04 · EN LOS MUROS",
+    ra_head: "ARTE REGENERATIVO",
+    ra_sub: "Sanando comunidades y la tierra con arte — anunciando un renacimiento de la custodia planetaria.",
+    ra_alt: "Un mural comunitario en proceso, pintado con el vecindario",
+    ra_btn: "Explora Arte Regenerativo",
     t5_label: "PISTA 05 · LA PRUEBA",
     t5_head: "NACIDO EN NUEVO MÉXICO. LISTO PARA TU DISTRITO.",
     t5_points: [
@@ -169,8 +211,8 @@ const copy = {
       ["Cultura incluida", "Conciertos de hip-hop regenerativo que convierten el lanzamiento en la excursión más sonora del año."],
     ],
     cta_stamp: "¡ARRIBA VAMOS!",
-    cta_head: "PON TU ESCUELA EN EL MAPA.",
-    cta_sub: "Treinta minutos con groove. Una demo. La nueva clase favorita de tus estudiantes.",
+    cta_head: "¡COLABOREMOS!",
+    cta_sub: "Reúnete con nuestro equipo para ver cómo podemos potenciar a tu comunidad con una nueva visión de sostenibilidad y regeneración.",
     cta_btn: "Reserva una demo piloto",
     cta_alt: "o di hola: allaboardearth@gmail.com",
     footer: "ALL ABOARD EARTH · ¡ARRIBA VAMOS! 🌱",
@@ -988,6 +1030,26 @@ export default function App() {
         h2.display{ font-size:clamp(34px,6vw,72px); margin-bottom:20px; }
         .lede{ font-size:18px; line-height:1.6; max-width:640px; color:${T.cream}dd; }
         .tags{ display:flex; gap:10px; flex-wrap:wrap; margin-top:26px; }
+        /* the lede runs the full measure where a section has no column beside it */
+        .lede.wide{ max-width:900px; }
+        /* a subhead inside a section: quieter than the section's own h2 */
+        .subhead{ margin-top:clamp(46px,7vh,78px); }
+        .subhead h3.display{ font-size:clamp(26px,3.6vw,42px); margin-bottom:14px; }
+        .subhead .label{ margin-bottom:10px; }
+        .section-cta{ margin-top:clamp(28px,4vh,42px); }
+        /* the visual that carries an engine section */
+        .engine-art{ margin:clamp(28px,4vh,44px) 0 0; }
+        .engine-art img{ width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; display:block; border-radius:20px;
+          border:6px solid ${T.cream}; box-shadow:0 22px 50px #0009; transform:rotate(-.5deg); }
+        .ytframe{ position:relative; aspect-ratio:16/9; border-radius:20px; overflow:hidden;
+          border:6px solid ${T.cream}; box-shadow:0 22px 50px #0009; background:#000; transform:rotate(-.4deg); }
+        .ytframe iframe, .ytfacade, .ytfacade img{ position:absolute; inset:0; width:100%; height:100%; border:0; display:block; }
+        .ytfacade{ cursor:pointer; background:#000; padding:0; }
+        .ytfacade img{ object-fit:cover; transition:transform .5s var(--ease-settle), filter .5s; }
+        .ytfacade:hover img{ transform:scale(1.03); filter:brightness(.85); }
+        .ytplay{ position:absolute; left:50%; top:50%; width:92px; height:92px; margin:-46px 0 0 -46px; border-radius:50%;
+          background:${T.coral}; color:${T.pineDeep}; font-size:34px; display:grid; place-items:center; padding-left:6px; box-shadow:0 10px 30px #0008; }
+        @media (max-width:560px){ .ytplay{ width:60px; height:60px; margin:-30px 0 0 -30px; font-size:22px; } .ytframe{ border-width:4px; } }
         .tag{ border:1.5px solid ${T.marigold}88; color:${T.marigold}; border-radius:999px; padding:7px 14px; font-family:'Space Mono'; font-size:12px; }
 
         /* frequencies */
@@ -1005,7 +1067,7 @@ export default function App() {
         .signal{ width:12px; height:12px; border-radius:50%; background:${T.coral}; animation:blink 1.6s ease-in-out infinite; }
 
         /* comic panels */
-        .panels{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; margin-top:36px; }
+        .panels{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; margin-top:24px; }
         /* Seat 6 — deal the panels in like comic pages */
         .panel{ position:relative; transition:transform .5s var(--ease-settle); will-change:transform; }
         .panel::before{
@@ -1030,7 +1092,7 @@ export default function App() {
         .panel p{ line-height:1.55; font-size:15px; }
 
         /* trading cards */
-        .cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:18px; margin-top:40px; }
+        .cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:18px; margin-top:28px; }
         /* five careers deal as one row on desktop rather than 4 + an orphan */
         @media (min-width:1000px){ .cards{ grid-template-columns:repeat(5,1fr); } }
         .ccard{ perspective:900px; }
@@ -1103,7 +1165,7 @@ export default function App() {
         .photoprint figcaption{ color:${T.pineDeep}; text-align:center; padding-top:10px; font-size:11px; letter-spacing:.1em; }
         @keyframes printfloat{ 0%,100%{ transform:rotate(-1deg) translateY(-3px); } 50%{ transform:rotate(-1deg) translateY(3px); } }
 
-        .collage{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:22px; }
+        .collage{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:clamp(34px,5vh,56px); }
         .polaroid{
           position:relative; line-height:0; overflow:hidden;
           background:${T.cream}; border:7px solid ${T.cream}; border-bottom-width:20px; border-radius:3px;
@@ -1230,36 +1292,34 @@ export default function App() {
 
       <WaveMountainDivider />
 
-      {/* TRACK 02 — NOW BOARDING */}
+      {/* COOL CAREERS — one unified section: the pitch, the cards, how it plays,
+          the felt crew, and the way in. Runs full width; no poster beside it. */}
       <section id="cool-careers">
         <div className="boarding-strip" data-reveal>
           <span className="signal" />
           <span className="mono label" style={{ marginBottom: 0 }}>{c.t2_label}</span>
         </div>
-        <div className="feature">
-          <div>
-            <h2 className="display" data-reveal>{c.t2_head}</h2>
-            <p className="lede" data-reveal>{c.t2_body}</p>
+        <h2 className="display" data-reveal>{c.t2_head}</h2>
+        <p className="lede wide" data-reveal>{c.t2_body}</p>
         <div className="tags" data-reveal>
           {c.t2_tags.map((t) => <span className="tag" key={t}>{t}</span>)}
         </div>
-          </div>
-          <figure className="poster" data-reveal>
-            <img
-              src={cardArt("3d-ocean-farmer", 760, 1064)}
-              alt="3D Ocean Farmer — grows seaweed and shellfish in layered ocean habitats"
-              loading="lazy" decoding="async" width="760" height="1064"
-            />
-          </figure>
+
+        {/* collect your future */}
+        <div className="subhead" data-reveal>
+          <span className="mono label">{c.t4_label}</span>
+          <h3 className="display">{c.t4_head}</h3>
+          <p className="lede wide">{c.t4_sub}</p>
         </div>
-      </section>
+        <div className="cards">
+          {c.cards.map((card, i) => <CareerCard c={card} i={i} art={CARD_ART[i]} key={card.role} />)}
+        </div>
 
-      <WaveMountainDivider flip />
-
-      {/* TRACK 03 — HOW IT PLAYS */}
-      <section>
-        <span className="mono label" data-reveal>{c.t3_label}</span>
-        <h2 className="display" data-reveal>{c.t3_head}</h2>
+        {/* play. learn. launch. */}
+        <div className="subhead" data-reveal>
+          <span className="mono label">{c.t3_label}</span>
+          <h3 className="display">{c.t3_head}</h3>
+        </div>
         <div className="panels">
           {c.t3_cards.map((p, i) => (
             <div className="panel" data-reveal key={p.n} style={{ transitionDelay: `${i * 100}ms` }}>
@@ -1268,19 +1328,50 @@ export default function App() {
             </div>
           ))}
         </div>
+
+        {/* the felt crew, then the way in */}
+        <div className="collage" data-reveal aria-hidden="true">
+          {FELT_WALL.map((f) => (
+            <FeltLoop key={f.name} className="polaroid" name={f.name} width="520" height={f.h} mode={f.mode} />
+          ))}
+        </div>
+        <div className="section-cta" data-reveal>
+          <a className="btn big" href={LINKS.gamePortal}>{c.cc_btn}</a>
+        </div>
+        <RootsMark />
+      </section>
+
+      <WaveMountainDivider flip />
+
+      {/* ENVIRONMENTAL EDUTAINMENT */}
+      <section id="edutainment">
+        <span className="mono label" data-reveal>{c.ed_label}</span>
+        <h2 className="display" data-reveal>{c.ed_head}</h2>
+        <p className="lede wide" data-reveal>{c.ed_sub}</p>
+        <div className="engine-art" data-reveal>
+          <YouTubeFacade id="LYdnsE1jmn0" title={c.ed_video} label={c.ed_play} poster="/art/edutainment/upwego-video.webp" />
+        </div>
+        <div className="section-cta" data-reveal>
+          <a className="btn big" href={LINKS.edutainment}>{c.ed_btn}</a>
+        </div>
         <RootsMark />
       </section>
 
       <WaveMountainDivider />
 
-      {/* TRACK 04 — MEET THE CREW */}
-      <section>
-        <span className="mono label" data-reveal>{c.t4_label}</span>
-        <h2 className="display" data-reveal>{c.t4_head}</h2>
-        <p className="lede" data-reveal>{c.t4_sub}</p>
-        <div className="cards">
-          {c.cards.map((card, i) => <CareerCard c={card} i={i} art={CARD_ART[i]} key={card.role} />)}
+      {/* REGENERATIVE ART */}
+      <section id="regenerative-art">
+        <span className="mono label" data-reveal>{c.ra_label}</span>
+        <h2 className="display" data-reveal>{c.ra_head}</h2>
+        <p className="lede wide" data-reveal>{c.ra_sub}</p>
+        <figure className="engine-art" data-reveal>
+          <img src="/art/regen-art/mural-2-1400.webp" srcSet="/art/regen-art/mural-2-700.webp 700w, /art/regen-art/mural-2-1400.webp 1200w"
+               sizes="(max-width: 1100px) 100vw, 1000px" alt={c.ra_alt} loading="lazy" decoding="async" width="1200" height="800" />
+        </figure>
+        <div className="section-cta" data-reveal>
+          <a className="btn big" href={LINKS.regenArt}>{c.ra_btn}</a>
         </div>
+        <RootsMark />
       </section>
 
       <WaveMountainDivider flip />
@@ -1299,11 +1390,6 @@ export default function App() {
           <FeltLoop name="felt-8" dir="frame" sm width="1600" height="800" alt="A felt Earth meditating on a flowering island beneath soft felt clouds" />
           <figcaption className="mono">Handmade heroes. Real classrooms.</figcaption>
         </figure>
-        <div className="collage" data-reveal aria-hidden="true">
-          {FELT_WALL.map((f) => (
-            <FeltLoop key={f.name} className="polaroid" name={f.name} width="520" height={f.h} mode={f.mode} />
-          ))}
-        </div>
         <RootsMark />
       </section>
 

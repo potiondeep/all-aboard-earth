@@ -35,6 +35,7 @@ export const LINKS = {
   grooves: "https://www.allaboardearth.com/grooves",
   // "Hear the music" goes straight to the artist page, not the Wix grooves page.
   spotify: `https://open.spotify.com/artist/${SPOTIFY_ARTIST_ID}`,
+  youtube: "https://www.youtube.com/@allaboardearth",
   donate: "https://www.tessafoundation.org/donate",
   instagram: "https://www.instagram.com/allaboardearth",
 };
