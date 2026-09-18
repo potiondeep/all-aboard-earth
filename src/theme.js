@@ -32,6 +32,7 @@ export const LINKS = {
   bookingMail: mailTo("All Aboard Earth Booking Request"),   // "Book a show"
   demoMail: mailTo("Cool Careers Demo"),                     // "Book a pilot demo"
   commissionMail: mailTo("Regenerative Art Opportunity"),    // "Commission a project"
+  inquiryMail: mailTo("All Aboard Earth Inquiry"),           // "Give us a holler"
   grooves: "https://www.allaboardearth.com/grooves",
   // "Hear the music" goes straight to the artist page, not the Wix grooves page.
   spotify: `https://open.spotify.com/artist/${SPOTIFY_ARTIST_ID}`,

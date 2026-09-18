@@ -1365,7 +1365,7 @@ export default function App() {
           <div className="cta-stamp display">{c.cta_stamp}</div>
           <h2 className="display">{c.cta_head}</h2>
           <p>{c.cta_sub}</p>
-          <a className="btn big" href={LINKS.demoMail}>{c.cta_btn}</a>
+          <a className="btn big" href={LINKS.inquiryMail}>{c.cta_btn}</a>
           <span className="mono">{c.cta_alt}</span>
         </div>
       </div>
