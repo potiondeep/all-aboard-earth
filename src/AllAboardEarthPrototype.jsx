@@ -131,6 +131,7 @@ const copy = {
     ra_head: "REGENERATIVE ART",
     ra_sub: "Healing communities and the land with art — heralding a renaissance of planetary stewardship.",
     ra_alt: "A community mural in progress, painted with the neighbourhood",
+    ra_caption: "Handmade heroes. Real classrooms.",
     ra_btn: "Explore Regenerative Art",
     t5_label: "TRACK 05 · THE PROOF",
     t5_head: "BORN IN NEW MEXICO. READY FOR YOUR DISTRICT.",
@@ -201,6 +202,7 @@ const copy = {
     ra_head: "ARTE REGENERATIVO",
     ra_sub: "Sanando comunidades y la tierra con arte — anunciando un renacimiento de la custodia planetaria.",
     ra_alt: "Un mural comunitario en proceso, pintado con el vecindario",
+    ra_caption: "Héroes hechos a mano. Aulas reales.",
     ra_btn: "Explora Arte Regenerativo",
     t5_label: "PISTA 05 · LA PRUEBA",
     t5_head: "NACIDO EN NUEVO MÉXICO. LISTO PARA TU DISTRITO.",
@@ -1156,7 +1158,7 @@ export default function App() {
         .poster img{ width:100%; height:auto; display:block; border-radius:3px; }
 
         /* Seat 8 — the felt raccoon, framed like a photo print */
-        .photoprint{
+        .photoprint{ margin-top:clamp(16px,2.5vh,26px);
           margin-top:34px; background:${T.cream}; padding:14px 14px 10px; border-radius:8px;
           transform:rotate(-1deg); box-shadow:0 18px 40px #0007;
           animation:printfloat 7s var(--ease-drift) infinite; will-change:transform;
@@ -1368,6 +1370,11 @@ export default function App() {
           <img src="/art/regen-art/mural-2-1400.webp" srcSet="/art/regen-art/mural-2-700.webp 700w, /art/regen-art/mural-2-1400.webp 1200w"
                sizes="(max-width: 1100px) 100vw, 1000px" alt={c.ra_alt} loading="lazy" decoding="async" width="1200" height="800" />
         </figure>
+        <figure className="photoprint" data-reveal>
+          {/* the meditating Earth, ping-pong looped; phones get the lighter encode */}
+          <FeltLoop name="felt-8" dir="frame" sm width="1600" height="800" alt="A felt Earth meditating on a flowering island beneath soft felt clouds" />
+          <figcaption className="mono">{c.ra_caption}</figcaption>
+        </figure>
         <div className="section-cta" data-reveal>
           <a className="btn big" href={LINKS.regenArt}>{c.ra_btn}</a>
         </div>
@@ -1385,11 +1392,6 @@ export default function App() {
             <div key={h}><h3>{h}</h3><p>{p}</p></div>
           ))}
         </div>
-        <figure className="photoprint" data-reveal>
-          {/* the meditating Earth, ping-pong looped; phones get the lighter encode */}
-          <FeltLoop name="felt-8" dir="frame" sm width="1600" height="800" alt="A felt Earth meditating on a flowering island beneath soft felt clouds" />
-          <figcaption className="mono">Handmade heroes. Real classrooms.</figcaption>
-        </figure>
         <RootsMark />
       </section>
 
