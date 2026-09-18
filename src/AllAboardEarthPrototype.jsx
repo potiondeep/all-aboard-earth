@@ -83,7 +83,7 @@ const copy = {
     hero_eyebrow: "ALL ABOARD EARTH · SIDE A · 33⅓ RPM",
     hero_line1: "THE EARTH NEEDS DREAMERS",
     hero_line2: "WHO GOT THE SKILLS TO PAY THE BILLS!",
-    hero_accent: "¡Arriba vamos!",
+    hero_accent: "Up we go!",
     hero_sub:
       "All Aboard Earth is a movement igniting the visionary willpower of humanity to foster ecological health through green career pathways, environmental edutainment and regenerative art.",
     marquee: "UP WE GO! · UP WE GO! · ",
