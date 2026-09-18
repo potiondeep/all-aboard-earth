@@ -12,7 +12,7 @@ export const raCopy = {
     materials_points: [
       ["Murals", "Public walls painted with communities, not just for them."],
       ["Sculpture & design", "Reclaimed metal and wood, cut and finished by hand."],
-      ["Reclaimed objects", "Waste turned into work that argues for its own material."],
+      ["Sustainability advocacy campaigns", "Messages to inspire your community toward regenerative lifestyles."],
     ],
 
     mural_label: "MURAL PROJECT",
@@ -55,7 +55,7 @@ export const raCopy = {
     materials_points: [
       ["Murales", "Muros públicos pintados con las comunidades, no solo para ellas."],
       ["Escultura y diseño", "Metal y madera recuperados, cortados y acabados a mano."],
-      ["Objetos recuperados", "Residuos convertidos en obra que defiende su propio material."],
+      ["Campañas de incidencia por la sostenibilidad", "Mensajes para inspirar a tu comunidad hacia estilos de vida regenerativos."],
     ],
 
     mural_label: "PROYECTO DE MURAL",
