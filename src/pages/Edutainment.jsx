@@ -27,18 +27,20 @@ function NewsVideo({ id, label, title, poster }) {
 
 /**
  * One event in the wall. Events with several photos/clips cycle every 2.8s and
- * stop on whatever frame the pointer (or keyboard focus) lands on; clicking (or
- * Enter/Space) steps to the next frame. Single-media events never move. Only
- * cycles while on screen; reduced motion holds frame one.
+ * stop on whatever frame the pointer (or keyboard focus) lands on; the arrows
+ * beside the dots step through the group by hand. Clicking the frame opens it
+ * large. Single-media events never move. Only cycles while on screen; reduced
+ * motion holds frame one.
  */
-function EventTile({ event, label }) {
+function EventTile({ event, label, copy, onOpen }) {
   const ref = useRef(null);
   const [i, setI] = useState(0);
   const [hold, setHold] = useState(false);
   const [seen, setSeen] = useState(false);
   const [reduced] = useState(reducedMotion);
   const many = event.items.length > 1;
-  const next = () => setI((n) => (n + 1) % event.items.length);
+  const len = event.items.length;
+  const step = (d) => setI((n) => (n + d + len) % len);
 
   useEffect(() => {
     const el = ref.current;
@@ -57,16 +59,11 @@ function EventTile({ event, label }) {
   return (
     <figure
       ref={ref}
-      className={"ed-tile" + (many ? " is-many" : "")}
+      className="ed-tile"
       onMouseEnter={() => setHold(true)}
       onMouseLeave={() => setHold(false)}
       onFocus={() => setHold(true)}
       onBlur={() => setHold(false)}
-      onClick={many ? next : undefined}
-      onKeyDown={many ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); next(); } } : undefined}
-      tabIndex={many ? 0 : -1}
-      role={many ? "button" : undefined}
-      aria-label={many ? `${label} — ${event.items.length} photos, ${i + 1} showing. Click for the next.` : undefined}
     >
       {event.items.map(([kind, name, alt, w, pos], n) => {
         const on = n === i;
@@ -95,14 +92,77 @@ function EventTile({ event, label }) {
           </span>
         );
       })}
-      {many && <span className="ed-dots" aria-hidden="true">{event.items.map((_, n) => <i key={n} className={n === i ? "on" : ""} />)}</span>}
+      <button
+        className="ed-open"
+        onClick={() => onOpen(event, i, label)}
+        aria-label={many ? `${label} — ${len} frames, ${i + 1} showing. ${copy.lb_open}` : `${label}. ${copy.lb_open}`}
+      />
+      {many && (
+        <span className="ed-dots">
+          <button className="ed-arrow" onClick={(e) => { e.stopPropagation(); step(-1); }} aria-label={`${label} — ${copy.lb_prev}`}>‹</button>
+          <span className="ed-pips" aria-hidden="true">{event.items.map((_, n) => <i key={n} className={n === i ? "on" : ""} />)}</span>
+          <button className="ed-arrow" onClick={(e) => { e.stopPropagation(); step(1); }} aria-label={`${label} — ${copy.lb_next}`}>›</button>
+        </span>
+      )}
     </figure>
+  );
+}
+
+/**
+ * One frame, popped out large. Leaves on Escape, on the backdrop, or on close;
+ * arrow keys and the side buttons walk a group. Locks the page behind it and
+ * hands focus to close, so a keyboard never falls through to the page.
+ */
+function Lightbox({ event, index, label, copy, onClose }) {
+  const [i, setI] = useState(index);
+  const closeRef = useRef(null);
+  const len = event.items.length;
+  const many = len > 1;
+  const step = (d) => setI((n) => (n + d + len) % len);
+
+  useEffect(() => { closeRef.current?.focus(); }, []);
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape") onClose();
+      else if (many && e.key === "ArrowRight") setI((n) => (n + 1) % len);
+      else if (many && e.key === "ArrowLeft") setI((n) => (n - 1 + len) % len);
+    };
+    document.addEventListener("keydown", onKey);
+    const held = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.removeEventListener("keydown", onKey); document.body.style.overflow = held; };
+  }, [many, len, onClose]);
+
+  const [kind, name, alt, w] = event.items[i];
+  const big = w || 1400;
+  return (
+    <div className="ed-lb" role="dialog" aria-modal="true" aria-label={label} onClick={onClose}>
+      <div className="ed-lb-stage" onClick={(e) => e.stopPropagation()}>
+        {kind === "video" ? (
+          <video key={name} className="ed-lb-media" autoPlay muted loop playsInline controls poster={`/art/edutainment/${name}-poster.webp`}>
+            <source src={`/art/edutainment/${name}.webm`} type="video/webm" />
+            <source src={`/art/edutainment/${name}.mp4`} type="video/mp4" />
+          </video>
+        ) : (
+          <img key={name} className="ed-lb-media" src={`/art/edutainment/${name}-${big}.webp`} alt={alt} />
+        )}
+        <p className="ed-lb-cap mono">{alt}{many ? ` · ${i + 1}/${len}` : ""}</p>
+        {many && (
+          <>
+            <button className="ed-lb-nav prev" onClick={() => step(-1)} aria-label={copy.lb_prev}>‹</button>
+            <button className="ed-lb-nav next" onClick={() => step(1)} aria-label={copy.lb_next}>›</button>
+          </>
+        )}
+      </div>
+      <button ref={closeRef} className="ed-lb-close" onClick={onClose} aria-label={copy.lb_close}>✕</button>
+    </div>
   );
 }
 
 export default function Edutainment() {
   const [lang, setLang] = useLang();
   const c = edCopy[lang];
+  const [lb, setLb] = useState(null);   // { event, index, label } while a frame is open
 
   return (
     <div className="pg ed">
@@ -139,14 +199,40 @@ export default function Edutainment() {
           border:4px solid ${T.cream}; box-shadow:0 12px 26px #0007; background:${T.pineDeep}; }
         .ed-tile:nth-child(3n+1){ transform:rotate(-1.2deg); }
         .ed-tile:nth-child(3n+2){ transform:rotate(.9deg); }
-        .ed-tile.is-many{ cursor:pointer; }
-        .ed-tile:focus-visible{ outline:3px solid ${T.sky}; outline-offset:3px; }
+        /* the opener covers the media; the arrows sit above it and take their own clicks */
+        .ed-open{ position:absolute; inset:0; z-index:1; border:0; padding:0; background:none; cursor:zoom-in; }
+        .ed-open:focus-visible{ outline:3px solid ${T.sky}; outline-offset:-3px; }
         .ed-frame{ position:absolute; inset:0; opacity:0; transition:opacity .6s var(--ease-settle); }
         .ed-frame.on{ opacity:1; }
         .ed-frame img, .ed-frame video{ width:100%; height:100%; object-fit:cover; display:block; }
-        .ed-dots{ position:absolute; left:0; right:0; bottom:6px; display:flex; gap:4px; justify-content:center; pointer-events:none; }
+        .ed-dots{ position:absolute; left:0; right:0; bottom:6px; z-index:2;
+          display:flex; gap:8px; justify-content:center; align-items:center; pointer-events:none; }
+        .ed-pips{ display:flex; gap:4px; align-items:center; }
         .ed-dots i{ width:5px; height:5px; border-radius:50%; background:${T.cream}66; box-shadow:0 1px 2px #0008; }
         .ed-dots i.on{ background:${T.marigold}; }
+        .ed-arrow{ pointer-events:auto; width:22px; height:22px; padding:0 0 2px; border-radius:50%;
+          border:1.5px solid ${T.cream}55; background:${T.pineDeep}bb; color:${T.cream};
+          font-size:14px; line-height:1; display:grid; place-items:center; cursor:pointer;
+          transition:background .2s, color .2s, border-color .2s; }
+        .ed-arrow:hover{ background:${T.marigold}; color:${T.pineDeep}; border-color:${T.marigold}; }
+        .ed-arrow:focus-visible{ outline:3px solid ${T.sky}; outline-offset:2px; }
+
+        /* a frame popped out large */
+        .ed-lb{ position:fixed; inset:0; z-index:100; background:${T.pineDeep}f2;
+          display:grid; place-items:center; padding:clamp(16px,4vw,48px); animation:ed-lb-in .2s ease both; }
+        @keyframes ed-lb-in{ from{ opacity:0; } to{ opacity:1; } }
+        .ed-lb-stage{ position:relative; display:flex; flex-direction:column; align-items:center; gap:10px; max-width:min(1100px,100%); }
+        .ed-lb-media{ display:block; max-width:100%; max-height:calc(100vh - 160px); width:auto; height:auto;
+          object-fit:contain; border-radius:14px; border:4px solid ${T.cream}; box-shadow:0 26px 60px #000a; background:#000; }
+        .ed-lb-cap{ color:${T.cream}bb; font-size:12px; letter-spacing:.06em; text-align:center; max-width:64ch; }
+        .ed-lb-close, .ed-lb-nav{ border-radius:50%; border:2px solid ${T.cream}44; background:${T.pineDeep}dd;
+          color:${T.cream}; cursor:pointer; display:grid; place-items:center; transition:background .2s, border-color .2s; }
+        .ed-lb-close:hover, .ed-lb-nav:hover{ background:${T.marigold}; color:${T.pineDeep}; border-color:${T.marigold}; }
+        .ed-lb-close{ position:absolute; top:clamp(10px,2.5vw,24px); right:clamp(10px,2.5vw,24px); width:44px; height:44px; font-size:17px; }
+        .ed-lb-nav{ position:absolute; top:calc(50% - 22px); width:46px; height:46px; font-size:26px; padding-bottom:4px; }
+        .ed-lb-nav.prev{ left:-10px; } .ed-lb-nav.next{ right:-10px; }
+        @media (max-width:640px){ .ed-lb-nav.prev{ left:4px; } .ed-lb-nav.next{ right:4px; } }
+        @media (prefers-reduced-motion: reduce){ .ed-lb{ animation:none; } }
 
         /* music section: the bullets on the left, the Earth boombox filling the space beside them */
         .ed-music{ display:grid; gap:clamp(22px,4vw,44px); align-items:start; grid-template-columns:1fr; }
@@ -216,7 +302,10 @@ export default function Edutainment() {
           <div className="pg-label">{c.gallery_label}</div>
           <h2 id="ed-stage" className="sr-only">{c.gallery_label}</h2>
           <div className="ed-gallery">
-            {EVENTS.map((ev) => <EventTile key={ev.id} event={ev} label={ev.label} />)}
+            {EVENTS.map((ev) => (
+              <EventTile key={ev.id} event={ev} label={ev.label} copy={c}
+                         onOpen={(event, index, label) => setLb({ event, index, label })} />
+            ))}
           </div>
           <p className="ed-cap">{c.gallery_cap}</p>
         </section>
@@ -276,6 +365,8 @@ export default function Edutainment() {
           </div>
         </section>
       </main>
+
+      {lb && <Lightbox event={lb.event} index={lb.index} label={lb.label} copy={c} onClose={() => setLb(null)} />}
 
       <SiteFooter footer={c.footer} give={c.give} />
     </div>

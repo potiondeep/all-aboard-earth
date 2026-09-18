@@ -28,6 +28,10 @@ export const edCopy = {
     bus_alt: "The All Aboard Earth bus painted as the Earth, animals riding along",
 
 
+    lb_open: "Click to view large.",
+    lb_prev: "Previous",
+    lb_next: "Next",
+    lb_close: "Close",
     listen_label: "LISTEN & WATCH",
     spotify_title: "All Aboard Earth on Spotify",
     yt_title: "All Aboard Earth on YouTube",
@@ -66,6 +70,10 @@ export const edCopy = {
     bus_alt: "El autobús All Aboard Earth pintado como la Tierra, con animales viajando",
 
 
+    lb_open: "Haz clic para verlo en grande.",
+    lb_prev: "Anterior",
+    lb_next: "Siguiente",
+    lb_close: "Cerrar",
     listen_label: "ESCUCHA Y MIRA",
     spotify_title: "All Aboard Earth en Spotify",
     yt_title: "All Aboard Earth en YouTube",
