@@ -159,7 +159,7 @@ export default function RegenArt() {
           </div>
         </section>
 
-        {/* RECLAIMED OBJECTS */}
+        {/* SUSTAINABILITY ADVOCACY CAMPAIGNS */}
         <section className="pg-wrap" style={{ paddingTop: 0 }} aria-labelledby="ra-objects">
           <div className="pg-label">{c.objects_label}</div>
           <h2 id="ra-objects" className="sr-only">{c.objects_label}</h2>
@@ -173,6 +173,12 @@ export default function RegenArt() {
               <img src="/art/regen-art/there-is-no-try-1000.webp" srcSet="/art/regen-art/there-is-no-try-600.webp 600w, /art/regen-art/there-is-no-try-1000.webp 1000w"
                    sizes="(max-width: 700px) 100vw, 530px" alt="Poster: Recycle. Or not. There is no try." loading="lazy" decoding="async" />
               <figcaption>{c.objects_caps[1]}</figcaption>
+            </figure>
+            <figure>
+              <img src="/art/regen-art/yo-mama-1080.webp" srcSet="/art/regen-art/yo-mama-600.webp 600w, /art/regen-art/yo-mama-1080.webp 1080w"
+                   sizes="(max-width: 700px) 100vw, 530px" alt="Campaign poster: Yo' mama is so bright — she electrifies the whole planet"
+                   loading="lazy" decoding="async" width="1080" height="1080" />
+              <figcaption>{c.objects_caps[2]}</figcaption>
             </figure>
           </div>
         </section>
