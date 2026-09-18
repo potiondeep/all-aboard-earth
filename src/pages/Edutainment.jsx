@@ -260,8 +260,11 @@ export default function Edutainment() {
         .ed-cta{ position:relative; text-align:center; border-radius:28px; overflow:hidden; isolation:isolate;
           padding:clamp(48px,8vw,104px) clamp(22px,5vw,56px); transform:rotate(-.4deg); color:${T.cream}; }
         .ed-cta img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-2; }
+        /* Lighter than it was: the old art was busy edge to edge and needed heavy
+           cover for the type. This one is built with a quiet middle, so the scrim
+           only has to seat the text — the dancers keep their neon. */
         .ed-cta::after{ content:""; position:absolute; inset:0; z-index:-1;
-          background:linear-gradient(180deg, ${T.pineDeep}b8, ${T.pineDeep}8c 45%, ${T.pineDeep}cc); }
+          background:linear-gradient(180deg, ${T.pineDeep}8c, ${T.pineDeep}4d 45%, ${T.pineDeep}a3); }
         .ed-cta h2{ font-size:clamp(32px,4.8vw,58px); margin-bottom:12px; text-shadow:0 3px 22px ${T.pineDeep}; }
         .ed-cta p{ font-size:18px; font-weight:500; margin-bottom:22px; color:${T.cream}e6; text-shadow:0 2px 14px ${T.pineDeep}; }
         @media (prefers-reduced-motion: reduce){
@@ -357,7 +360,7 @@ export default function Edutainment() {
 
         <section className="pg-wrap" style={{ paddingTop: 0 }}>
           <div className="ed-cta">
-            <img src="/art/edutainment/solar-disco-1200.webp" srcSet="/art/edutainment/solar-disco-600.webp 600w, /art/edutainment/solar-disco-1200.webp 1200w"
+            <img src="/art/edutainment/solar-disco-1200.webp" srcSet="/art/edutainment/solar-disco-600.webp 600w, /art/edutainment/solar-disco-1200.webp 1200w, /art/edutainment/solar-disco-1800.webp 1800w"
                  sizes="(max-width: 1100px) 100vw, 1000px" alt="" aria-hidden="true" loading="lazy" decoding="async" />
             <h2 className="display">{c.cta_head}</h2>
             <p>{c.cta_sub}</p>
