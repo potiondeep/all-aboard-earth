@@ -58,8 +58,15 @@ const MEDIA = {
   "circular-packaging-developer": "d0e664_ec464a43b8d24319b0d3f7efcb073ce2~mv2.png",
 };
 
-export const CAREER_PAGE = (slug) =>
-  `https://www.allaboardearth.com/coolcareers/${slug}`;
+/**
+ * The card's own entry in the game platform's Deck Explorer. That screen reads
+ * ?card=<slug> and opens the matching card, matching on the same slug the art
+ * is keyed by here — verified against all five on the live deck.
+ * (The Wix career page, https://www.allaboardearth.com/coolcareers/<slug>, is
+ * the other home for these; the cards used to point there.)
+ */
+export const DECK_CARD = (slug) =>
+  `https://cool-careers.allaboardearth.com/s/explore?card=${slug}`;
 
 /** Card art URL at a given size. 2:2.8 portrait is the card's native ratio. */
 export function cardArt(slug, w = 600, h = 840) {

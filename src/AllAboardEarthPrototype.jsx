@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { T, LINKS } from "./theme.js";
 
-import { cardArt, CAREER_PAGE } from "./wixCardArt.js";
+import { cardArt, DECK_CARD } from "./wixCardArt.js";
 import Seed from "./ornaments/Seed.jsx";
 import Divider from "./ornaments/Divider.jsx";
 import CtaCrossing from "./ornaments/CtaCrossing.jsx";
@@ -42,7 +42,7 @@ const CARD_ART = [
     slug: "wind-power-technician",
     alt: "Wind Technician — installs and maintains wind turbines",
   },
-].map((c) => ({ ...c, src: cardArt(c.slug), href: CAREER_PAGE(c.slug) }));
+].map((c) => ({ ...c, src: cardArt(c.slug), href: DECK_CARD(c.slug) }));
 
 /* ============================================================
    ALL ABOARD EARTH — "UP WE GO!" HOMEPAGE PROTOTYPE v3
