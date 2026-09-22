@@ -1209,7 +1209,7 @@ export default function App() {
             <button className={lang === "en" ? "on" : ""} onClick={() => setLang("en")}>EN</button>
             <button className={lang === "es" ? "on" : ""} onClick={() => setLang("es")}>ES</button>
           </div>
-          <a className="btn" href={LINKS.demoMail}>{c.nav_cta}</a>
+          <a className="btn" href={LINKS.bookDemo}>{c.nav_cta}</a>
         </div>
       </nav>
 

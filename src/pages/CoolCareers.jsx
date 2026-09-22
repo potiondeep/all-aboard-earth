@@ -277,7 +277,7 @@ export default function CoolCareers() {
             <button className={lang === "en" ? "on" : ""} aria-pressed={lang === "en"} onClick={() => setLang("en")}>EN</button>
             <button className={lang === "es" ? "on" : ""} aria-pressed={lang === "es"} onClick={() => setLang("es")}>ES</button>
           </div>
-          <a className="btn" href={LINKS.demoMail}>{c.nav_cta}</a>
+          <a className="btn" href={LINKS.bookDemo}>{c.nav_cta}</a>
         </div>
       </nav>
 
@@ -372,7 +372,7 @@ export default function CoolCareers() {
             <BusLoop caption={c.hero_caption} />
             <h2 className="display">{c.cta_head}</h2>
             <p>{c.cta_sub}</p>
-            <a className="btn big" href={LINKS.demoMail}>{c.cta_btn}</a>
+            <a className="btn big" href={LINKS.bookDemo}>{c.cta_btn}</a>
           </div>
         </section>
       </main>

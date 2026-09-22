@@ -21,6 +21,7 @@ export const LINKS = {
   home: "/",
   coolCareers: "/cool-careers",
   edutainment: "/edutainment",
+  bookDemo: "/book-a-demo",
   regenArt: "/regenerative-art",
   gamePortal: "https://cool-careers.allaboardearth.com",
   // Phase 2: pilot-demo CTAs point at a real Wix Bookings service (School

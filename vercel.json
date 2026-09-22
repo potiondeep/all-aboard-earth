@@ -6,6 +6,7 @@
   "rewrites": [
     { "source": "/cool-careers", "destination": "/cool-careers/index.html" },
     { "source": "/edutainment", "destination": "/edutainment/index.html" },
-    { "source": "/regenerative-art", "destination": "/regenerative-art/index.html" }
+    { "source": "/regenerative-art", "destination": "/regenerative-art/index.html" },
+    { "source": "/book-a-demo", "destination": "/book-a-demo/index.html" }
   ]
 }

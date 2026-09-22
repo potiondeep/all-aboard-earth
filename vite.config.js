@@ -14,6 +14,7 @@ export default defineConfig({
         coolCareers: resolve(import.meta.dirname, 'cool-careers/index.html'),
         edutainment: resolve(import.meta.dirname, 'edutainment/index.html'),
         regenArt: resolve(import.meta.dirname, 'regenerative-art/index.html'),
+        bookDemo: resolve(import.meta.dirname, 'book-a-demo/index.html'),
       },
     },
   },
