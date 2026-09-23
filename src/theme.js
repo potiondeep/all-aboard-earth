@@ -24,9 +24,6 @@ export const LINKS = {
   bookDemo: "/book-a-demo",
   regenArt: "/regenerative-art",
   gamePortal: "https://cool-careers.allaboardearth.com",
-  // Phase 2: pilot-demo CTAs point at a real Wix Bookings service (School
-  // Performance). The earlier /contact placeholder was a 404 — never point a CTA there.
-  booking: "https://www.allaboardearth.com/service-page/school-performance",
   // Every CTA opens the visitor's own mail app, pre-addressed and pre-subjected,
   // rather than sending them through the Wix booking flow. One subject per ask,
   // so the inbox sorts itself.
@@ -34,7 +31,6 @@ export const LINKS = {
   demoMail: mailTo("Cool Careers Demo"),                     // "Book a pilot demo"
   commissionMail: mailTo("Regenerative Art Opportunity"),    // "Commission a project"
   inquiryMail: mailTo("All Aboard Earth Inquiry"),           // "Give us a holler"
-  grooves: "https://www.allaboardearth.com/grooves",
   // "Hear the music" goes straight to the artist page, not the Wix grooves page.
   spotify: `https://open.spotify.com/artist/${SPOTIFY_ARTIST_ID}`,
   youtube: "https://www.youtube.com/@allaboardearth",

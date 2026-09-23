@@ -68,15 +68,18 @@ const MEDIA = {
 export const DECK_CARD = (slug) =>
   `https://cool-careers.allaboardearth.com/s/explore?card=${slug}`;
 
-/** Card art URL at a given size. 2:2.8 portrait is the card's native ratio. */
-export function cardArt(slug, w = 600, h = 840) {
-  const id = MEDIA[slug];
-  return id
-    ? `https://static.wixstatic.com/media/${id}/v1/fill/w_${w},h_${h},al_c,q_85,enc_auto/card.png`
-    : null;
+/**
+ * Card art, self-hosted.
+ *
+ * These were pulled from the Wix CMS at full size and re-encoded into
+ * /art/cool-careers/cards. The site no longer fetches anything from
+ * static.wixstatic.com at runtime, so it does not depend on the Wix site
+ * staying up. The MEDIA map above is kept as the record of where each
+ * card's original lives, for re-pulling art if a card is redrawn.
+ */
+export function cardArt(slug) {
+  return `/art/cool-careers/cards/${slug}-600.webp`;
 }
 
-export const hasArt = (slug) => Boolean(MEDIA[slug]);
-export const SLUGS = Object.keys(MEDIA);
-
-export default MEDIA;
+/* No 2x tier: the card fills a ~200px slot, so the 600px file is already 3x —
+   a 1200 file was never the candidate the browser picked. */

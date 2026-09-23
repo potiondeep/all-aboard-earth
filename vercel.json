@@ -8,5 +8,35 @@
     { "source": "/edutainment", "destination": "/edutainment/index.html" },
     { "source": "/regenerative-art", "destination": "/regenerative-art/index.html" },
     { "source": "/book-a-demo", "destination": "/book-a-demo/index.html" }
+  ],
+  "redirects": [
+    { "source": "/coolcareers/:slug", "destination": "https://cool-careers.allaboardearth.com/s/explore?card=:slug", "permanent": true },
+    { "source": "/coolactions/:slug", "destination": "https://cool-careers.allaboardearth.com/s/explore?card=:slug", "permanent": true },
+    { "source": "/coolcareers", "destination": "/cool-careers", "permanent": true },
+    { "source": "/coolactions", "destination": "/cool-careers", "permanent": true },
+    { "source": "/cool-careers/game", "destination": "https://cool-careers.allaboardearth.com", "permanent": true },
+
+    { "source": "/grooves", "destination": "https://open.spotify.com/artist/3PxV0vuP14pMfk7HJi1YFE", "permanent": true },
+    { "source": "/art", "destination": "/regenerative-art", "permanent": true },
+    { "source": "/community-theater", "destination": "/edutainment", "permanent": true },
+    { "source": "/eco-film-camp", "destination": "/edutainment", "permanent": true },
+    { "source": "/copy-of-eco-arts-activism", "destination": "/regenerative-art", "permanent": true },
+    { "source": "/curriculum", "destination": "/cool-careers", "permanent": true },
+    { "source": "/mentorship", "destination": "/cool-careers", "permanent": true },
+    { "source": "/solar", "destination": "/cool-careers", "permanent": true },
+
+    { "source": "/book-online", "destination": "/book-a-demo", "permanent": true },
+    { "source": "/service-page/:slug*", "destination": "/book-a-demo", "permanent": true },
+    { "source": "/booking-calendar/:slug*", "destination": "/book-a-demo", "permanent": true },
+
+    { "source": "/about-5", "destination": "/", "permanent": true },
+    { "source": "/michael-meade", "destination": "/", "permanent": true },
+    { "source": "/team", "destination": "/", "permanent": true },
+    { "source": "/partners", "destination": "/", "permanent": true },
+    { "source": "/events", "destination": "/", "permanent": true },
+    { "source": "/shop", "destination": "/", "permanent": true },
+    { "source": "/compost-cafe", "destination": "/", "permanent": true },
+    { "source": "/projects-7", "destination": "/", "permanent": true },
+    { "source": "/copy-of-programs-events", "destination": "/", "permanent": true }
   ]
 }

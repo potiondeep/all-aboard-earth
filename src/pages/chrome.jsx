@@ -37,7 +37,7 @@ export function useLoopVideo(ref, { reduced }) {
   return ready;
 }
 
-export function SiteNav({ lang, setLang, cta, ctaHref = LINKS.booking }) {
+export function SiteNav({ lang, setLang, cta, ctaHref = LINKS.bookDemo }) {
   return (
     <nav className="pg-nav">
       <a className="brand" href={LINKS.home}>ALL ABOARD <b>EARTH</b></a>
