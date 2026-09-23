@@ -1,19 +1,21 @@
 import React, { useRef, useState } from "react";
 import { T, LINKS } from "../theme.js";
 import { SiteNav, SiteFooter, chromeCss, useLang, reducedMotion, useLoopVideo } from "./chrome.jsx";
-import { raCopy, MURAL_VIDEO } from "./regenArtCopy.js";
+import { raCopy, MURAL_VIDEO_ID } from "./regenArtCopy.js";
 
 /* ============================================================
    🎨 REGENERATIVE ART — murals · sculpture · reclaimed objects
    ============================================================ */
 
-/** The mural film is 113MB on the Wix CDN: poster until pressed, then it streams from there. */
-function MuralVideo({ label }) {
+/** The mural film, on YouTube. The poster is ours and local, so nothing reaches
+ *  YouTube until someone actually presses play. */
+function MuralVideo({ label, title }) {
   const [on, setOn] = useState(false);
   return (
     <div className="ra-video">
       {on ? (
-        <video src={MURAL_VIDEO} poster="/art/regen-art/mural-video-poster.webp" controls autoPlay playsInline preload="metadata" />
+        <iframe src={`https://www.youtube-nocookie.com/embed/${MURAL_VIDEO_ID}?autoplay=1&rel=0`} title={title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
       ) : (
         <button className="ra-video-facade" onClick={() => setOn(true)} aria-label={label}>
           <img src="/art/regen-art/mural-video-poster.webp" alt="" width="1280" height="720" loading="lazy" decoding="async" />
@@ -79,8 +81,8 @@ export default function RegenArt() {
 
         .ra-video{ position:relative; margin-top:clamp(24px,4vh,36px); aspect-ratio:16/9; border-radius:20px; overflow:hidden;
           border:6px solid ${T.cream}; box-shadow:0 22px 50px #0009; background:#000; }
-        .ra-video video, .ra-video-facade, .ra-video-facade img{ position:absolute; inset:0; width:100%; height:100%; border:0; display:block; }
-        .ra-video video{ object-fit:contain; background:#000; }
+        .ra-video iframe, .ra-video-facade, .ra-video-facade img{ position:absolute; inset:0; width:100%; height:100%; border:0; display:block; }
+        .ra-video iframe{ background:#000; }
         .ra-video-facade{ cursor:pointer; background:#000; padding:0; }
         .ra-video-facade img{ object-fit:cover; transition:transform .5s var(--ease-settle), filter .5s; }
         .ra-video-facade:hover img{ transform:scale(1.03); filter:brightness(.85); }
@@ -133,7 +135,7 @@ export default function RegenArt() {
           <div className="pg-label">{c.mural_label}</div>
           <h2 id="ra-mural" className="display pg-h2">{c.mural_h}</h2>
           <p className="pg-lede">{c.mural_p}</p>
-          <MuralVideo label={c.mural_video_play} />
+          <MuralVideo label={c.mural_video_play} title={c.mural_video_title} />
           <div className="ra-grid">
             {MURALS.map((n, i) => (
               <figure key={n}>

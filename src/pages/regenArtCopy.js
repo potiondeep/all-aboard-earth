@@ -19,6 +19,7 @@ export const raCopy = {
     mural_h: "A wall the whole block paints.",
     mural_p: "Ladders, rollers and a dozen hands: the mural goes up with the people who will walk past it every day. Kids in costume on the scaffold, neighbours mixing colour, the sun coming up behind the dragon.",
     mural_video_play: "Play the mural project video",
+    mural_video_title: "All Life is Sacred — the mural film",
     mural_caps: [
       "Painting the sunburst panel",
       "The crew on the scaffold in front of the finished wall",
@@ -62,6 +63,7 @@ export const raCopy = {
     mural_h: "Un muro que pinta toda la cuadra.",
     mural_p: "Escaleras, rodillos y una docena de manos: el mural se levanta con la gente que pasará frente a él todos los días. Niños con vestuario en el andamio, vecinos mezclando color, el sol saliendo detrás del dragón.",
     mural_video_play: "Reproducir el video del proyecto de mural",
+    mural_video_title: "All Life is Sacred — la película del mural",
     mural_caps: [
       "Pintando el panel del sol",
       "El equipo en el andamio frente al muro terminado",
@@ -88,5 +90,5 @@ export const raCopy = {
   },
 };
 
-// the full mural video stays on the Wix CDN — 113MB, 2:37; nothing loads until play
-export const MURAL_VIDEO = "https://video.wixstatic.com/video/d0e664_19921604f7504e6c8de6c9de118507b2/1080p/mp4/file.mp4";
+// the mural film lives on YouTube; the poster is local, so nothing loads until play
+export const MURAL_VIDEO_ID = "TK-8p1feAH0";
