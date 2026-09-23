@@ -24,22 +24,22 @@
   "redirects": [
     {
       "source": "/coolcareers/:slug",
-      "destination": "https://cool-careers.allaboardearth.com/s/explore?card=:slug",
+      "destination": "https://cards.allaboardearth.com/coolcareers/:slug",
       "permanent": true
     },
     {
       "source": "/coolactions/:slug",
-      "destination": "https://cool-careers.allaboardearth.com/s/explore?card=:slug",
+      "destination": "https://cards.allaboardearth.com/coolactions/:slug",
       "permanent": true
     },
     {
       "source": "/coolcareers",
-      "destination": "/cool-careers",
+      "destination": "https://cards.allaboardearth.com/coolcareers",
       "permanent": true
     },
     {
       "source": "/coolactions",
-      "destination": "/cool-careers",
+      "destination": "https://cards.allaboardearth.com/coolactions",
       "permanent": true
     },
     {
