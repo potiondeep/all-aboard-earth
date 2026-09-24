@@ -642,7 +642,10 @@ export default function App() {
           /* organic easing tokens — nothing in this page snaps */
           --ease-settle: cubic-bezier(.22, 1, .36, 1);   /* things land like leaves */
           --ease-drift:  cubic-bezier(.45, 0, .55, 1);   /* loops */
-          background:${T.pine}; color:${T.cream};
+          /* cyanotype paper: the tone, with the fibre texture blended into it */
+          background:${T.pine} url('/art/paper-cyanotype.webp') repeat top center / 1400px auto;
+          background-blend-mode:soft-light;
+          color:${T.cream};
           font-family:'Bricolage Grotesque', sans-serif;
           overflow-x:hidden; min-height:100vh;
         }
@@ -715,7 +718,7 @@ export default function App() {
         .lang{ display:flex; border:2px solid ${T.cream}44; border-radius:999px; overflow:hidden; }
         .lang button{ background:none; border:none; color:${T.cream}; font-family:'Space Mono'; font-size:12px; padding:6px 12px; cursor:pointer; }
         .lang button.on{ background:${T.marigold}; color:${T.pineDeep}; font-weight:700; }
-        .btn{ display:inline-block; background:${T.coral}; color:${T.pineDeep}; border:none; border-radius:999px; padding:12px 22px; font-family:'Bricolage Grotesque'; font-weight:700; font-size:15px; cursor:pointer; transition:transform .2s var(--ease-settle); box-shadow:0 0 0 0 ${T.coral}55; }
+        .btn{ display:inline-block; background:${T.coral}; color:${T.ink}; border:none; border-radius:999px; padding:12px 22px; font-family:'Bricolage Grotesque'; font-weight:700; font-size:15px; cursor:pointer; transition:transform .2s var(--ease-settle); box-shadow:0 0 0 0 ${T.coral}55; }
         .btn:hover{ transform:translateY(-3px) rotate(-1deg); box-shadow:0 10px 24px ${T.coral}55; }
         .btn.big{ padding:18px 34px; font-size:18px; }
         .btn.ghost{ background:transparent; color:${T.cream}; border:2px solid ${T.cream}55; box-shadow:none; }

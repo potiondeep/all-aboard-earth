@@ -65,7 +65,7 @@ export default function RegenArt() {
         .ra-split{ display:grid; gap:clamp(24px,4vw,52px); align-items:start; grid-template-columns:1fr; }
         @media (min-width:900px){ .ra-split{ grid-template-columns:1fr 1fr; } }
         .ra-points{ list-style:none; margin-top:24px; display:grid; gap:12px; }
-        .ra-points li{ background:#12301F; border:2px solid ${T.cream}1f; border-radius:16px; padding:16px 18px; }
+        .ra-points li{ background:#17466B; border:2px solid ${T.cream}1f; border-radius:16px; padding:16px 18px; }
         .ra-points b{ display:block; font-size:17px; margin-bottom:4px; }
         .ra-points span{ font-size:15px; line-height:1.45; color:${T.cream}bb; }
 
@@ -91,7 +91,7 @@ export default function RegenArt() {
         @media (max-width:560px){ .ra-play{ width:60px; height:60px; margin:-30px 0 0 -30px; font-size:22px; padding-left:4px; } .ra-video, .ra-hero-art img{ border-width:4px; } }
 
 
-        .ra-cta{ text-align:center; background:${T.coral}; color:${T.pineDeep}; border-radius:28px; padding:clamp(30px,5vw,56px); transform:rotate(.4deg); }
+        .ra-cta{ text-align:center; background:${T.coral}; color:${T.ink}; border-radius:28px; padding:clamp(30px,5vw,56px); transform:rotate(.4deg); }
         .ra-cta h2{ font-size:clamp(32px,4.8vw,58px); margin-bottom:12px; }
         .ra-cta p{ font-size:18px; font-weight:500; margin-bottom:22px; max-width:640px; margin-left:auto; margin-right:auto; }
         .ra-cta .btn{ background:${T.pineDeep}; color:${T.cream}; }

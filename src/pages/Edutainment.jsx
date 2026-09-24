@@ -186,7 +186,7 @@ export default function Edutainment() {
           background:${T.coral}; color:${T.pineDeep}; font-size:34px; display:grid; place-items:center; padding-left:6px; box-shadow:0 10px 30px #0008; }
         @media (max-width:560px){ .ed-play{ width:60px; height:60px; margin:-30px 0 0 -30px; font-size:22px; padding-left:4px; } .ed-news{ border-width:4px; } }
         .ed-points{ list-style:none; margin-top:26px; display:grid; gap:12px; }
-        .ed-points li{ background:#12301F; border:2px solid ${T.cream}1f; border-radius:16px; padding:16px 18px; }
+        .ed-points li{ background:#17466B; border:2px solid ${T.cream}1f; border-radius:16px; padding:16px 18px; }
         .ed-points b{ display:block; font-size:17px; margin-bottom:4px; }
         .ed-points span{ font-size:15px; line-height:1.45; color:${T.cream}bb; }
 
@@ -244,7 +244,7 @@ export default function Edutainment() {
         @media (min-width:760px){ .ed-listen{ grid-template-columns:minmax(0,1fr) minmax(0,310px); } }
         .ed-spotify{ display:block; width:100%; height:152px; border:0; border-radius:14px; }
         .ed-yt{ display:flex; align-items:center; gap:14px; height:152px; padding:16px; border-radius:14px;
-          background:#12301F; border:2px solid ${T.cream}1f; color:${T.cream}; text-decoration:none;
+          background:#17466B; border:2px solid ${T.cream}1f; color:${T.cream}; text-decoration:none;
           transition:transform .3s var(--ease-settle), border-color .3s; }
         .ed-yt:hover{ transform:translateY(-3px); border-color:${T.marigold}66; }
         .ed-yt img{ width:84px; height:84px; border-radius:50%; flex:none; display:block; }

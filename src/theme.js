@@ -1,7 +1,8 @@
 // Color Crew — shared by every page so the palette has one source of truth.
 export const T = {
-  pine: "#0E2A1B",
-  pineDeep: "#081D12",
+  pine: "#1C5178",      // cyanotype mid
+  pineDeep: "#102F4C",  // cyanotype deep
+  ink: "#0A1F33",       // text on the accent fills; deeper than pineDeep so coral still clears contrast
   cream: "#FFF4DF",
   marigold: "#FFB53C",
   coral: "#FF5C39",
