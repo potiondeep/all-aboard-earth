@@ -83,7 +83,7 @@ const copy = {
     hero_eyebrow: "ALL ABOARD EARTH · SIDE A · 33⅓ RPM",
     hero_line1: "THE EARTH NEEDS DREAMERS",
     hero_line2: "WHO GOT THE SKILLS TO PAY THE BILLS!",
-    hero_accent: "Up we go!",
+    hero_accent: "Up We Go!",
     hero_sub:
       "All Aboard Earth is a movement igniting the visionary willpower of humanity to foster ecological health through green career pathways, environmental edutainment and regenerative art.",
     marquee: "UP WE GO! · UP WE GO! · ",
@@ -618,6 +618,14 @@ function useMarkShrink(ref) {
   }, [ref]);
 }
 
+/** The lede opens by naming the movement, so the name carries weight there. */
+const BRAND = "All Aboard Earth";
+function withBrand(text) {
+  const i = text.indexOf(BRAND);
+  if (i < 0) return text;
+  return [text.slice(0, i), <b key="brand">{BRAND}</b>, text.slice(i + BRAND.length)];
+}
+
 export default function App() {
   // language choice is shared with the sub pages
   const [lang, setLang] = useState(() => {
@@ -816,12 +824,14 @@ export default function App() {
         }
 
         .hero-eyebrow{ position:relative; z-index:3; color:${T.marigold}; margin-bottom:14px; line-height:18px; min-height:18px; }
-        .hero-word{ position:relative; z-index:3; font-size:clamp(32px,6.4vw,86px); color:${T.cream}; max-width:16ch; margin:0 auto; }
-        .hero-word.l2{ font-size:clamp(24px,4.6vw,62px); color:${T.marigold}; max-width:22ch; }
+        .hero-word{ position:relative; z-index:3; font-size:clamp(32px,6.4vw,86px); color:${T.cream}; max-width:16ch; margin:0 auto;
+          line-height:1.08; }   /* .display sets .95, which crowds these when they wrap */
+        .hero-word.l2{ font-size:clamp(24px,4.6vw,62px); color:${T.marigold}; max-width:22ch; margin-top:.14em; }
         .hero-word span{ display:inline-block; animation:pop .8s cubic-bezier(.2,.9,.3,1.3) both; animation-delay:calc(var(--i, 0) * 70ms); }
         .hero-word.l2 span{ animation-delay:calc(150ms + var(--i, 0) * 70ms); }
         @keyframes pop{ from{ transform:translateY(60px) scale(.9); opacity:0; } to{ transform:none; opacity:1; } }
         .hero-sub{ position:relative; z-index:3; max-width:580px; margin:16px auto 60px; font-size:17px; line-height:1.55; color:${T.cream}dd; }
+        .hero-sub b{ font-weight:700; color:${T.cream}; }
 
         /* marquee */
         .marquee{ background:${T.marigold}; color:${T.pineDeep}; overflow:hidden; transform:rotate(-1.5deg) scale(1.02); padding:10px 0; height:56px; }
@@ -1241,7 +1251,7 @@ export default function App() {
         <KineticLine text={c.hero_line1} />
         <KineticLine text={c.hero_line2} className="l2" />
         <div className="hero-accent">{c.hero_accent}</div>
-        <p className="hero-sub">{c.hero_sub}</p>
+        <p className="hero-sub">{withBrand(c.hero_sub)}</p>
       </header>
 
       <div className="marquee">
