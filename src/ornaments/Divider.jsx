@@ -1,29 +1,31 @@
 import React, { useEffect, useRef, useState } from "react";
+// The bands are the cyanotype prints of the painting; the original green
+// separations are kept untouched in ../assets/divider-layers/.
 import { tuning, subscribe } from "./dividerTuning.js";
-import a_far_1600 from "../assets/divider-layers/a-far-1600.webp";
-import a_far_2560 from "../assets/divider-layers/a-far-2560.webp";
-import a_far_3840 from "../assets/divider-layers/a-far-3840.webp";
-import a_mid_1600 from "../assets/divider-layers/a-mid-1600.webp";
-import a_mid_2560 from "../assets/divider-layers/a-mid-2560.webp";
-import a_mid_3840 from "../assets/divider-layers/a-mid-3840.webp";
-import a_land_1600 from "../assets/divider-layers/a-land-1600.webp";
-import a_land_2560 from "../assets/divider-layers/a-land-2560.webp";
-import a_land_3840 from "../assets/divider-layers/a-land-3840.webp";
-import a_sea_1600 from "../assets/divider-layers/a-sea-1600.webp";
-import a_sea_2560 from "../assets/divider-layers/a-sea-2560.webp";
-import a_sea_3840 from "../assets/divider-layers/a-sea-3840.webp";
-import b_far_1600 from "../assets/divider-layers/b-far-1600.webp";
-import b_far_2560 from "../assets/divider-layers/b-far-2560.webp";
-import b_far_3840 from "../assets/divider-layers/b-far-3840.webp";
-import b_mid_1600 from "../assets/divider-layers/b-mid-1600.webp";
-import b_mid_2560 from "../assets/divider-layers/b-mid-2560.webp";
-import b_mid_3840 from "../assets/divider-layers/b-mid-3840.webp";
-import b_land_1600 from "../assets/divider-layers/b-land-1600.webp";
-import b_land_2560 from "../assets/divider-layers/b-land-2560.webp";
-import b_land_3840 from "../assets/divider-layers/b-land-3840.webp";
-import b_sea_1600 from "../assets/divider-layers/b-sea-1600.webp";
-import b_sea_2560 from "../assets/divider-layers/b-sea-2560.webp";
-import b_sea_3840 from "../assets/divider-layers/b-sea-3840.webp";
+import a_far_1600 from "../assets/divider-layers-cy/a-far-1600.webp";
+import a_far_2560 from "../assets/divider-layers-cy/a-far-2560.webp";
+import a_far_3840 from "../assets/divider-layers-cy/a-far-3840.webp";
+import a_mid_1600 from "../assets/divider-layers-cy/a-mid-1600.webp";
+import a_mid_2560 from "../assets/divider-layers-cy/a-mid-2560.webp";
+import a_mid_3840 from "../assets/divider-layers-cy/a-mid-3840.webp";
+import a_land_1600 from "../assets/divider-layers-cy/a-land-1600.webp";
+import a_land_2560 from "../assets/divider-layers-cy/a-land-2560.webp";
+import a_land_3840 from "../assets/divider-layers-cy/a-land-3840.webp";
+import a_sea_1600 from "../assets/divider-layers-cy/a-sea-1600.webp";
+import a_sea_2560 from "../assets/divider-layers-cy/a-sea-2560.webp";
+import a_sea_3840 from "../assets/divider-layers-cy/a-sea-3840.webp";
+import b_far_1600 from "../assets/divider-layers-cy/b-far-1600.webp";
+import b_far_2560 from "../assets/divider-layers-cy/b-far-2560.webp";
+import b_far_3840 from "../assets/divider-layers-cy/b-far-3840.webp";
+import b_mid_1600 from "../assets/divider-layers-cy/b-mid-1600.webp";
+import b_mid_2560 from "../assets/divider-layers-cy/b-mid-2560.webp";
+import b_mid_3840 from "../assets/divider-layers-cy/b-mid-3840.webp";
+import b_land_1600 from "../assets/divider-layers-cy/b-land-1600.webp";
+import b_land_2560 from "../assets/divider-layers-cy/b-land-2560.webp";
+import b_land_3840 from "../assets/divider-layers-cy/b-land-3840.webp";
+import b_sea_1600 from "../assets/divider-layers-cy/b-sea-1600.webp";
+import b_sea_2560 from "../assets/divider-layers-cy/b-sea-2560.webp";
+import b_sea_3840 from "../assets/divider-layers-cy/b-sea-3840.webp";
 
 /**
  * 🌊 Wave → mountain divider — scroll-linked, painting kept.
