@@ -159,7 +159,7 @@ export default function CoolCareers() {
         @media (max-width:560px){ .brand{ font-size:15px; } .navr .btn{ display:none; } }
 
         /* top — title, tagline, the music video */
-        .cc-top{ background:radial-gradient(120% 80% at 50% 0%, #17466B 0%, ${T.pine} 62%); text-align:center;
+        .cc-top{ background:radial-gradient(120% 80% at 50% 0%, #12385A 0%, ${T.pine} 62%); text-align:center;
           padding:calc(clamp(84px,11vh,112px) + 12px) clamp(16px,4vw,48px) clamp(40px,6vh,64px); }
         .cc-top h1{ font-size:clamp(52px,9vw,120px); color:${T.cream}; }
         .cc-tagline{ margin:10px auto clamp(24px,4vh,36px); font-family:'Space Mono', ui-monospace, monospace; font-size:clamp(13px,1.6vw,17px);

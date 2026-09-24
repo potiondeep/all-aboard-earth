@@ -65,7 +65,7 @@ export default function RegenArt() {
         .ra-split{ display:grid; gap:clamp(24px,4vw,52px); align-items:start; grid-template-columns:1fr; }
         @media (min-width:900px){ .ra-split{ grid-template-columns:1fr 1fr; } }
         .ra-points{ list-style:none; margin-top:24px; display:grid; gap:12px; }
-        .ra-points li{ background:#17466B; border:2px solid ${T.cream}1f; border-radius:16px; padding:16px 18px; }
+        .ra-points li{ background:#12385A; border:2px solid ${T.cream}1f; border-radius:16px; padding:16px 18px; }
         .ra-points b{ display:block; font-size:17px; margin-bottom:4px; }
         .ra-points span{ font-size:15px; line-height:1.45; color:${T.cream}bb; }
 
