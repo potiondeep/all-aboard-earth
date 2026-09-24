@@ -16,7 +16,11 @@ import puppeteer from "puppeteer-core";
 
 const BASE = (process.argv[2] || "https://www.allaboardearth.com").replace(/\/$/, "");
 const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
-const PAGES = ["/", "/cool-careers", "/edutainment", "/regenerative-art", "/book-a-demo"];
+const LOCAL = /localhost|127\.0\.0\.1/.test(BASE);
+// The dev server serves each entry from its directory, so it needs the trailing
+// slash; on Vercel the clean path is rewritten to the same file.
+const PAGES = ["/", "/cool-careers", "/edutainment", "/regenerative-art", "/book-a-demo"]
+  .map((p) => (LOCAL && p !== "/" ? p + "/" : p));
 
 /** Redirects worth checking every time: the first two are the printed QR codes. */
 const REDIRECTS = [
@@ -85,9 +89,11 @@ for (const path of PAGES) {
 }
 
 // Redirects: follow them the whole way, as a visitor (or a QR scanner) would.
+// They live in vercel.json, which the dev server knows nothing about.
 console.log("");
+if (LOCAL) console.log("  (skipping redirects — vercel.json is not applied locally)");
 const page = await browser.newPage();
-for (const [from, expect] of REDIRECTS) {
+for (const [from, expect] of LOCAL ? [] : REDIRECTS) {
   try {
     const res = await page.goto(BASE + from, { waitUntil: "domcontentloaded", timeout: 30000 });
     const landed = page.url();

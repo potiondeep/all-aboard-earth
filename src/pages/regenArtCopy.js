@@ -21,6 +21,7 @@ export const raCopy = {
     mural_video_play: "Play the mural project video",
     mural_video_title: "All Life is Sacred — the mural film",
     mural_caps: [
+      "The Great Coming Together, 2021\u201322 \u2014 12\u2032 \u00d7 20\u2032, designed by Jonathan Meade",
       "Painting the sunburst panel",
       "The crew on the scaffold in front of the finished wall",
       "Detail work in a dragon hood",
@@ -65,6 +66,7 @@ export const raCopy = {
     mural_video_play: "Reproducir el video del proyecto de mural",
     mural_video_title: "All Life is Sacred — la película del mural",
     mural_caps: [
+      "The Great Coming Together, 2021\u201322 \u2014 12\u2032 \u00d7 20\u2032, dise\u00f1ado por Jonathan Meade",
       "Pintando el panel del sol",
       "El equipo en el andamio frente al muro terminado",
       "Trabajo de detalle con capucha de dragón",

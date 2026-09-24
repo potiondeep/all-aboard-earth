@@ -239,6 +239,13 @@ export default function Edutainment() {
         .ed-music > ul{ grid-column:1; }
         @media (min-width:900px){ .ed-music > .ed-boombox{ grid-column:2; grid-row:1 / span 2; } }
         @media (min-width:900px){ .ed-music{ grid-template-columns:1.05fr .95fr; } }
+        /* a decorative band, not a hero: the steam thins into the copy above and
+           the ground dissolves at the foot so neither ends on an edge */
+        .ed-steam{ max-width:600px; margin:clamp(8px,2vh,20px) auto -4%; padding:0 16px; }
+        .ed-steam img{ width:100%; height:auto; display:block;
+          -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 40%, #000 84%, transparent 100%);
+          mask-image:linear-gradient(to bottom, transparent 0, #000 40%, #000 84%, transparent 100%); }
+
         /* listen and watch, side by side: the compact player plus the channel */
         .ed-listen{ display:grid; gap:14px; grid-template-columns:1fr; align-items:stretch; max-width:900px; }
         @media (min-width:760px){ .ed-listen{ grid-template-columns:minmax(0,1fr) minmax(0,310px); } }
@@ -331,6 +338,16 @@ export default function Edutainment() {
             </figure>
           </div>
         </section>
+
+        {/* The felt solar train, its steam climbing into the section above. The
+            top of the image is masked away rather than cropped, so the steam
+            thins out instead of ending on an edge. */}
+        <figure className="ed-steam" aria-hidden="true">
+          <img src="/art/edutainment/steam-train-1200.webp"
+               srcSet="/art/edutainment/steam-train-600.webp 600w, /art/edutainment/steam-train-1200.webp 1200w"
+               sizes="(max-width: 640px) 92vw, 600px"
+               alt="" width="1200" height="1110" loading="lazy" decoding="async" />
+        </figure>
 
         {/* LISTEN — the artist page itself. Lazy, so a below-the-fold third-party
             frame costs nothing at load, and a fixed height so it can't shift. */}

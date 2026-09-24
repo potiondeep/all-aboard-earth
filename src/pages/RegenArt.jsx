@@ -46,7 +46,7 @@ function EcoHomeLoop({ caption }) {
   );
 }
 
-const MURALS = ["mural-1", "mural-2", "mural-3", "mural-4"];
+const MURALS = ["mural-finished", "mural-1", "mural-2", "mural-3", "mural-4"];
 const SCULPTURE = ["sculpture-1", "sculpture-2", "sculpture-3", "sculpture-4"];
 
 export default function RegenArt() {
@@ -138,9 +138,10 @@ export default function RegenArt() {
           <MuralVideo label={c.mural_video_play} title={c.mural_video_title} />
           <div className="ra-grid">
             {MURALS.map((n, i) => (
-              <figure key={n}>
+              <figure key={n} className={i === 0 ? "ra-wide" : undefined}>
                 <img src={`/art/regen-art/${n}-1400.webp`} srcSet={`/art/regen-art/${n}-700.webp 700w, /art/regen-art/${n}-1400.webp 1400w`}
-                     sizes="(max-width: 700px) 100vw, 530px" alt={c.mural_caps[i]} loading="lazy" decoding="async" />
+                     sizes={i === 0 ? "(max-width: 1100px) 100vw, 1000px" : "(max-width: 700px) 100vw, 530px"}
+                     alt={c.mural_caps[i]} loading="lazy" decoding="async" />
                 <figcaption>{c.mural_caps[i]}</figcaption>
               </figure>
             ))}
