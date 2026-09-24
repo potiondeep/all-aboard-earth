@@ -40,7 +40,7 @@ export default function BookDemo() {
 
         .bd-points{ list-style:none; margin-top:clamp(24px,4vh,34px); display:grid; gap:14px; }
         @media (min-width:860px){ .bd-points{ grid-template-columns:repeat(3,1fr); } }
-        .bd-points li{ background:#17466B; border:2px solid ${T.cream}1f; border-radius:16px; padding:20px 20px 22px; }
+        .bd-points li{ background:#12385A; border:2px solid ${T.cream}1f; border-radius:16px; padding:20px 20px 22px; }
         .bd-points b{ display:block; font-size:18px; margin-bottom:6px; }
         .bd-points span{ font-size:15px; line-height:1.5; color:${T.cream}bb; }
 
