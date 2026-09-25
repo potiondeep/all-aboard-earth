@@ -25,6 +25,7 @@ export const raCopy = {
       "Painting the sunburst panel",
       "Detail work in a dragon hood",
       "Rolling colour high on the wall",
+      "Santa Fe New Mexican, 2 January 2021 — \u201cA mural with meaning\u201d",
     ],
 
     sculpture_label: "SCULPTURE",
@@ -69,6 +70,7 @@ export const raCopy = {
       "Pintando el panel del sol",
       "Trabajo de detalle con capucha de dragón",
       "Aplicando color en lo alto del muro",
+      "Santa Fe New Mexican, 2 de enero de 2021 — \u201cA mural with meaning\u201d",
     ],
 
     sculpture_label: "ESCULTURA",

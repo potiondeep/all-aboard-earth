@@ -237,7 +237,8 @@ export default function Edutainment() {
         /* music section: the bullets on the left, the Earth boombox filling the space beside them */
         .ed-music{ display:grid; gap:clamp(22px,4vw,44px); align-items:start; grid-template-columns:1fr; }
         .ed-music > ul{ grid-column:1; }
-        @media (min-width:900px){ .ed-music > .ed-scene{ grid-column:2; grid-row:1 / span 2; } }
+        @media (min-width:900px){ .ed-music > ul, .ed-music > .ed-boombox{ grid-column:1; } }
+        @media (min-width:900px){ .ed-music > .ed-scene{ grid-column:2; grid-row:1 / span 3; } }
         @media (min-width:900px){ .ed-music{ grid-template-columns:1.05fr .95fr; } }
         /* listen and watch, side by side: the compact player plus the channel */
         .ed-listen{ display:grid; gap:14px; grid-template-columns:1fr; align-items:stretch; max-width:900px; }
@@ -255,13 +256,17 @@ export default function Edutainment() {
         /* Cutouts standing on the page rather than framed photographs: the crew
            sets the height, and the boombox sits lower and in front of them, so it
            reads as being on the ground in the same scene. */
-        .ed-scene{ position:relative; margin:0; padding-bottom:58px; }
-        .ed-scene-crew{ display:block; width:88%; max-width:420px; height:auto; margin:0 auto;
+        /* Both stand on the page as cutouts rather than framed photographs. The
+           crew holds the right column; the boombox fills the space the bullets
+           leave under them on the left. */
+        .ed-scene{ margin:0; }
+        .ed-scene-crew{ display:block; width:92%; max-width:440px; height:auto; margin:0 auto;
           filter:drop-shadow(0 18px 26px rgba(0,0,0,.42)); }
-        .ed-scene-boombox{ position:absolute; z-index:2; left:2%; bottom:34px; width:47%; max-width:210px; height:auto;
-          filter:drop-shadow(0 12px 18px rgba(0,0,0,.45)); }
-        .ed-scene figcaption{ position:absolute; left:0; right:0; bottom:0; text-align:center;
-          font-family:'Space Mono', ui-monospace, monospace; font-size:12px; color:${T.cream}99; letter-spacing:.06em; }
+        .ed-boombox{ margin:clamp(14px,2.5vh,26px) 0 0; }
+        .ed-boombox img{ display:block; width:80%; max-width:330px; height:auto;
+          filter:drop-shadow(0 12px 20px rgba(0,0,0,.45)); }
+        .ed-boombox figcaption{ margin-top:12px; font-family:'Space Mono', ui-monospace, monospace;
+          font-size:12px; color:${T.cream}99; letter-spacing:.06em; }
 
         /* closing CTA sits on the solar disco */
         .ed-cta{ position:relative; text-align:center; border-radius:28px; overflow:hidden; isolation:isolate;
@@ -331,16 +336,18 @@ export default function Edutainment() {
                   screen below on the closing CTA, so it needs no button here */}
               {[...c.music_points, c.booking_point].map(([b, s]) => <li key={b}><b>{b}</b><span>{s}</span></li>)}
             </ul>
-            <figure className="ed-scene">
-              <img className="ed-scene-crew" src="/art/edutainment/crew-cutout-900.webp"
-                   srcSet="/art/edutainment/crew-cutout-450.webp 450w, /art/edutainment/crew-cutout-900.webp 900w"
-                   sizes="(max-width: 900px) 70vw, 420px" alt={c.crew_alt}
-                   width="900" height="1532" loading="lazy" decoding="async" />
-              <img className="ed-scene-boombox" src="/art/edutainment/boombox-cutout-700.webp"
+            <figure className="ed-boombox">
+              <img src="/art/edutainment/boombox-cutout-700.webp"
                    srcSet="/art/edutainment/boombox-cutout-380.webp 380w, /art/edutainment/boombox-cutout-700.webp 700w"
-                   sizes="(max-width: 900px) 34vw, 200px" alt={c.boombox_cap}
-                   width="700" height="700" loading="lazy" decoding="async" />
+                   sizes="(max-width: 900px) 62vw, 330px" alt={c.boombox_cap}
+                   width="700" height="592" loading="lazy" decoding="async" />
               <figcaption>{c.boombox_cap}</figcaption>
+            </figure>
+            <figure className="ed-scene">
+              <img className="ed-scene-crew" src="/art/edutainment/crew-cutout-800.webp"
+                   srcSet="/art/edutainment/crew-cutout-400.webp 400w, /art/edutainment/crew-cutout-800.webp 800w"
+                   sizes="(max-width: 900px) 74vw, 440px" alt={c.crew_alt}
+                   width="800" height="1360" loading="lazy" decoding="async" />
             </figure>
           </div>
         </section>

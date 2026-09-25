@@ -46,7 +46,7 @@ function EcoHomeLoop({ caption }) {
   );
 }
 
-const MURALS = ["mural-finished", "mural-1", "mural-3", "mural-4"];
+const MURALS = ["mural-finished", "mural-1", "mural-3", "mural-4", "mural-news"];
 const SCULPTURE = ["sculpture-1", "sculpture-2", "sculpture-3", "sculpture-4", "sculpture-5"];
 
 export default function RegenArt() {
