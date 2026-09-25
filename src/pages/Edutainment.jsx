@@ -237,7 +237,7 @@ export default function Edutainment() {
         /* music section: the bullets on the left, the Earth boombox filling the space beside them */
         .ed-music{ display:grid; gap:clamp(22px,4vw,44px); align-items:start; grid-template-columns:1fr; }
         .ed-music > ul{ grid-column:1; }
-        @media (min-width:900px){ .ed-music > ul, .ed-music > .ed-boombox{ grid-column:1; } }
+        @media (min-width:900px){ .ed-music > ul, .ed-music > .ed-train{ grid-column:1; } }
         @media (min-width:900px){ .ed-music > .ed-scene{ grid-column:2; grid-row:1 / span 3; } }
         @media (min-width:900px){ .ed-music{ grid-template-columns:1.05fr .95fr; } }
         /* listen and watch, side by side: the compact player plus the channel */
@@ -262,11 +262,20 @@ export default function Edutainment() {
         .ed-scene{ margin:0; }
         .ed-scene-crew{ display:block; width:92%; max-width:440px; height:auto; margin:0 auto;
           filter:drop-shadow(0 18px 26px rgba(0,0,0,.42)); }
-        .ed-boombox{ margin:clamp(14px,2.5vh,26px) 0 0; }
-        .ed-boombox img{ display:block; width:80%; max-width:330px; height:auto;
-          filter:drop-shadow(0 12px 20px rgba(0,0,0,.45)); }
-        .ed-boombox figcaption{ margin-top:12px; font-family:'Space Mono', ui-monospace, monospace;
-          font-size:12px; color:${T.cream}99; letter-spacing:.06em; }
+        /* The locomotive runs along the seam between this section and the
+           players: steam drifting up over the bullets, wheels down on the row
+           below. It has to hang out of the section to do that, and a negative
+           margin cannot — the grid's height is set by the crew spanning every
+           row, so nothing below would move. Anchored to the section instead,
+           and only once there are two columns; narrower than that it returns to
+           the flow. */
+        .ed-train{ position:relative; z-index:3; pointer-events:none; margin:clamp(10px,2vh,22px) 0 0; }
+        .ed-train img{ display:block; width:100%; max-width:640px; height:auto;
+          filter:drop-shadow(0 16px 22px rgba(0,0,0,.40)); }
+        @media (min-width:900px){
+          .ed-music{ position:relative; }
+          .ed-train{ position:absolute; left:-2%; bottom:-132px; width:64%; margin:0; }
+        }
 
         /* closing CTA sits on the solar disco */
         .ed-cta{ position:relative; text-align:center; border-radius:28px; overflow:hidden; isolation:isolate;
@@ -336,13 +345,12 @@ export default function Edutainment() {
                   screen below on the closing CTA, so it needs no button here */}
               {[...c.music_points, c.booking_point].map(([b, s]) => <li key={b}><b>{b}</b><span>{s}</span></li>)}
             </ul>
-            <figure className="ed-boombox">
-              <img src="/art/edutainment/boombox-cutout-700.webp"
-                   srcSet="/art/edutainment/boombox-cutout-380.webp 380w, /art/edutainment/boombox-cutout-700.webp 700w"
-                   sizes="(max-width: 900px) 62vw, 330px" alt={c.boombox_cap}
-                   width="700" height="592" loading="lazy" decoding="async" />
-              <figcaption>{c.boombox_cap}</figcaption>
-            </figure>
+            <div className="ed-train" aria-hidden="true">
+              <img src="/art/edutainment/steam-train-1200.webp"
+                   srcSet="/art/edutainment/steam-train-600.webp 600w, /art/edutainment/steam-train-1200.webp 1200w"
+                   sizes="(max-width: 900px) 92vw, 460px" alt=""
+                   width="1200" height="938" loading="lazy" decoding="async" />
+            </div>
             <figure className="ed-scene">
               <img className="ed-scene-crew" src="/art/edutainment/crew-cutout-800.webp"
                    srcSet="/art/edutainment/crew-cutout-400.webp 400w, /art/edutainment/crew-cutout-800.webp 800w"
