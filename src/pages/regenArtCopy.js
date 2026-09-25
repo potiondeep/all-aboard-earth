@@ -31,7 +31,7 @@ export const raCopy = {
     sculpture_label: "SCULPTURE",
     sculpture_h: "Cut, welded, planted in the street.",
     sculpture_p: "Metal bloom and chevron forms fabricated by hand and installed along a public wall — work sized for the sidewalk, finished so it holds up to the weather and the neighbourhood.",
-    sculpture_caps: ["Installed along the wall", "With the makers", "Cutting the bloom", "Finishing on site"],
+    sculpture_caps: ["Installed along the wall", "With the makers", "Cutting the bloom", "Finishing on site", "Gold and silver leaf laid over the cut forms"],
 
     objects_label: "SUSTAINABILITY ADVOCACY CAMPAIGNS",
     objects_caps: ["Honor the Earth — San Ildefonso Pueblo", "Or not. There is no try.", "Yo' mama is so bright — she electrifies the whole planet", "Recycling is magic"],
@@ -76,7 +76,7 @@ export const raCopy = {
     sculpture_label: "ESCULTURA",
     sculpture_h: "Cortada, soldada, sembrada en la calle.",
     sculpture_p: "Formas de flor y chevrón en metal, fabricadas a mano e instaladas a lo largo de un muro público — obra a escala de la banqueta, acabada para resistir el clima y el barrio.",
-    sculpture_caps: ["Instalada a lo largo del muro", "Con quienes la hicieron", "Cortando la flor", "Acabado en sitio"],
+    sculpture_caps: ["Instalada a lo largo del muro", "Con quienes la hicieron", "Cortando la flor", "Acabado en sitio", "Pan de oro y plata sobre las formas cortadas"],
 
     objects_label: "CAMPAÑAS DE INCIDENCIA POR LA SOSTENIBILIDAD",
     objects_caps: ["Honra a la Tierra — Pueblo de San Ildefonso", "O no. No hay intento.", "Yo' mama is so bright — electrifica el planeta entero", "Reciclar es magia"],
