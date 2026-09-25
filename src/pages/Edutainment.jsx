@@ -279,7 +279,11 @@ export default function Edutainment() {
            list beside it — so the wheels land exactly on the last bullet. */
         @media (min-width:900px){
           .ed-scene{ position:relative; min-height:300px; }
-          .ed-rig{ position:absolute; right:-6%; bottom:-5%; width:112%; max-width:none; margin:0; }
+          /* Hangs past the bullet list and down through the gap below, so the
+             wheels come to rest just above the YouTube card. That gap measures
+             the same 82px at every desktop width — it is section padding, not
+             anything that scales with the art — so the drop is a constant too. */
+          .ed-rig{ position:absolute; right:-6%; bottom:-96px; width:112%; max-width:none; margin:0; }
         }
 
         /* closing CTA sits on the solar disco */
