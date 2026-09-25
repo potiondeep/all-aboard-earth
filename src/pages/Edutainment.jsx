@@ -269,8 +269,8 @@ export default function Edutainment() {
            shows the cut. The rig's aspect ratio is the stack's full height,
            locomotive plus the part of the crew standing above it. */
         .ed-rig{ position:relative; width:100%; max-width:500px; margin:clamp(14px,3vh,26px) auto 0;
-          aspect-ratio:1 / 1.074; pointer-events:none; }
-        .ed-scene-crew{ position:absolute; right:2%; bottom:28.2%; width:79%; height:auto; z-index:2;
+          aspect-ratio:1 / .9962; pointer-events:none; }
+        .ed-scene-crew{ position:absolute; right:2%; bottom:27.5%; width:74%; height:auto; z-index:2;
           filter:drop-shadow(0 18px 26px rgba(0,0,0,.42)); }
         .ed-train{ position:absolute; right:0; bottom:0; width:100%; height:auto; z-index:3;
           transform:scaleX(-1); filter:drop-shadow(0 16px 22px rgba(0,0,0,.40)); }
@@ -283,7 +283,7 @@ export default function Edutainment() {
              wheels come to rest just above the YouTube card. That gap measures
              the same 82px at every desktop width — it is section padding, not
              anything that scales with the art — so the drop is a constant too. */
-          .ed-rig{ position:absolute; right:-6%; bottom:-96px; width:112%; max-width:none; margin:0; }
+          .ed-rig{ position:absolute; right:-6%; bottom:-96px; width:120%; max-width:none; margin:0; }
         }
 
         /* closing CTA sits on the solar disco */
