@@ -268,9 +268,9 @@ export default function Edutainment() {
            instead drifts out from behind the train as the column reflows and
            shows the cut. The rig's aspect ratio is the stack's full height,
            locomotive plus the part of the crew standing above it. */
-        .ed-rig{ position:relative; width:100%; max-width:460px; margin:clamp(14px,3vh,26px) auto 0;
-          aspect-ratio:1 / .961; pointer-events:none; }
-        .ed-scene-crew{ position:absolute; right:2%; bottom:32.6%; width:79%; height:auto; z-index:2;
+        .ed-rig{ position:relative; width:100%; max-width:500px; margin:clamp(14px,3vh,26px) auto 0;
+          aspect-ratio:1 / 1.074; pointer-events:none; }
+        .ed-scene-crew{ position:absolute; right:2%; bottom:28.2%; width:79%; height:auto; z-index:2;
           filter:drop-shadow(0 18px 26px rgba(0,0,0,.42)); }
         .ed-train{ position:absolute; right:0; bottom:0; width:100%; height:auto; z-index:3;
           transform:scaleX(-1); filter:drop-shadow(0 16px 22px rgba(0,0,0,.40)); }
@@ -279,7 +279,7 @@ export default function Edutainment() {
            list beside it — so the wheels land exactly on the last bullet. */
         @media (min-width:900px){
           .ed-scene{ position:relative; min-height:300px; }
-          .ed-rig{ position:absolute; right:-6%; bottom:0; width:104%; max-width:none; margin:0; }
+          .ed-rig{ position:absolute; right:-6%; bottom:-5%; width:112%; max-width:none; margin:0; }
         }
 
         /* closing CTA sits on the solar disco */
@@ -355,7 +355,7 @@ export default function Edutainment() {
               <img className="ed-scene-crew" src="/art/edutainment/crew-cutout-800.webp"
                    srcSet="/art/edutainment/crew-cutout-400.webp 400w, /art/edutainment/crew-cutout-800.webp 800w"
                    sizes="(max-width: 900px) 74vw, 430px" alt={c.crew_alt}
-                   width="800" height="656" loading="lazy" decoding="async" />
+                   width="800" height="780" loading="lazy" decoding="async" />
               <img className="ed-train" src="/art/edutainment/steam-train-1200.webp"
                    srcSet="/art/edutainment/steam-train-600.webp 600w, /art/edutainment/steam-train-1200.webp 1200w"
                    sizes="(max-width: 900px) 92vw, 430px" alt=""
