@@ -237,7 +237,7 @@ export default function Edutainment() {
         /* music section: the bullets on the left, the Earth boombox filling the space beside them */
         .ed-music{ display:grid; gap:clamp(22px,4vw,44px); align-items:start; grid-template-columns:1fr; }
         .ed-music > ul{ grid-column:1; }
-        @media (min-width:900px){ .ed-music > .ed-boombox{ grid-column:2; grid-row:1 / span 2; } }
+        @media (min-width:900px){ .ed-music > .ed-scene{ grid-column:2; grid-row:1 / span 2; } }
         @media (min-width:900px){ .ed-music{ grid-template-columns:1.05fr .95fr; } }
         /* listen and watch, side by side: the compact player plus the channel */
         .ed-listen{ display:grid; gap:14px; grid-template-columns:1fr; align-items:stretch; max-width:900px; }
@@ -252,9 +252,16 @@ export default function Edutainment() {
         .ed-yt .handle{ display:block; font-family:'Space Mono', ui-monospace, monospace; font-size:12px;
           letter-spacing:.06em; color:${T.cream}99; margin-bottom:9px; }
         .ed-yt .go{ font-size:13px; color:${T.marigold}; }
-        .ed-boombox{ margin:0; }
-        .ed-boombox img{ width:100%; height:auto; display:block; border-radius:18px; border:5px solid ${T.cream}; box-shadow:0 16px 36px #0008; transform:rotate(.8deg); }
-        .ed-boombox figcaption{ margin-top:10px; font-family:'Space Mono', ui-monospace, monospace; font-size:12px; color:${T.cream}99; letter-spacing:.06em; }
+        /* Cutouts standing on the page rather than framed photographs: the crew
+           sets the height, and the boombox sits lower and in front of them, so it
+           reads as being on the ground in the same scene. */
+        .ed-scene{ position:relative; margin:0; padding-bottom:58px; }
+        .ed-scene-crew{ display:block; width:88%; max-width:420px; height:auto; margin:0 auto;
+          filter:drop-shadow(0 18px 26px rgba(0,0,0,.42)); }
+        .ed-scene-boombox{ position:absolute; z-index:2; left:2%; bottom:34px; width:47%; max-width:210px; height:auto;
+          filter:drop-shadow(0 12px 18px rgba(0,0,0,.45)); }
+        .ed-scene figcaption{ position:absolute; left:0; right:0; bottom:0; text-align:center;
+          font-family:'Space Mono', ui-monospace, monospace; font-size:12px; color:${T.cream}99; letter-spacing:.06em; }
 
         /* closing CTA sits on the solar disco */
         .ed-cta{ position:relative; text-align:center; border-radius:28px; overflow:hidden; isolation:isolate;
@@ -268,7 +275,7 @@ export default function Edutainment() {
         .ed-cta h2{ font-size:clamp(32px,4.8vw,58px); margin-bottom:12px; text-shadow:0 3px 22px ${T.pineDeep}; }
         .ed-cta p{ font-size:18px; font-weight:500; margin-bottom:22px; color:${T.cream}e6; text-shadow:0 2px 14px ${T.pineDeep}; }
         @media (prefers-reduced-motion: reduce){
-          .ed-hero-art img, .ed-tile, .ed-cta, .ed-boombox img, .ed-news{ transform:none !important; }
+          .ed-hero-art img, .ed-tile, .ed-cta, .ed-news{ transform:none !important; }
           .ed-news-facade img{ transition:none !important; } .ed-news-facade:hover img{ transform:none !important; }
           .ed-frame{ transition:none !important; }
         }
@@ -319,14 +326,20 @@ export default function Edutainment() {
           <h2 id="ed-music" className="display pg-h2">{c.music_h}</h2>
           <p className="pg-lede">{c.music_p}</p>
           <div className="ed-music">
-            <ul className="ed-points" style={{ marginTop: 0 }}>
+            <ul className="ed-points" style={{ marginTop: "clamp(26px,4vh,44px)" }}>
               {/* the live show sits in the same run of bubbles; booking is one
                   screen below on the closing CTA, so it needs no button here */}
               {[...c.music_points, c.booking_point].map(([b, s]) => <li key={b}><b>{b}</b><span>{s}</span></li>)}
             </ul>
-            <figure className="ed-boombox">
-              <img src="/art/edutainment/earth-boombox-1200.webp" srcSet="/art/edutainment/earth-boombox-600.webp 600w, /art/edutainment/earth-boombox-1200.webp 1200w"
-                   sizes="(max-width: 900px) 100vw, 480px" alt="A boombox overgrown with living plants" loading="lazy" decoding="async" />
+            <figure className="ed-scene">
+              <img className="ed-scene-crew" src="/art/edutainment/crew-cutout-900.webp"
+                   srcSet="/art/edutainment/crew-cutout-450.webp 450w, /art/edutainment/crew-cutout-900.webp 900w"
+                   sizes="(max-width: 900px) 70vw, 420px" alt={c.crew_alt}
+                   width="900" height="1532" loading="lazy" decoding="async" />
+              <img className="ed-scene-boombox" src="/art/edutainment/boombox-cutout-700.webp"
+                   srcSet="/art/edutainment/boombox-cutout-380.webp 380w, /art/edutainment/boombox-cutout-700.webp 700w"
+                   sizes="(max-width: 900px) 34vw, 200px" alt={c.boombox_cap}
+                   width="700" height="700" loading="lazy" decoding="async" />
               <figcaption>{c.boombox_cap}</figcaption>
             </figure>
           </div>

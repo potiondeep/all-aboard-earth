@@ -24,6 +24,7 @@ export const edCopy = {
       ["Music videos", "Every song becomes a video the classroom can play."],
       ["Classroom-ready", "Tracks and visuals that plug straight into a lesson."],
     ],
+    crew_alt: "Michael and Jonathan performing — one on the mic, one holding a hand-sewn globe",
     boombox_cap: "The Earth boombox — where the garden meets the speaker.",
     bus_alt: "The All Aboard Earth bus painted as the Earth, animals riding along",
 
@@ -66,6 +67,7 @@ export const edCopy = {
       ["Videos musicales", "Cada canción se convierte en un video que el salón puede reproducir."],
       ["Listas para el salón", "Pistas y visuales que se integran directo a una lección."],
     ],
+    crew_alt: "Michael y Jonathan en escena — uno en el micrófono, el otro sosteniendo un globo cosido a mano",
     boombox_cap: "El boombox de la Tierra — donde el jardín se encuentra con la bocina.",
     bus_alt: "El autobús All Aboard Earth pintado como la Tierra, con animales viajando",
 
