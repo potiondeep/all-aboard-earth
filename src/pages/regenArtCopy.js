@@ -23,7 +23,6 @@ export const raCopy = {
     mural_caps: [
       "The Great Coming Together, 2021\u201322 \u2014 12\u2032 \u00d7 20\u2032, designed by Jonathan Meade",
       "Painting the sunburst panel",
-      "The crew on the scaffold in front of the finished wall",
       "Detail work in a dragon hood",
       "Rolling colour high on the wall",
     ],
@@ -68,7 +67,6 @@ export const raCopy = {
     mural_caps: [
       "The Great Coming Together, 2021\u201322 \u2014 12\u2032 \u00d7 20\u2032, dise\u00f1ado por Jonathan Meade",
       "Pintando el panel del sol",
-      "El equipo en el andamio frente al muro terminado",
       "Trabajo de detalle con capucha de dragón",
       "Aplicando color en lo alto del muro",
     ],
