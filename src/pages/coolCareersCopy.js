@@ -20,7 +20,6 @@ export const ccCopy = {
     hero_title: "Play a game. Find a future.",
     hero_title_b: "One class period.",
     hero_band: [["Standards-aligned", "marigold"], [", ", null], ["zero-student-data", "sky"], [", ", null], ["CTE-funded", "leaf"], [" career exploration that plugs into an existing class period.", null]],
-    hero_demo: "Book a pilot demo",
     hero_caption: "Felt school buses charging up on sun and wind.",
 
     why_label: "WHY IT'S IMPORTANT",
@@ -114,12 +113,6 @@ export const ccCopy = {
     path_label: "FROM SPARK TO PAYCHECK",
     path_h: "Inspiration is the easy part.",
     path_lede: "Most career programs stop at the poster. This one carries a student to a wage, and to somebody already doing the work who will pick up the phone.",
-    path: [
-      ["01", "Inspiration", "marigold", "A student meets a silvopasture specialist on a card and wants to be one."],
-      ["02", "Education", "leaf", "The station behind the card, and real routes in — degrees, certificates, apprenticeships."],
-      ["03", "Connection", "sky", "The next step is a person and a place, not a search box."],
-      ["04", "Realization", "coral", "Fare & Return: what the training costs, what the job pays. The highest wage is rarely the best deal."],
-    ],
     path_nums: [
       ["102", "curated videos", "PBS, TED-Ed, NASA and NOAA — district-safe, and every link re-checked"],
       ["86", "education routes", "Degrees, certificates, apprenticeships and two-year programs"],
@@ -157,7 +150,6 @@ export const ccCopy = {
     hero_title: "Juega. Encuentra un futuro.",
     hero_title_b: "Una sola clase.",
     hero_band: [["Alineado a estándares", "marigold"], [", ", null], ["cero datos estudiantiles", "sky"], [", ", null], ["financiable por CTE", "leaf"], [": exploración de carreras que se integra a una clase existente.", null]],
-    hero_demo: "Reserva una demo",
     hero_caption: "Autobuses escolares de fieltro cargándose con sol y viento.",
 
     why_label: "POR QUÉ IMPORTA",
@@ -245,12 +237,6 @@ export const ccCopy = {
     path_label: "DE LA CHISPA AL SUELDO",
     path_h: "Inspirar es la parte fácil.",
     path_lede: "Casi todos los programas de carreras se detienen en el póster. Este lleva al estudiante a un sueldo, y a alguien que ya hace el trabajo y contestará el teléfono.",
-    path: [
-      ["01", "Inspiración", "marigold", "Un estudiante conoce a un especialista en silvopastura en una carta y quiere ser eso."],
-      ["02", "Educación", "leaf", "La estación detrás de la carta, y rutas reales de entrada — títulos, certificados, aprendizajes."],
-      ["03", "Conexión", "sky", "El siguiente paso es una persona y un lugar, no un buscador."],
-      ["04", "Realización", "coral", "Fare & Return: lo que cuesta la formación y lo que paga el empleo. El sueldo más alto casi nunca es el mejor trato."],
-    ],
     path_nums: [
       ["102", "videos curados", "PBS, TED-Ed, NASA y NOAA — seguros para el distrito, y cada enlace revisado"],
       ["86", "rutas educativas", "Títulos, certificados, aprendizajes y programas de dos años"],

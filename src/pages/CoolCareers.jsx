@@ -226,11 +226,10 @@ export default function CoolCareers() {
         .cc-band{ margin:24px auto 26px; max-width:760px; background:${T.pineDeep}; border:2px solid ${T.cream}22; border-radius:16px;
           padding:14px 20px; font-size:clamp(16px,1.8vw,20px); font-weight:600; line-height:1.4; }
         .cc-band b{ font-weight:800; }
-        .cc-actions{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
 
         /* the felt buses, framed small by the closing CTA — stretched full-bleed they show their seams */
         .cc-buses{ position:relative; width:min(760px, 100%); aspect-ratio:16/9;
-          margin:clamp(72px,10vh,132px) auto clamp(26px,4vh,36px); overflow:hidden;
+          margin:0 auto clamp(26px,4vh,36px); overflow:hidden;
           border:6px solid ${T.cream}; border-radius:18px; box-shadow:0 18px 40px #0008; transform:rotate(.6deg); background:${T.pineDeep}; }
         .cc-buses-media{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
         .cc-buses-vid{ opacity:0; }
@@ -386,13 +385,7 @@ export default function CoolCareers() {
           background:${T.pineDeep}; border-radius:0 14px 14px 0; font-size:15.5px; line-height:1.5; color:${T.cream}c4; }
 
         /* from spark to paycheck */
-        .cc-path{ display:grid; gap:12px; grid-template-columns:1fr; margin-top:clamp(26px,4vh,42px); }
-        @media (min-width:900px){ .cc-path{ grid-template-columns:repeat(4,1fr); } }
-        .cc-stage{ background:${T.pineDeep}; border:2px solid ${T.cream}22; border-top-width:6px; border-radius:16px; padding:18px clamp(15px,2vw,20px); }
-        .cc-stage .n{ font-family:'Space Mono', ui-monospace, monospace; font-size:12px; letter-spacing:.2em; }
-        .cc-stage h3{ font-family:'Anton'; font-weight:400; text-transform:uppercase; font-size:clamp(20px,2.3vw,26px); margin:8px 0 9px; }
-        .cc-stage p{ font-size:14.5px; line-height:1.45; color:${T.cream}aa; }
-        .cc-nums{ display:grid; gap:12px; grid-template-columns:repeat(2,1fr); margin-top:clamp(20px,3vh,28px); }
+        .cc-nums{ display:grid; gap:12px; grid-template-columns:repeat(2,1fr); margin-top:clamp(26px,4vh,42px); }
         @media (min-width:880px){ .cc-nums{ grid-template-columns:repeat(4,1fr); } }
         .cc-num{ border:2px solid ${T.cream}22; border-radius:16px; padding:18px clamp(14px,2vw,20px); background:${T.pineDeep}; }
         .cc-num .n{ font-family:'Anton'; font-size:clamp(38px,4.4vw,54px); line-height:.9; color:${T.marigold}; }
@@ -458,9 +451,6 @@ export default function CoolCareers() {
           <p className="cc-band">
             {c.hero_band.map(([t, h], i) => (h ? <b key={i} style={{ color: hue(h) }}>{t}</b> : <React.Fragment key={i}>{t}</React.Fragment>))}
           </p>
-          <div className="cc-actions">
-            <a className="btn big" href={LINKS.contact}>{c.hero_demo}</a>
-          </div>
         </section>
 
         {/* HOW THE GAME WORKS */}
@@ -569,15 +559,6 @@ export default function CoolCareers() {
             <div className="mono cc-dlabel">{c.path_label}</div>
             <h2 id="cc-path" className="display cc-dh">{c.path_h}</h2>
             <p className="cc-dlede">{c.path_lede}</p>
-            <div className="cc-path">
-              {c.path.map(([n, h, tone, t]) => (
-                <article key={n} className="cc-stage" style={{ borderTopColor: hue(tone) }}>
-                  <div className="n" style={{ color: hue(tone) }}>{n}</div>
-                  <h3>{h}</h3>
-                  <p>{t}</p>
-                </article>
-              ))}
-            </div>
             <div className="cc-nums">
               {c.path_nums.map(([n, b, t]) => (
                 <div key={b} className="cc-num"><div className="n">{n}</div><b>{b}</b><span>{t}</span></div>
@@ -640,7 +621,7 @@ export default function CoolCareers() {
         </section>
 
         <section className="cc-cta">
-          <div className="cc-wrap" style={{ paddingTop: 0 }}>
+          <div className="cc-wrap" style={{ paddingTop: 0, paddingBottom: "clamp(16px,2.5vh,28px)" }}>
             <BusLoop caption={c.hero_caption} />
             <h2 className="display">{c.cta_head}</h2>
             <p>{c.cta_sub}</p>
