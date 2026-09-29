@@ -29,12 +29,34 @@ Open copy/content questions. Art gaps live in `MISSING_ART.md`.
    section; "Hear the Music" goes to `/grooves`. Both unchanged from V1 — say if
    either should point somewhere else now.
 
-4. **Cool Careers page (`/cool-careers`) — two things to confirm.**
+4. **Cool Careers page (`/cool-careers`) — things to confirm.**
    - **Spanish.** The page is fully bilingual, but the Spanish is my rendering of
      the one-pager, not official — `src/pages/coolCareersCopy.js`, `es` block.
+     Career card names stay in English in both, because they label real cards
+     that are drawn and printed in English and each one links into the Deck
+     Explorer under that name.
    - **Portal link.** Both portal buttons go to the game platform itself,
      `cool-careers.allaboardearth.com`. The old Wix "Access the game portal"
      button went to `/cool-careers/game` (the card-game rules page) instead.
+   - **The numbers are the platform's, and they will drift.** 106 cards, 104
+     stations, 1,317 files and the access model come from `PROJECT_BRIEF.md` in
+     `potiondeep/cool-careers`; 102 videos / 86 education routes / 85
+     internships / 340 mentors are row counts from the Wix CMS exports in that
+     same repo. Re-check both when the platform moves, rather than editing by
+     feel.
+   - **Two claims the page deliberately avoids**, because the repo says they are
+     not true yet: that every station has a video (6 of 104 branded reels have
+     landed) and that the curriculum is actually locked (migrations 0031 and
+     0033 are written but not applied, so the storage bucket is still public).
+     The page describes the access code as how a class gets set up, not as a
+     security boundary. **Tell me when both migrations have run** and the page
+     can say it plainly.
+   - **The four thematic lines** (renewable energy · regenerative agriculture ·
+     sustainable water · circular economy) are a second reading of the same 40
+     career cards, grouped in `src/pages/coolCareersDeck.js`. The platform's own
+     spine is still the 2024 National Career Clusters plus the seven elements —
+     that is what the cards carry and what the Standards Map reports. Move a
+     card between lines there if you'd file it differently.
 
 5. **New sub pages — Spanish and a couple of specifics.**
    - `/edutainment` and `/regenerative-art` are fully bilingual, but the Spanish

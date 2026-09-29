@@ -83,3 +83,13 @@ export function cardArt(slug) {
 
 /* No 2x tier: the card fills a ~200px slot, so the 600px file is already 3x —
    a 1200 file was never the candidate the browser picked. */
+
+/**
+ * The small tier, for the Cool Careers theme grids where a card lands in about
+ * 125px. At that size the 600 file is nearly 5x and costs four times the bytes
+ * for nothing; the 300 is still 2.4x. Both are offered, so a dense screen can
+ * still take the big one.
+ */
+export const cardArtSm = (slug) => `/art/cool-careers/cards/${slug}-300.webp`;
+export const cardSrcSet = (slug) =>
+  `${cardArtSm(slug)} 300w, ${cardArt(slug)} 600w`;

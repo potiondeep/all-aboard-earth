@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { T, LINKS } from "../theme.js";
 import { ccCopy } from "./coolCareersCopy.js";
+import { PageMenu, menuCss } from "./chrome.jsx";
+import { THEMES, CROSSCUT } from "./coolCareersDeck.js";
+import { cardArtSm, cardSrcSet, DECK_CARD } from "../wixCardArt.js";
 
 /* ============================================================
    🌱 COOL CAREERS — program overview · music video · game portal
@@ -111,6 +114,43 @@ function MusicVideo({ label, title }) {
   );
 }
 
+/**
+ * The illustrated cards for one line, then the rest of that line as chips.
+ * Every card and every chip opens the Deck Explorer on that slug — the deck is
+ * the product, so the page should never be a dead end in front of it.
+ */
+function CardRow({ cards, more, open, tint }) {
+  const drawn = cards.filter((k) => k.art);
+  const rest = cards.filter((k) => !k.art);
+  return (
+    <>
+      {drawn.length > 0 && (
+        <ul className="cc-cards">
+          {drawn.map((k) => (
+            <li key={k.slug}>
+              <a href={DECK_CARD(k.slug)} title={`${k.name} — ${open}`} style={{ borderColor: tint + "66" }}>
+                <img src={cardArtSm(k.slug)} srcSet={cardSrcSet(k.slug)}
+                     sizes="(max-width: 620px) 26vw, (max-width: 1000px) 17vw, 130px"
+                     alt={k.name} width="300" height="420" loading="lazy" decoding="async" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+      {rest.length > 0 && (
+        <>
+          <p className="cc-more">{more}</p>
+          <div className="cc-chips">
+            {rest.map((k) => (
+              <a key={k.slug} className="cc-chip" href={DECK_CARD(k.slug)}>{k.name}</a>
+            ))}
+          </div>
+        </>
+      )}
+    </>
+  );
+}
+
 export default function CoolCareers() {
   const [lang, setLang] = useState(() => {
     try { return localStorage.getItem("aae-lang") === "es" ? "es" : "en"; } catch { return "en"; }
@@ -125,7 +165,7 @@ export default function CoolCareers() {
 
   return (
     <div className="cc-page">
-      <style>{`
+      <style>{menuCss + `
         * { margin:0; padding:0; box-sizing:border-box; }
         html, body { background:${T.pine}; }
         .cc-page{
@@ -199,7 +239,7 @@ export default function CoolCareers() {
         .cc-pipeline{ font-family:'Anton'; font-size:clamp(24px,3vw,34px); margin:clamp(40px,6vh,64px) 0 22px; }
         .cc-tiles{ display:grid; gap:12px; grid-template-columns:repeat(2,1fr); }
         @media (min-width:700px){ .cc-tiles{ grid-template-columns:repeat(3,1fr); } }
-        @media (min-width:1000px){ .cc-tiles{ grid-template-columns:repeat(6,1fr); } }
+        @media (min-width:1000px){ .cc-tiles{ grid-template-columns:repeat(4,1fr); } }
         .cc-tile{ background:var(--tile); border:2px solid var(--tile-edge); border-radius:14px; padding:16px 14px; }
         .cc-tile b{ display:block; font-family:'Anton'; font-weight:400; font-size:clamp(22px,2.2vw,28px); line-height:1; margin-bottom:10px; }
         .cc-tile span{ font-size:14px; font-weight:600; line-height:1.3; }
@@ -256,6 +296,133 @@ export default function CoolCareers() {
         .cc-portal li::before{ content:counter(step); position:absolute; left:14px; top:50%; transform:translateY(-50%); width:28px; height:28px; border-radius:50%;
           background:${T.pineDeep}; color:${T.marigold}; display:grid; place-items:center; font-family:'Anton'; font-size:15px; }
 
+
+        /* ---------- the dark sections between the hero and the one-pager ----------
+           The page's cream "paper" carries the school-facing document; everything
+           about the game and the deck sits on the cyanotype ground instead,
+           because that is where the card illustrations have any contrast. */
+        .cc-dlabel{ font-family:'Space Mono', ui-monospace, monospace; font-size:12px; letter-spacing:.22em; color:${T.marigold}; margin-bottom:14px; }
+        .cc-dh{ font-size:clamp(32px,4.6vw,58px); margin-bottom:14px; }
+        .cc-dlede{ font-size:18px; line-height:1.5; color:${T.cream}cc; max-width:720px; }
+        .cc-panel{ background:${T.pineDeep}; border:2px solid ${T.cream}22; border-radius:18px; }
+
+        /* how the game works — five steps down a rail */
+        .cc-ride{ list-style:none; margin-top:clamp(26px,4vh,42px); display:grid; gap:12px; }
+        .cc-ride li{ display:grid; grid-template-columns:auto 1fr; gap:clamp(14px,2vw,20px); align-items:start;
+          background:${T.pineDeep}; border:2px solid ${T.cream}22; border-radius:16px; padding:18px clamp(16px,2.4vw,24px); }
+        .cc-ride .n{ flex:none; width:38px; height:38px; border-radius:50%; background:${T.marigold}; color:${T.ink};
+          display:grid; place-items:center; font-family:'Anton'; font-size:19px; }
+        .cc-ride b{ display:block; font-family:'Anton'; font-weight:400; letter-spacing:.01em; font-size:clamp(18px,2vw,22px); margin-bottom:5px; }
+        .cc-ride span{ display:block; font-size:15.5px; line-height:1.45; color:${T.cream}c4; }
+
+        /* the deck, counted out */
+        .cc-deck{ display:grid; gap:12px; grid-template-columns:repeat(2,1fr); margin-top:clamp(22px,3vh,32px); }
+        @media (min-width:880px){ .cc-deck{ grid-template-columns:repeat(4,1fr); } }
+        .cc-deck > div{ background:${T.pineDeep}; border:2px solid ${T.cream}22; border-radius:16px; padding:18px clamp(14px,2vw,20px); }
+        .cc-deck .n{ font-family:'Anton'; font-size:clamp(34px,4vw,48px); line-height:.9; }
+        .cc-deck b{ display:block; font-family:'Space Mono', ui-monospace, monospace; font-size:11.5px; letter-spacing:.14em;
+          text-transform:uppercase; color:${T.cream}; margin:10px 0 9px; }
+        .cc-deck p{ font-size:14px; line-height:1.42; color:${T.cream}aa; }
+        .cc-deck-foot{ margin-top:18px; font-size:15px; line-height:1.5; color:${T.cream}b0; max-width:760px; }
+
+        /* the four lines */
+        .cc-lines{ display:grid; gap:clamp(18px,2.6vw,26px); margin-top:clamp(26px,4vh,42px); }
+        .cc-line{ background:${T.pineDeep}; border:2px solid ${T.cream}22; border-left-width:7px; border-radius:18px;
+          padding:clamp(20px,3vw,30px); }
+        .cc-line-head{ display:flex; align-items:baseline; gap:clamp(12px,2vw,20px); flex-wrap:wrap; }
+        .cc-line-n{ font-family:'Anton'; font-size:clamp(38px,4.6vw,58px); line-height:.85; }
+        .cc-line h3{ font-family:'Anton', Impact, sans-serif; text-transform:uppercase; font-weight:400; letter-spacing:.01em;
+          font-size:clamp(23px,2.9vw,34px); line-height:1; }
+        .cc-line-blurb{ margin-top:12px; font-size:16.5px; line-height:1.45; color:${T.cream}d0; max-width:660px; }
+        .cc-cards{ list-style:none; display:grid; gap:10px; grid-template-columns:repeat(3,1fr); margin:clamp(18px,2.6vw,24px) 0 16px; }
+        @media (min-width:620px){ .cc-cards{ grid-template-columns:repeat(5,1fr); } }
+        @media (min-width:1000px){ .cc-cards{ grid-template-columns:repeat(7,1fr); } }
+        .cc-cards a{ display:block; line-height:0; border-radius:10px; overflow:hidden; border:2px solid ${T.cream}2e;
+          transition:transform .2s var(--ease-settle), border-color .2s var(--ease-settle); }
+        .cc-cards a:hover{ transform:translateY(-5px) rotate(-1.2deg); }
+        .cc-cards img{ display:block; width:100%; height:auto; }
+        .cc-more{ font-family:'Space Mono', ui-monospace, monospace; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
+          color:${T.cream}88; margin-bottom:10px; }
+        .cc-chips{ display:flex; flex-wrap:wrap; gap:8px; }
+        .cc-chip{ font-family:'Space Mono', ui-monospace, monospace; font-size:12px; letter-spacing:.03em; text-decoration:none;
+          border:1.5px solid ${T.cream}33; border-radius:999px; padding:7px 13px; color:${T.cream}cc;
+          transition:border-color .18s var(--ease-settle), color .18s var(--ease-settle); }
+        .cc-line-curric{ margin-top:18px; padding-top:15px; border-top:1px dashed ${T.cream}2e;
+          font-size:14.5px; line-height:1.5; color:${T.cream}a6; }
+        .cc-cross{ margin-top:clamp(26px,4vh,40px); display:grid; gap:clamp(18px,3vw,32px); align-items:center; grid-template-columns:1fr; }
+        @media (min-width:840px){ .cc-cross{ grid-template-columns:1.1fr .9fr; } }
+        .cc-cross h3{ font-family:'Anton'; font-weight:400; text-transform:uppercase; font-size:clamp(22px,2.7vw,32px); margin-bottom:10px; }
+        .cc-cross p{ font-size:16px; line-height:1.5; color:${T.cream}c4; margin-bottom:14px; }
+
+        /* the curriculum */
+        .cc-kit{ display:grid; gap:10px; grid-template-columns:repeat(2,1fr); margin-top:clamp(24px,3.5vh,36px); }
+        @media (min-width:760px){ .cc-kit{ grid-template-columns:repeat(4,1fr); } }
+        .cc-kit div{ background:${T.pineDeep}; border:2px solid ${T.cream}22; border-radius:14px; padding:15px 16px; }
+        .cc-kit b{ display:block; font-size:15px; margin-bottom:6px; color:${T.marigold}; }
+        .cc-kit span{ font-size:13.5px; line-height:1.4; color:${T.cream}a8; }
+        .cc-tiers{ display:grid; gap:12px; grid-template-columns:1fr; margin-top:18px; }
+        @media (min-width:760px){ .cc-tiers{ grid-template-columns:repeat(3,1fr); } }
+        .cc-tier{ display:flex; gap:16px; align-items:flex-start; background:${T.pineDeep}; border:2px solid ${T.sky}44;
+          border-radius:14px; padding:16px 18px; }
+        .cc-tier b{ font-family:'Anton'; font-weight:400; font-size:clamp(22px,2.4vw,28px); color:${T.sky}; line-height:1; white-space:nowrap; }
+        .cc-tier span{ font-size:14px; line-height:1.4; color:${T.cream}bb; }
+
+        /* the green line */
+        .cc-stops{ list-style:none; display:flex; flex-wrap:wrap; gap:0; align-items:center;
+          margin:clamp(24px,3.5vh,36px) 0 clamp(26px,4vh,40px); }
+        .cc-stops li{ display:flex; align-items:center; gap:10px; }
+        .cc-stops span{ display:flex; align-items:center; gap:9px; font-family:'Space Mono', ui-monospace, monospace;
+          font-size:12.5px; letter-spacing:.04em; color:${T.cream}d0; padding:7px 0; }
+        .cc-stops i{ width:11px; height:11px; border-radius:50%; background:${T.leaf}; box-shadow:0 0 0 3px ${T.leaf}33; }
+        .cc-stops em{ width:clamp(14px,2.4vw,34px); height:3px; background:${T.leaf}66; margin:0 10px; border-radius:2px; }
+        .cc-gl{ display:grid; gap:clamp(18px,3vw,30px); grid-template-columns:1fr; }
+        @media (min-width:900px){ .cc-gl{ grid-template-columns:1fr 1fr; } }
+        .cc-gl h3{ font-family:'Anton'; font-weight:400; text-transform:uppercase; font-size:clamp(19px,2.1vw,24px); margin-bottom:14px; color:${T.leaf}; }
+        .cc-dict{ list-style:none; display:grid; gap:1px; background:${T.cream}1c; border:2px solid ${T.cream}22; border-radius:14px; overflow:hidden; }
+        .cc-dict li{ display:grid; grid-template-columns:1fr 1.25fr; gap:14px; background:${T.pineDeep}; padding:12px 16px; font-size:14px; line-height:1.4; }
+        .cc-dict b{ font-weight:700; color:${T.cream}; }
+        .cc-dict span{ color:${T.cream}a8; }
+        .cc-rides{ list-style:none; display:grid; gap:10px; }
+        .cc-rides li{ background:${T.pineDeep}; border:2px solid ${T.leaf}44; border-radius:14px; padding:14px 16px; }
+        .cc-rides b{ display:block; font-size:15.5px; margin-bottom:4px; color:${T.leaf}; }
+        .cc-rides span{ font-size:14px; line-height:1.42; color:${T.cream}a8; }
+        .cc-gl-foot{ margin-top:clamp(22px,3vh,32px); padding:16px 20px; border-left:4px solid ${T.leaf};
+          background:${T.pineDeep}; border-radius:0 14px 14px 0; font-size:15.5px; line-height:1.5; color:${T.cream}c4; }
+
+        /* from spark to paycheck */
+        .cc-path{ display:grid; gap:12px; grid-template-columns:1fr; margin-top:clamp(26px,4vh,42px); }
+        @media (min-width:900px){ .cc-path{ grid-template-columns:repeat(4,1fr); } }
+        .cc-stage{ background:${T.pineDeep}; border:2px solid ${T.cream}22; border-top-width:6px; border-radius:16px; padding:18px clamp(15px,2vw,20px); }
+        .cc-stage .n{ font-family:'Space Mono', ui-monospace, monospace; font-size:12px; letter-spacing:.2em; }
+        .cc-stage h3{ font-family:'Anton'; font-weight:400; text-transform:uppercase; font-size:clamp(20px,2.3vw,26px); margin:8px 0 9px; }
+        .cc-stage p{ font-size:14.5px; line-height:1.45; color:${T.cream}aa; }
+        .cc-nums{ display:grid; gap:12px; grid-template-columns:repeat(2,1fr); margin-top:clamp(20px,3vh,28px); }
+        @media (min-width:880px){ .cc-nums{ grid-template-columns:repeat(4,1fr); } }
+        .cc-num{ border:2px solid ${T.cream}22; border-radius:16px; padding:18px clamp(14px,2vw,20px); background:${T.pineDeep}; }
+        .cc-num .n{ font-family:'Anton'; font-size:clamp(38px,4.4vw,54px); line-height:.9; color:${T.marigold}; }
+        .cc-num b{ display:block; font-family:'Space Mono', ui-monospace, monospace; font-size:11.5px; letter-spacing:.14em;
+          text-transform:uppercase; margin:9px 0 8px; }
+        .cc-num span{ font-size:13.5px; line-height:1.4; color:${T.cream}a0; }
+        .cc-path-foot{ margin-top:16px; font-family:'Space Mono', ui-monospace, monospace; font-size:12px; color:${T.cream}88; }
+        .cc-path-track{ margin-top:14px; font-size:15.5px; line-height:1.5; color:${T.cream}bb; max-width:760px; }
+
+        /* standards — inside the paper one-pager, so these are ink on cream */
+        .cc-std{ display:grid; gap:14px; grid-template-columns:1fr; margin-top:6px; }
+        @media (min-width:900px){ .cc-std{ grid-template-columns:repeat(3,1fr); } }
+        .cc-std > div{ background:var(--card); border:2.5px solid var(--ink); border-top-width:8px; border-radius:18px;
+          padding:20px clamp(16px,2.2vw,22px); box-shadow:6px 6px 0 #0000001a; }
+        .cc-std h3{ font-family:'Anton'; font-weight:400; text-transform:uppercase; font-size:clamp(21px,2.3vw,26px); margin-bottom:11px; }
+        .cc-std p{ font-size:14.5px; line-height:1.5; }
+        .cc-std p + p{ margin-top:11px; padding-top:11px; border-top:1px dashed #C9B58A; font-weight:700; }
+        .cc-std-label{ margin-top:clamp(40px,6vh,64px); }
+        .cc-std-h{ font-family:'Anton'; font-size:clamp(24px,3vw,34px); margin:0 0 20px; }
+
+        @media (max-width:560px){
+          .cc-dict li{ grid-template-columns:1fr; gap:4px; }
+          .cc-stops em{ display:none; }
+          .cc-stops li{ width:50%; }
+        }
+
         /* closing CTA + footer */
         .cc-cta{ text-align:center; }
         .cc-cta h2{ font-size:clamp(34px,5vw,60px); margin-bottom:12px; }
@@ -267,6 +434,7 @@ export default function CoolCareers() {
           .btn, .cc-video-facade img, .cc-play{ transition:none !important; }
           .btn:hover, .cc-video-facade:hover img, .cc-video-facade:hover .cc-play{ transform:none !important; }
           .cc-video, .cc-portal, .cc-buses{ transform:none; }
+          .cc-cards a{ transition:none !important; } .cc-cards a:hover{ transform:none !important; }
         }
       `}</style>
 
@@ -277,6 +445,7 @@ export default function CoolCareers() {
             <button className={lang === "en" ? "on" : ""} aria-pressed={lang === "en"} onClick={() => setLang("en")}>EN</button>
             <button className={lang === "es" ? "on" : ""} aria-pressed={lang === "es"} onClick={() => setLang("es")}>ES</button>
           </div>
+          <PageMenu lang={lang} />
           <a className="btn" href={LINKS.bookDemo}>{c.nav_cta}</a>
         </div>
       </nav>
@@ -297,6 +466,159 @@ export default function CoolCareers() {
           </p>
           <div className="cc-actions">
             <a className="btn big" href={LINKS.gamePortal}>{c.hero_portal}</a>
+            <a className="btn big ghost" href={LINKS.bookDemo}>{c.hero_demo}</a>
+          </div>
+        </section>
+
+        {/* HOW THE GAME WORKS */}
+        <section aria-labelledby="cc-game">
+          <div className="cc-wrap" style={{ paddingTop: 0 }}>
+            <div className="mono cc-dlabel">{c.game_label}</div>
+            <h2 id="cc-game" className="display cc-dh">{c.game_h}</h2>
+            <p className="cc-dlede">{c.game_lede}</p>
+            <ol className="cc-ride">
+              {c.game_steps.map(([b, t], i) => (
+                <li key={b}>
+                  <span className="n" aria-hidden="true">{i + 1}</span>
+                  <span><b>{b}</b><span>{t}</span></span>
+                </li>
+              ))}
+            </ol>
+
+            <h3 className="mono cc-dlabel" style={{ marginTop: "clamp(38px,5vh,58px)" }}>{c.deck_label}</h3>
+            <div className="cc-deck">
+              {c.deck.map(([n, b, t], i) => (
+                <div key={b}>
+                  <div className="n" style={{ color: [T.marigold, T.leaf, T.sky, T.coral][i] }}>{n}</div>
+                  <b>{b}</b>
+                  <p>{t}</p>
+                </div>
+              ))}
+            </div>
+            <p className="cc-deck-foot">{c.deck_foot}</p>
+          </div>
+        </section>
+
+        {/* FOUR LINES — the thematic areas, told in the cards themselves */}
+        <section aria-labelledby="cc-lines">
+          <div className="cc-wrap" style={{ paddingTop: 0 }}>
+            <div className="mono cc-dlabel">{c.themes_label}</div>
+            <h2 id="cc-lines" className="display cc-dh">{c.themes_h}</h2>
+            <p className="cc-dlede">{c.themes_lede}</p>
+            <div className="cc-lines">
+              {THEMES.map((line) => {
+                const t = c.themes[line.key];
+                const tint = hue(line.hue);
+                return (
+                  <article key={line.key} className="cc-line" style={{ borderLeftColor: tint }}>
+                    <div className="cc-line-head">
+                      <span className="cc-line-n" style={{ color: tint }}>{t.n}</span>
+                      <h3>{t.name}</h3>
+                    </div>
+                    <p className="cc-line-blurb">{t.blurb}</p>
+                    <CardRow cards={line.cards} more={c.themes_more} open={c.card_open} tint={tint} />
+                    <p className="cc-line-curric">{t.curric}</p>
+                  </article>
+                );
+              })}
+            </div>
+
+            <div className="cc-cross">
+              <div>
+                <h3>{c.crosscut_h}</h3>
+                <p>{c.crosscut_p}</p>
+                <div className="cc-chips">
+                  {CROSSCUT.filter((k) => !k.art).map((k) => (
+                    <a key={k.slug} className="cc-chip" href={DECK_CARD(k.slug)}>{k.name}</a>
+                  ))}
+                </div>
+              </div>
+              <ul className="cc-cards" style={{ margin: 0, gridTemplateColumns: "repeat(2,1fr)" }}>
+                {CROSSCUT.filter((k) => k.art).map((k) => (
+                  <li key={k.slug}>
+                    <a href={DECK_CARD(k.slug)} title={`${k.name} — ${c.card_open}`}>
+                      <img src={cardArtSm(k.slug)} srcSet={cardSrcSet(k.slug)}
+                           sizes="(max-width: 840px) 40vw, 200px"
+                           alt={k.name} width="300" height="420" loading="lazy" decoding="async" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* THE CURRICULUM */}
+        <section aria-labelledby="cc-curric">
+          <div className="cc-wrap" style={{ paddingTop: 0 }}>
+            <div className="mono cc-dlabel">{c.curric_label}</div>
+            <h2 id="cc-curric" className="display cc-dh">{c.curric_h}</h2>
+            <p className="cc-dlede">{c.curric_lede}</p>
+            <div className="cc-kit">
+              {c.curric_items.map(([b, t]) => <div key={b}><b>{b}</b><span>{t}</span></div>)}
+            </div>
+            <h3 className="cc-foot" style={{ color: T.cream, marginTop: "clamp(30px,4vh,44px)" }}>{c.tiers_h}</h3>
+            <div className="cc-tiers">
+              {c.tiers.map(([b, t]) => <div key={b} className="cc-tier"><b>{b}</b><span>{t}</span></div>)}
+            </div>
+            <p className="cc-path-foot">{c.tiers_foot}</p>
+          </div>
+        </section>
+
+        {/* THE GREEN LINE */}
+        <section aria-labelledby="cc-gl">
+          <div className="cc-wrap" style={{ paddingTop: 0 }}>
+            <div className="mono cc-dlabel">{c.gl_label}</div>
+            <h2 id="cc-gl" className="display cc-dh">{c.gl_h}</h2>
+            <p className="cc-dlede">{c.gl_lede}</p>
+            <ol className="cc-stops">
+              {c.gl_stops.map((stop, i) => (
+                <li key={stop}>
+                  {i > 0 && <em aria-hidden="true" />}
+                  <span><i aria-hidden="true" />{stop}</span>
+                </li>
+              ))}
+            </ol>
+            <div className="cc-gl">
+              <div>
+                <h3>{c.gl_dict_h}</h3>
+                <ul className="cc-dict">
+                  {c.gl_dict.map(([k, v]) => <li key={k}><b>{k}</b><span>{v}</span></li>)}
+                </ul>
+              </div>
+              <div>
+                <h3>{c.gl_rides_h}</h3>
+                <ul className="cc-rides">
+                  {c.gl_rides.map(([b, t]) => <li key={b}><b>{b}</b><span>{t}</span></li>)}
+                </ul>
+              </div>
+            </div>
+            <p className="cc-gl-foot">{c.gl_foot}</p>
+          </div>
+        </section>
+
+        {/* FROM SPARK TO PAYCHECK — the pathway, end to end */}
+        <section aria-labelledby="cc-path">
+          <div className="cc-wrap" style={{ paddingTop: 0 }}>
+            <div className="mono cc-dlabel">{c.path_label}</div>
+            <h2 id="cc-path" className="display cc-dh">{c.path_h}</h2>
+            <p className="cc-dlede">{c.path_lede}</p>
+            <div className="cc-path">
+              {c.path.map(([n, h, tone, t]) => (
+                <article key={n} className="cc-stage" style={{ borderTopColor: hue(tone) }}>
+                  <div className="n" style={{ color: hue(tone) }}>{n}</div>
+                  <h3>{h}</h3>
+                  <p>{t}</p>
+                </article>
+              ))}
+            </div>
+            <div className="cc-nums">
+              {c.path_nums.map(([n, b, t]) => (
+                <div key={b} className="cc-num"><div className="n">{n}</div><b>{b}</b><span>{t}</span></div>
+              ))}
+            </div>
+            <p className="cc-path-track">{c.path_track}</p>
+            <p className="cc-path-foot">{c.path_foot}</p>
           </div>
         </section>
 
@@ -339,6 +661,21 @@ export default function CoolCareers() {
                   <span>{s}</span>
                 </div>
               ))}
+            </div>
+
+            <h2 className="mono cc-label cc-std-label">{c.std_label}</h2>
+            <p className="cc-std-h">{c.std_h}</p>
+            <div className="cc-std">
+              {c.std.map(([h, tone, body, foot]) => {
+                const inkTone = tone === "leaf" ? "#1F6B3A" : tone === "sky" ? "#1C6A8A" : "#8A5300";
+                return (
+                  <div key={h} style={{ borderTopColor: inkTone }}>
+                    <h3 style={{ color: inkTone }}>{h}</h3>
+                    <p>{body}</p>
+                    <p>{foot}</p>
+                  </div>
+                );
+              })}
             </div>
 
             <div className="cc-district">
