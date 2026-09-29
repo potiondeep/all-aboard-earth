@@ -42,8 +42,7 @@ export function useLoopVideo(ref, { reduced }) {
    trailing slash depending on whether Vercel or the dev server served it. */
 const PAGES = [
   { href: LINKS.home,        en: "Home",                     es: "Inicio" },
-  { href: LINKS.coolCareers, en: "Cool Careers",             es: "Cool Careers",
-    sub: { href: LINKS.gamePortal, en: "Open Cool Careers portal", es: "Abre el portal de Cool Careers" } },
+  { href: LINKS.coolCareers, en: "Cool Careers",             es: "Cool Careers" },
   { href: LINKS.edutainment, en: "Environmental Edutainment", es: "Edutenimiento Ambiental" },
   { href: LINKS.regenArt,    en: "Regenerative Art",         es: "Arte Regenerativo" },
   { href: LINKS.contact,     en: "Contact Us",               es: "Contáctanos" },
@@ -113,21 +112,12 @@ export function PageMenu({ lang = "en" }) {
         {PAGES.map((p) => {
           const on = here === p;
           return (
-            <React.Fragment key={p.href}>
-              <li>
-                <a href={p.href} aria-current={on ? "page" : undefined} className={on ? "on" : ""}>
-                  {p[lang] || p.en}
-                  {on && <span className="sr-only"> — {t.here}</span>}
-                </a>
-              </li>
-              {/* The portal belongs to Cool Careers, not to the site — it sits
-                  indented under its page rather than adrift at the bottom. */}
-              {p.sub && (
-                <li className="pmenu-sub">
-                  <a href={p.sub.href}>{p.sub[lang] || p.sub.en} <span aria-hidden="true">↗</span></a>
-                </li>
-              )}
-            </React.Fragment>
+            <li key={p.href}>
+              <a href={p.href} aria-current={on ? "page" : undefined} className={on ? "on" : ""}>
+                {p[lang] || p.en}
+                {on && <span className="sr-only"> — {t.here}</span>}
+              </a>
+            </li>
           );
         })}
       </ul>
@@ -192,12 +182,6 @@ export const menuCss = `
   .pmenu-panel a:hover{ background:${T.cream}14; }
   .pmenu-panel a.on{ color:${T.marigold}; }
   .pmenu-panel a:focus-visible{ outline:3px solid ${T.sky}; outline-offset:-3px; }
-  .pmenu-sub a{ padding-left:28px; font-family:'Space Mono', ui-monospace, monospace; font-size:12px;
-    letter-spacing:.06em; color:${T.sky}; }
-  .pmenu-sub a::before{ content:""; position:absolute; margin-left:-16px; margin-top:8px;
-    width:8px; height:8px; border-left:1.5px solid ${T.sky}66; border-bottom:1.5px solid ${T.sky}66;
-    border-bottom-left-radius:3px; }
-  .pmenu-sub{ position:relative; }
   @media (prefers-reduced-motion: reduce){ .pmenu-chev{ transition:none; } }
 `;
 

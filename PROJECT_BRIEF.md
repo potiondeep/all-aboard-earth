@@ -16,8 +16,8 @@ Its plane clip is `felt-4-loop.*`, not `felt-4.*`: the original is a boomerang (
 the loop is its forward half with the last 1.25s dissolved back into its own opening. `felt-4.*` stays — there is no
 Desktop original behind it — and derives the loop if it ever needs rebuilding.
 Every CTA opens a pre-addressed email (`mailTo()` in `theme.js`). None go through the old Wix booking flow.
-Every nav carries a **page menu** (`PageMenu` in `src/pages/chrome.jsx`) — a dropdown of all five pages, marking the current page, with
-the game portal nested under Cool Careers where it belongs. The homepage and Cool Careers have their own nav and import `menuCss` separately.
+Every nav carries a **page menu** (`PageMenu` in `src/pages/chrome.jsx`) — a dropdown of the five pages, marking the current page. Pages
+only — the Cool Careers portal is reached from its own page, by the button closing the spark→paycheck arc. The homepage and Cool Careers have their own nav and import `menuCss` separately.
 
 ## `/cool-careers` — rebuilt 2026-09-28
 Written against `PROJECT_BRIEF.md` in `potiondeep/cool-careers`, not by feel. Five sections on the blue ground — the
