@@ -394,7 +394,6 @@ export default function CoolCareers() {
           text-transform:uppercase; margin:9px 0 8px; }
         .cc-num span{ font-size:13.5px; line-height:1.4; color:${T.cream}a0; }
         .cc-path-foot{ margin-top:16px; font-family:'Space Mono', ui-monospace, monospace; font-size:12px; color:${T.cream}88; }
-        .cc-path-track{ margin-top:14px; font-size:15.5px; line-height:1.5; color:${T.cream}bb; max-width:760px; }
 
         /* standards — inside the paper one-pager, so these are ink on cream */
         .cc-std{ display:grid; gap:14px; grid-template-columns:1fr; margin-top:6px; }
@@ -580,7 +579,6 @@ export default function CoolCareers() {
                 <div key={b} className="cc-num"><div className="n">{n}</div><b>{b}</b><span>{t}</span></div>
               ))}
             </div>
-            <p className="cc-path-track">{c.path_track}</p>
             <p className="cc-path-foot">{c.path_foot}</p>
           </div>
         </section>

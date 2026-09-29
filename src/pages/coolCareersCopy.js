@@ -84,7 +84,7 @@ export const ccCopy = {
     curric_label: "THE CURRICULUM",
     curric_h: "Every card is a lesson, already written.",
     curric_items: ["Teacher deck", "Infographic", "3 lesson plans", "3 reading passages", "Flashcards", "Quizzes, all three bands", "Performance task + rubric", "One-zip print bundle"],
-    tiers_h: "Three tiers, one switch.",
+    tiers_h: "Three grade tiers.",
     tiers: [["3–5", "Video, the reading, flashcards, a 3-question quiz"], ["6–8", "The reading, the infographic, a 5-question quiz"], ["9–12", "The infographic, the reading, a 5-question quiz, the performance task"]],
     tiers_foot: "A student picks a tier once; a teacher can pin one for the whole class.",
 
@@ -137,7 +137,6 @@ export const ccCopy = {
       ["340", "mentors", "People already doing the work, attached to the career they do"],
     ],
     path_foot: "Wages from the Bureau of Labor Statistics OEWS. Nothing on a card is invented.",
-    path_track: "My Path saves each student’s cards and opportunities across devices, without ever storing a name.",
 
     teachers_label: "WHAT TEACHERS GET",
     teachers: [
@@ -248,7 +247,7 @@ export const ccCopy = {
     curric_label: "EL CURRÍCULO",
     curric_h: "Cada carta es una lección, ya escrita.",
     curric_items: ["Presentación docente", "Infografía", "3 planes de clase", "3 lecturas", "Tarjetas", "Cuestionarios, los tres niveles", "Tarea de desempeño + rúbrica", "Paquete de impresión en un zip"],
-    tiers_h: "Tres niveles, un interruptor.",
+    tiers_h: "Tres niveles de grado.",
     tiers: [["3–5", "Video, la lectura, tarjetas, un cuestionario de 3 preguntas"], ["6–8", "La lectura, la infografía, un cuestionario de 5 preguntas"], ["9–12", "La infografía, la lectura, un cuestionario de 5 preguntas, la tarea de desempeño"]],
     tiers_foot: "El estudiante elige nivel una vez; el maestro puede fijar uno para toda la clase.",
 
@@ -298,7 +297,6 @@ export const ccCopy = {
       ["340", "mentores", "Gente que ya hace el trabajo, junto a la carrera que ejerce"],
     ],
     path_foot: "Salarios del OEWS del Bureau of Labor Statistics. Nada en una carta es inventado.",
-    path_track: "My Path guarda las cartas y oportunidades de cada estudiante entre dispositivos, sin guardar jamás un nombre.",
 
     teachers_label: "LO QUE RECIBEN LOS MAESTROS",
     teachers: [
