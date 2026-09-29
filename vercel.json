@@ -17,8 +17,8 @@
       "destination": "/regenerative-art/index.html"
     },
     {
-      "source": "/book-a-demo",
-      "destination": "/book-a-demo/index.html"
+      "source": "/contact",
+      "destination": "/contact/index.html"
     }
   ],
   "redirects": [
@@ -89,17 +89,17 @@
     },
     {
       "source": "/book-online",
-      "destination": "/book-a-demo",
+      "destination": "/contact",
       "permanent": true
     },
     {
       "source": "/service-page/:slug*",
-      "destination": "/book-a-demo",
+      "destination": "/contact",
       "permanent": true
     },
     {
       "source": "/booking-calendar/:slug*",
-      "destination": "/book-a-demo",
+      "destination": "/contact",
       "permanent": true
     },
     {
@@ -145,6 +145,11 @@
     {
       "source": "/copy-of-programs-events",
       "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/book-a-demo",
+      "destination": "/contact",
       "permanent": true
     }
   ],

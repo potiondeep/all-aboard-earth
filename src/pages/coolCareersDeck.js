@@ -85,3 +85,23 @@ export const CROSSCUT = [
   { slug: "environmental-journalist", name: "Environmental Journalist" },
   { slug: "artist", name: "Artist" },
 ];
+
+/**
+ * The station plate that opens each line — a painted scene from that career's
+ * own Station in the curriculum pipeline, not stock art and not a repeat of the
+ * card. One career stands in for its line.
+ */
+export const SCENES = {
+  energy: { slug: "photovoltaic-power-technician", alt: "A photovoltaic technician wiring a desert solar array at sunrise." },
+  land: { slug: "soil-microbiologist", alt: "A soil microbiologist at a field microscope, the living soil magnified beside her." },
+  water: { slug: "watershed-restoration-specialist", alt: "Two specialists laying erosion checks in a red-rock arroyo, testing the water." },
+  circular: { slug: "circular-supply-chain-specialist", alt: "A supply-chain specialist in a warehouse, goods circling back through the loop." },
+};
+
+/** Four plates from one card's teacher deck, shown as the deck itself. */
+export const DECK_PLATES = [
+  ["title", "The station's opening plate"],
+  ["standards", "The standards it carries"],
+  ["activity", "The activity it sets up"],
+  ["misconceptions", "The misconception it corrects"],
+];

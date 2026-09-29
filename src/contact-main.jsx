@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import BookDemo from "./pages/BookDemo.jsx";
+import Contact from "./pages/Contact.jsx";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BookDemo />
+    <Contact />
   </React.StrictMode>
 );

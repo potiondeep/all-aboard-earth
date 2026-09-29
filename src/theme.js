@@ -22,14 +22,14 @@ export const LINKS = {
   home: "/",
   coolCareers: "/cool-careers",
   edutainment: "/edutainment",
-  bookDemo: "/book-a-demo",
+  contact: "/contact",
   regenArt: "/regenerative-art",
   gamePortal: "https://cool-careers.allaboardearth.com",
   // Every CTA opens the visitor's own mail app, pre-addressed and pre-subjected,
   // rather than sending them through the Wix booking flow. One subject per ask,
   // so the inbox sorts itself.
   bookingMail: mailTo("All Aboard Earth Booking Request"),   // "Book a show"
-  demoMail: mailTo("Cool Careers Demo"),                     // "Book a pilot demo"
+  demoMail: mailTo("Cool Careers Pilot Demo"),               // "Book a pilot demo"
   commissionMail: mailTo("Regenerative Art Opportunity"),    // "Commission a project"
   inquiryMail: mailTo("All Aboard Earth Inquiry"),           // "Give us a holler"
   // "Hear the music" goes straight to the artist page, not the Wix grooves page.

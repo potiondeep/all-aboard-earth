@@ -44,13 +44,13 @@ Open copy/content questions. Art gaps live in `MISSING_ART.md`.
      internships / 340 mentors are row counts from the Wix CMS exports in that
      same repo. Re-check both when the platform moves, rather than editing by
      feel.
-   - **Two claims the page deliberately avoids**, because the repo says they are
-     not true yet: that every station has a video (6 of 104 branded reels have
-     landed) and that the curriculum is actually locked (migrations 0031 and
-     0033 are written but not applied, so the storage bucket is still public).
-     The page describes the access code as how a class gets set up, not as a
-     security boundary. **Tell me when both migrations have run** and the page
-     can say it plainly.
+   - ~~**The curriculum lock.**~~ **Applied 2026-09-28.** Migrations 0031 and
+     0033 have both run, so station rows are gated behind `has_access()` and the
+     bucket is private behind signed URLs. The district list now says the
+     curriculum is protected at the database and the file store, which it is.
+   - **One claim the page still avoids:** that every station has a video. 6 of
+     104 branded reels have landed; the page says "102 curated videos" across
+     the deck instead, which is the resource library, not per-station reels.
    - **The four thematic lines** (renewable energy · regenerative agriculture ·
      sustainable water · circular economy) are a second reading of the same 40
      career cards, grouped in `src/pages/coolCareersDeck.js`. The platform's own

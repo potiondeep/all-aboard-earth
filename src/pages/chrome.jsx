@@ -42,14 +42,15 @@ export function useLoopVideo(ref, { reduced }) {
    trailing slash depending on whether Vercel or the dev server served it. */
 const PAGES = [
   { href: LINKS.home,        en: "Home",                     es: "Inicio" },
-  { href: LINKS.coolCareers, en: "Cool Careers",             es: "Cool Careers" },
+  { href: LINKS.coolCareers, en: "Cool Careers",             es: "Cool Careers",
+    sub: { href: LINKS.gamePortal, en: "Open game portal", es: "Abre el portal del juego" } },
   { href: LINKS.edutainment, en: "Environmental Edutainment", es: "Edutenimiento Ambiental" },
   { href: LINKS.regenArt,    en: "Regenerative Art",         es: "Arte Regenerativo" },
-  { href: LINKS.bookDemo,    en: "Book a Pilot Demo",        es: "Reserva una demo" },
+  { href: LINKS.contact,     en: "Contact Us",               es: "Contáctanos" },
 ];
 const MENU_TEXT = {
-  en: { label: "Menu", here: "You are here", portal: "Game portal" },
-  es: { label: "Menú", here: "Estás aquí",  portal: "Portal del juego" },
+  en: { label: "Menu", here: "You are here" },
+  es: { label: "Menú", here: "Estás aquí" },
 };
 /* Both sides through the same normaliser: stripping the trailing slash turns
    the home path into "" on one side and "/" on the other, and home stops
@@ -112,23 +113,29 @@ export function PageMenu({ lang = "en" }) {
         {PAGES.map((p) => {
           const on = here === p;
           return (
-            <li key={p.href}>
-              <a href={p.href} aria-current={on ? "page" : undefined} className={on ? "on" : ""}>
-                {p[lang] || p.en}
-                {on && <span className="sr-only"> — {t.here}</span>}
-              </a>
-            </li>
+            <React.Fragment key={p.href}>
+              <li>
+                <a href={p.href} aria-current={on ? "page" : undefined} className={on ? "on" : ""}>
+                  {p[lang] || p.en}
+                  {on && <span className="sr-only"> — {t.here}</span>}
+                </a>
+              </li>
+              {/* The portal belongs to Cool Careers, not to the site — it sits
+                  indented under its page rather than adrift at the bottom. */}
+              {p.sub && (
+                <li className="pmenu-sub">
+                  <a href={p.sub.href}>{p.sub[lang] || p.sub.en} <span aria-hidden="true">↗</span></a>
+                </li>
+              )}
+            </React.Fragment>
           );
         })}
-        <li className="pmenu-sep">
-          <a href={LINKS.gamePortal}>{t.portal} <span aria-hidden="true">↗</span></a>
-        </li>
       </ul>
     </div>
   );
 }
 
-export function SiteNav({ lang, setLang, cta, ctaHref = LINKS.bookDemo }) {
+export function SiteNav({ lang, setLang, cta, ctaHref = LINKS.contact }) {
   return (
     <nav className="pg-nav">
       <a className="brand" href={LINKS.home}>ALL ABOARD <b>EARTH</b></a>
@@ -185,8 +192,12 @@ export const menuCss = `
   .pmenu-panel a:hover{ background:${T.cream}14; }
   .pmenu-panel a.on{ color:${T.marigold}; }
   .pmenu-panel a:focus-visible{ outline:3px solid ${T.sky}; outline-offset:-3px; }
-  .pmenu-sep{ margin-top:6px; padding-top:6px; border-top:1px solid ${T.cream}22; }
-  .pmenu-sep a{ font-family:'Space Mono', ui-monospace, monospace; font-size:12px; letter-spacing:.08em; color:${T.sky}; }
+  .pmenu-sub a{ padding-left:28px; font-family:'Space Mono', ui-monospace, monospace; font-size:12px;
+    letter-spacing:.06em; color:${T.sky}; }
+  .pmenu-sub a::before{ content:""; position:absolute; margin-left:-16px; margin-top:8px;
+    width:8px; height:8px; border-left:1.5px solid ${T.sky}66; border-bottom:1.5px solid ${T.sky}66;
+    border-bottom-left-radius:3px; }
+  .pmenu-sub{ position:relative; }
   @media (prefers-reduced-motion: reduce){ .pmenu-chev{ transition:none; } }
 `;
 
@@ -208,7 +219,7 @@ export const chromeCss = menuCss + `
   a{ color:inherit; }
   .pg-nav{ position:absolute; top:0; left:0; right:0; z-index:20; display:flex; align-items:center; justify-content:space-between; gap:12px;
     padding:20px clamp(16px,4vw,48px); }
-  .brand{ font-family:'Anton'; font-size:18px; letter-spacing:.06em; text-decoration:none; color:${T.cream}; }
+  .brand{ font-family:'Anton'; font-size:18px; letter-spacing:.06em; text-decoration:none; color:${T.cream}; white-space:nowrap; }
   .brand b{ color:${T.marigold}; font-weight:400; }
   .navr{ display:flex; gap:12px; align-items:center; }
   .lang{ display:flex; border:2px solid ${T.cream}44; border-radius:999px; overflow:hidden; }

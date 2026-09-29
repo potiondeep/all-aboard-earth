@@ -721,7 +721,8 @@ export default function App() {
         /* the hero runs up behind the nav: pulled up 120px (more than the nav is ever tall)
            and given the same 120px back as padding, so nothing below moves */
         main{ margin-top:-120px; }
-        .brand{ font-family:'Anton'; font-size:18px; letter-spacing:.06em; }
+        .brand{ font-family:'Anton'; font-size:18px; letter-spacing:.06em; white-space:nowrap; }
+        @media (max-width:560px){ .brand{ font-size:15px; } .navr .btn{ display:none; } }
         .brand b{ color:${T.marigold}; }
         .navr{ display:flex; gap:12px; align-items:center; }
         .lang{ display:flex; border:2px solid ${T.cream}44; border-radius:999px; overflow:hidden; }
@@ -1224,7 +1225,7 @@ export default function App() {
             <button className={lang === "en" ? "on" : ""} onClick={() => setLang("en")}>EN</button>
             <button className={lang === "es" ? "on" : ""} onClick={() => setLang("es")}>ES</button>
           </div>
-          <a className="btn" href={LINKS.bookDemo}>{c.nav_cta}</a>
+          <a className="btn" href={LINKS.contact}>{c.nav_cta}</a>
         </div>
       </nav>
 

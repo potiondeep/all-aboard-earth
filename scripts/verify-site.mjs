@@ -19,7 +19,7 @@ const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const LOCAL = /localhost|127\.0\.0\.1/.test(BASE);
 // The dev server serves each entry from its directory, so it needs the trailing
 // slash; on Vercel the clean path is rewritten to the same file.
-const PAGES = ["/", "/cool-careers", "/edutainment", "/regenerative-art", "/book-a-demo"]
+const PAGES = ["/", "/cool-careers", "/edutainment", "/regenerative-art", "/contact"]
   .map((p) => (LOCAL && p !== "/" ? p + "/" : p));
 
 /** Redirects worth checking every time: the first two are the printed QR codes. */
@@ -27,7 +27,8 @@ const REDIRECTS = [
   ["/coolcareers/artist", "cards.allaboardearth.com/coolcareers/artist"],
   ["/coolactions/green-hustle", "cards.allaboardearth.com/coolactions/green-hustle"],
   ["/grooves", "open.spotify.com"],
-  ["/book-online", "/book-a-demo"],
+  ["/book-online", "/contact"],
+  ["/book-a-demo", "/contact"],
 ];
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));

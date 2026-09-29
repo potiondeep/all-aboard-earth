@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { T, LINKS } from "../theme.js";
 import { ccCopy } from "./coolCareersCopy.js";
 import { PageMenu, menuCss } from "./chrome.jsx";
-import { THEMES, CROSSCUT } from "./coolCareersDeck.js";
+import { THEMES, CROSSCUT, SCENES, DECK_PLATES } from "./coolCareersDeck.js";
 import { cardArtSm, cardSrcSet, DECK_CARD } from "../wixCardArt.js";
 
 /* ============================================================
@@ -119,6 +119,8 @@ function MusicVideo({ label, title }) {
  * Every card and every chip opens the Deck Explorer on that slug — the deck is
  * the product, so the page should never be a dead end in front of it.
  */
+const scene = (slug, w) => `/art/cool-careers/stations/${slug}-${w}.webp`;
+
 function CardRow({ cards, more, open, tint }) {
   const drawn = cards.filter((k) => k.art);
   const rest = cards.filter((k) => !k.art);
@@ -182,7 +184,7 @@ export default function CoolCareers() {
         /* nav — same as the homepage, transparent over the hero */
         .cc-nav{ position:absolute; top:0; left:0; right:0; z-index:20; display:flex; align-items:center; justify-content:space-between; gap:12px;
           padding:20px clamp(16px,4vw,48px); }
-        .brand{ font-family:'Anton'; font-size:18px; letter-spacing:.06em; text-decoration:none; color:${T.cream}; }
+        .brand{ font-family:'Anton'; font-size:18px; letter-spacing:.06em; text-decoration:none; color:${T.cream}; white-space:nowrap; }
         .brand b{ color:${T.marigold}; font-weight:400; }
         .navr{ display:flex; gap:12px; align-items:center; }
         .lang{ display:flex; border:2px solid ${T.cream}44; border-radius:999px; overflow:hidden; }
@@ -329,6 +331,13 @@ export default function CoolCareers() {
         .cc-lines{ display:grid; gap:clamp(18px,2.6vw,26px); margin-top:clamp(26px,4vh,42px); }
         .cc-line{ background:${T.pineDeep}; border:2px solid ${T.cream}22; border-left-width:7px; border-radius:18px;
           padding:clamp(20px,3vw,30px); }
+        /* The line opens on a painted plate from that career's own station, so
+           the section carries the curriculum's look rather than describing it. */
+        .cc-line-top{ display:grid; gap:clamp(16px,2.4vw,24px); grid-template-columns:1fr; align-items:center;
+          margin-bottom:clamp(16px,2.4vw,22px); }
+        @media (min-width:720px){ .cc-line-top{ grid-template-columns:180px 1fr; align-items:start; } }
+        .cc-plate{ display:block; width:100%; height:auto; border-radius:12px; border:2px solid ${T.cream}2e;
+          box-shadow:0 12px 28px #00000040; }
         .cc-line-head{ display:flex; align-items:baseline; gap:clamp(12px,2vw,20px); flex-wrap:wrap; }
         .cc-line-n{ font-family:'Anton'; font-size:clamp(38px,4.6vw,58px); line-height:.85; }
         .cc-line h3{ font-family:'Anton', Impact, sans-serif; text-transform:uppercase; font-weight:400; letter-spacing:.01em;
@@ -354,12 +363,16 @@ export default function CoolCareers() {
         .cc-cross h3{ font-family:'Anton'; font-weight:400; text-transform:uppercase; font-size:clamp(22px,2.7vw,32px); margin-bottom:10px; }
         .cc-cross p{ font-size:16px; line-height:1.5; color:${T.cream}c4; margin-bottom:14px; }
 
-        /* the curriculum */
-        .cc-kit{ display:grid; gap:10px; grid-template-columns:repeat(2,1fr); margin-top:clamp(24px,3.5vh,36px); }
-        @media (min-width:760px){ .cc-kit{ grid-template-columns:repeat(4,1fr); } }
-        .cc-kit div{ background:${T.pineDeep}; border:2px solid ${T.cream}22; border-radius:14px; padding:15px 16px; }
-        .cc-kit b{ display:block; font-size:15px; margin-bottom:6px; color:${T.marigold}; }
-        .cc-kit span{ font-size:13.5px; line-height:1.4; color:${T.cream}a8; }
+        /* the curriculum — the teacher deck shown, then what a station holds
+           as a plain list, because the plates already carry the weight */
+        .cc-plates{ display:grid; gap:10px; grid-template-columns:repeat(2,1fr); margin:clamp(24px,3.5vh,36px) 0 0; }
+        @media (min-width:820px){ .cc-plates{ grid-template-columns:repeat(4,1fr); } }
+        .cc-plates img{ display:block; width:100%; height:auto; border-radius:10px; border:2px solid ${T.cream}2e; }
+        .cc-plates figcaption{ grid-column:1 / -1; margin-top:4px; font-family:'Space Mono', ui-monospace, monospace;
+          font-size:11.5px; letter-spacing:.06em; color:${T.cream}88; }
+        .cc-kit{ list-style:none; display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+        .cc-kit li{ font-family:'Space Mono', ui-monospace, monospace; font-size:12px; letter-spacing:.03em;
+          border:1.5px solid ${T.marigold}55; border-radius:999px; padding:7px 13px; color:${T.cream}d0; }
         .cc-tiers{ display:grid; gap:12px; grid-template-columns:1fr; margin-top:18px; }
         @media (min-width:760px){ .cc-tiers{ grid-template-columns:repeat(3,1fr); } }
         .cc-tier{ display:flex; gap:16px; align-items:flex-start; background:${T.pineDeep}; border:2px solid ${T.sky}44;
@@ -446,7 +459,7 @@ export default function CoolCareers() {
             <button className={lang === "es" ? "on" : ""} aria-pressed={lang === "es"} onClick={() => setLang("es")}>ES</button>
           </div>
           <PageMenu lang={lang} />
-          <a className="btn" href={LINKS.bookDemo}>{c.nav_cta}</a>
+          <a className="btn" href={LINKS.contact}>{c.nav_cta}</a>
         </div>
       </nav>
 
@@ -466,7 +479,7 @@ export default function CoolCareers() {
           </p>
           <div className="cc-actions">
             <a className="btn big" href={LINKS.gamePortal}>{c.hero_portal}</a>
-            <a className="btn big ghost" href={LINKS.bookDemo}>{c.hero_demo}</a>
+            <a className="btn big ghost" href={LINKS.contact}>{c.hero_demo}</a>
           </div>
         </section>
 
@@ -511,13 +524,20 @@ export default function CoolCareers() {
                 const tint = hue(line.hue);
                 return (
                   <article key={line.key} className="cc-line" style={{ borderLeftColor: tint }}>
-                    <div className="cc-line-head">
-                      <span className="cc-line-n" style={{ color: tint }}>{t.n}</span>
-                      <h3>{t.name}</h3>
+                    <div className="cc-line-top">
+                      <img className="cc-plate" src={scene(SCENES[line.key].slug, 280)}
+                           srcSet={`${scene(SCENES[line.key].slug, 280)} 280w, ${scene(SCENES[line.key].slug, 560)} 560w`}
+                           sizes="(max-width: 720px) 100vw, 180px" alt={SCENES[line.key].alt}
+                           width="560" height="750" loading="lazy" decoding="async" />
+                      <div>
+                        <div className="cc-line-head">
+                          <span className="cc-line-n" style={{ color: tint }}>{t.n}</span>
+                          <h3>{t.name}</h3>
+                        </div>
+                        <p className="cc-line-blurb">{t.blurb}</p>
+                      </div>
                     </div>
-                    <p className="cc-line-blurb">{t.blurb}</p>
                     <CardRow cards={line.cards} more={c.themes_more} open={c.card_open} tint={tint} />
-                    <p className="cc-line-curric">{t.curric}</p>
                   </article>
                 );
               })}
@@ -554,9 +574,18 @@ export default function CoolCareers() {
             <div className="mono cc-dlabel">{c.curric_label}</div>
             <h2 id="cc-curric" className="display cc-dh">{c.curric_h}</h2>
             <p className="cc-dlede">{c.curric_lede}</p>
-            <div className="cc-kit">
-              {c.curric_items.map(([b, t]) => <div key={b}><b>{b}</b><span>{t}</span></div>)}
-            </div>
+            <figure className="cc-plates">
+              {DECK_PLATES.map(([k, alt]) => (
+                <img key={k} src={`/art/cool-careers/stations/deck-${k}-450.webp`}
+                     srcSet={`/art/cool-careers/stations/deck-${k}-450.webp 450w, /art/cool-careers/stations/deck-${k}-900.webp 900w`}
+                     sizes="(max-width: 820px) 46vw, 240px" alt={alt}
+                     width="900" height="502" loading="lazy" decoding="async" />
+              ))}
+              <figcaption>{c.curric_cap}</figcaption>
+            </figure>
+            <ul className="cc-kit">
+              {c.curric_items.map((b) => <li key={b}>{b}</li>)}
+            </ul>
             <h3 className="cc-foot" style={{ color: T.cream, marginTop: "clamp(30px,4vh,44px)" }}>{c.tiers_h}</h3>
             <div className="cc-tiers">
               {c.tiers.map(([b, t]) => <div key={b} className="cc-tier"><b>{b}</b><span>{t}</span></div>)}
@@ -709,7 +738,7 @@ export default function CoolCareers() {
             <BusLoop caption={c.hero_caption} />
             <h2 className="display">{c.cta_head}</h2>
             <p>{c.cta_sub}</p>
-            <a className="btn big" href={LINKS.bookDemo}>{c.cta_btn}</a>
+            <a className="btn big" href={LINKS.contact}>{c.cta_btn}</a>
           </div>
         </section>
       </main>
