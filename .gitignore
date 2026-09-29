@@ -28,3 +28,6 @@ dist-ssr
 !.env.example
 .vercel
 .DS_Store
+
+# scratch verification scripts written beside the repo during a session
+/.*.mjs

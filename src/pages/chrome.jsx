@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { T, LINKS } from "../theme.js";
 
 /* Shared furniture for the sub pages: nav, footer, and the CSS both need.
@@ -37,6 +37,97 @@ export function useLoopVideo(ref, { reduced }) {
   return ready;
 }
 
+/* The site is five separate HTML entries, so there is no router to ask where we
+   are — the path is the only source of truth, and it arrives with or without a
+   trailing slash depending on whether Vercel or the dev server served it. */
+const PAGES = [
+  { href: LINKS.home,        en: "Home",                     es: "Inicio" },
+  { href: LINKS.coolCareers, en: "Cool Careers",             es: "Cool Careers" },
+  { href: LINKS.edutainment, en: "Environmental Edutainment", es: "Edutenimiento Ambiental" },
+  { href: LINKS.regenArt,    en: "Regenerative Art",         es: "Arte Regenerativo" },
+  { href: LINKS.bookDemo,    en: "Book a Pilot Demo",        es: "Reserva una demo" },
+];
+const MENU_TEXT = {
+  en: { label: "Menu", here: "You are here", portal: "Game portal" },
+  es: { label: "Menú", here: "Estás aquí",  portal: "Portal del juego" },
+};
+/* Both sides through the same normaliser: stripping the trailing slash turns
+   the home path into "" on one side and "/" on the other, and home stops
+   matching itself. */
+const norm = (path) => path.replace(/\/+$/, "") || "/";
+const samePage = (href) =>
+  typeof window !== "undefined" && norm(window.location.pathname) === norm(href);
+
+/**
+ * The page picker. A button that drops a list of every page, on every page.
+ * Closes on Escape (focus goes back to the button), on a click outside, and on
+ * a scroll — the nav is absolute over the hero on most pages, so a panel left
+ * open would travel up the screen with it.
+ */
+export function PageMenu({ lang = "en" }) {
+  const t = MENU_TEXT[lang] || MENU_TEXT.en;
+  const [open, setOpen] = useState(false);
+  const wrap = useRef(null);
+  const btn = useRef(null);
+  const here = PAGES.find((p) => samePage(p.href));
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e) => { if (!wrap.current?.contains(e.target)) setOpen(false); };
+    const onKey = (e) => {
+      if (e.key === "Escape") { setOpen(false); btn.current?.focus(); return; }
+      if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+      const items = [...wrap.current.querySelectorAll(".pmenu-panel a")];
+      const at = items.indexOf(document.activeElement);
+      const next = e.key === "ArrowDown" ? at + 1 : at - 1;
+      const target = items[(next + items.length) % items.length];
+      if (target) { e.preventDefault(); target.focus(); }
+    };
+    const onScroll = () => setOpen(false);
+    document.addEventListener("pointerdown", onDown);
+    document.addEventListener("keydown", onKey);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      document.removeEventListener("pointerdown", onDown);
+      document.removeEventListener("keydown", onKey);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [open]);
+
+  return (
+    <div className={"pmenu" + (open ? " open" : "")} ref={wrap}>
+      <button ref={btn} className="pmenu-btn" aria-expanded={open} aria-haspopup="true"
+              aria-controls="pmenu-panel"
+              onClick={() => setOpen((v) => !v)}
+              onKeyDown={(e) => {
+                if (e.key !== "ArrowDown") return;
+                e.preventDefault(); setOpen(true);
+                requestAnimationFrame(() => wrap.current?.querySelector(".pmenu-panel a")?.focus());
+              }}>
+        <span className="pmenu-long">{here ? here[lang] || here.en : t.label}</span>
+        <span className="pmenu-short">{t.label}</span>
+        <i className="pmenu-chev" aria-hidden="true" />
+      </button>
+      <ul id="pmenu-panel" className="pmenu-panel" hidden={!open}>
+        {PAGES.map((p) => {
+          const on = here === p;
+          return (
+            <li key={p.href}>
+              <a href={p.href} aria-current={on ? "page" : undefined} className={on ? "on" : ""}>
+                {p[lang] || p.en}
+                {on && <span className="sr-only"> — {t.here}</span>}
+              </a>
+            </li>
+          );
+        })}
+        <li className="pmenu-sep">
+          <a href={LINKS.gamePortal}>{t.portal} <span aria-hidden="true">↗</span></a>
+        </li>
+      </ul>
+    </div>
+  );
+}
+
 export function SiteNav({ lang, setLang, cta, ctaHref = LINKS.bookDemo }) {
   return (
     <nav className="pg-nav">
@@ -46,6 +137,7 @@ export function SiteNav({ lang, setLang, cta, ctaHref = LINKS.bookDemo }) {
           <button className={lang === "en" ? "on" : ""} aria-pressed={lang === "en"} onClick={() => setLang("en")}>EN</button>
           <button className={lang === "es" ? "on" : ""} aria-pressed={lang === "es"} onClick={() => setLang("es")}>ES</button>
         </div>
+        <PageMenu lang={lang} />
         <a className="btn" href={ctaHref}>{cta}</a>
       </div>
     </nav>
@@ -62,8 +154,44 @@ export function SiteFooter({ footer, give }) {
   );
 }
 
+/** The page picker's styles. Exported separately because the homepage and Cool
+    Careers carry their own nav and their own <style>, and neither uses chromeCss. */
+export const menuCss = `
+  .pmenu .sr-only{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+  .pmenu{ position:relative; }
+  .pmenu-btn{ display:flex; align-items:center; gap:8px; background:none; cursor:pointer;
+    border:2px solid ${T.cream}44; border-radius:999px; color:${T.cream};
+    font-family:'Space Mono', ui-monospace, monospace; font-size:12px; letter-spacing:.06em;
+    padding:6px 14px; max-width:46vw; }
+  .pmenu-btn span{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .pmenu-short{ display:none; }
+  /* Narrow, the page's own name is too long to sit beside the wordmark without
+     wrapping it — the panel still marks where you are. */
+  @media (max-width:620px){
+    .pmenu-long{ display:none; } .pmenu-short{ display:inline; }
+    .pmenu-panel{ min-width:min(78vw, 280px); }
+  }
+  .pmenu-btn:hover{ border-color:${T.marigold}; color:${T.marigold}; }
+  .pmenu-chev{ flex:none; width:7px; height:7px; border-right:2px solid currentColor; border-bottom:2px solid currentColor;
+    transform:translateY(-2px) rotate(45deg); transition:transform .18s var(--ease-settle, ease); }
+  .pmenu.open .pmenu-chev{ transform:translateY(1px) rotate(-135deg); }
+  .pmenu.open .pmenu-btn{ border-color:${T.marigold}; color:${T.marigold}; }
+  .pmenu-panel{ position:absolute; right:0; top:calc(100% + 10px); z-index:60; min-width:250px;
+    list-style:none; margin:0; padding:6px; background:${T.pineDeep};
+    border:2px solid ${T.cream}2e; border-radius:14px; box-shadow:0 18px 40px #00000066; }
+  .pmenu-panel[hidden]{ display:none; }
+  .pmenu-panel a{ display:block; padding:10px 14px; border-radius:9px; text-decoration:none;
+    color:${T.cream}; font-family:'Bricolage Grotesque', system-ui, sans-serif; font-size:15px; font-weight:600; }
+  .pmenu-panel a:hover{ background:${T.cream}14; }
+  .pmenu-panel a.on{ color:${T.marigold}; }
+  .pmenu-panel a:focus-visible{ outline:3px solid ${T.sky}; outline-offset:-3px; }
+  .pmenu-sep{ margin-top:6px; padding-top:6px; border-top:1px solid ${T.cream}22; }
+  .pmenu-sep a{ font-family:'Space Mono', ui-monospace, monospace; font-size:12px; letter-spacing:.08em; color:${T.sky}; }
+  @media (prefers-reduced-motion: reduce){ .pmenu-chev{ transition:none; } }
+`;
+
 /** Base CSS shared by the sub pages — palette, type, nav, buttons, footer. */
-export const chromeCss = `
+export const chromeCss = menuCss + `
   * { margin:0; padding:0; box-sizing:border-box; }
   html, body { background:${T.pine}; }
   .pg{

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { T, LINKS } from "./theme.js";
+import { PageMenu, menuCss } from "./pages/chrome.jsx";
 
 import { cardArt, DECK_CARD } from "./wixCardArt.js";
 import Seed from "./ornaments/Seed.jsx";
@@ -643,7 +644,7 @@ export default function App() {
 
   return (
     <div className="page">
-      <style>{`
+      <style>{menuCss + `
 
         * { margin:0; padding:0; box-sizing:border-box; }
         .page {
@@ -1218,6 +1219,7 @@ export default function App() {
       <nav>
         <div className="brand">ALL ABOARD <b>EARTH</b></div>
         <div className="navr">
+          <PageMenu lang={lang} />
           <div className="lang">
             <button className={lang === "en" ? "on" : ""} onClick={() => setLang("en")}>EN</button>
             <button className={lang === "es" ? "on" : ""} onClick={() => setLang("es")}>ES</button>
