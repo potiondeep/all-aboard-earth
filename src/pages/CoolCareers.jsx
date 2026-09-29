@@ -215,7 +215,8 @@ export default function CoolCareers() {
         .cc-actions{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
 
         /* the felt buses, framed small by the closing CTA — stretched full-bleed they show their seams */
-        .cc-buses{ position:relative; width:min(760px, 100%); aspect-ratio:16/9; margin:0 auto clamp(26px,4vh,36px); overflow:hidden;
+        .cc-buses{ position:relative; width:min(760px, 100%); aspect-ratio:16/9;
+          margin:clamp(72px,10vh,132px) auto clamp(26px,4vh,36px); overflow:hidden;
           border:6px solid ${T.cream}; border-radius:18px; box-shadow:0 18px 40px #0008; transform:rotate(.6deg); background:${T.pineDeep}; }
         .cc-buses-media{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
         .cc-buses-vid{ opacity:0; }

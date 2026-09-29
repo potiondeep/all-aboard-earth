@@ -9,7 +9,17 @@ import { bdCopy } from "./contactCopy.js";
    sorts itself; the page never asks anyone to choose a form.
    ============================================================ */
 
-/** The felt solar plane, looped. Loads only as it nears the viewport; a still for reduced motion. */
+/**
+ * The felt solar plane, looped. Loads only as it nears the viewport; a still
+ * for reduced motion.
+ *
+ * felt-4 is a boomerang — its second half is the first played backwards, which
+ * reads as the plane flying off and then reversing. felt-4-loop is the forward
+ * half only, with its last 1.25s dissolved back into its own opening, so the
+ * clip returns to frame one without ever flying backwards. The seam measures
+ * ~8x tighter than an arbitrary frame pair, i.e. a single frame of motion.
+ * felt-4.* stays put: there is no Desktop original behind it.
+ */
 function SolarPlane({ alt }) {
   const ref = useRef(null);
   const [reduced] = useState(reducedMotion);
@@ -17,13 +27,13 @@ function SolarPlane({ alt }) {
   return (
     <figure className="bd-plane" ref={ref}>
       {ready && !reduced ? (
-        <video muted loop playsInline preload="auto" poster="/art/felt/felt-4-poster.webp"
-               width="1280" height="536" aria-label={alt}>
-          <source src="/art/felt/felt-4.webm" type="video/webm" />
-          <source src="/art/felt/felt-4.mp4" type="video/mp4" />
+        <video muted loop playsInline preload="auto" poster="/art/felt/felt-4-loop-poster.webp"
+               width="1280" height="526" aria-label={alt}>
+          <source src="/art/felt/felt-4-loop.webm" type="video/webm" />
+          <source src="/art/felt/felt-4-loop.mp4" type="video/mp4" />
         </video>
       ) : (
-        <img src="/art/felt/felt-4-poster.webp" alt={alt} width="1280" height="536" decoding="async" />
+        <img src="/art/felt/felt-4-loop-poster.webp" alt={alt} width="1280" height="526" decoding="async" />
       )}
     </figure>
   );

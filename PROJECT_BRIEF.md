@@ -12,6 +12,9 @@ unofficial until Michael signs off (`CONTENT_NEEDED.md`). Push to `main` deploys
 `/` home · `/cool-careers` · `/edutainment` · `/regenerative-art` · `/contact`
 `/contact` replaced `/book-a-demo` on 2026-09-28 and carries three routes — pilot demo, live show, art commission —
 each with its own mail subject. `/book-a-demo` and `/book-online` 308 to it, and nothing redirects *through* it.
+Its plane clip is `felt-4-loop.*`, not `felt-4.*`: the original is a boomerang (second half = first half reversed), so
+the loop is its forward half with the last 1.25s dissolved back into its own opening. `felt-4.*` stays — there is no
+Desktop original behind it — and derives the loop if it ever needs rebuilding.
 Every CTA opens a pre-addressed email (`mailTo()` in `theme.js`). None go through the old Wix booking flow.
 Every nav carries a **page menu** (`PageMenu` in `src/pages/chrome.jsx`) — a dropdown of all five pages, marking the current page, with
 the game portal nested under Cool Careers where it belongs. The homepage and Cool Careers have their own nav and import `menuCss` separately.

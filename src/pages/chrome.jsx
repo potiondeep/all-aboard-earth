@@ -43,7 +43,7 @@ export function useLoopVideo(ref, { reduced }) {
 const PAGES = [
   { href: LINKS.home,        en: "Home",                     es: "Inicio" },
   { href: LINKS.coolCareers, en: "Cool Careers",             es: "Cool Careers",
-    sub: { href: LINKS.gamePortal, en: "Open game portal", es: "Abre el portal del juego" } },
+    sub: { href: LINKS.gamePortal, en: "Open Cool Careers portal", es: "Abre el portal de Cool Careers" } },
   { href: LINKS.edutainment, en: "Environmental Edutainment", es: "Edutenimiento Ambiental" },
   { href: LINKS.regenArt,    en: "Regenerative Art",         es: "Arte Regenerativo" },
   { href: LINKS.contact,     en: "Contact Us",               es: "Contáctanos" },
