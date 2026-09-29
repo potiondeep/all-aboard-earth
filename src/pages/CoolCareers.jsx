@@ -14,8 +14,12 @@ const YT_ID = "G1IOqfjphIw"; // "Cool Careers" music video, All Aboard Earth on 
 const reducedMotion = () =>
   typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/** The felt solar eagle. It keeps its white studio background, and the overview
- *  section is painted the same white so the two merge with no visible edge. */
+/**
+ * The felt solar eagle, keyed to real alpha so it sits on the page rather than
+ * in a box. HEVC first for Safari, VP9 (alpha_mode=1) for everyone else — the
+ * The white-background eagle-plain.* cut existed only for the cream section
+ * this page used to have; it is deleted, and re-derives from this pair.
+ */
 function Eagle({ label }) {
   const ref = useRef(null);
   const [ready, setReady] = useState(false);
@@ -38,12 +42,12 @@ function Eagle({ label }) {
   return (
     <div ref={ref} className="cc-eagle" role="img" aria-label={label}>
       {ready ? (
-        <video muted loop playsInline preload="auto" poster="/art/cool-careers/eagle-plain-poster.webp" width="560" height="546" aria-hidden="true">
-          <source src="/art/cool-careers/eagle-plain.webm" type="video/webm" />
-          <source src="/art/cool-careers/eagle-plain.mp4" type="video/mp4" />
+        <video muted loop playsInline preload="auto" poster="/art/cool-careers/eagle-poster.webp" width="560" height="545" aria-hidden="true">
+          <source src="/art/cool-careers/eagle-hevc.mov" type="video/quicktime" />
+          <source src="/art/cool-careers/eagle.webm" type="video/webm" />
         </video>
       ) : (
-        <img src="/art/cool-careers/eagle-plain-poster.webp" alt="" width="560" height="546" loading="lazy" decoding="async" />
+        <img src="/art/cool-careers/eagle-poster.webp" alt="" width="560" height="545" loading="lazy" decoding="async" />
       )}
     </div>
   );
@@ -170,8 +174,11 @@ export default function CoolCareers() {
         html, body { background:${T.pine}; }
         .cc-page{
           --ease-settle: cubic-bezier(.22, 1, .36, 1);
-          --ink:#12203A; --paper:#FDFDFD; --card:#F4EAD7; --tile:#EFE4C8; --tile-edge:#D9C68E;
-          background:${T.pine}; color:${T.cream}; font-family:'Bricolage Grotesque', system-ui, sans-serif;
+          /* cyanotype paper: the tone, with the fibre texture blended into it —
+             the same ground the other four pages stand on */
+          background:${T.pine} url('/art/paper-cyanotype.webp') repeat top center / 1400px auto;
+          background-blend-mode:soft-light;
+          color:${T.cream}; font-family:'Bricolage Grotesque', system-ui, sans-serif;
           min-height:100vh; overflow-x:hidden; -webkit-font-smoothing:antialiased;
         }
         .display{ font-family:'Anton', Impact, sans-serif; text-transform:uppercase; letter-spacing:.01em; line-height:.95; font-weight:400; }
@@ -222,29 +229,30 @@ export default function CoolCareers() {
         .cc-buses-vid{ opacity:0; }
         .cc-buses-vid.on{ opacity:1; }
 
-        /* overview — the one-pager, on paper */
-        .cc-paper{ background:var(--paper); color:var(--ink); }
+        /* overview — the one-pager. It was a cream island; now it sits on the
+           same blue as everything else and its cards match the dark panels. */
+        .cc-paper{ background:transparent; color:${T.cream}; }
         .cc-wrap{ max-width:1100px; margin:0 auto; padding:clamp(56px,9vh,100px) clamp(16px,4vw,48px); }
-        .cc-label{ font-size:12px; letter-spacing:.22em; color:#1F6B3A; margin-bottom:14px; }
+        .cc-label{ font-size:12px; letter-spacing:.22em; color:${T.marigold}; margin-bottom:14px; }
         .cc-why{ display:grid; gap:14px; grid-template-columns:1fr; }
         @media (min-width:860px){ .cc-why{ grid-template-columns:repeat(3,1fr); } }
         /* Side by side the cards stretch to the tallest, so the source line
            goes to the floor of each rather than trailing its own text. */
         .cc-why .cc-stat{ margin-bottom:0; align-content:space-between; }
-        .cc-card{ background:var(--card); border:2.5px solid var(--ink); border-radius:18px; box-shadow:6px 6px 0 #0000001a; }
+        .cc-card{ background:${T.pineDeep}; border:2px solid ${T.cream}22; border-radius:18px; }
         .cc-stat{ padding:18px 20px 14px; margin-bottom:14px; display:grid; grid-template-columns:auto 1fr; column-gap:16px; align-items:start; }
         .cc-stat .n{ font-family:'Anton'; font-size:clamp(46px,5.4vw,64px); line-height:.9; white-space:nowrap; }
         .cc-stat p{ font-weight:700; font-size:16px; line-height:1.3; padding-top:6px; }
-        .cc-stat small{ grid-column:1 / -1; margin-top:10px; font-family:'Space Mono'; font-size:11px; color:#6B7280; }
+        .cc-stat small{ grid-column:1 / -1; margin-top:10px; font-family:'Space Mono'; font-size:11px; color:${T.cream}80; }
         .cc-foot{ font-family:'Anton'; text-transform:none; font-size:clamp(20px,2.2vw,24px); letter-spacing:.01em; margin-top:8px; }
-        .cc-district{ margin-top:clamp(32px,5vh,48px); border:3px solid #1F6B3A; border-radius:18px; background:var(--card); padding:22px clamp(18px,3vw,30px); box-shadow:6px 6px 0 #0000001a; }
+        .cc-district{ margin-top:clamp(32px,5vh,48px); border:2px solid ${T.leaf}66; border-radius:18px; background:${T.pineDeep}; padding:22px clamp(18px,3vw,30px); }
         .cc-district ul{ list-style:none; display:grid; gap:10px 34px; grid-template-columns:1fr; }
         @media (min-width:800px){ .cc-district ul{ grid-template-columns:1fr 1fr; } }
         .cc-district li{ position:relative; padding-left:26px; font-size:15px; line-height:1.4; }
-        .cc-district li::before{ content:"✓"; position:absolute; left:0; top:0; color:#1F6B3A; font-weight:800; }
-        .cc-pilot{ margin-top:clamp(28px,4vh,40px); padding-top:24px; border-top:2px dashed #C9B58A; }
+        .cc-district li::before{ content:"✓"; position:absolute; left:0; top:0; color:${T.leaf}; font-weight:800; }
+        .cc-pilot{ margin-top:clamp(28px,4vh,40px); padding-top:24px; border-top:2px dashed ${T.cream}33; }
         .cc-pilot p{ font-weight:800; font-size:clamp(17px,2vw,21px); }
-        .cc-pilot p span{ color:#1F6B3A; }
+        .cc-pilot p span{ color:${T.marigold}; }
 
         /* music video */
         .cc-video{ position:relative; max-width:960px; margin:0 auto; aspect-ratio:16/9; border-radius:20px; overflow:hidden;
@@ -259,22 +267,15 @@ export default function CoolCareers() {
         .cc-video-facade:hover .cc-play{ transform:scale(1.08); }
         @media (max-width:560px){ .cc-play{ width:60px; height:60px; margin:-30px 0 0 -30px; font-size:22px; padding-left:4px; } .cc-video, .cc-buses{ border-width:4px; } }
 
-        /* The portal button closes the spark→paycheck arc, so it gets room
-           above it rather than sitting tight under the source line. */
-        .cc-portal-open{ margin-top:clamp(26px,4vh,38px); }
+        /* Sits opposite the eagle; on a phone the row stacks and it centres. */
+        .cc-portal-open{ align-self:center; }
         /* the solar eagle fills the open space beside the standards heading */
-        .cc-pipeline-row{ display:flex; align-items:flex-end; justify-content:space-between; gap:clamp(16px,3vw,40px);
-          margin:clamp(40px,6vh,64px) 0 22px; }
+        .cc-pipeline-row{ display:flex; align-items:center; justify-content:space-between; gap:clamp(16px,3vw,40px);
+          flex-wrap:wrap; margin:clamp(40px,6vh,64px) 0 clamp(34px,5vh,52px); }
         .cc-eagle{ flex:none; width:clamp(120px,18vw,230px); line-height:0; margin-bottom:-6px; }
-        /* the clip's own white is a hair off the section's after compression, so melt its
-           edges rather than chase an exact match */
+        /* Real alpha, so no edge to melt — just a shadow to seat it on the page. */
         .cc-eagle video, .cc-eagle img{ width:100%; height:auto; display:block;
-          -webkit-mask-image:linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%),
-                             linear-gradient(to bottom, transparent 0, #000 6%, #000 94%, transparent 100%);
-          -webkit-mask-composite:source-in;
-          mask-image:linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%),
-                     linear-gradient(to bottom, transparent 0, #000 6%, #000 94%, transparent 100%);
-          mask-composite:intersect; }
+          filter:drop-shadow(0 14px 22px rgba(0,0,0,.42)); }
         @media (max-width:560px){ .cc-eagle{ width:110px; } }
 
         /* ---------- the dark sections between the hero and the one-pager ----------
@@ -378,11 +379,11 @@ export default function CoolCareers() {
         /* standards — inside the paper one-pager, so these are ink on cream */
         .cc-std{ display:grid; gap:14px; grid-template-columns:1fr; margin-top:6px; }
         @media (min-width:900px){ .cc-std{ grid-template-columns:repeat(3,1fr); } }
-        .cc-std > div{ background:var(--card); border:2.5px solid var(--ink); border-top-width:8px; border-radius:18px;
-          padding:20px clamp(16px,2.2vw,22px); box-shadow:6px 6px 0 #0000001a; }
+        .cc-std > div{ background:${T.pineDeep}; border:2px solid ${T.cream}22; border-top-width:7px; border-radius:18px;
+          padding:20px clamp(16px,2.2vw,22px); }
         .cc-std h3{ font-family:'Anton'; font-weight:400; text-transform:uppercase; font-size:clamp(21px,2.3vw,26px); margin-bottom:11px; }
         .cc-std p{ font-size:14.5px; line-height:1.5; }
-        .cc-std p + p{ margin-top:11px; padding-top:11px; border-top:1px dashed #C9B58A; font-weight:700; }
+        .cc-std p + p{ margin-top:11px; padding-top:11px; border-top:1px dashed ${T.cream}2e; font-weight:700; }
         .cc-std-h{ font-family:'Anton'; font-size:clamp(24px,3vw,34px); margin:0 0 20px; }
 
         @media (max-width:560px){
@@ -558,9 +559,6 @@ export default function CoolCareers() {
               ))}
             </div>
             <p className="cc-path-foot">{c.path_foot}</p>
-            {/* The arc ends here, so the way in does too — this is the page's
-                one portal link now that the marigold block is gone. */}
-            <a className="btn big cc-portal-open" href={LINKS.gamePortal}>{c.portal_open} →</a>
           </div>
         </section>
 
@@ -571,28 +569,28 @@ export default function CoolCareers() {
             <div className="cc-why">
               {c.why.map((w) => (
                 <div key={w.n} className="cc-card cc-stat">
-                  <div className="n" style={{ color: w.hue === "leaf" ? "#1F6B3A" : w.hue === "sky" ? "#1C6A8A" : "#D2502C" }}>{w.n}</div>
+                  <div className="n" style={{ color: hue(w.hue) }}>{w.n}</div>
                   <p>{w.text}</p>
                   <small>Source: {w.src}</small>
                 </div>
               ))}
             </div>
 
-            {/* The eagle keeps its seat — it now fills the space beside the
-                standards heading rather than beside the pipeline line. */}
+            {/* The eagle and the way in, facing each other across the gap the
+                removed sections left behind. */}
             <div className="cc-pipeline-row">
-              <div>
-                <h2 className="mono cc-label cc-std-label">{c.std_label}</h2>
-                <p className="cc-std-h">{c.std_h}</p>
-              </div>
+              <a className="btn big cc-portal-open" href={LINKS.gamePortal}>{c.portal_open} →</a>
               <Eagle label={c.eagle_alt} />
             </div>
+
+            <h2 className="mono cc-label">{c.std_label}</h2>
+            <p className="cc-std-h">{c.std_h}</p>
             <div className="cc-std">
               {c.std.map(([h, tone, body, foot]) => {
-                const inkTone = tone === "leaf" ? "#1F6B3A" : tone === "sky" ? "#1C6A8A" : "#8A5300";
+                const tint = hue(tone);
                 return (
-                  <div key={h} style={{ borderTopColor: inkTone }}>
-                    <h3 style={{ color: inkTone }}>{h}</h3>
+                  <div key={h} style={{ borderTopColor: tint }}>
+                    <h3 style={{ color: tint }}>{h}</h3>
                     <p>{body}</p>
                     <p>{foot}</p>
                   </div>

@@ -32,8 +32,11 @@ marigold game-portal block all came out, along with several stray lines of body 
 The eagle stayed and moved to sit beside the standards heading. The one portal link is now a single button closing the
 spark→paycheck arc, labelled "Open the Cool Careers Portal"; the hero keeps only "Book a pilot demo". The stats section
 is titled "Why it's important" rather than "Why now".
-Standards (NGSS · NM HB 171 financial literacy · 2024 Career Clusters + Perkins V) sit in the cream one-pager beside
-district approval. Thematic grouping lives in `src/pages/coolCareersDeck.js`; it is a second reading of the 40 career
+Standards (NGSS · NM HB 171 financial literacy · 2024 Career Clusters + Perkins V) sit beside district approval.
+The page went fully cyanotype on 2026-09-29 — the cream "paper" one-pager is gone, so all five pages now share the same
+mottled blue ground. Its cards became the dark panels the rest of the page uses, and the eagle switched to the alpha
+pair (`eagle.webm` alpha_mode=1 + `eagle-hevc.mov`) that already existed; the white-background `eagle-plain.*` cut was
+deleted. The portal button moved from the foot of the arc to sit opposite the eagle. Thematic grouping lives in `src/pages/coolCareersDeck.js`; it is a second reading of the 40 career
 cards, not the platform's spine, which is still Clusters + the seven elements.
 Migrations 0031 + 0033 were applied 2026-09-28, so the page now states plainly that station rows and files are gated at
 the database and the file store. **One claim it still avoids:** that every station has a video — 6 of 104 branded reels
