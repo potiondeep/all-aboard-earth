@@ -257,9 +257,6 @@ export default function CoolCareers() {
         @media (min-width:800px){ .cc-district ul{ grid-template-columns:1fr 1fr; } }
         .cc-district li{ position:relative; padding-left:26px; font-size:15px; line-height:1.4; }
         .cc-district li::before{ content:"✓"; position:absolute; left:0; top:0; color:${T.leaf}; font-weight:800; }
-        .cc-pilot{ margin-top:clamp(28px,4vh,40px); padding-top:24px; border-top:2px dashed ${T.cream}33; }
-        .cc-pilot p{ font-weight:800; font-size:clamp(17px,2vw,21px); }
-        .cc-pilot p span{ color:${T.marigold}; }
 
         /* music video */
         .cc-video{ position:relative; max-width:960px; margin:0 auto; aspect-ratio:16/9; border-radius:20px; overflow:hidden;
@@ -592,7 +589,7 @@ export default function CoolCareers() {
 
         {/* PROGRAM OVERVIEW — the one-pager */}
         <section className="cc-paper" aria-labelledby="cc-why">
-          <div className="cc-wrap">
+          <div className="cc-wrap" style={{ paddingTop: 0 }}>
             <h2 id="cc-why" className="mono cc-label">{c.why_label}</h2>
             <div className="cc-why">
               {c.why.map((w) => (
@@ -638,10 +635,6 @@ export default function CoolCareers() {
             <div className="cc-district">
               <h2 className="mono cc-label">{c.district_label}</h2>
               <ul>{c.district.map(([b, rest]) => <li key={b}><b>{b}</b>{rest}</li>)}</ul>
-            </div>
-
-            <div className="cc-pilot">
-              <p>{c.pilot_title}<span>{c.pilot_hi}</span></p>
             </div>
           </div>
         </section>

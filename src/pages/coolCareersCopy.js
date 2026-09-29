@@ -139,9 +139,6 @@ export const ccCopy = {
       ["One code, one URL", " — a class is set up in the time it takes to write it on the board"],
       ["Curriculum actually protected", " — station rows and files are gated at the database and the file store, not just hidden in the interface"],
     ],
-    pilot_title: "Pilot free with one class period —",
-    pilot_hi: " 2026–27 cohort now booking.",
-
     video_title: "Cool Careers",
     video_sub: "Workforce Development for Sustainability",
     video_play: "Play the Cool Careers music video",
@@ -273,9 +270,6 @@ export const ccCopy = {
       ["Un código, una dirección", " — una clase queda lista en lo que tardas en escribirla en el pizarrón"],
       ["Currículo realmente protegido", " — las filas y los archivos de estación están restringidos en la base de datos y en el almacenamiento, no solo ocultos en la interfaz"],
     ],
-    pilot_title: "Piloto gratis con una sola clase —",
-    pilot_hi: " inscripciones abiertas para 2026–27.",
-
     video_title: "Cool Careers",
     video_sub: "Desarrollo laboral para la sostenibilidad",
     video_play: "Reproducir el video musical de Cool Careers",
