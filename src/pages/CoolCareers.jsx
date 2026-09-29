@@ -16,9 +16,19 @@ const reducedMotion = () =>
 
 /**
  * The felt solar eagle, keyed to real alpha so it sits on the page rather than
- * in a box. HEVC first for Safari, VP9 (alpha_mode=1) for everyone else — the
- * The white-background eagle-plain.* cut existed only for the cream section
- * this page used to have; it is deleted, and re-derives from this pair.
+ * in a box. HEVC first for Safari, VP9 (alpha_mode=1) for everyone else.
+ *
+ * Re-keyed 2026-09-29 off the white studio master. The head is cream and the
+ * solar panel has white highlights, so a threshold on whiteness eats them —
+ * only the background is connected to the frame border, so the key floods in
+ * from the edge instead and never reaches interior cream. Loose tuft fibres
+ * survived as islands floating beside the head (invisible on white, debris on
+ * blue), so only the component joined to the bird is kept. 12px of transparent
+ * padding too: the old frames ran flush to the bottom edge.
+ *
+ * eagle-plain.* is that white master. Nothing renders it, but it is the only
+ * unkeyed copy of this clip — there is no Desktop original — so it stays as
+ * what a re-key would start from.
  */
 function Eagle({ label }) {
   const ref = useRef(null);
@@ -42,12 +52,12 @@ function Eagle({ label }) {
   return (
     <div ref={ref} className="cc-eagle" role="img" aria-label={label}>
       {ready ? (
-        <video muted loop playsInline preload="auto" poster="/art/cool-careers/eagle-poster.webp" width="560" height="545" aria-hidden="true">
+        <video muted loop playsInline preload="auto" poster="/art/cool-careers/eagle-poster.webp" width="584" height="570" aria-hidden="true">
           <source src="/art/cool-careers/eagle-hevc.mov" type="video/quicktime" />
           <source src="/art/cool-careers/eagle.webm" type="video/webm" />
         </video>
       ) : (
-        <img src="/art/cool-careers/eagle-poster.webp" alt="" width="560" height="545" loading="lazy" decoding="async" />
+        <img src="/art/cool-careers/eagle-poster.webp" alt="" width="584" height="570" loading="lazy" decoding="async" />
       )}
     </div>
   );
