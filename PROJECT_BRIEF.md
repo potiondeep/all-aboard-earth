@@ -39,7 +39,10 @@ master into a fresh alpha pair (`eagle.webm` alpha_mode=1 + `eagle-hevc.mov`). T
 keying debris — tuft fibres floating beside the head, invisible on white — and its frames ran flush to the bottom edge.
 The new key is two-pass (strict everywhere, looser only below 70% of the frame where the floor shadow lives and there is
 no cream to lose), keeps only the component joined to the bird, and pads 12px so nothing touches an edge.
-**`eagle-plain.*` stays**: nothing renders it, but it is the only unkeyed copy of the clip and what a re-key starts from. The portal button moved from the foot of the arc to sit opposite the eagle. Thematic grouping lives in `src/pages/coolCareersDeck.js`; it is a second reading of the 40 career
+**`eagle-plain.*` stays**: nothing renders it, but it is the only unkeyed copy of the clip and what a re-key starts from. The way into the portal sits opposite the eagle: a framed screenshot of the student home a visitor actually lands on,
+with a full-width button under it. **The screenshot goes stale** — it is `public/art/cool-careers/portal-preview-*.webp`,
+captured from the free tier of cool-careers.allaboardearth.com with the access banner scrolled off. Re-shoot it when the
+portal's home screen changes. Thematic grouping lives in `src/pages/coolCareersDeck.js`; it is a second reading of the 40 career
 cards, not the platform's spine, which is still Clusters + the seven elements.
 Migrations 0031 + 0033 were applied 2026-09-28, so the page now states plainly that station rows and files are gated at
 the database and the file store. **One claim it still avoids:** that every station has a video — 6 of 104 branded reels

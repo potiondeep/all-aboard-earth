@@ -277,16 +277,30 @@ export default function CoolCareers() {
         .cc-video-facade:hover .cc-play{ transform:scale(1.08); }
         @media (max-width:560px){ .cc-play{ width:60px; height:60px; margin:-30px 0 0 -30px; font-size:22px; padding-left:4px; } .cc-video, .cc-buses{ border-width:4px; } }
 
-        /* Sits opposite the eagle; on a phone the row stacks and it centres. */
-        .cc-portal-open{ align-self:center; }
+        /* The way in: what the portal looks like, then the button. The shot is
+           inert to the keyboard — the button beside it goes to the same place,
+           so a second stop on the same target is just noise. */
+        .cc-way-in{ flex:0 1 540px; min-width:0; }
+        .cc-portal-shot{ display:block; line-height:0; border-radius:16px; overflow:hidden;
+          border:5px solid ${T.cream}; box-shadow:0 18px 40px #00000059; transform:rotate(-.6deg);
+          transition:transform .25s var(--ease-settle); }
+        .cc-portal-shot:hover{ transform:rotate(-.6deg) translateY(-4px); }
+        .cc-portal-shot img{ display:block; width:100%; height:auto; }
+        /* Full width of the shot above it, so the pair reads as one way in
+           rather than a picture with a button loose beside it. */
+        .cc-portal-open{ display:block; width:100%; text-align:center;
+          margin-top:clamp(20px,3vh,28px); font-size:clamp(17px,1.9vw,21px);
+          padding:clamp(17px,2.4vh,22px) clamp(20px,3vw,32px); }
         /* the solar eagle fills the open space beside the standards heading */
         .cc-pipeline-row{ display:flex; align-items:center; justify-content:space-between; gap:clamp(16px,3vw,40px);
           flex-wrap:wrap; margin:clamp(40px,6vh,64px) 0 clamp(34px,5vh,52px); }
-        .cc-eagle{ flex:none; width:clamp(120px,18vw,230px); line-height:0; margin-bottom:-6px; }
+        .cc-eagle{ flex:none; width:clamp(130px,21vw,265px); line-height:0; margin-bottom:-6px; }
+        /* Once the row wraps there is no "opposite" left, so both halves centre. */
+        @media (max-width:760px){ .cc-pipeline-row{ justify-content:center; } }
         /* Real alpha, so no edge to melt — just a shadow to seat it on the page. */
         .cc-eagle video, .cc-eagle img{ width:100%; height:auto; display:block;
           filter:drop-shadow(0 14px 22px rgba(0,0,0,.42)); }
-        @media (max-width:560px){ .cc-eagle{ width:110px; } }
+        @media (max-width:560px){ .cc-eagle{ width:130px; } }
 
         /* ---------- the dark sections between the hero and the one-pager ----------
            The page's cream "paper" carries the school-facing document; everything
@@ -586,10 +600,19 @@ export default function CoolCareers() {
               ))}
             </div>
 
-            {/* The eagle and the way in, facing each other across the gap the
-                removed sections left behind. */}
+            {/* The way in, and the eagle facing it. The screenshot is the
+                student home a visitor actually lands on, so the button is not
+                asking anyone to click into the dark. */}
             <div className="cc-pipeline-row">
-              <a className="btn big cc-portal-open" href={LINKS.gamePortal}>{c.portal_open} →</a>
+              <div className="cc-way-in">
+                <a className="cc-portal-shot" href={LINKS.gamePortal} tabIndex={-1} aria-hidden="true">
+                  <img src="/art/cool-careers/portal-preview-450.webp"
+                       srcSet="/art/cool-careers/portal-preview-450.webp 450w, /art/cool-careers/portal-preview-900.webp 900w"
+                       sizes="(max-width: 760px) 92vw, 540px" alt=""
+                       width="900" height="753" loading="lazy" decoding="async" />
+                </a>
+                <a className="btn cc-portal-open" href={LINKS.gamePortal}>{c.portal_open} →</a>
+              </div>
               <Eagle label={c.eagle_alt} />
             </div>
 
