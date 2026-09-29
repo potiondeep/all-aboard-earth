@@ -30,19 +30,10 @@ export const ccCopy = {
     ],
 
     /* ---- how the game works ---- */
-    game_label: "HOW THE GAME WORKS",
-    game_h: "A deck, a story, and a line to ride.",
-    game_lede: "One URL, any browser. No app store, no accounts, no student emails.",
-    deck_label: "THE DECK",
-    deck: [
-      ["40", "career cards", "Real regenerative jobs, each one flipping to its training cost and its wages"],
-      ["45", "action cards", "The work itself — fire ecology, passive solar design, degraded land restoration"],
-      ["14", "Green Line cards", "The financial literacy suit, dealt into the same game"],
-    ],
 
     /* ---- the four thematic areas ---- */
     themes_label: "FOUR LINES OUT OF THE STATION",
-    themes_h: "Where the careers actually live.",
+    themes_h: "The careers.",
     themes_lede: "Thirty-six of the forty career cards ride one of four lines. Open any card for its video, programs, internships and mentors.",
     themes: {
       energy: {
@@ -159,18 +150,9 @@ export const ccCopy = {
       { n: "1 de 3", hue: "coral", text: "nuevos empleos energéticos en EE. UU. en años recientes fueron para trabajadores latinos/hispanos — y el 29% de la fuerza laboral energética tiene menos de 30 años", src: "US DOE, USEER 2025" },
     ],
 
-    game_label: "CÓMO FUNCIONA EL JUEGO",
-    game_h: "Una baraja, una historia y una línea que recorrer.",
-    game_lede: "Una sola dirección, cualquier navegador. Sin tienda de apps, sin cuentas, sin correos estudiantiles.",
-    deck_label: "LA BARAJA",
-    deck: [
-      ["40", "cartas de carrera", "Empleos regenerativos reales; cada una se voltea para mostrar su costo de formación y su salario"],
-      ["45", "cartas de acción", "El trabajo mismo — ecología del fuego, diseño solar pasivo, restauración de tierras degradadas"],
-      ["14", "cartas de la Línea Verde", "El palo de educación financiera, repartido dentro del mismo juego"],
-    ],
 
     themes_label: "CUATRO LÍNEAS DESDE LA ESTACIÓN",
-    themes_h: "Dónde viven realmente las carreras.",
+    themes_h: "Las carreras.",
     themes_lede: "Treinta y seis de las cuarenta cartas de carrera recorren una de cuatro líneas. Abre cualquiera para ver su video, programas, pasantías y mentores.",
     themes: {
       energy: {

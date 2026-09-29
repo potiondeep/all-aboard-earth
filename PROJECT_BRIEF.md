@@ -20,15 +20,15 @@ Every nav carries a **page menu** (`PageMenu` in `src/pages/chrome.jsx`) — a d
 only — the Cool Careers portal is reached from its own page, by the button closing the spark→paycheck arc. The homepage and Cool Careers have their own nav and import `menuCss` separately.
 
 ## `/cool-careers` — rebuilt 2026-09-28
-Written against `PROJECT_BRIEF.md` in `potiondeep/cool-careers`, not by feel. Five sections on the blue ground — the
-deck (40 career / 45 action / 14 Green Line cards); four thematic lines (renewable energy 12, regenerative agriculture
+Written against `PROJECT_BRIEF.md` in `potiondeep/cool-careers`, not by feel. Four sections on the blue ground — the
+four thematic lines (renewable energy 12, regenerative agriculture
 9, sustainable water 7, circular economy 8) told in 23 self-hosted card illustrations that link into the Deck Explorer;
 the 104-station curriculum, shown as four real plates from one card's teacher deck; The Green Line; and the
 spark→paycheck arc (102 videos · 86 education routes · 85 internships · 340 mentors · Fare & Return on BLS wages).
-Trimmed hard on 2026-09-29 at Michael's direction, in three passes: the five-step game walkthrough, the element-card
-tile, the cross-cutting careers block, the per-line station plates, "What students do", "What teachers get" and the
-marigold game-portal block all came out, along with several stray lines of body copy. Page height 11,537 → 8,562px at
-1280. Orphaned art was deleted with them, so nothing unused ships.
+Trimmed hard on 2026-09-29 at Michael's direction, over several passes: the five-step game walkthrough, the whole
+"How the game works" section and its deck tiles, the element-card tile, the cross-cutting careers block, the per-line
+station plates, the 01–04 pathway stages, "What students do", "What teachers get", the marigold game-portal block and
+the pilot line all came out, along with several stray lines of body copy. Page height 11,537 → 7,909px at 1280. Orphaned art was deleted with them, so nothing unused ships.
 The eagle stayed and moved to sit beside the standards heading. The one portal link is now a single button closing the
 spark→paycheck arc, labelled "Open the Cool Careers Portal"; the hero keeps only "Book a pilot demo". The stats section
 is titled "Why it's important" rather than "Why now".

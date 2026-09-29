@@ -311,15 +311,6 @@ export default function CoolCareers() {
         .cc-dlede{ font-size:18px; line-height:1.5; color:${T.cream}cc; max-width:720px; }
         .cc-panel{ background:${T.pineDeep}; border:2px solid ${T.cream}22; border-radius:18px; }
 
-        /* the deck, counted out */
-        .cc-deck{ display:grid; gap:12px; grid-template-columns:repeat(2,1fr); margin-top:clamp(22px,3vh,32px); }
-        @media (min-width:760px){ .cc-deck{ grid-template-columns:repeat(3,1fr); } }
-        .cc-deck > div{ background:${T.pineDeep}; border:2px solid ${T.cream}22; border-radius:16px; padding:18px clamp(14px,2vw,20px); }
-        .cc-deck .n{ font-family:'Anton'; font-size:clamp(34px,4vw,48px); line-height:.9; }
-        .cc-deck b{ display:block; font-family:'Space Mono', ui-monospace, monospace; font-size:11.5px; letter-spacing:.14em;
-          text-transform:uppercase; color:${T.cream}; margin:10px 0 9px; }
-        .cc-deck p{ font-size:14px; line-height:1.42; color:${T.cream}aa; }
-
         /* the four lines */
         .cc-lines{ display:grid; gap:clamp(18px,2.6vw,26px); margin-top:clamp(26px,4vh,42px); }
         .cc-line{ background:${T.pineDeep}; border:2px solid ${T.cream}22; border-left-width:7px; border-radius:18px;
@@ -451,25 +442,6 @@ export default function CoolCareers() {
           <p className="cc-band">
             {c.hero_band.map(([t, h], i) => (h ? <b key={i} style={{ color: hue(h) }}>{t}</b> : <React.Fragment key={i}>{t}</React.Fragment>))}
           </p>
-        </section>
-
-        {/* HOW THE GAME WORKS */}
-        <section aria-labelledby="cc-game">
-          <div className="cc-wrap" style={{ paddingTop: 0 }}>
-            <div className="mono cc-dlabel">{c.game_label}</div>
-            <h2 id="cc-game" className="display cc-dh">{c.game_h}</h2>
-            <p className="cc-dlede">{c.game_lede}</p>
-            <h3 className="mono cc-dlabel" style={{ marginTop: "clamp(38px,5vh,58px)" }}>{c.deck_label}</h3>
-            <div className="cc-deck">
-              {c.deck.map(([n, b, t], i) => (
-                <div key={b}>
-                  <div className="n" style={{ color: [T.marigold, T.leaf, T.sky, T.coral][i] }}>{n}</div>
-                  <b>{b}</b>
-                  <p>{t}</p>
-                </div>
-              ))}
-            </div>
-          </div>
         </section>
 
         {/* FOUR LINES — the thematic areas, told in the cards themselves */}
