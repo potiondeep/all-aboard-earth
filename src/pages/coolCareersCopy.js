@@ -20,25 +20,15 @@ export const ccCopy = {
     hero_title: "Play a game. Find a future.",
     hero_title_b: "One class period.",
     hero_band: [["Standards-aligned", "marigold"], [", ", null], ["zero-student-data", "sky"], [", ", null], ["CTE-funded", "leaf"], [" career exploration that plugs into an existing class period.", null]],
-    hero_portal: "Open the game portal",
     hero_demo: "Book a pilot demo",
     hero_caption: "Felt school buses charging up on sun and wind.",
 
-    why_label: "WHY NOW",
+    why_label: "WHY IT'S IMPORTANT",
     why: [
       { n: "3×", hue: "leaf", text: "Clean energy jobs grew 3× faster than the rest of the US economy last year — nearly 100,000 new jobs", src: "US DOE, USEER 2025" },
       { n: "7 in 8", hue: "sky", text: "workers worldwide lack even a single green skill — green hiring grows nearly 2× as fast as green talent", src: "LinkedIn Global Green Skills Report 2025" },
       { n: "1 in 3", hue: "coral", text: "new US energy jobs in recent years have gone to Latino/Hispanic workers — and 29% of the energy workforce is under 30", src: "US DOE, USEER 2025" },
     ],
-    students_label: "WHAT STUDENTS DO",
-    students: [
-      ["Play", " a card game about real regenerative careers — solo, in pairs or in teams"],
-      ["Tell", " their own nature-origin story"],
-      ["Reveal", " the career avatar that story earns them"],
-      ["Follow real pathways", " — videos, programs, internships and mentors on every card"],
-    ],
-    students_foot: "106 cards, mapped to the National Career Clusters.",
-    pipeline: "This pipeline starts in class.",
 
     /* ---- how the game works ---- */
     game_label: "HOW THE GAME WORKS",
@@ -137,18 +127,8 @@ export const ccCopy = {
       ["340", "mentors", "People already doing the work, attached to the career they do"],
     ],
     path_foot: "Wages from the Bureau of Labor Statistics OEWS. Nothing on a card is invented.",
+    portal_open: "Open the Cool Careers Portal",
 
-    teachers_label: "WHAT TEACHERS GET",
-    teachers: [
-      ["45·50·60·90", "auto-paced lesson plan for your period length", "leaf"],
-      ["2 min", "projected join code — students in fast", "sky"],
-      ["Run of Show", "pick the station the period is built around", "marigold"],
-      ["One zip", "the whole station's print bundle, per grade band", "coral"],
-      ["Map", "Standards Map shows what each session covers", "leaf"],
-      ["Pre / post", "automatic reflection capture for your report", "sky"],
-      ["QR sheet", "printable codes for the physical deck", "marigold"],
-      ["Green Line Kit", "the financial literacy unit, ready to run", "coral"],
-    ],
     district_label: "BUILT FOR DISTRICT APPROVAL",
     district: [
       ["Zero student PII", " — class code + nickname; no student emails or accounts"],
@@ -167,12 +147,6 @@ export const ccCopy = {
     video_play: "Play the Cool Careers music video",
 
     eagle_alt: "A felt eagle in a work harness holding a solar panel.",
-    portal_label: "THE GAME PORTAL",
-    portal_title: "Step inside the game.",
-    portal_sub: "Students set up an explorer profile, link up with a classmate to play, meet their career avatar, and ride the Green Line — no accounts, no student data.",
-    portal_points: ["Set up your explorer profile", "Play the Game", "Build Your Cool Career", "Ride the Green Line"],
-    portal_btn: "Enter the game portal",
-
     cta_head: "Bring Cool Careers to your school.",
     cta_sub: "One class period. Zero student data. A pipeline that starts in class.",
     cta_btn: "Book a pilot demo",
@@ -186,25 +160,15 @@ export const ccCopy = {
     hero_title: "Juega. Encuentra un futuro.",
     hero_title_b: "Una sola clase.",
     hero_band: [["Alineado a estándares", "marigold"], [", ", null], ["cero datos estudiantiles", "sky"], [", ", null], ["financiable por CTE", "leaf"], [": exploración de carreras que se integra a una clase existente.", null]],
-    hero_portal: "Abre el portal del juego",
     hero_demo: "Reserva una demo",
     hero_caption: "Autobuses escolares de fieltro cargándose con sol y viento.",
 
-    why_label: "POR QUÉ AHORA",
+    why_label: "POR QUÉ IMPORTA",
     why: [
       { n: "3×", hue: "leaf", text: "Los empleos en energía limpia crecieron 3× más rápido que el resto de la economía de EE. UU. el año pasado — casi 100,000 empleos nuevos", src: "US DOE, USEER 2025" },
       { n: "7 de 8", hue: "sky", text: "trabajadores en el mundo no tienen ni una sola habilidad verde — la contratación verde crece casi 2× más rápido que el talento verde", src: "LinkedIn Global Green Skills Report 2025" },
       { n: "1 de 3", hue: "coral", text: "nuevos empleos energéticos en EE. UU. en años recientes fueron para trabajadores latinos/hispanos — y el 29% de la fuerza laboral energética tiene menos de 30 años", src: "US DOE, USEER 2025" },
     ],
-    students_label: "LO QUE HACEN LOS ESTUDIANTES",
-    students: [
-      ["Juegan", " un juego de cartas sobre carreras regenerativas reales — solos, en parejas o en equipos"],
-      ["Cuentan", " su propia historia de origen con la naturaleza"],
-      ["Descubren", " el avatar de carrera que esa historia les gana"],
-      ["Siguen rutas reales", " — videos, programas, pasantías y mentores en cada carta"],
-    ],
-    students_foot: "106 cartas, alineadas a los National Career Clusters.",
-    pipeline: "Esta ruta empieza en el salón.",
 
     game_label: "CÓMO FUNCIONA EL JUEGO",
     game_h: "Una baraja, una historia y una línea que recorrer.",
@@ -297,18 +261,8 @@ export const ccCopy = {
       ["340", "mentores", "Gente que ya hace el trabajo, junto a la carrera que ejerce"],
     ],
     path_foot: "Salarios del OEWS del Bureau of Labor Statistics. Nada en una carta es inventado.",
+    portal_open: "Abre el Portal de Cool Careers",
 
-    teachers_label: "LO QUE RECIBEN LOS MAESTROS",
-    teachers: [
-      ["45·50·60·90", "plan de clase con ritmo automático para la duración de tu periodo", "leaf"],
-      ["2 min", "código de acceso proyectado — los estudiantes entran rápido", "sky"],
-      ["Run of Show", "elige la estación sobre la que se arma el periodo", "marigold"],
-      ["Un zip", "el paquete de impresión completo de la estación, por nivel", "coral"],
-      ["Mapa", "el Mapa de Estándares muestra qué cubre cada sesión", "leaf"],
-      ["Pre / post", "captura automática de reflexiones para tu informe", "sky"],
-      ["Hoja de QR", "códigos imprimibles para la baraja física", "marigold"],
-      ["Kit Línea Verde", "la unidad de educación financiera, lista para correr", "coral"],
-    ],
     district_label: "HECHO PARA LA APROBACIÓN DEL DISTRITO",
     district: [
       ["Cero datos personales", " — código de clase + apodo; sin correos ni cuentas de estudiantes"],
@@ -327,12 +281,6 @@ export const ccCopy = {
     video_play: "Reproducir el video musical de Cool Careers",
 
     eagle_alt: "Un águila de fieltro con arnés de trabajo sosteniendo un panel solar.",
-    portal_label: "EL PORTAL DEL JUEGO",
-    portal_title: "Entra al juego.",
-    portal_sub: "Los estudiantes crean su perfil de explorador, se conectan con un compañero para jugar, conocen su avatar de carrera y viajan en la Línea Verde — sin cuentas, sin datos estudiantiles.",
-    portal_points: ["Crea tu perfil de explorador", "Juega", "Construye tu Cool Career", "Viaja en la Línea Verde"],
-    portal_btn: "Entra al portal del juego",
-
     cta_head: "Lleva Cool Careers a tu escuela.",
     cta_sub: "Una clase. Cero datos estudiantiles. Una ruta que empieza en el salón.",
     cta_btn: "Reserva una demo",

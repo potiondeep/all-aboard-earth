@@ -22,9 +22,13 @@ deck (40 career / 45 action / 14 Green Line cards); four thematic lines (renewab
 9, sustainable water 7, circular economy 8) told in 23 self-hosted card illustrations that link into the Deck Explorer;
 the 104-station curriculum, shown as four real plates from one card's teacher deck; The Green Line; and the
 spark→paycheck arc (102 videos · 86 education routes · 85 internships · 340 mentors · Fare & Return on BLS wages).
-Trimmed hard on 2026-09-29 at Michael's direction: the five-step game walkthrough, the element-card tile, the
-cross-cutting careers block, the per-line station plates and three stray lines of body copy all came out. Page height
-11,537 → 9,762px at 1280. Orphaned art was deleted with them, so nothing unused ships.
+Trimmed hard on 2026-09-29 at Michael's direction, in three passes: the five-step game walkthrough, the element-card
+tile, the cross-cutting careers block, the per-line station plates, "What students do", "What teachers get" and the
+marigold game-portal block all came out, along with several stray lines of body copy. Page height 11,537 → 8,562px at
+1280. Orphaned art was deleted with them, so nothing unused ships.
+The eagle stayed and moved to sit beside the standards heading. The one portal link is now a single button closing the
+spark→paycheck arc, labelled "Open the Cool Careers Portal"; the hero keeps only "Book a pilot demo". The stats section
+is titled "Why it's important" rather than "Why now".
 Standards (NGSS · NM HB 171 financial literacy · 2024 Career Clusters + Perkins V) sit in the cream one-pager beside
 district approval. Thematic grouping lives in `src/pages/coolCareersDeck.js`; it is a second reading of the 40 career
 cards, not the platform's spine, which is still Clusters + the seven elements.

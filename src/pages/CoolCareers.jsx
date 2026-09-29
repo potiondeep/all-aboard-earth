@@ -225,24 +225,17 @@ export default function CoolCareers() {
         .cc-paper{ background:var(--paper); color:var(--ink); }
         .cc-wrap{ max-width:1100px; margin:0 auto; padding:clamp(56px,9vh,100px) clamp(16px,4vw,48px); }
         .cc-label{ font-size:12px; letter-spacing:.22em; color:#1F6B3A; margin-bottom:14px; }
-        .cc-grid{ display:grid; gap:clamp(28px,4vw,48px); grid-template-columns:1fr; }
-        @media (min-width:900px){ .cc-grid{ grid-template-columns:1fr 1fr; } }
+        .cc-why{ display:grid; gap:14px; grid-template-columns:1fr; }
+        @media (min-width:860px){ .cc-why{ grid-template-columns:repeat(3,1fr); } }
+        /* Side by side the cards stretch to the tallest, so the source line
+           goes to the floor of each rather than trailing its own text. */
+        .cc-why .cc-stat{ margin-bottom:0; align-content:space-between; }
         .cc-card{ background:var(--card); border:2.5px solid var(--ink); border-radius:18px; box-shadow:6px 6px 0 #0000001a; }
         .cc-stat{ padding:18px 20px 14px; margin-bottom:14px; display:grid; grid-template-columns:auto 1fr; column-gap:16px; align-items:start; }
         .cc-stat .n{ font-family:'Anton'; font-size:clamp(46px,5.4vw,64px); line-height:.9; white-space:nowrap; }
         .cc-stat p{ font-weight:700; font-size:16px; line-height:1.3; padding-top:6px; }
         .cc-stat small{ grid-column:1 / -1; margin-top:10px; font-family:'Space Mono'; font-size:11px; color:#6B7280; }
-        .cc-step{ padding:14px 18px; margin-bottom:12px; display:flex; align-items:center; gap:16px; font-size:16px; line-height:1.35; }
-        .cc-step .num{ flex:none; width:34px; height:34px; border-radius:50%; background:var(--ink); color:${T.marigold}; display:grid; place-items:center; font-family:'Anton'; font-size:18px; }
-        .cc-step .card-ico{ flex:none; width:36px; height:48px; border:2.5px solid var(--ink); border-radius:6px; transform:rotate(-4deg); }
         .cc-foot{ font-family:'Anton'; text-transform:none; font-size:clamp(20px,2.2vw,24px); letter-spacing:.01em; margin-top:8px; }
-        .cc-pipeline{ font-family:'Anton'; font-size:clamp(24px,3vw,34px); margin:clamp(40px,6vh,64px) 0 22px; }
-        .cc-tiles{ display:grid; gap:12px; grid-template-columns:repeat(2,1fr); }
-        @media (min-width:700px){ .cc-tiles{ grid-template-columns:repeat(3,1fr); } }
-        @media (min-width:1000px){ .cc-tiles{ grid-template-columns:repeat(4,1fr); } }
-        .cc-tile{ background:var(--tile); border:2px solid var(--tile-edge); border-radius:14px; padding:16px 14px; }
-        .cc-tile b{ display:block; font-family:'Anton'; font-weight:400; font-size:clamp(22px,2.2vw,28px); line-height:1; margin-bottom:10px; }
-        .cc-tile span{ font-size:14px; font-weight:600; line-height:1.3; }
         .cc-district{ margin-top:clamp(32px,5vh,48px); border:3px solid #1F6B3A; border-radius:18px; background:var(--card); padding:22px clamp(18px,3vw,30px); box-shadow:6px 6px 0 #0000001a; }
         .cc-district ul{ list-style:none; display:grid; gap:10px 34px; grid-template-columns:1fr; }
         @media (min-width:800px){ .cc-district ul{ grid-template-columns:1fr 1fr; } }
@@ -265,16 +258,12 @@ export default function CoolCareers() {
         .cc-video-facade:hover .cc-play{ transform:scale(1.08); }
         @media (max-width:560px){ .cc-play{ width:60px; height:60px; margin:-30px 0 0 -30px; font-size:22px; padding-left:4px; } .cc-video, .cc-buses{ border-width:4px; } }
 
-        /* game portal */
-        .cc-portal{ display:grid; gap:clamp(24px,4vw,48px); align-items:center; grid-template-columns:1fr;
-          background:${T.marigold}; color:${T.pineDeep}; border-radius:28px; padding:clamp(28px,5vw,56px); transform:rotate(.4deg); }
-        @media (min-width:860px){ .cc-portal{ grid-template-columns:1.1fr .9fr; } }
-        /* clear room between the paper overview and the tilted yellow box */
-        .cc-portal-wrap{ padding-top:clamp(56px,9vh,96px); }
-        /* the solar eagle fills the open space beside "This pipeline starts in class." */
+        /* The portal button closes the spark→paycheck arc, so it gets room
+           above it rather than sitting tight under the source line. */
+        .cc-portal-open{ margin-top:clamp(26px,4vh,38px); }
+        /* the solar eagle fills the open space beside the standards heading */
         .cc-pipeline-row{ display:flex; align-items:flex-end; justify-content:space-between; gap:clamp(16px,3vw,40px);
           margin:clamp(40px,6vh,64px) 0 22px; }
-        .cc-pipeline-row .cc-pipeline{ margin:0; }
         .cc-eagle{ flex:none; width:clamp(120px,18vw,230px); line-height:0; margin-bottom:-6px; }
         /* the clip's own white is a hair off the section's after compression, so melt its
            edges rather than chase an exact match */
@@ -286,16 +275,6 @@ export default function CoolCareers() {
                      linear-gradient(to bottom, transparent 0, #000 6%, #000 94%, transparent 100%);
           mask-composite:intersect; }
         @media (max-width:560px){ .cc-eagle{ width:110px; } }
-        .cc-portal .cc-label{ color:${T.pineDeep}; opacity:.75; }
-        .cc-portal h2{ font-size:clamp(38px,5.4vw,68px); margin-bottom:14px; }
-        .cc-portal p{ font-size:18px; line-height:1.45; font-weight:500; margin-bottom:22px; }
-        .cc-portal .btn{ background:${T.pineDeep}; color:${T.cream}; }
-        .cc-portal ol{ list-style:none; display:grid; gap:10px; counter-reset:step; }
-        .cc-portal li{ counter-increment:step; background:${T.cream}; border:2.5px solid ${T.pineDeep}; border-radius:14px; padding:14px 16px 14px 56px;
-          position:relative; font-weight:700; font-size:16px; }
-        .cc-portal li::before{ content:counter(step); position:absolute; left:14px; top:50%; transform:translateY(-50%); width:28px; height:28px; border-radius:50%;
-          background:${T.pineDeep}; color:${T.marigold}; display:grid; place-items:center; font-family:'Anton'; font-size:15px; }
-
 
         /* ---------- the dark sections between the hero and the one-pager ----------
            The page's cream "paper" carries the school-facing document; everything
@@ -403,7 +382,6 @@ export default function CoolCareers() {
         .cc-std h3{ font-family:'Anton'; font-weight:400; text-transform:uppercase; font-size:clamp(21px,2.3vw,26px); margin-bottom:11px; }
         .cc-std p{ font-size:14.5px; line-height:1.5; }
         .cc-std p + p{ margin-top:11px; padding-top:11px; border-top:1px dashed #C9B58A; font-weight:700; }
-        .cc-std-label{ margin-top:clamp(40px,6vh,64px); }
         .cc-std-h{ font-family:'Anton'; font-size:clamp(24px,3vw,34px); margin:0 0 20px; }
 
         @media (max-width:560px){
@@ -422,7 +400,7 @@ export default function CoolCareers() {
         @media (prefers-reduced-motion: reduce){
           .btn, .cc-video-facade img, .cc-play{ transition:none !important; }
           .btn:hover, .cc-video-facade:hover img, .cc-video-facade:hover .cc-play{ transform:none !important; }
-          .cc-video, .cc-portal, .cc-buses{ transform:none; }
+          .cc-video, .cc-buses{ transform:none; }
           .cc-cards a{ transition:none !important; } .cc-cards a:hover{ transform:none !important; }
         }
       `}</style>
@@ -454,8 +432,7 @@ export default function CoolCareers() {
             {c.hero_band.map(([t, h], i) => (h ? <b key={i} style={{ color: hue(h) }}>{t}</b> : <React.Fragment key={i}>{t}</React.Fragment>))}
           </p>
           <div className="cc-actions">
-            <a className="btn big" href={LINKS.gamePortal}>{c.hero_portal}</a>
-            <a className="btn big ghost" href={LINKS.contact}>{c.hero_demo}</a>
+            <a className="btn big" href={LINKS.contact}>{c.hero_demo}</a>
           </div>
         </section>
 
@@ -580,52 +557,35 @@ export default function CoolCareers() {
               ))}
             </div>
             <p className="cc-path-foot">{c.path_foot}</p>
+            {/* The arc ends here, so the way in does too — this is the page's
+                one portal link now that the marigold block is gone. */}
+            <a className="btn big cc-portal-open" href={LINKS.gamePortal}>{c.portal_open} →</a>
           </div>
         </section>
 
         {/* PROGRAM OVERVIEW — the one-pager */}
         <section className="cc-paper" aria-labelledby="cc-why">
           <div className="cc-wrap">
-            <div className="cc-grid">
-              <div>
-                <h2 id="cc-why" className="mono cc-label">{c.why_label}</h2>
-                {c.why.map((w) => (
-                  <div key={w.n} className="cc-card cc-stat">
-                    <div className="n" style={{ color: w.hue === "leaf" ? "#1F6B3A" : w.hue === "sky" ? "#1C6A8A" : "#D2502C" }}>{w.n}</div>
-                    <p>{w.text}</p>
-                    <small>Source: {w.src}</small>
-                  </div>
-                ))}
-              </div>
-              <div>
-                <h2 className="mono cc-label">{c.students_label}</h2>
-                {c.students.map(([b, rest], i) => (
-                  <div key={i} className="cc-card cc-step">
-                    <span className="num">{i + 1}</span>
-                    <span className="card-ico" style={{ background: ["#E9DFC2", "#CFE8F3", "#FBE3BF", "#D2E8DA"][i] }} aria-hidden="true" />
-                    <span><b>{b}</b>{rest}</span>
-                  </div>
-                ))}
-                <p className="cc-foot">{c.students_foot}</p>
-              </div>
-            </div>
-
-            <div className="cc-pipeline-row">
-              <p className="cc-pipeline">{c.pipeline}</p>
-              <Eagle label={c.eagle_alt} />
-            </div>
-            <h2 className="mono cc-label">{c.teachers_label}</h2>
-            <div className="cc-tiles">
-              {c.teachers.map(([b, s, h]) => (
-                <div key={b} className="cc-tile">
-                  <b style={{ color: h === "leaf" ? "#1F6B3A" : h === "sky" ? "#1C6A8A" : h === "marigold" ? "#8A5300" : "#A8391A" }}>{b}</b>
-                  <span>{s}</span>
+            <h2 id="cc-why" className="mono cc-label">{c.why_label}</h2>
+            <div className="cc-why">
+              {c.why.map((w) => (
+                <div key={w.n} className="cc-card cc-stat">
+                  <div className="n" style={{ color: w.hue === "leaf" ? "#1F6B3A" : w.hue === "sky" ? "#1C6A8A" : "#D2502C" }}>{w.n}</div>
+                  <p>{w.text}</p>
+                  <small>Source: {w.src}</small>
                 </div>
               ))}
             </div>
 
-            <h2 className="mono cc-label cc-std-label">{c.std_label}</h2>
-            <p className="cc-std-h">{c.std_h}</p>
+            {/* The eagle keeps its seat — it now fills the space beside the
+                standards heading rather than beside the pipeline line. */}
+            <div className="cc-pipeline-row">
+              <div>
+                <h2 className="mono cc-label cc-std-label">{c.std_label}</h2>
+                <p className="cc-std-h">{c.std_h}</p>
+              </div>
+              <Eagle label={c.eagle_alt} />
+            </div>
             <div className="cc-std">
               {c.std.map(([h, tone, body, foot]) => {
                 const inkTone = tone === "leaf" ? "#1F6B3A" : tone === "sky" ? "#1C6A8A" : "#8A5300";
@@ -646,21 +606,6 @@ export default function CoolCareers() {
 
             <div className="cc-pilot">
               <p>{c.pilot_title}<span>{c.pilot_hi}</span></p>
-            </div>
-          </div>
-        </section>
-
-        {/* GAME PORTAL */}
-        <section aria-labelledby="cc-portal-title">
-          <div className="cc-wrap cc-portal-wrap">
-            <div className="cc-portal">
-              <div>
-                <div className="mono cc-label">{c.portal_label}</div>
-                <h2 id="cc-portal-title" className="display">{c.portal_title}</h2>
-                <p>{c.portal_sub}</p>
-                <a className="btn big" href={LINKS.gamePortal}>{c.portal_btn} →</a>
-              </div>
-              <ol>{c.portal_points.map((pt) => <li key={pt}>{pt}</li>)}</ol>
             </div>
           </div>
         </section>
