@@ -17,18 +17,21 @@ Every nav carries a **page menu** (`PageMenu` in `src/pages/chrome.jsx`) — a d
 the game portal nested under Cool Careers where it belongs. The homepage and Cool Careers have their own nav and import `menuCss` separately.
 
 ## `/cool-careers` — rebuilt 2026-09-28
-Written against `PROJECT_BRIEF.md` in `potiondeep/cool-careers`, not by feel. Five sections on the blue ground — how the
-game works and the deck (40 career / 45 action / 14 Green Line / 7 element = 106); four thematic lines (renewable energy
-12, regenerative agriculture 9, sustainable water 7, circular economy 8, plus 4 that cross all of them) told in 25
-self-hosted card illustrations that link into the Deck Explorer; the 104-station curriculum; The Green Line; and the
+Written against `PROJECT_BRIEF.md` in `potiondeep/cool-careers`, not by feel. Five sections on the blue ground — the
+deck (40 career / 45 action / 14 Green Line cards); four thematic lines (renewable energy 12, regenerative agriculture
+9, sustainable water 7, circular economy 8) told in 23 self-hosted card illustrations that link into the Deck Explorer;
+the 104-station curriculum, shown as four real plates from one card's teacher deck; The Green Line; and the
 spark→paycheck arc (102 videos · 86 education routes · 85 internships · 340 mentors · Fare & Return on BLS wages).
+Trimmed hard on 2026-09-29 at Michael's direction: the five-step game walkthrough, the element-card tile, the
+cross-cutting careers block, the per-line station plates and three stray lines of body copy all came out. Page height
+11,537 → 9,762px at 1280. Orphaned art was deleted with them, so nothing unused ships.
 Standards (NGSS · NM HB 171 financial literacy · 2024 Career Clusters + Perkins V) sit in the cream one-pager beside
 district approval. Thematic grouping lives in `src/pages/coolCareersDeck.js`; it is a second reading of the 40 career
 cards, not the platform's spine, which is still Clusters + the seven elements.
 Migrations 0031 + 0033 were applied 2026-09-28, so the page now states plainly that station rows and files are gated at
 the database and the file store. **One claim it still avoids:** that every station has a video — 6 of 104 branded reels
 have landed, so the page cites the 102-video resource library instead.
-Station art (four line plates, four teacher-deck plates) is derived from `~/Projects/station-pipeline`; originals untouched.
+The four teacher-deck plates are derived from `~/Projects/station-pipeline`; originals untouched.
 
 ## Domains
 | Host | Serves |

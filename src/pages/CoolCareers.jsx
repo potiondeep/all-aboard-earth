@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { T, LINKS } from "../theme.js";
 import { ccCopy } from "./coolCareersCopy.js";
 import { PageMenu, menuCss } from "./chrome.jsx";
-import { THEMES, CROSSCUT, SCENES, DECK_PLATES } from "./coolCareersDeck.js";
+import { THEMES, DECK_PLATES } from "./coolCareersDeck.js";
 import { cardArtSm, cardSrcSet, DECK_CARD } from "../wixCardArt.js";
 
 /* ============================================================
@@ -119,8 +119,6 @@ function MusicVideo({ label, title }) {
  * Every card and every chip opens the Deck Explorer on that slug — the deck is
  * the product, so the page should never be a dead end in front of it.
  */
-const scene = (slug, w) => `/art/cool-careers/stations/${slug}-${w}.webp`;
-
 function CardRow({ cards, more, open, tint }) {
   const drawn = cards.filter((k) => k.art);
   const rest = cards.filter((k) => !k.art);
@@ -308,36 +306,19 @@ export default function CoolCareers() {
         .cc-dlede{ font-size:18px; line-height:1.5; color:${T.cream}cc; max-width:720px; }
         .cc-panel{ background:${T.pineDeep}; border:2px solid ${T.cream}22; border-radius:18px; }
 
-        /* how the game works — five steps down a rail */
-        .cc-ride{ list-style:none; margin-top:clamp(26px,4vh,42px); display:grid; gap:12px; }
-        .cc-ride li{ display:grid; grid-template-columns:auto 1fr; gap:clamp(14px,2vw,20px); align-items:start;
-          background:${T.pineDeep}; border:2px solid ${T.cream}22; border-radius:16px; padding:18px clamp(16px,2.4vw,24px); }
-        .cc-ride .n{ flex:none; width:38px; height:38px; border-radius:50%; background:${T.marigold}; color:${T.ink};
-          display:grid; place-items:center; font-family:'Anton'; font-size:19px; }
-        .cc-ride b{ display:block; font-family:'Anton'; font-weight:400; letter-spacing:.01em; font-size:clamp(18px,2vw,22px); margin-bottom:5px; }
-        .cc-ride span{ display:block; font-size:15.5px; line-height:1.45; color:${T.cream}c4; }
-
         /* the deck, counted out */
         .cc-deck{ display:grid; gap:12px; grid-template-columns:repeat(2,1fr); margin-top:clamp(22px,3vh,32px); }
-        @media (min-width:880px){ .cc-deck{ grid-template-columns:repeat(4,1fr); } }
+        @media (min-width:760px){ .cc-deck{ grid-template-columns:repeat(3,1fr); } }
         .cc-deck > div{ background:${T.pineDeep}; border:2px solid ${T.cream}22; border-radius:16px; padding:18px clamp(14px,2vw,20px); }
         .cc-deck .n{ font-family:'Anton'; font-size:clamp(34px,4vw,48px); line-height:.9; }
         .cc-deck b{ display:block; font-family:'Space Mono', ui-monospace, monospace; font-size:11.5px; letter-spacing:.14em;
           text-transform:uppercase; color:${T.cream}; margin:10px 0 9px; }
         .cc-deck p{ font-size:14px; line-height:1.42; color:${T.cream}aa; }
-        .cc-deck-foot{ margin-top:18px; font-size:15px; line-height:1.5; color:${T.cream}b0; max-width:760px; }
 
         /* the four lines */
         .cc-lines{ display:grid; gap:clamp(18px,2.6vw,26px); margin-top:clamp(26px,4vh,42px); }
         .cc-line{ background:${T.pineDeep}; border:2px solid ${T.cream}22; border-left-width:7px; border-radius:18px;
           padding:clamp(20px,3vw,30px); }
-        /* The line opens on a painted plate from that career's own station, so
-           the section carries the curriculum's look rather than describing it. */
-        .cc-line-top{ display:grid; gap:clamp(16px,2.4vw,24px); grid-template-columns:1fr; align-items:center;
-          margin-bottom:clamp(16px,2.4vw,22px); }
-        @media (min-width:720px){ .cc-line-top{ grid-template-columns:180px 1fr; align-items:start; } }
-        .cc-plate{ display:block; width:100%; height:auto; border-radius:12px; border:2px solid ${T.cream}2e;
-          box-shadow:0 12px 28px #00000040; }
         .cc-line-head{ display:flex; align-items:baseline; gap:clamp(12px,2vw,20px); flex-wrap:wrap; }
         .cc-line-n{ font-family:'Anton'; font-size:clamp(38px,4.6vw,58px); line-height:.85; }
         .cc-line h3{ font-family:'Anton', Impact, sans-serif; text-transform:uppercase; font-weight:400; letter-spacing:.01em;
@@ -358,10 +339,6 @@ export default function CoolCareers() {
           transition:border-color .18s var(--ease-settle), color .18s var(--ease-settle); }
         .cc-line-curric{ margin-top:18px; padding-top:15px; border-top:1px dashed ${T.cream}2e;
           font-size:14.5px; line-height:1.5; color:${T.cream}a6; }
-        .cc-cross{ margin-top:clamp(26px,4vh,40px); display:grid; gap:clamp(18px,3vw,32px); align-items:center; grid-template-columns:1fr; }
-        @media (min-width:840px){ .cc-cross{ grid-template-columns:1.1fr .9fr; } }
-        .cc-cross h3{ font-family:'Anton'; font-weight:400; text-transform:uppercase; font-size:clamp(22px,2.7vw,32px); margin-bottom:10px; }
-        .cc-cross p{ font-size:16px; line-height:1.5; color:${T.cream}c4; margin-bottom:14px; }
 
         /* the curriculum — the teacher deck shown, then what a station holds
            as a plain list, because the plates already carry the weight */
@@ -489,15 +466,6 @@ export default function CoolCareers() {
             <div className="mono cc-dlabel">{c.game_label}</div>
             <h2 id="cc-game" className="display cc-dh">{c.game_h}</h2>
             <p className="cc-dlede">{c.game_lede}</p>
-            <ol className="cc-ride">
-              {c.game_steps.map(([b, t], i) => (
-                <li key={b}>
-                  <span className="n" aria-hidden="true">{i + 1}</span>
-                  <span><b>{b}</b><span>{t}</span></span>
-                </li>
-              ))}
-            </ol>
-
             <h3 className="mono cc-dlabel" style={{ marginTop: "clamp(38px,5vh,58px)" }}>{c.deck_label}</h3>
             <div className="cc-deck">
               {c.deck.map(([n, b, t], i) => (
@@ -508,7 +476,6 @@ export default function CoolCareers() {
                 </div>
               ))}
             </div>
-            <p className="cc-deck-foot">{c.deck_foot}</p>
           </div>
         </section>
 
@@ -524,46 +491,15 @@ export default function CoolCareers() {
                 const tint = hue(line.hue);
                 return (
                   <article key={line.key} className="cc-line" style={{ borderLeftColor: tint }}>
-                    <div className="cc-line-top">
-                      <img className="cc-plate" src={scene(SCENES[line.key].slug, 280)}
-                           srcSet={`${scene(SCENES[line.key].slug, 280)} 280w, ${scene(SCENES[line.key].slug, 560)} 560w`}
-                           sizes="(max-width: 720px) 100vw, 180px" alt={SCENES[line.key].alt}
-                           width="560" height="750" loading="lazy" decoding="async" />
-                      <div>
-                        <div className="cc-line-head">
-                          <span className="cc-line-n" style={{ color: tint }}>{t.n}</span>
-                          <h3>{t.name}</h3>
-                        </div>
-                        <p className="cc-line-blurb">{t.blurb}</p>
-                      </div>
+                    <div className="cc-line-head">
+                      <span className="cc-line-n" style={{ color: tint }}>{t.n}</span>
+                      <h3>{t.name}</h3>
                     </div>
+                    <p className="cc-line-blurb">{t.blurb}</p>
                     <CardRow cards={line.cards} more={c.themes_more} open={c.card_open} tint={tint} />
                   </article>
                 );
               })}
-            </div>
-
-            <div className="cc-cross">
-              <div>
-                <h3>{c.crosscut_h}</h3>
-                <p>{c.crosscut_p}</p>
-                <div className="cc-chips">
-                  {CROSSCUT.filter((k) => !k.art).map((k) => (
-                    <a key={k.slug} className="cc-chip" href={DECK_CARD(k.slug)}>{k.name}</a>
-                  ))}
-                </div>
-              </div>
-              <ul className="cc-cards" style={{ margin: 0, gridTemplateColumns: "repeat(2,1fr)" }}>
-                {CROSSCUT.filter((k) => k.art).map((k) => (
-                  <li key={k.slug}>
-                    <a href={DECK_CARD(k.slug)} title={`${k.name} — ${c.card_open}`}>
-                      <img src={cardArtSm(k.slug)} srcSet={cardSrcSet(k.slug)}
-                           sizes="(max-width: 840px) 40vw, 200px"
-                           alt={k.name} width="300" height="420" loading="lazy" decoding="async" />
-                    </a>
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
         </section>
@@ -573,7 +509,6 @@ export default function CoolCareers() {
           <div className="cc-wrap" style={{ paddingTop: 0 }}>
             <div className="mono cc-dlabel">{c.curric_label}</div>
             <h2 id="cc-curric" className="display cc-dh">{c.curric_h}</h2>
-            <p className="cc-dlede">{c.curric_lede}</p>
             <figure className="cc-plates">
               {DECK_PLATES.map(([k, alt]) => (
                 <img key={k} src={`/art/cool-careers/stations/deck-${k}-450.webp`}
@@ -581,7 +516,6 @@ export default function CoolCareers() {
                      sizes="(max-width: 820px) 46vw, 240px" alt={alt}
                      width="900" height="502" loading="lazy" decoding="async" />
               ))}
-              <figcaption>{c.curric_cap}</figcaption>
             </figure>
             <ul className="cc-kit">
               {c.curric_items.map((b) => <li key={b}>{b}</li>)}
