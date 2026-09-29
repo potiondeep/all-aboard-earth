@@ -34,12 +34,11 @@ spark→paycheck arc, labelled "Open the Cool Careers Portal"; the hero keeps on
 is titled "Why it's important" rather than "Why now".
 Standards (NGSS · NM HB 171 financial literacy · 2024 Career Clusters + Perkins V) sit beside district approval.
 The page went fully cyanotype on 2026-09-29 — the cream "paper" one-pager is gone, so all five pages now share the same
-mottled blue ground. Its cards became the dark panels the rest of the page uses, and and the eagle was re-keyed off its white studio
-master into a fresh alpha pair (`eagle.webm` alpha_mode=1 + `eagle-hevc.mov`). The pair that already existed carried
-keying debris — tuft fibres floating beside the head, invisible on white — and its frames ran flush to the bottom edge.
-The new key is two-pass (strict everywhere, looser only below 70% of the frame where the floor shadow lives and there is
-no cream to lose), keeps only the component joined to the bird, and pads 12px so nothing touches an edge.
-**`eagle-plain.*` stays**: nothing renders it, but it is the only unkeyed copy of the clip and what a re-key starts from. The way into the portal sits opposite the eagle: a framed screenshot of the student home a visitor actually lands on,
+mottled blue ground. Its cards became the dark panels the rest of the page uses, and and the eagle now shows **whole on its own white
+studio card** (`eagle-plain.*`), paired with the portal screenshot beside it and stretched to the same height. Keying it
+out was tried twice and abandoned: every cut loses something at the silhouette, because the head is cream against white
+and the wing fringe is soft. The card is `#FFF` because that is what the browser decodes the clip's background to
+(measured). The keyed alpha pair (`eagle.webm` alpha_mode=1, `eagle-hevc.mov`) is kept but not rendered. The way into the portal sits opposite the eagle: a framed screenshot of the student home a visitor actually lands on,
 with a full-width button under it. **The screenshot goes stale** — it is `public/art/cool-careers/portal-preview-*.webp`,
 captured from the free tier of cool-careers.allaboardearth.com with the access banner scrolled off. Re-shoot it when the
 portal's home screen changes. Thematic grouping lives in `src/pages/coolCareersDeck.js`; it is a second reading of the 40 career

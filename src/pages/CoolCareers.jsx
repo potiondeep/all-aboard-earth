@@ -15,20 +15,17 @@ const reducedMotion = () =>
   typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /**
- * The felt solar eagle, keyed to real alpha so it sits on the page rather than
- * in a box. HEVC first for Safari, VP9 (alpha_mode=1) for everyone else.
+ * The felt solar eagle, shown whole on its own white studio card rather than
+ * keyed out. Every cut of this clip loses something at the silhouette — the
+ * head is cream against white and the wing fringe is soft — so the frame stays
+ * and becomes part of the design, paired with the portal screenshot beside it.
  *
- * Re-keyed 2026-09-29 off the white studio master. The head is cream and the
- * solar panel has white highlights, so a threshold on whiteness eats them —
- * only the background is connected to the frame border, so the key floods in
- * from the edge instead and never reaches interior cream. Loose tuft fibres
- * survived as islands floating beside the head (invisible on white, debris on
- * blue), so only the component joined to the bird is kept. 12px of transparent
- * padding too: the old frames ran flush to the bottom edge.
+ * The block is #FFF because that is what the browser decodes the clip's
+ * background to (measured, not assumed), so the letterbox bands either side of
+ * a contained frame have no seam.
  *
- * eagle-plain.* is that white master. Nothing renders it, but it is the only
- * unkeyed copy of this clip — there is no Desktop original — so it stays as
- * what a re-key would start from.
+ * The keyed alpha pair (eagle.webm with alpha_mode=1, eagle-hevc.mov) is kept
+ * but not rendered.
  */
 function Eagle({ label }) {
   const ref = useRef(null);
@@ -52,12 +49,12 @@ function Eagle({ label }) {
   return (
     <div ref={ref} className="cc-eagle" role="img" aria-label={label}>
       {ready ? (
-        <video muted loop playsInline preload="auto" poster="/art/cool-careers/eagle-poster.webp" width="584" height="570" aria-hidden="true">
-          <source src="/art/cool-careers/eagle-hevc.mov" type="video/quicktime" />
-          <source src="/art/cool-careers/eagle.webm" type="video/webm" />
+        <video muted loop playsInline preload="auto" poster="/art/cool-careers/eagle-plain-poster.webp" width="560" height="546" aria-hidden="true">
+          <source src="/art/cool-careers/eagle-plain.webm" type="video/webm" />
+          <source src="/art/cool-careers/eagle-plain.mp4" type="video/mp4" />
         </video>
       ) : (
-        <img src="/art/cool-careers/eagle-poster.webp" alt="" width="584" height="570" loading="lazy" decoding="async" />
+        <img src="/art/cool-careers/eagle-plain-poster.webp" alt="" width="560" height="546" loading="lazy" decoding="async" />
       )}
     </div>
   );
@@ -280,7 +277,7 @@ export default function CoolCareers() {
         /* The way in: what the portal looks like, then the button. The shot is
            inert to the keyboard — the button beside it goes to the same place,
            so a second stop on the same target is just noise. */
-        .cc-way-in{ flex:0 1 540px; min-width:0; }
+        .cc-way-in{ flex:1 1 380px; min-width:0; }
         .cc-portal-shot{ display:block; line-height:0; border-radius:16px; overflow:hidden;
           border:5px solid ${T.cream}; box-shadow:0 18px 40px #00000059; transform:rotate(-.6deg);
           transition:transform .25s var(--ease-settle); }
@@ -292,15 +289,22 @@ export default function CoolCareers() {
           margin-top:clamp(20px,3vh,28px); font-size:clamp(17px,1.9vw,21px);
           padding:clamp(17px,2.4vh,22px) clamp(20px,3vw,32px); }
         /* the solar eagle fills the open space beside the standards heading */
-        .cc-pipeline-row{ display:flex; align-items:center; justify-content:space-between; gap:clamp(16px,3vw,40px);
+        .cc-pipeline-row{ display:flex; align-items:stretch; justify-content:space-between; gap:clamp(16px,3vw,40px);
           flex-wrap:wrap; margin:clamp(40px,6vh,64px) 0 clamp(34px,5vh,52px); }
-        .cc-eagle{ flex:none; width:clamp(130px,21vw,265px); line-height:0; margin-bottom:-6px; }
-        /* Once the row wraps there is no "opposite" left, so both halves centre. */
-        @media (max-width:760px){ .cc-pipeline-row{ justify-content:center; } }
-        /* Real alpha, so no edge to melt — just a shadow to seat it on the page. */
-        .cc-eagle video, .cc-eagle img{ width:100%; height:auto; display:block;
-          filter:drop-shadow(0 14px 22px rgba(0,0,0,.42)); }
-        @media (max-width:560px){ .cc-eagle{ width:130px; } }
+        /* A card the same height as the portal block beside it: the row
+           stretches both, and the clip is contained inside rather than cropped,
+           so nothing of the bird is lost to the frame. */
+        .cc-eagle{ flex:1 1 380px; min-width:0; background:#FFF; border:5px solid ${T.cream};
+          border-radius:16px; overflow:hidden; line-height:0;
+          box-shadow:0 18px 40px #00000059; transform:rotate(.6deg); }
+        .cc-eagle video, .cc-eagle img{ width:100%; height:100%; object-fit:contain; display:block; }
+        /* Once the row wraps there is no "opposite" left, so both halves centre
+           and the card takes its height from the clip again. */
+        @media (max-width:760px){
+          .cc-pipeline-row{ justify-content:center; }
+          .cc-eagle{ flex:1 1 340px; align-self:center; }
+          .cc-eagle video, .cc-eagle img{ height:auto; }
+        }
 
         /* ---------- the dark sections between the hero and the one-pager ----------
            The page's cream "paper" carries the school-facing document; everything
@@ -608,7 +612,7 @@ export default function CoolCareers() {
                 <a className="cc-portal-shot" href={LINKS.gamePortal} tabIndex={-1} aria-hidden="true">
                   <img src="/art/cool-careers/portal-preview-450.webp"
                        srcSet="/art/cool-careers/portal-preview-450.webp 450w, /art/cool-careers/portal-preview-900.webp 900w"
-                       sizes="(max-width: 760px) 92vw, 540px" alt=""
+                       sizes="(max-width: 760px) 92vw, 480px" alt=""
                        width="900" height="753" loading="lazy" decoding="async" />
                 </a>
                 <a className="btn cc-portal-open" href={LINKS.gamePortal}>{c.portal_open} →</a>
