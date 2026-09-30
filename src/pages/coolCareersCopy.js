@@ -89,19 +89,11 @@ export const ccCopy = {
     gl_dict: [
       ["Compound interest", "A tree planted early — growth on growth"],
       ["Emergency fund", "A seed bank; a cistern for the dry season"],
-      ["A budget", "An irrigation plan — you don't get more water, you direct it"],
-      ["Credit", "Soil health — built slowly, invisible until you need it"],
-      ["High-interest debt", "Erosion"],
-      ["Insurance", "The firebreak — cut before the fire, not during it"],
+      ["A budget", "An irrigation plan — you don't get more water, you direct it strategically"],
+      ["Credit", "Soil health — built slowly, invisible until you need it — adds fertility to grow your future"],
+      ["High-interest debt", "Erosion — the kind that destroys financial stability"],
+      ["Insurance", "The firebreak — cut before the fire, not during it, to stop one disaster from ruining your whole financial landscape"],
     ],
-    gl_rides_h: "Four rides students actually play",
-    gl_rides: [
-      ["First Paycheck", "Read the paystub, feel the tax shock, allocate what's left"],
-      ["The Dollar Ride", "Route a dollar through your town: does it loop, or leave?"],
-      ["Money Forest", "Plant dollar-trees at different ages; see the forest at thirty"],
-      ["Commons Fund", "The class splits a community fund, argues, then votes"],
-    ],
-    gl_foot: "Anchored on the acequia — three centuries of community-governed water in New Mexico.",
 
     /* ---- the pathway ---- */
     path_label: "FROM SPARK TO PAYCHECK",
@@ -208,19 +200,11 @@ export const ccCopy = {
     gl_dict: [
       ["Interés compuesto", "Un árbol sembrado temprano — crecimiento sobre crecimiento"],
       ["Fondo de emergencia", "Un banco de semillas; una cisterna para la seca"],
-      ["Un presupuesto", "Un plan de riego — no tienes más agua, la diriges"],
-      ["Crédito", "Salud del suelo — se construye lento, invisible hasta que lo necesitas"],
-      ["Deuda de alto interés", "Erosión"],
-      ["Seguro", "El cortafuegos — se corta antes del incendio, no durante"],
+      ["Un presupuesto", "Un plan de riego — no tienes más agua, la diriges estratégicamente"],
+      ["Crédito", "Salud del suelo — se construye lento, invisible hasta que lo necesitas — aporta fertilidad para cultivar tu futuro"],
+      ["Deuda de alto interés", "Erosión — la que destruye la estabilidad financiera"],
+      ["Seguro", "El cortafuegos — se corta antes del incendio, no durante, para evitar que un solo desastre arruine todo tu paisaje financiero"],
     ],
-    gl_rides_h: "Cuatro trayectos que los estudiantes sí juegan",
-    gl_rides: [
-      ["Primer Cheque", "Lee el recibo, siente el golpe de impuestos, reparte lo que queda"],
-      ["El Viaje del Dólar", "Recorre un dólar por tu pueblo: ¿da vueltas o se va?"],
-      ["Bosque de Dinero", "Siembra árboles-dólar a distintas edades; mira el bosque a los treinta"],
-      ["Fondo Común", "La clase reparte un fondo comunitario, discute y vota"],
-    ],
-    gl_foot: "Anclada en la acequia — tres siglos de agua gobernada por la comunidad en Nuevo México.",
 
     path_label: "DE LA CHISPA AL SUELDO",
     path_h: "Inspirar es la parte fácil.",

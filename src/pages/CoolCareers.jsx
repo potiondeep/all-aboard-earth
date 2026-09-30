@@ -383,19 +383,11 @@ export default function CoolCareers() {
         /* the arrow is the whole width of the route, so the ends read as a span
            rather than two unrelated labels */
         .cc-route-ends span:nth-child(2){ flex:1; text-align:center; color:${T.marigold}66; letter-spacing:0; }
-        .cc-gl{ display:grid; gap:clamp(18px,3vw,30px); grid-template-columns:1fr; }
-        @media (min-width:900px){ .cc-gl{ grid-template-columns:1fr 1fr; } }
-        .cc-gl h3{ font-family:'Anton'; font-weight:400; text-transform:uppercase; font-size:clamp(19px,2.1vw,24px); margin-bottom:14px; color:${T.leaf}; }
+        .cc-gl-h{ font-family:'Anton'; font-weight:400; text-transform:uppercase; font-size:clamp(19px,2.1vw,24px); margin-bottom:14px; color:${T.leaf}; }
         .cc-dict{ list-style:none; display:grid; gap:1px; background:${T.cream}1c; border:2px solid ${T.cream}22; border-radius:14px; overflow:hidden; }
         .cc-dict li{ display:grid; grid-template-columns:1fr 1.25fr; gap:14px; background:${T.pineDeep}; padding:12px 16px; font-size:14px; line-height:1.4; }
         .cc-dict b{ font-weight:700; color:${T.cream}; }
         .cc-dict span{ color:${T.cream}a8; }
-        .cc-rides{ list-style:none; display:grid; gap:10px; }
-        .cc-rides li{ background:${T.pineDeep}; border:2px solid ${T.leaf}44; border-radius:14px; padding:14px 16px; }
-        .cc-rides b{ display:block; font-size:15.5px; margin-bottom:4px; color:${T.leaf}; }
-        .cc-rides span{ font-size:14px; line-height:1.42; color:${T.cream}a8; }
-        .cc-gl-foot{ margin-top:clamp(22px,3vh,32px); padding:16px 20px; border-left:4px solid ${T.leaf};
-          background:${T.pineDeep}; border-radius:0 14px 14px 0; font-size:15.5px; line-height:1.5; color:${T.cream}c4; }
 
         /* from spark to paycheck */
         .cc-nums{ display:grid; gap:12px; grid-template-columns:repeat(2,1fr); margin-top:clamp(26px,4vh,42px); }
@@ -543,21 +535,10 @@ export default function CoolCareers() {
                 ))}
               </ol>
             </div>
-            <div className="cc-gl">
-              <div>
-                <h3>{c.gl_dict_h}</h3>
-                <ul className="cc-dict">
-                  {c.gl_dict.map(([k, v]) => <li key={k}><b>{k}</b><span>{v}</span></li>)}
-                </ul>
-              </div>
-              <div>
-                <h3>{c.gl_rides_h}</h3>
-                <ul className="cc-rides">
-                  {c.gl_rides.map(([b, t]) => <li key={b}><b>{b}</b><span>{t}</span></li>)}
-                </ul>
-              </div>
-            </div>
-            <p className="cc-gl-foot">{c.gl_foot}</p>
+            <h3 className="cc-gl-h">{c.gl_dict_h}</h3>
+            <ul className="cc-dict">
+              {c.gl_dict.map(([k, v]) => <li key={k}><b>{k}</b><span>{v}</span></li>)}
+            </ul>
           </div>
         </section>
 
