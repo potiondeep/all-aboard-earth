@@ -80,7 +80,7 @@ export const ccCopy = {
     /* ---- the green line ---- */
     gl_label: "THE GREEN LINE",
     gl_h: "Money is a flow, not a pile.",
-    gl_lede: "The Green Line crosses every other line, because money does. Students already speak ecosystem from the deck, so every money idea is taught through the land.",
+    gl_lede: "The financial literacy module. The Green Line crosses every other line, because money does. Students already speak ecosystem from the deck, so every money idea is taught through the land.",
     gl_from: "My money",
     gl_to: "Our money",
     gl_art_alt: "The Green Line pulling out of a mountain town, its route glowing green through the valley below.",
@@ -191,7 +191,7 @@ export const ccCopy = {
 
     gl_label: "LA LÍNEA VERDE",
     gl_h: "El dinero es un flujo, no un montón.",
-    gl_lede: "La Línea Verde cruza todas las demás, porque el dinero lo hace. Los estudiantes ya hablan ecosistema gracias a la baraja, así que cada idea financiera se enseña a través de la tierra.",
+    gl_lede: "El módulo de educación financiera. La Línea Verde cruza todas las demás, porque el dinero lo hace. Los estudiantes ya hablan ecosistema gracias a la baraja, así que cada idea financiera se enseña a través de la tierra.",
     gl_from: "Mi dinero",
     gl_to: "Nuestro dinero",
     gl_art_alt: "La Línea Verde saliendo de un pueblo de montaña, su ruta brillando en verde por el valle.",
