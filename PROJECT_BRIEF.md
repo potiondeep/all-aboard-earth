@@ -23,8 +23,9 @@ only — the Cool Careers portal is reached from its own page, by the button clo
 Written against `PROJECT_BRIEF.md` in `potiondeep/cool-careers`, not by feel. Four sections on the blue ground — the
 four thematic lines (renewable energy 12, regenerative agriculture
 9, sustainable water 7, circular economy 8) told in 23 self-hosted card illustrations that link into the Deck Explorer;
-the 104-station curriculum, shown as four real teacher-deck plates — one station per thematic line, not four views of the same card; The Green Line; and the
-spark→paycheck arc (102 videos · 86 education routes · 85 internships · 340 mentors · Fare & Return on BLS wages).
+the 104-station curriculum, shown as four real teacher-deck plates — one station per thematic line, not four views of the same card; The Green Line, opening on the module's own **Now Boarding** hub plate
+(`public/greenline/now-boarding.webp` in the platform repo, derived into `/art/cool-careers/greenline`) above a CSS
+route diagram of the eight stops running my money → our money; and the spark→paycheck arc (102 videos · 86 education routes · 85 internships · 340 mentors · Fare & Return on BLS wages).
 Trimmed hard on 2026-09-29 at Michael's direction, over several passes: the five-step game walkthrough, the whole
 "How the game works" section and its deck tiles, the element-card tile, the cross-cutting careers block, the per-line
 station plates, the 01–04 pathway stages, "What students do", "What teachers get", the marigold game-portal block and

@@ -354,13 +354,35 @@ export default function CoolCareers() {
         .cc-tier span{ font-size:14px; line-height:1.4; color:${T.cream}bb; }
 
         /* the green line */
-        .cc-stops{ list-style:none; display:flex; flex-wrap:wrap; gap:0; align-items:center;
-          margin:clamp(24px,3.5vh,36px) 0 clamp(26px,4vh,40px); }
-        .cc-stops li{ display:flex; align-items:center; gap:10px; }
-        .cc-stops span{ display:flex; align-items:center; gap:9px; font-family:'Space Mono', ui-monospace, monospace;
-          font-size:12.5px; letter-spacing:.04em; color:${T.cream}d0; padding:7px 0; }
-        .cc-stops i{ width:11px; height:11px; border-radius:50%; background:${T.leaf}; box-shadow:0 0 0 3px ${T.leaf}33; }
-        .cc-stops em{ width:clamp(14px,2.4vw,34px); height:3px; background:${T.leaf}66; margin:0 10px; border-radius:2px; }
+        /* The hub plate from the Green Line module — the route glowing through
+           the valley is the money flow this section is about. */
+        .cc-gl-art{ margin:clamp(24px,3.5vh,36px) 0 0; border-radius:16px; overflow:hidden; line-height:0;
+          border:5px solid ${T.cream}; box-shadow:0 18px 40px #00000059; }
+        .cc-gl-art img{ display:block; width:100%; height:auto; }
+
+        /* the route itself */
+        .cc-route{ position:relative; margin:clamp(26px,4vh,40px) 0 clamp(26px,4vh,40px); }
+        .cc-route ol{ list-style:none; display:grid; gap:10px 0; grid-template-columns:repeat(2,1fr);
+          margin:10px 0; }
+        @media (min-width:640px){ .cc-route ol{ grid-template-columns:repeat(4,1fr); } }
+        @media (min-width:980px){ .cc-route ol{ grid-template-columns:repeat(8,1fr); } }
+        .cc-route li{ position:relative; display:flex; flex-direction:column; align-items:center; gap:11px;
+          padding-top:20px; text-align:center; }
+        /* the line: drawn per stop so it breaks cleanly where the grid wraps */
+        .cc-route li::before{ content:""; position:absolute; top:25px; left:0; right:0; height:3px;
+          background:${T.leaf}66; }
+        .cc-route li:first-child::before{ left:50%; border-radius:2px 0 0 2px; }
+        .cc-route li:last-child::before{ right:50%; border-radius:0 2px 2px 0; }
+        .cc-route i{ position:relative; z-index:1; width:13px; height:13px; border-radius:50%;
+          background:${T.leaf}; box-shadow:0 0 0 4px ${T.pineDeep}, 0 0 0 7px ${T.leaf}40; }
+        .cc-route span{ font-family:'Space Mono', ui-monospace, monospace; font-size:11.5px; letter-spacing:.04em;
+          line-height:1.35; color:${T.cream}c4; }
+        .cc-route-ends{ display:flex; align-items:center; justify-content:space-between; gap:12px;
+          font-family:'Space Mono', ui-monospace, monospace; font-size:11px; letter-spacing:.18em;
+          text-transform:uppercase; color:${T.marigold}; }
+        /* the arrow is the whole width of the route, so the ends read as a span
+           rather than two unrelated labels */
+        .cc-route-ends span:nth-child(2){ flex:1; text-align:center; color:${T.marigold}66; letter-spacing:0; }
         .cc-gl{ display:grid; gap:clamp(18px,3vw,30px); grid-template-columns:1fr; }
         @media (min-width:900px){ .cc-gl{ grid-template-columns:1fr 1fr; } }
         .cc-gl h3{ font-family:'Anton'; font-weight:400; text-transform:uppercase; font-size:clamp(19px,2.1vw,24px); margin-bottom:14px; color:${T.leaf}; }
@@ -397,8 +419,7 @@ export default function CoolCareers() {
 
         @media (max-width:560px){
           .cc-dict li{ grid-template-columns:1fr; gap:4px; }
-          .cc-stops em{ display:none; }
-          .cc-stops li{ width:50%; }
+          .cc-route ol{ gap:14px 0; }
         }
 
         /* closing CTA + footer */
@@ -499,14 +520,29 @@ export default function CoolCareers() {
             <div className="mono cc-dlabel">{c.gl_label}</div>
             <h2 id="cc-gl" className="display cc-dh">{c.gl_h}</h2>
             <p className="cc-dlede">{c.gl_lede}</p>
-            <ol className="cc-stops">
-              {c.gl_stops.map((stop, i) => (
-                <li key={stop}>
-                  {i > 0 && <em aria-hidden="true" />}
-                  <span><i aria-hidden="true" />{stop}</span>
-                </li>
-              ))}
-            </ol>
+            <figure className="cc-gl-art">
+              <img src="/art/cool-careers/greenline/now-boarding-560.webp"
+                   srcSet="/art/cool-careers/greenline/now-boarding-560.webp 560w, /art/cool-careers/greenline/now-boarding-1100.webp 1100w"
+                   sizes="(max-width: 1100px) 92vw, 1004px" alt={c.gl_art_alt}
+                   width="1100" height="619" loading="lazy" decoding="async" />
+            </figure>
+
+            {/* The route, drawn rather than listed. Real text in a list, so it
+                translates, selects and reads in order; the line and the stop
+                discs are CSS, so it reflows to a vertical route on a phone
+                instead of scaling its own labels into nothing. */}
+            <div className="cc-route">
+              <div className="cc-route-ends">
+                <span>{c.gl_from}</span>
+                <span aria-hidden="true">→</span>
+                <span>{c.gl_to}</span>
+              </div>
+              <ol>
+                {c.gl_stops.map((stop, i) => (
+                  <li key={stop}><i aria-hidden="true" /><span>{stop}</span></li>
+                ))}
+              </ol>
+            </div>
             <div className="cc-gl">
               <div>
                 <h3>{c.gl_dict_h}</h3>
