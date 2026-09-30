@@ -78,10 +78,17 @@ export const THEMES = [
   },
 ];
 
-/** Four plates from one card's teacher deck, shown as the deck itself. */
+/**
+ * Four plates from four stations' teacher decks, one per thematic line, so the
+ * strip reads as the range of the curriculum rather than four views of the same
+ * card. They were all solar until 2026-09-29.
+ *
+ * Painted for their own station in the curriculum pipeline; derived into
+ * /art/cool-careers/stations, originals untouched.
+ */
 export const DECK_PLATES = [
-  ["title", "The station's opening plate"],
-  ["standards", "The standards it carries"],
-  ["activity", "The activity it sets up"],
-  ["misconceptions", "The misconception it corrects"],
+  ["hydropower-technician", "A hydropower technician at a turbine hall, water rushing past the housing."],
+  ["agroforestry", "Rows of an agroforestry orchard, crops growing in the alleys between the trees."],
+  ["beavers", "A beaver dam slowing a mountain stream into pools and wet meadow."],
+  ["e-waste-recycling-technician", "A drawer of old phones and circuit boards, sorted for recovery."],
 ];

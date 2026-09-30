@@ -475,9 +475,9 @@ export default function CoolCareers() {
             <div className="mono cc-dlabel">{c.curric_label}</div>
             <h2 id="cc-curric" className="display cc-dh">{c.curric_h}</h2>
             <figure className="cc-plates">
-              {DECK_PLATES.map(([k, alt]) => (
-                <img key={k} src={`/art/cool-careers/stations/deck-${k}-450.webp`}
-                     srcSet={`/art/cool-careers/stations/deck-${k}-450.webp 450w, /art/cool-careers/stations/deck-${k}-900.webp 900w`}
+              {DECK_PLATES.map(([slug, alt]) => (
+                <img key={slug} src={`/art/cool-careers/stations/deck-${slug}-450.webp`}
+                     srcSet={`/art/cool-careers/stations/deck-${slug}-450.webp 450w, /art/cool-careers/stations/deck-${slug}-900.webp 900w`}
                      sizes="(max-width: 820px) 46vw, 240px" alt={alt}
                      width="900" height="502" loading="lazy" decoding="async" />
               ))}
