@@ -42,7 +42,9 @@ and the wing fringe is soft. The card is `#FFF` because that is what the browser
 (measured). The keyed alpha pair (`eagle.webm` alpha_mode=1, `eagle-hevc.mov`) is kept but not rendered. The way into the portal sits opposite the eagle: a framed screenshot of the student home a visitor actually lands on,
 with a full-width button under it. **The screenshot goes stale** — it is `public/art/cool-careers/portal-preview-*.webp`,
 captured from the free tier of cool-careers.allaboardearth.com with the access banner scrolled off. Re-shoot it when the
-portal's home screen changes. Thematic grouping lives in `src/pages/coolCareersDeck.js`; it is a second reading of the 40 career
+portal's home screen changes (last done 2026-10-07, when the portal's doors were reordered to lead with *Discover what
+lights you up!*). **The portal now answers 403 "Vercel Security Checkpoint" to headless Chrome and curl**, so the shot
+has to come from a real browser — the in-app browser pane passes it; puppeteer does not. Thematic grouping lives in `src/pages/coolCareersDeck.js`; it is a second reading of the 40 career
 cards, not the platform's spine, which is still Clusters + the seven elements.
 Migrations 0031 + 0033 were applied 2026-09-28, so the page now states plainly that station rows and files are gated at
 the database and the file store. **One claim it still avoids:** that every station has a video — 6 of 104 branded reels

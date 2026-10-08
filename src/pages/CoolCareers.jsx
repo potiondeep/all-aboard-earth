@@ -578,9 +578,9 @@ export default function CoolCareers() {
               <div className="cc-way-in">
                 <a className="cc-portal-shot" href={LINKS.gamePortal} tabIndex={-1} aria-hidden="true">
                   <img src="/art/cool-careers/portal-preview-450.webp"
-                       srcSet="/art/cool-careers/portal-preview-450.webp 450w, /art/cool-careers/portal-preview-900.webp 900w"
+                       srcSet="/art/cool-careers/portal-preview-450.webp 450w, /art/cool-careers/portal-preview-800.webp 800w"
                        sizes="(max-width: 760px) 92vw, 480px" alt=""
-                       width="900" height="753" loading="lazy" decoding="async" />
+                       width="800" height="666" loading="lazy" decoding="async" />
                 </a>
                 <a className="btn cc-portal-open" href={LINKS.gamePortal}>{c.portal_open} →</a>
               </div>
