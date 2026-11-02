@@ -42,7 +42,7 @@ export const raCopy = {
     ],
 
     objects_label: "SUSTAINABILITY ADVOCACY CAMPAIGNS",
-    objects_caps: ["Honor the Earth — San Ildefonso Pueblo", "Or not. There is no try.", "Yo' mama is so bright — she electrifies the whole planet", "Recycling is magic"],
+    objects_caps: ["Or not. There is no try.", "Yo' mama is so bright — she electrifies the whole planet"],
 
     felt_label: "WHAT WE'RE BUILDING TOWARD",
     felt_h: "A hillside that grows its own power.",
@@ -95,7 +95,7 @@ export const raCopy = {
     ],
 
     objects_label: "CAMPAÑAS DE INCIDENCIA POR LA SOSTENIBILIDAD",
-    objects_caps: ["Honra a la Tierra — Pueblo de San Ildefonso", "O no. No hay intento.", "Yo' mama is so bright — electrifica el planeta entero", "Reciclar es magia"],
+    objects_caps: ["O no. No hay intento.", "Yo' mama is so bright — electrifica el planeta entero"],
 
     felt_label: "HACIA DÓNDE VAMOS",
     felt_h: "Una ladera que cultiva su propia energía.",

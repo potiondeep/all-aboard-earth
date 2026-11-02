@@ -201,26 +201,15 @@ export default function RegenArt() {
           <h2 id="ra-objects" className="sr-only">{c.objects_label}</h2>
           <div className="ra-grid" style={{ marginTop: 0 }}>
             <figure>
-              <img src="/art/regen-art/recycle-honor-the-earth-1200.webp" srcSet="/art/regen-art/recycle-honor-the-earth-600.webp 600w, /art/regen-art/recycle-honor-the-earth-1200.webp 1200w"
-                   sizes="(max-width: 700px) 100vw, 530px" alt="A recycling symbol built from bottles, cans and leaves" loading="lazy" decoding="async" />
-              <figcaption>{c.objects_caps[0]}</figcaption>
-            </figure>
-            <figure>
               <img src="/art/regen-art/there-is-no-try-1000.webp" srcSet="/art/regen-art/there-is-no-try-600.webp 600w, /art/regen-art/there-is-no-try-1000.webp 1000w"
                    sizes="(max-width: 700px) 100vw, 530px" alt="Poster: Recycle. Or not. There is no try." loading="lazy" decoding="async" />
-              <figcaption>{c.objects_caps[1]}</figcaption>
+              <figcaption>{c.objects_caps[0]}</figcaption>
             </figure>
             <figure>
               <img src="/art/regen-art/yo-mama-1080.webp" srcSet="/art/regen-art/yo-mama-600.webp 600w, /art/regen-art/yo-mama-1080.webp 1080w"
                    sizes="(max-width: 700px) 100vw, 530px" alt="Campaign poster: Yo' mama is so bright — she electrifies the whole planet"
                    loading="lazy" decoding="async" width="1080" height="1080" />
-              <figcaption>{c.objects_caps[2]}</figcaption>
-            </figure>
-            <figure>
-              <img src="/art/regen-art/recycling-is-magic-1080.webp" srcSet="/art/regen-art/recycling-is-magic-600.webp 600w, /art/regen-art/recycling-is-magic-1080.webp 1080w"
-                   sizes="(max-width: 700px) 100vw, 530px" alt="Campaign poster: a wizard stirring a cauldron of cans and bottles — Recycling is Magic"
-                   loading="lazy" decoding="async" width="1080" height="1080" />
-              <figcaption>{c.objects_caps[3]}</figcaption>
+              <figcaption>{c.objects_caps[1]}</figcaption>
             </figure>
           </div>
         </section>

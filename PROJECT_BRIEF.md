@@ -79,12 +79,14 @@ Target: Lighthouse mobile ≥ 85 on every page.
   either a thinner divider on phones or moving the layers to CSS backgrounds and losing lazy-loading. Left as-is.
 - The homepage's Regenerative Art section still uses `mural-2`, the scaffold photo removed from `/regenerative-art`.
 - `/regenerative-art` gained an **Earthen art** gallery (2026-11-02): cob wings and an earthen altar, between Sculpture
-  and the advocacy campaigns. Its two sources are ~1100px, so they ship at 1060 (exactly 2x the 530px grid slot) rather
-  than the galleries' 1400 — resizing past the source would only add softness. The winged stage now runs **full width**
-  at 2000px: upscaled 2x in Gigapixel (Standard v2), **with the crew composited back from the original** under a soft
-  mask, because the model rebuilt their faces and these are real people. Everything outside that mask is the upscale.
+  and the advocacy campaigns. Both run **full width** at a 2000px top tier, off ~1100px sources.
+  The winged stage was upscaled 2x in Gigapixel (Standard v2), **with the crew composited back from the original**
+  under a soft mask, because the model rebuilt their faces and these are real people. Everything outside that mask is
+  the upscale.
   The altar runs full width too, but off a plain Lanczos resize of its own 1080px source: a clean q=93 frame of smooth
   sculpted clay carries 1.85x without the mush that made the stage need a model.
   Gigapixel's **CLI needs a Pro licence** (this account is Individual), so it has to be driven through its GUI — and its
   window can only be driven while the user is **not** in a full-screen Space.
+- The advocacy-campaign row is down to two (2026-11-02): the San Ildefonso recycling symbol and the wizard poster were
+  removed at Michael's request, and their art files with them.
 - Cool Careers numbers are copied from the platform repo and the Wix CMS exports. Re-check them there when it moves.
