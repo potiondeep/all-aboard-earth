@@ -48,10 +48,16 @@ function EcoHomeLoop({ caption }) {
 
 const MURALS = ["mural-finished", "mural-1", "mural-3", "mural-4", "mural-news"];
 const SCULPTURE = ["sculpture-1", "sculpture-2", "sculpture-3", "sculpture-4", "sculpture-5"];
-/* Earthen pieces carry their own top tier rather than the galleries' 1400: both
-   sources are about 1100px, and the pair sits in the 530px grid where 1060 is
-   exactly 2x. Resizing past the source would only add softness. */
-const EARTHEN = [["earthen-wings", 1060], ["earthen-altar", 1060]];
+/* The winged stage runs the full measure, so it needs 2000 for a 1000px slot on
+   a retina screen — more than its 1125px source had. It was upscaled 2x in
+   Gigapixel, then the crew were composited back from the original: the model
+   rebuilt their faces, and these are real people. Everything outside that soft
+   mask is the upscale; the faces are the photograph.
+   The altar keeps its own 1060, exactly 2x of the 530px grid slot it sits in. */
+const EARTHEN = [
+  { slug: "earthen-wings", wide: true,  tiers: [700, 1400, 2000] },
+  { slug: "earthen-altar", wide: false, tiers: [700, 1060] },
+];
 
 export default function RegenArt() {
   const [lang, setLang] = useLang();
@@ -175,11 +181,11 @@ export default function RegenArt() {
           <h2 id="ra-earthen" className="display pg-h2">{c.earthen_h}</h2>
           <p className="pg-lede">{c.earthen_p}</p>
           <div className="ra-grid">
-            {EARTHEN.map(([n, w], i) => (
-              <figure key={n}>
-                <img src={`/art/regen-art/${n}-${w}.webp`}
-                     srcSet={`/art/regen-art/${n}-700.webp 700w, /art/regen-art/${n}-${w}.webp ${w}w`}
-                     sizes="(max-width: 700px) 100vw, 530px"
+            {EARTHEN.map(({ slug, wide, tiers }, i) => (
+              <figure key={slug} className={wide ? "ra-wide" : undefined}>
+                <img src={`/art/regen-art/${slug}-${tiers[tiers.length - 1]}.webp`}
+                     srcSet={tiers.map((w) => `/art/regen-art/${slug}-${w}.webp ${w}w`).join(", ")}
+                     sizes={wide ? "(max-width: 1100px) 100vw, 1000px" : "(max-width: 700px) 100vw, 530px"}
                      alt={c.earthen_caps[i]} loading="lazy" decoding="async" />
                 <figcaption>{c.earthen_caps[i]}</figcaption>
               </figure>

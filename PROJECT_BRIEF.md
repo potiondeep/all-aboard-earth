@@ -80,7 +80,8 @@ Target: Lighthouse mobile ≥ 85 on every page.
 - The homepage's Regenerative Art section still uses `mural-2`, the scaffold photo removed from `/regenerative-art`.
 - `/regenerative-art` gained an **Earthen art** gallery (2026-11-02): cob wings and an earthen altar, between Sculpture
   and the advocacy campaigns. Its two sources are ~1100px, so they ship at 1060 (exactly 2x the 530px grid slot) rather
-  than the galleries' 1400 — resizing past the source would only add softness. Making either full-width would need a
-  genuine upscale first; Topaz Gigapixel is installed but its **CLI requires a Pro licence** (this account is
-  Individual), so that route means driving its GUI.
+  than the galleries' 1400 — resizing past the source would only add softness. The winged stage now runs **full width**
+  at 2000px: upscaled 2x in Gigapixel (Standard v2), **with the crew composited back from the original** under a soft
+  mask, because the model rebuilt their faces and these are real people. Everything outside that mask is the upscale.
+  Gigapixel's **CLI needs a Pro licence** (this account is Individual), so it has to be driven through its GUI.
 - Cool Careers numbers are copied from the platform repo and the Wix CMS exports. Re-check them there when it moves.
