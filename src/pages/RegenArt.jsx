@@ -48,6 +48,10 @@ function EcoHomeLoop({ caption }) {
 
 const MURALS = ["mural-finished", "mural-1", "mural-3", "mural-4", "mural-news"];
 const SCULPTURE = ["sculpture-1", "sculpture-2", "sculpture-3", "sculpture-4", "sculpture-5"];
+/* Earthen pieces carry their own top tier rather than the galleries' 1400: both
+   sources are about 1100px, and the pair sits in the 530px grid where 1060 is
+   exactly 2x. Resizing past the source would only add softness. */
+const EARTHEN = [["earthen-wings", 1060], ["earthen-altar", 1060]];
 
 export default function RegenArt() {
   const [lang, setLang] = useLang();
@@ -160,6 +164,24 @@ export default function RegenArt() {
                      sizes={i === 0 ? "(max-width: 1100px) 100vw, 1000px" : "(max-width: 700px) 100vw, 530px"}
                      alt={c.sculpture_caps[i]} loading="lazy" decoding="async" />
                 <figcaption>{c.sculpture_caps[i]}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+
+        {/* EARTHEN ART */}
+        <section className="pg-wrap" style={{ paddingTop: 0 }} aria-labelledby="ra-earthen">
+          <div className="pg-label">{c.earthen_label}</div>
+          <h2 id="ra-earthen" className="display pg-h2">{c.earthen_h}</h2>
+          <p className="pg-lede">{c.earthen_p}</p>
+          <div className="ra-grid">
+            {EARTHEN.map(([n, w], i) => (
+              <figure key={n}>
+                <img src={`/art/regen-art/${n}-${w}.webp`}
+                     srcSet={`/art/regen-art/${n}-700.webp 700w, /art/regen-art/${n}-${w}.webp ${w}w`}
+                     sizes="(max-width: 700px) 100vw, 530px"
+                     alt={c.earthen_caps[i]} loading="lazy" decoding="async" />
+                <figcaption>{c.earthen_caps[i]}</figcaption>
               </figure>
             ))}
           </div>

@@ -78,4 +78,9 @@ Target: Lighthouse mobile ≥ 85 on every page.
   deliberately stretched to `clamp(84px,11vw,150px)` and the audit only inspects `object-fit:fill`. Clearing it means
   either a thinner divider on phones or moving the layers to CSS backgrounds and losing lazy-loading. Left as-is.
 - The homepage's Regenerative Art section still uses `mural-2`, the scaffold photo removed from `/regenerative-art`.
+- `/regenerative-art` gained an **Earthen art** gallery (2026-11-02): cob wings and an earthen altar, between Sculpture
+  and the advocacy campaigns. Its two sources are ~1100px, so they ship at 1060 (exactly 2x the 530px grid slot) rather
+  than the galleries' 1400 — resizing past the source would only add softness. Making either full-width would need a
+  genuine upscale first; Topaz Gigapixel is installed but its **CLI requires a Pro licence** (this account is
+  Individual), so that route means driving its GUI.
 - Cool Careers numbers are copied from the platform repo and the Wix CMS exports. Re-check them there when it moves.
