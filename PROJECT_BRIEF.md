@@ -83,5 +83,8 @@ Target: Lighthouse mobile ≥ 85 on every page.
   than the galleries' 1400 — resizing past the source would only add softness. The winged stage now runs **full width**
   at 2000px: upscaled 2x in Gigapixel (Standard v2), **with the crew composited back from the original** under a soft
   mask, because the model rebuilt their faces and these are real people. Everything outside that mask is the upscale.
-  Gigapixel's **CLI needs a Pro licence** (this account is Individual), so it has to be driven through its GUI.
+  The altar runs full width too, but off a plain Lanczos resize of its own 1080px source: a clean q=93 frame of smooth
+  sculpted clay carries 1.85x without the mush that made the stage need a model.
+  Gigapixel's **CLI needs a Pro licence** (this account is Individual), so it has to be driven through its GUI — and its
+  window can only be driven while the user is **not** in a full-screen Space.
 - Cool Careers numbers are copied from the platform repo and the Wix CMS exports. Re-check them there when it moves.

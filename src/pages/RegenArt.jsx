@@ -53,10 +53,12 @@ const SCULPTURE = ["sculpture-1", "sculpture-2", "sculpture-3", "sculpture-4", "
    Gigapixel, then the crew were composited back from the original: the model
    rebuilt their faces, and these are real people. Everything outside that soft
    mask is the upscale; the faces are the photograph.
-   The altar keeps its own 1060, exactly 2x of the 530px grid slot it sits in. */
+   The altar runs full width too, but off a plain Lanczos resize of its own
+   1080px source — it is a clean q=93 frame of smooth sculpted clay, so it
+   carries 1.85x without the mush that made the stage need a model. */
 const EARTHEN = [
-  { slug: "earthen-wings", wide: true,  tiers: [700, 1400, 2000] },
-  { slug: "earthen-altar", wide: false, tiers: [700, 1060] },
+  { slug: "earthen-wings", wide: true, tiers: [700, 1400, 2000] },
+  { slug: "earthen-altar", wide: true, tiers: [700, 1400, 2000] },
 ];
 
 export default function RegenArt() {
