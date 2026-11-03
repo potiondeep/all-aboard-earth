@@ -1,6 +1,6 @@
 # All Aboard Earth site — Project Brief
 
-**Last refreshed:** 2026-09-28 · commit `ef1ae2f`
+**Last refreshed:** 2026-11-03 · commit `cac8415`
 Read by the All Aboard Earth claude.ai Project on "sync from the repo". Refreshed by Claude Code at the end of every
 session that changes the site (see `CLAUDE.md`). Workflow detail lives in `.claude/skills/aae-site/SKILL.md`.
 
@@ -55,8 +55,8 @@ The four teacher-deck plates are derived from `~/Projects/station-pipeline`; ori
 | Host | Serves |
 |---|---|
 | `www.allaboardearth.com` | this site (the apex redirects to www) |
-| `cards.allaboardearth.com` | the old Wix site. **Keep the Wix subscription alive**, because the printed deck's QR codes (`/coolcareers/:slug`) redirect there |
-| `cool-careers.allaboardearth.com` | the Cool Careers game platform (Deck Explorer takes `?card=<slug>`) |
+| `cards.allaboardearth.com` | the old Wix site, now an archive. **Keep the Wix subscription alive for now**: the printed deck's QR codes went there as permanent redirects until 2026-11, and phones cache those |
+| `cool-careers.allaboardearth.com` | the Cool Careers game platform. **Every printed Career/Action QR lands here**: `/coolcareers/:slug` and `/coolactions/:slug` redirect (temporary 307 for now) to its Deck Explorer card, `/s/explore?card=:slug`, which works without an access code. Elements carry no QR. The printed Soil Microbiologist card's QR is misprinted as `/cool-careers/trophic-cascades`; a one-off rule sends it to that card |
 | `new.allaboardearth.com` | staging for design comparisons (noindex) |
 
 ## Look

@@ -46,8 +46,8 @@ These override anything below. They are not preferences.
 | Host | Serves | Why it matters |
 |---|---|---|
 | `www.allaboardearth.com` | this site (Vercel) | apex 308s to www |
-| `cards.allaboardearth.com` | **the old Wix site** | the printed Cool Careers deck has QR codes pointing at `/coolcareers/:slug`; Vercel 308s those to `cards.` The Wix subscription must stay alive |
-| `cool-careers.allaboardearth.com` | the game platform | its Deck Explorer takes `?card=<slug>` |
+| `cards.allaboardearth.com` | **the old Wix site** | archive only. The printed Cool Careers deck's QR codes (`/coolcareers/:slug`, `/coolactions/:slug`) now redirect to the portal's Deck Explorer card (`cool-careers.…/s/explore?card=:slug`); until 2026-11 they went here as permanent 308s, which phones cache, so keep the Wix subscription alive a while longer |
+| `cool-careers.allaboardearth.com` | the game platform | its Deck Explorer takes `?card=<slug>`, and every printed Career/Action QR lands there (all 85 Wix slugs match its card slugs exactly) |
 | `new.allaboardearth.com` | staging | point it at a branch to compare designs; `noindex` via a host-matched header in `vercel.json` |
 
 ## The loop
