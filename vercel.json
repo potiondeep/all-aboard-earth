@@ -25,27 +25,27 @@
     {
       "source": "/cool-careers/trophic-cascades",
       "destination": "https://cool-careers.allaboardearth.com/s/explore?card=soil-microbiologist",
-      "permanent": false
+      "permanent": true
     },
     {
       "source": "/coolcareers/:slug",
       "destination": "https://cool-careers.allaboardearth.com/s/explore?card=:slug",
-      "permanent": false
+      "permanent": true
     },
     {
       "source": "/coolactions/:slug",
       "destination": "https://cool-careers.allaboardearth.com/s/explore?card=:slug",
-      "permanent": false
+      "permanent": true
     },
     {
       "source": "/coolcareers",
       "destination": "https://cool-careers.allaboardearth.com/s/explore",
-      "permanent": false
+      "permanent": true
     },
     {
       "source": "/coolactions",
       "destination": "https://cool-careers.allaboardearth.com/s/explore",
-      "permanent": false
+      "permanent": true
     },
     {
       "source": "/cool-careers/game",
