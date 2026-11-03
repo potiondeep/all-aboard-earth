@@ -26,6 +26,8 @@ const PAGES = ["/", "/cool-careers", "/edutainment", "/regenerative-art", "/cont
 const REDIRECTS = [
   ["/coolcareers/artist", "cool-careers.allaboardearth.com/s/explore?card=artist"],
   ["/coolactions/green-hustle", "cool-careers.allaboardearth.com/s/explore?card=green-hustle"],
+  // The printed Soil Microbiologist card's QR was misprinted with this path.
+  ["/cool-careers/trophic-cascades", "cool-careers.allaboardearth.com/s/explore?card=soil-microbiologist"],
   ["/grooves", "open.spotify.com"],
   ["/book-online", "/contact"],
   ["/book-a-demo", "/contact"],

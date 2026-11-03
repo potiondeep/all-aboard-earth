@@ -56,7 +56,7 @@ The four teacher-deck plates are derived from `~/Projects/station-pipeline`; ori
 |---|---|
 | `www.allaboardearth.com` | this site (the apex redirects to www) |
 | `cards.allaboardearth.com` | the old Wix site, now an archive. **Keep the Wix subscription alive for now**: the printed deck's QR codes went there as permanent redirects until 2026-11, and phones cache those |
-| `cool-careers.allaboardearth.com` | the Cool Careers game platform. **Every printed Career/Action QR lands here**: `/coolcareers/:slug` and `/coolactions/:slug` redirect (temporary 307 for now) to its Deck Explorer card, `/s/explore?card=:slug`, which works without an access code. Elements carry no QR |
+| `cool-careers.allaboardearth.com` | the Cool Careers game platform. **Every printed Career/Action QR lands here**: `/coolcareers/:slug` and `/coolactions/:slug` redirect (temporary 307 for now) to its Deck Explorer card, `/s/explore?card=:slug`, which works without an access code. Elements carry no QR. The printed Soil Microbiologist card's QR is misprinted as `/cool-careers/trophic-cascades`; a one-off rule sends it to that card |
 | `new.allaboardearth.com` | staging for design comparisons (noindex) |
 
 ## Look

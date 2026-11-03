@@ -23,6 +23,11 @@
   ],
   "redirects": [
     {
+      "source": "/cool-careers/trophic-cascades",
+      "destination": "https://cool-careers.allaboardearth.com/s/explore?card=soil-microbiologist",
+      "permanent": false
+    },
+    {
       "source": "/coolcareers/:slug",
       "destination": "https://cool-careers.allaboardearth.com/s/explore?card=:slug",
       "permanent": false
