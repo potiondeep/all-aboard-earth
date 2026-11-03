@@ -24,8 +24,8 @@ const PAGES = ["/", "/cool-careers", "/edutainment", "/regenerative-art", "/cont
 
 /** Redirects worth checking every time: the first two are the printed QR codes. */
 const REDIRECTS = [
-  ["/coolcareers/artist", "cards.allaboardearth.com/coolcareers/artist"],
-  ["/coolactions/green-hustle", "cards.allaboardearth.com/coolactions/green-hustle"],
+  ["/coolcareers/artist", "cool-careers.allaboardearth.com/s/explore?card=artist"],
+  ["/coolactions/green-hustle", "cool-careers.allaboardearth.com/s/explore?card=green-hustle"],
   ["/grooves", "open.spotify.com"],
   ["/book-online", "/contact"],
   ["/book-a-demo", "/contact"],

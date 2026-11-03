@@ -24,23 +24,23 @@
   "redirects": [
     {
       "source": "/coolcareers/:slug",
-      "destination": "https://cards.allaboardearth.com/coolcareers/:slug",
-      "permanent": true
+      "destination": "https://cool-careers.allaboardearth.com/s/explore?card=:slug",
+      "permanent": false
     },
     {
       "source": "/coolactions/:slug",
-      "destination": "https://cards.allaboardearth.com/coolactions/:slug",
-      "permanent": true
+      "destination": "https://cool-careers.allaboardearth.com/s/explore?card=:slug",
+      "permanent": false
     },
     {
       "source": "/coolcareers",
-      "destination": "https://cards.allaboardearth.com/coolcareers",
-      "permanent": true
+      "destination": "https://cool-careers.allaboardearth.com/s/explore",
+      "permanent": false
     },
     {
       "source": "/coolactions",
-      "destination": "https://cards.allaboardearth.com/coolactions",
-      "permanent": true
+      "destination": "https://cool-careers.allaboardearth.com/s/explore",
+      "permanent": false
     },
     {
       "source": "/cool-careers/game",
