@@ -13,7 +13,7 @@ and one page. If nothing product-facing changed, leave it alone.
 Workflow rules live in the `aae-site` skill; this is only where things are. Keep it current.
 
 - **Pages**: home `src/AllAboardEarthPrototype.jsx` (1,400 lines, carries its own `<style>`, grep it) · sub pages `src/pages/{CoolCareers,Edutainment,RegenArt,Contact}.jsx`, each with a `*Copy.js` (EN/ES strings) · `src/pages/coolCareersDeck.js` (thematic grouping).
-- **Entries**: one HTML folder per page (`cool-careers/`, `edutainment/`, `regenerative-art/`, `contact/`) + `src/*-main.jsx`, registered in `vite.config.js`. Redirects are in `vercel.json`.
+- **Entries**: one HTML folder per page (`cool-careers/`, `edutainment/`, `regenerative-art/`, `contact/`, `privacy/`) + `src/*-main.jsx`, registered in `vite.config.js`. Redirects are in `vercel.json`.
 - **Shared**: `src/pages/chrome.jsx` (nav, `PageMenu`, footer, `chromeCss`, `useLang`, `useLoopVideo`) · `src/theme.js` (palette `T.*`, `LINKS.*`, `mailTo()`) · `src/index.css` (pre-React paint) · `src/wixCardArt.js`.
 - **Ornaments** (`src/ornaments/`): `Divider` (+`dividerTuning.js`, `DividerTunePanel` via `?tune`) · `Train` · `CtaCrossing` · `FeltLoop` · `Seed`.
 - **Art**: `src/assets/` (originals are read-only; `divider-layers*`) · `public/art/`.
