@@ -15,6 +15,7 @@ export default defineConfig({
         edutainment: resolve(import.meta.dirname, 'edutainment/index.html'),
         regenArt: resolve(import.meta.dirname, 'regenerative-art/index.html'),
         contact: resolve(import.meta.dirname, 'contact/index.html'),
+        privacy: resolve(import.meta.dirname, 'privacy/index.html'),
       },
     },
   },
