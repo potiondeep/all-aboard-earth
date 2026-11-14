@@ -47,7 +47,13 @@ function EcoHomeLoop({ caption }) {
 }
 
 const MURALS = ["mural-finished", "mural-1", "mural-3", "mural-4", "mural-news"];
-const SCULPTURE = ["sculpture-1", "sculpture-2", "sculpture-3", "sculpture-4", "sculpture-5"];
+/* sculpture-wall is the lead image: a 2000x1333 photograph, so its 2000 tier is
+   native (no upscale). It runs the full measure; the two below are half width. */
+const SCULPTURE = [
+  { slug: "sculpture-wall", tiers: [700, 1400, 2000], w: 2000, h: 1333 },
+  { slug: "sculpture-4", tiers: [700, 1400] },
+  { slug: "sculpture-5", tiers: [700, 1400] },
+];
 /* The winged stage runs the full measure, so it needs 2000 for a 1000px slot on
    a retina screen — more than its 1125px source had. It was upscaled 2x in
    Gigapixel, then the crew were composited back from the original: the model
@@ -166,10 +172,12 @@ export default function RegenArt() {
           <h2 id="ra-sculpture" className="display pg-h2">{c.sculpture_h}</h2>
           <p className="pg-lede">{c.sculpture_p}</p>
           <div className="ra-grid">
-            {SCULPTURE.map((n, i) => (
-              <figure key={n} className={i === 0 ? "ra-wide" : undefined}>
-                <img src={`/art/regen-art/${n}-1400.webp`} srcSet={`/art/regen-art/${n}-700.webp 700w, /art/regen-art/${n}-1400.webp 1400w`}
+            {SCULPTURE.map(({ slug, tiers, w, h }, i) => (
+              <figure key={slug} className={i === 0 ? "ra-wide" : undefined}>
+                <img src={`/art/regen-art/${slug}-1400.webp`}
+                     srcSet={tiers.map((t) => `/art/regen-art/${slug}-${t}.webp ${t}w`).join(", ")}
                      sizes={i === 0 ? "(max-width: 1100px) 100vw, 1000px" : "(max-width: 700px) 100vw, 530px"}
+                     width={w} height={h}
                      alt={c.sculpture_caps[i]} loading="lazy" decoding="async" />
                 <figcaption>{c.sculpture_caps[i]}</figcaption>
               </figure>

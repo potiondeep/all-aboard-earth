@@ -29,9 +29,9 @@ export const raCopy = {
     ],
 
     sculpture_label: "SCULPTURE",
-    sculpture_h: "Cut, welded, planted in the street.",
+    sculpture_h: "Mixed Media Sculptural Relief",
     sculpture_p: "Metal bloom and chevron forms fabricated by hand and installed along a public wall — work sized for the sidewalk, finished so it holds up to the weather and the neighbourhood.",
-    sculpture_caps: ["Installed along the wall", "With the makers", "Cutting the bloom", "Finishing on site", "Gold and silver leaf laid over the cut forms"],
+    sculpture_caps: ["Installed along the wall", "Finishing on site", "Gold and silver leaf laid over the cut forms"],
 
     earthen_label: "EARTHEN ART",
     earthen_h: "Sculpted from the ground it stands on.",
@@ -82,9 +82,9 @@ export const raCopy = {
     ],
 
     sculpture_label: "ESCULTURA",
-    sculpture_h: "Cortada, soldada, sembrada en la calle.",
+    sculpture_h: "Relieve escultórico de técnica mixta",
     sculpture_p: "Formas de flor y chevrón en metal, fabricadas a mano e instaladas a lo largo de un muro público — obra a escala de la banqueta, acabada para resistir el clima y el barrio.",
-    sculpture_caps: ["Instalada a lo largo del muro", "Con quienes la hicieron", "Cortando la flor", "Acabado en sitio", "Pan de oro y plata sobre las formas cortadas"],
+    sculpture_caps: ["Instalada a lo largo del muro", "Acabado en sitio", "Pan de oro y plata sobre las formas cortadas"],
 
     earthen_label: "ARTE EN TIERRA",
     earthen_h: "Esculpido del suelo que lo sostiene.",
