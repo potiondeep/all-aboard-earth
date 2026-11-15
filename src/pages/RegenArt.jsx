@@ -51,7 +51,7 @@ function EcoHomeLoop({ caption }) {
    box before the image arrives. The first item of a grid runs the full measure
    when it is `wide`. Captions live in regenArtCopy.js, in the same order. */
 const MURALS = [
-  { slug: "mural-finished", tiers: [700, 1400], w: 1400, h: 1012, wide: true },
+  { slug: "mural-wall", tiers: [700, 1400, 2000], w: 2000, h: 1457, wide: true },
   { slug: "mural-sunburst", tiers: [700, 1400], w: 1400, h: 1400 },
   { slug: "mural-dragon-hood", tiers: [700, 1200], w: 1200, h: 860 },
   { slug: "mural-zebra", tiers: [700, 960], w: 960, h: 1280 },
@@ -180,8 +180,10 @@ export default function RegenArt() {
           <div className="pg-label">{c.mural_label}</div>
           <h2 id="ra-mural" className="display pg-h2">{c.mural_h}</h2>
           <p className="pg-lede">{c.mural_p}</p>
+          {/* The finished wall leads; the film follows it, then the rest of the stills. */}
+          <Gallery items={MURALS.slice(0, 1)} caps={c.mural_caps} />
           <MuralVideo label={c.mural_video_play} title={c.mural_video_title} />
-          <Gallery items={MURALS} caps={c.mural_caps} />
+          <Gallery items={MURALS.slice(1)} caps={c.mural_caps.slice(1)} />
         </section>
 
         {/* SCULPTURE */}

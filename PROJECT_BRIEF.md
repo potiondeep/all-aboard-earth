@@ -1,6 +1,6 @@
 # All Aboard Earth site — Project Brief
 
-**Last refreshed:** 2026-11-14 · after commit `fc5c960`
+**Last refreshed:** 2026-11-14 · after commit `68a0a5d`
 Read by the All Aboard Earth claude.ai Project on "sync from the repo". Refreshed by Claude Code at the end of every
 session that changes the site (see `CLAUDE.md`). Workflow detail lives in `.claude/skills/aae-site/SKILL.md`.
 
@@ -80,7 +80,8 @@ Target: Lighthouse mobile ≥ 85 on every page.
 - The homepage's Regenerative Art section still uses `mural-2`, the scaffold photo removed from `/regenerative-art`.
 - `/regenerative-art` photo sections were re-cut 2026-11-14 from Michael's edited files (Drive `Murals/Regenerative Art`,
   8 JPEGs, plus four renamed mural files found in `~/Downloads`; no Desktop "mural" folder exists). **Murals** (5): the
-  finished wall, then the sunburst, dragon-hood and zebra stills and the Santa Fe New Mexican clipping, swapped for the
+  finished wall leads (the 2855px upscale from Michael's Desktop, shown at 2000), then the mural film's play-to-load
+  poster, then the sunburst, dragon-hood and zebra stills and the Santa Fe New Mexican clipping, swapped for the
   edited files. **Sculpture** (7): the new 2000px wall photo leads, then the run along the sidewalk, close-up, build
   table, cut bloom, gold forms on the anvil and "Finishing on site". **Earthen art** (3): altar mid-build at Atitlan
   (full width), the winged stage, the fire altar. The screenshot-grade images (gold-leaf close-up, old wings and altar)
