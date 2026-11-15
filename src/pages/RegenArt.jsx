@@ -72,15 +72,15 @@ const SCULPTURE = [
   { slug: "sculpture-anvil", tiers: [700, 1400], w: 1400, h: 1867 },
   { slug: "sculpture-4", tiers: [700, 1400], w: 1050, h: 1400 },
 ];
-/* Earthen set, all from the edited Drive files and used as supplied, each on its
+/* Earthen set, all from Michael's edited files and used as supplied, each on its
    own full-width line. The stage photo has the crew in it, so it must never go
    through an AI upscale; its top tier is the file's native 1575px. The fire altar
-   is only 1174px native, so on a retina screen at full width the browser scales
-   it ~1.7x; nothing larger is made from it. */
+   is Michael's own 2x upscale from his Desktop (2348px, from the 1174px Drive
+   edit); it is a sculpture, no people in it, and we ship it at up to 2000. */
 const EARTHEN = [
   { slug: "earthen-atitlan", tiers: [700, 1400, 2000], w: 2000, h: 1500, wide: true },
+  { slug: "earthen-altar-2x", tiers: [700, 1400, 2000], w: 2000, h: 1840, wide: true },
   { slug: "earthen-stage", tiers: [700, 1400, 1575], w: 1575, h: 2100, wide: true },
-  { slug: "earthen-altar-fire", tiers: [700, 1174], w: 1174, h: 1080, wide: true },
 ];
 
 function Pic({ slug, tiers, w, h, wide, alt }) {

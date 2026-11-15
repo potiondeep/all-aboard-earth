@@ -85,8 +85,8 @@ Target: Lighthouse mobile ≥ 85 on every page.
   edited files. **Sculpture** (7): the new 2000px wall photo leads, then the run along the sidewalk, close-up, the build
   table with the gold-and-silver-leaf "tail" stacked under it (both uncaptioned so the tail fills the height beside the
   bloom; it is cropped to fit on desktop, whole on phones), the cut bloom, gold forms on the anvil and "Finishing on site". **Earthen art** (3): altar mid-build at Atitlan,
-  the winged stage and the fire altar, each on its own full-width line (the fire altar is only 1174px native, so it is
-  slightly soft on retina at that size). The old wings and altar images are gone, with their files; the gold-leaf close-up came back at Michael's request
+  the fire altar (Michael's 2348px Desktop upscale of the 1174px edit, served up to 2000) and the winged stage (in that
+  order), each on its own full-width line. The old wings and altar images are gone, with their files; the gold-leaf close-up came back at Michael's request
   (still the 1400px file, no edited version exists). All tiers stop at each file's native width: nothing is upscaled. The stage photo has the
   crew in it, so it must never go through an AI upscale. Captions are drafted from what the photos show, EN + ES, and
   want Michael's eye. Rows in the Sculpture and Earthen grids are uneven (tall photo beside a short one) because the grid

@@ -47,8 +47,8 @@ export const raCopy = {
     earthen_p: "Cob, clay and straw raised by hand into wings, faces and altars — built from the soil underfoot, by the people who gather around them, and left to weather with the place.",
     earthen_caps: [
       "The altar mid-build, buckets and ladder still on site",
-      "A winged stage raised in cob, with the crew who built it",
       "Earthen altar and fire, carved wings running out to either side",
+      "A winged stage raised in cob, with the crew who built it",
     ],
 
     objects_label: "SUSTAINABILITY ADVOCACY CAMPAIGNS",
@@ -110,8 +110,8 @@ export const raCopy = {
     earthen_p: "Cob, barro y paja levantados a mano en alas, rostros y altares — construidos con la tierra bajo los pies, por la gente que se reúne alrededor, y dejados a envejecer con el lugar.",
     earthen_caps: [
       "El altar a medio construir, con cubetas y escalera todavía en el sitio",
-      "Un escenario alado levantado en cob, con el equipo que lo construyó",
       "Altar de tierra y fuego, con alas talladas que se extienden a los lados",
+      "Un escenario alado levantado en cob, con el equipo que lo construyó",
     ],
 
     objects_label: "CAMPAÑAS DE INCIDENCIA POR LA SOSTENIBILIDAD",
