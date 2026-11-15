@@ -1,6 +1,6 @@
 # All Aboard Earth site — Project Brief
 
-**Last refreshed:** 2026-11-14 · after commit `68a0a5d`
+**Last refreshed:** 2026-11-14 · after commit `9b9a13b`
 Read by the All Aboard Earth claude.ai Project on "sync from the repo". Refreshed by Claude Code at the end of every
 session that changes the site (see `CLAUDE.md`). Workflow detail lives in `.claude/skills/aae-site/SKILL.md`.
 
@@ -82,10 +82,11 @@ Target: Lighthouse mobile ≥ 85 on every page.
   8 JPEGs, plus four renamed mural files found in `~/Downloads`; no Desktop "mural" folder exists). **Murals** (5): the
   finished wall leads (the 2855px upscale from Michael's Desktop, shown at 2000), then the mural film's play-to-load
   poster, then the sunburst, dragon-hood and zebra stills and the Santa Fe New Mexican clipping, swapped for the
-  edited files. **Sculpture** (7): the new 2000px wall photo leads, then the run along the sidewalk, close-up, build
-  table, cut bloom, gold forms on the anvil and "Finishing on site". **Earthen art** (3): altar mid-build at Atitlan
-  (full width), the winged stage, the fire altar. The screenshot-grade images (gold-leaf close-up, old wings and altar)
-  are gone, with their files. All tiers stop at each file's native width: nothing is upscaled. The stage photo has the
+  edited files. **Sculpture** (7): the new 2000px wall photo leads, then the run along the sidewalk, close-up, the build
+  table with the gold-and-silver-leaf "tail" stacked under it (both uncaptioned so the tail fills the height beside the
+  bloom; it is cropped to fit on desktop, whole on phones), the cut bloom, gold forms on the anvil and "Finishing on site". **Earthen art** (3): altar mid-build at Atitlan
+  (full width), the winged stage, the fire altar. The old wings and altar images are gone, with their files; the gold-leaf close-up came back at Michael's request
+  (still the 1400px file, no edited version exists). All tiers stop at each file's native width: nothing is upscaled. The stage photo has the
   crew in it, so it must never go through an AI upscale. Captions are drafted from what the photos show, EN + ES, and
   want Michael's eye. Rows in the Sculpture and Earthen grids are uneven (tall photo beside a short one) because the grid
   aligns to the top.

@@ -31,6 +31,7 @@ export const raCopy = {
     sculpture_label: "SCULPTURE",
     sculpture_h: "Mixed Media Sculptural Relief",
     sculpture_p: "Metal bloom and chevron forms fabricated by hand and installed along a public wall — work sized for the sidewalk, finished so it holds up to the weather and the neighbourhood.",
+    sculpture_tail_alt: "Gold and silver leaf laid over the cut forms",
     sculpture_caps: [
       "Installed along the wall",
       "The full run along the sidewalk, bloom to tail",
@@ -93,6 +94,7 @@ export const raCopy = {
     sculpture_label: "ESCULTURA",
     sculpture_h: "Relieve escultórico de técnica mixta",
     sculpture_p: "Formas de flor y chevrón en metal, fabricadas a mano e instaladas a lo largo de un muro público — obra a escala de la banqueta, acabada para resistir el clima y el barrio.",
+    sculpture_tail_alt: "Pan de oro y plata sobre las formas cortadas",
     sculpture_caps: [
       "Instalada a lo largo del muro",
       "El recorrido completo junto a la banqueta, de la flor a la cola",

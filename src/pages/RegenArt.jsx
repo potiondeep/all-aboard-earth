@@ -63,7 +63,11 @@ const SCULPTURE = [
   { slug: "sculpture-wall", tiers: [700, 1400, 2000], w: 2000, h: 1333, wide: true },
   { slug: "sculpture-run", tiers: [700, 1400], w: 1400, h: 1867 },
   { slug: "sculpture-close", tiers: [700, 1400], w: 1400, h: 1867 },
-  { slug: "sculpture-bench", tiers: [700, 1400], w: 1400, h: 1050 },
+  /* The build-table photo and the gold-leaf "tail" share one grid cell, stacked, beside
+     the tall bloom. Neither carries a caption, so the tail fills exactly the height
+     the bloom leaves (cropped to fit on desktop, whole in one column on phones). */
+  { slug: "sculpture-bench", tiers: [700, 1400], w: 1400, h: 1050, bare: true,
+    under: { slug: "sculpture-5", tiers: [700, 1400], w: 1400, h: 1867 } },
   { slug: "sculpture-bloom", tiers: [700, 1400], w: 1400, h: 1969 },
   { slug: "sculpture-anvil", tiers: [700, 1400], w: 1400, h: 1867 },
   { slug: "sculpture-4", tiers: [700, 1400], w: 1050, h: 1400 },
@@ -78,18 +82,32 @@ const EARTHEN = [
   { slug: "earthen-altar-fire", tiers: [700, 1174], w: 1174, h: 1080 },
 ];
 
-function Gallery({ items, caps }) {
+function Pic({ slug, tiers, w, h, wide, alt }) {
+  return (
+    <img src={`/art/regen-art/${slug}-${tiers[tiers.length - 1]}.webp`}
+         srcSet={tiers.map((t) => `/art/regen-art/${slug}-${t}.webp ${t}w`).join(", ")}
+         sizes={wide ? "(max-width: 1100px) 100vw, 1000px" : "(max-width: 700px) 100vw, 530px"}
+         width={w} height={h} alt={alt} loading="lazy" decoding="async" />
+  );
+}
+
+function Gallery({ items, caps, underAlt }) {
   return (
     <div className="ra-grid">
-      {items.map(({ slug, tiers, w, h, wide }, i) => (
-        <figure key={slug} className={wide ? "ra-wide" : undefined}>
-          <img src={`/art/regen-art/${slug}-${tiers[tiers.length - 1]}.webp`}
-               srcSet={tiers.map((t) => `/art/regen-art/${slug}-${t}.webp ${t}w`).join(", ")}
-               sizes={wide ? "(max-width: 1100px) 100vw, 1000px" : "(max-width: 700px) 100vw, 530px"}
-               width={w} height={h} alt={caps[i]} loading="lazy" decoding="async" />
-          <figcaption>{caps[i]}</figcaption>
-        </figure>
-      ))}
+      {items.map((it, i) => {
+        const fig = (
+          <figure key={it.slug} className={it.wide ? "ra-wide" : undefined}>
+            <Pic {...it} alt={caps[i]} />
+            {!it.bare && <figcaption>{caps[i]}</figcaption>}
+          </figure>
+        );
+        return it.under ? (
+          <div key={it.slug} className="ra-stack">
+            {fig}
+            <figure className="ra-fill"><Pic {...it.under} alt={underAlt} /></figure>
+          </div>
+        ) : fig;
+      })}
     </div>
   );
 }
@@ -121,6 +139,10 @@ export default function RegenArt() {
         .ra-grid figure{ margin:0; }
         .ra-grid img{ width:100%; height:auto; display:block; border-radius:16px; border:5px solid ${T.cream}; box-shadow:0 14px 32px #0008; }
         .ra-grid figcaption{ margin-top:9px; font-family:'Space Mono', ui-monospace, monospace; font-size:12px; color:${T.cream}99; letter-spacing:.06em; }
+        .ra-stack{ display:flex; flex-direction:column; gap:14px; min-width:0; }
+        .ra-stack .ra-fill{ position:relative; flex:1 1 auto; min-height:180px; }
+        .ra-stack .ra-fill img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 56%; }
+        @media (max-width:699px){ .ra-stack .ra-fill{ flex:none; min-height:0; aspect-ratio:1400/1867; } }
         .ra-grid figure:nth-child(odd) img{ transform:rotate(-.8deg); }
         .ra-grid figure:nth-child(even) img{ transform:rotate(.6deg); }
 
@@ -191,7 +213,7 @@ export default function RegenArt() {
           <div className="pg-label">{c.sculpture_label}</div>
           <h2 id="ra-sculpture" className="display pg-h2">{c.sculpture_h}</h2>
           <p className="pg-lede">{c.sculpture_p}</p>
-          <Gallery items={SCULPTURE} caps={c.sculpture_caps} />
+          <Gallery items={SCULPTURE} caps={c.sculpture_caps} underAlt={c.sculpture_tail_alt} />
         </section>
 
         {/* EARTHEN ART */}
