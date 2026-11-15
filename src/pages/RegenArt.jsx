@@ -46,26 +46,53 @@ function EcoHomeLoop({ caption }) {
   );
 }
 
-const MURALS = ["mural-finished", "mural-1", "mural-3", "mural-4", "mural-news"];
-/* sculpture-wall is the lead image: a 2000x1333 photograph, so its 2000 tier is
-   native (no upscale). It runs the full measure; the two below are half width. */
+/* Each item's `tiers` stop at the file's native width, so nothing here is
+   upscaled; w/h are the top tier's pixels, which lets the browser reserve the
+   box before the image arrives. The first item of a grid runs the full measure
+   when it is `wide`. Captions live in regenArtCopy.js, in the same order. */
+const MURALS = [
+  { slug: "mural-finished", tiers: [700, 1400], w: 1400, h: 1012, wide: true },
+  { slug: "mural-sunburst", tiers: [700, 1400], w: 1400, h: 1400 },
+  { slug: "mural-dragon-hood", tiers: [700, 1200], w: 1200, h: 860 },
+  { slug: "mural-zebra", tiers: [700, 960], w: 960, h: 1280 },
+  { slug: "mural-press", tiers: [700, 1400], w: 1400, h: 1888 },
+];
+/* sculpture-wall leads: a 2000x1333 photograph, so its 2000 tier is native. The
+   rest are the edited set from Drive (originals 2633-4032px, shown at 1400). */
 const SCULPTURE = [
-  { slug: "sculpture-wall", tiers: [700, 1400, 2000], w: 2000, h: 1333 },
-  { slug: "sculpture-4", tiers: [700, 1400] },
-  { slug: "sculpture-5", tiers: [700, 1400] },
+  { slug: "sculpture-wall", tiers: [700, 1400, 2000], w: 2000, h: 1333, wide: true },
+  { slug: "sculpture-run", tiers: [700, 1400], w: 1400, h: 1867 },
+  { slug: "sculpture-close", tiers: [700, 1400], w: 1400, h: 1867 },
+  { slug: "sculpture-bench", tiers: [700, 1400], w: 1400, h: 1050 },
+  { slug: "sculpture-bloom", tiers: [700, 1400], w: 1400, h: 1969 },
+  { slug: "sculpture-anvil", tiers: [700, 1400], w: 1400, h: 1867 },
+  { slug: "sculpture-4", tiers: [700, 1400], w: 1050, h: 1400 },
 ];
-/* The winged stage runs the full measure, so it needs 2000 for a 1000px slot on
-   a retina screen — more than its 1125px source had. It was upscaled 2x in
-   Gigapixel, then the crew were composited back from the original: the model
-   rebuilt their faces, and these are real people. Everything outside that soft
-   mask is the upscale; the faces are the photograph.
-   The altar runs full width too, but off a plain Lanczos resize of its own
-   1080px source — it is a clean q=93 frame of smooth sculpted clay, so it
-   carries 1.85x without the mush that made the stage need a model. */
+/* Earthen set, all from the edited Drive files and used as supplied. The stage
+   photo has the crew in it, so it must never go through an AI upscale; at
+   1575px it does not need one for a half-width slot. The fire altar is 1174px,
+   which is also enough for half width, so its top tier is its native size. */
 const EARTHEN = [
-  { slug: "earthen-wings", wide: true, tiers: [700, 1400, 2000] },
-  { slug: "earthen-altar", wide: true, tiers: [700, 1400, 2000] },
+  { slug: "earthen-atitlan", tiers: [700, 1400, 2000], w: 2000, h: 1500, wide: true },
+  { slug: "earthen-stage", tiers: [700, 1400], w: 1400, h: 1867 },
+  { slug: "earthen-altar-fire", tiers: [700, 1174], w: 1174, h: 1080 },
 ];
+
+function Gallery({ items, caps }) {
+  return (
+    <div className="ra-grid">
+      {items.map(({ slug, tiers, w, h, wide }, i) => (
+        <figure key={slug} className={wide ? "ra-wide" : undefined}>
+          <img src={`/art/regen-art/${slug}-${tiers[tiers.length - 1]}.webp`}
+               srcSet={tiers.map((t) => `/art/regen-art/${slug}-${t}.webp ${t}w`).join(", ")}
+               sizes={wide ? "(max-width: 1100px) 100vw, 1000px" : "(max-width: 700px) 100vw, 530px"}
+               width={w} height={h} alt={caps[i]} loading="lazy" decoding="async" />
+          <figcaption>{caps[i]}</figcaption>
+        </figure>
+      ))}
+    </div>
+  );
+}
 
 export default function RegenArt() {
   const [lang, setLang] = useLang();
@@ -154,16 +181,7 @@ export default function RegenArt() {
           <h2 id="ra-mural" className="display pg-h2">{c.mural_h}</h2>
           <p className="pg-lede">{c.mural_p}</p>
           <MuralVideo label={c.mural_video_play} title={c.mural_video_title} />
-          <div className="ra-grid">
-            {MURALS.map((n, i) => (
-              <figure key={n} className={i === 0 ? "ra-wide" : undefined}>
-                <img src={`/art/regen-art/${n}-1400.webp`} srcSet={`/art/regen-art/${n}-700.webp 700w, /art/regen-art/${n}-1400.webp 1400w`}
-                     sizes={i === 0 ? "(max-width: 1100px) 100vw, 1000px" : "(max-width: 700px) 100vw, 530px"}
-                     alt={c.mural_caps[i]} loading="lazy" decoding="async" />
-                <figcaption>{c.mural_caps[i]}</figcaption>
-              </figure>
-            ))}
-          </div>
+          <Gallery items={MURALS} caps={c.mural_caps} />
         </section>
 
         {/* SCULPTURE */}
@@ -171,18 +189,7 @@ export default function RegenArt() {
           <div className="pg-label">{c.sculpture_label}</div>
           <h2 id="ra-sculpture" className="display pg-h2">{c.sculpture_h}</h2>
           <p className="pg-lede">{c.sculpture_p}</p>
-          <div className="ra-grid">
-            {SCULPTURE.map(({ slug, tiers, w, h }, i) => (
-              <figure key={slug} className={i === 0 ? "ra-wide" : undefined}>
-                <img src={`/art/regen-art/${slug}-1400.webp`}
-                     srcSet={tiers.map((t) => `/art/regen-art/${slug}-${t}.webp ${t}w`).join(", ")}
-                     sizes={i === 0 ? "(max-width: 1100px) 100vw, 1000px" : "(max-width: 700px) 100vw, 530px"}
-                     width={w} height={h}
-                     alt={c.sculpture_caps[i]} loading="lazy" decoding="async" />
-                <figcaption>{c.sculpture_caps[i]}</figcaption>
-              </figure>
-            ))}
-          </div>
+          <Gallery items={SCULPTURE} caps={c.sculpture_caps} />
         </section>
 
         {/* EARTHEN ART */}
@@ -190,17 +197,7 @@ export default function RegenArt() {
           <div className="pg-label">{c.earthen_label}</div>
           <h2 id="ra-earthen" className="display pg-h2">{c.earthen_h}</h2>
           <p className="pg-lede">{c.earthen_p}</p>
-          <div className="ra-grid">
-            {EARTHEN.map(({ slug, wide, tiers }, i) => (
-              <figure key={slug} className={wide ? "ra-wide" : undefined}>
-                <img src={`/art/regen-art/${slug}-${tiers[tiers.length - 1]}.webp`}
-                     srcSet={tiers.map((w) => `/art/regen-art/${slug}-${w}.webp ${w}w`).join(", ")}
-                     sizes={wide ? "(max-width: 1100px) 100vw, 1000px" : "(max-width: 700px) 100vw, 530px"}
-                     alt={c.earthen_caps[i]} loading="lazy" decoding="async" />
-                <figcaption>{c.earthen_caps[i]}</figcaption>
-              </figure>
-            ))}
-          </div>
+          <Gallery items={EARTHEN} caps={c.earthen_caps} />
         </section>
 
         {/* SUSTAINABILITY ADVOCACY CAMPAIGNS */}
