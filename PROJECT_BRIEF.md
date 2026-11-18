@@ -70,7 +70,7 @@ Target: Lighthouse mobile ≥ 85 on every page.
   pill at 390–412px. It now drops the CTA below 560px like the sub pages. Lighthouse mobile accessibility 95 → 100.
 
 ## Open items
-- Standard security response headers (nosniff, referrer and permissions policies, frame protection), long caching for hashed assets, a `/.well-known/security.txt` and a Content-Security-Policy in **report-only** mode are written in `vercel.json` on a branch, **not yet live**: they go out when Michael approves the merge. Report-only first; enforcing it is a later, separate step.
+- Standard security response headers (nosniff, referrer and permissions policies, frame protection), long caching for hashed assets, a `/.well-known/security.txt` and a Content-Security-Policy in **report-only** mode are written in `vercel.json` on a branch, **not yet live**: they go out when Michael approves the merge. Report-only first; enforcing it is a later, separate step. The Edutainment Spotify player is now click-to-load, like the YouTube videos (same branch).
 - Spanish copy needs official sign-off (mission, hero, engine names, all sub pages).
 - The felt train wheels are waiting on regenerated art (two Nano Banana edits, specified in `MISSING_ART.md`).
 - The mural film is 113 MB, streamed only when a visitor presses play. A trimmed, self-hosted cut is optional.

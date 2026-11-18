@@ -25,6 +25,28 @@ function NewsVideo({ id, label, title, poster }) {
   );
 }
 
+/** Spotify facade: a local card; nothing reaches Spotify until the visitor clicks it. */
+function SpotifyPlayer({ title, go }) {
+  const [on, setOn] = useState(false);
+  return on ? (
+    <iframe
+      className="ed-spotify"
+      src={`https://open.spotify.com/embed/artist/${SPOTIFY_ARTIST_ID}?utm_source=generator&theme=0`}
+      title={title}
+      height="152"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+    />
+  ) : (
+    <button className="ed-spotify ed-spotify-facade" onClick={() => setOn(true)}>
+      <span className="ed-sp-play" aria-hidden="true">▶</span>
+      <span>
+        <b>{title}</b>
+        <span className="go">{go}</span>
+      </span>
+    </button>
+  );
+}
+
 /**
  * One event in the wall. Events with several photos/clips cycle every 2.8s and
  * stop on whatever frame the pointer (or keyboard focus) lands on; the arrows
@@ -243,6 +265,14 @@ export default function Edutainment() {
         .ed-listen{ display:grid; gap:14px; grid-template-columns:1fr; align-items:stretch; max-width:900px; }
         @media (min-width:760px){ .ed-listen{ grid-template-columns:minmax(0,1fr) minmax(0,310px); } }
         .ed-spotify{ display:block; width:100%; height:152px; border:0; border-radius:14px; }
+        .ed-spotify-facade{ display:flex; align-items:center; gap:16px; padding:16px; text-align:left; cursor:pointer;
+          background:#12385A; border:2px solid ${T.cream}1f; color:${T.cream}; font:inherit;
+          transition:transform .3s var(--ease-settle), border-color .3s; }
+        .ed-spotify-facade:hover{ transform:translateY(-3px); border-color:${T.marigold}66; }
+        .ed-sp-play{ flex:none; width:64px; height:64px; border-radius:50%; background:${T.coral}; color:${T.pineDeep};
+          font-size:24px; display:grid; place-items:center; padding-left:4px; box-shadow:0 8px 22px #0008; }
+        .ed-spotify-facade b{ display:block; font-size:16px; line-height:1.25; margin-bottom:5px; }
+        .ed-spotify-facade .go{ display:block; font-size:13px; color:${T.marigold}; }
         .ed-yt{ display:flex; align-items:center; gap:14px; height:152px; padding:16px; border-radius:14px;
           background:#12385A; border:2px solid ${T.cream}1f; color:${T.cream}; text-decoration:none;
           transition:transform .3s var(--ease-settle), border-color .3s; }
@@ -299,7 +329,7 @@ export default function Edutainment() {
         .ed-cta p{ font-size:18px; font-weight:500; margin-bottom:22px; color:${T.cream}e6; text-shadow:0 2px 14px ${T.pineDeep}; }
         @media (prefers-reduced-motion: reduce){
           .ed-hero-art img, .ed-tile, .ed-cta, .ed-news{ transform:none !important; }
-          .ed-news-facade img{ transition:none !important; } .ed-news-facade:hover img{ transform:none !important; }
+          .ed-news-facade img{ transition:none !important; } .ed-news-facade:hover img{ transform:none !important; } .ed-spotify-facade{ transition:none !important; } .ed-spotify-facade:hover{ transform:none !important; }
           .ed-frame{ transition:none !important; }
         }
       `}</style>
@@ -375,14 +405,7 @@ export default function Edutainment() {
           <div className="pg-label">{c.listen_label}</div>
           <h2 id="ed-listen" className="sr-only">{c.listen_label}</h2>
           <div className="ed-listen">
-            <iframe
-              className="ed-spotify"
-              src={`https://open.spotify.com/embed/artist/${SPOTIFY_ARTIST_ID}?utm_source=generator&theme=0`}
-              title={c.spotify_title}
-              height="152"
-              loading="lazy"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            />
+            <SpotifyPlayer title={c.spotify_title} go={c.spotify_go} />
             {/* a channel has no embeddable player of its own, so this is a card to it */}
             <a className="ed-yt" href={LINKS.youtube} target="_blank" rel="noopener noreferrer">
               <img src="/art/edutainment/youtube-avatar.webp" alt="" width="300" height="300" loading="lazy" decoding="async" />
