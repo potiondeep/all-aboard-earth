@@ -1,6 +1,6 @@
 # All Aboard Earth site — Project Brief
 
-**Last refreshed:** 2026-11-14 · after commit `9b9a13b`
+**Last refreshed:** 2026-11-18 · after commit `bc743ff` + the response-headers branch
 Read by the All Aboard Earth claude.ai Project on "sync from the repo". Refreshed by Claude Code at the end of every
 session that changes the site (see `CLAUDE.md`). Workflow detail lives in `.claude/skills/aae-site/SKILL.md`.
 
@@ -70,6 +70,7 @@ Target: Lighthouse mobile ≥ 85 on every page.
   pill at 390–412px. It now drops the CTA below 560px like the sub pages. Lighthouse mobile accessibility 95 → 100.
 
 ## Open items
+- Standard security response headers (nosniff, referrer and permissions policies, frame protection), long caching for hashed assets, a `/.well-known/security.txt` and a Content-Security-Policy in **report-only** mode are written in `vercel.json` on a branch, **not yet live**: they go out when Michael approves the merge. Report-only first; enforcing it is a later, separate step.
 - Spanish copy needs official sign-off (mission, hero, engine names, all sub pages).
 - The felt train wheels are waiting on regenerated art (two Nano Banana edits, specified in `MISSING_ART.md`).
 - The mural film is 113 MB, streamed only when a visitor presses play. A trimmed, self-hosted cut is optional.
